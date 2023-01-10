@@ -11,11 +11,16 @@ class TitleView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          _buildCealChroniclerImage(),
           _buildWelcomeText(theme),
           _buildStartButton(theme),
         ],
       ),
     );
+  }
+  
+  _buildCealChroniclerImage() {
+    return Image.asset("assets/images/CealChroniclerLogo.png");
   }
 
   Text _buildWelcomeText(ThemeData theme) {
@@ -26,10 +31,11 @@ class TitleView extends StatelessWidget {
     );
   }
 
-  _buildStartButton(ThemeData theme) {
+  ElevatedButton _buildStartButton(ThemeData theme) {
     return ElevatedButton(
       onPressed: () {},
       child: const Text("Go to Character Screen"),
     );
   }
 }
+
