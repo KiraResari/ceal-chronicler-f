@@ -24,9 +24,10 @@ class TitleView extends StatelessWidget {
   }
 
   Text _buildWelcomeText(ThemeData theme) {
-    TextStyle textStyle = theme.textTheme.displayMedium!;
+    TextStyle textStyle = theme.textTheme.displaySmall!;
     return Text(
       "Welcome to the Ceal Chronicler f!",
+      textAlign: TextAlign.center,
       style: textStyle,
     );
   }
