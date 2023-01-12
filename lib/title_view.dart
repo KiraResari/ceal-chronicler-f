@@ -1,4 +1,11 @@
+import 'package:ceal_chronicler_f/events/open_character_selection_view_event.dart';
+import 'package:ceal_chronicler_f/get_it_context.dart';
+import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'custom_colors.dart';
+import 'app_state.dart';
 
 class TitleView extends StatelessWidget {
   const TitleView({super.key});
@@ -7,18 +14,18 @@ class TitleView extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     return Container(
-      color: Color.fromRGBO(0, 255, 191, 1),
+      color: CustomColors.background,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _buildCealChroniclerImage(),
           _buildWelcomeText(theme),
-          _buildStartButton(theme),
+          _buildStartButton(theme, context),
         ],
       ),
     );
   }
-  
+
   _buildCealChroniclerImage() {
     return Image.asset("assets/images/CealChroniclerLogo.png");
   }
@@ -32,11 +39,14 @@ class TitleView extends StatelessWidget {
     );
   }
 
-  ElevatedButton _buildStartButton(ThemeData theme) {
+  ElevatedButton _buildStartButton(ThemeData theme, BuildContext context) {
+    var eventBus = getIt.get<EventBus>();
+
     return ElevatedButton(
-      onPressed: () {},
-      child: const Text("Go to Character Screen"),
+      onPressed: () {
+        eventBus.fire(OpenCharacterSelectionViewEvent());
+      },
+      child: const Text("Go to Character Selection Screen"),
     );
   }
 }
-
