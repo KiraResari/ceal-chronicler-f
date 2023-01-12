@@ -19,17 +19,24 @@ class CharacterSelectionView extends StatelessWidget {
     );
   }
 
-  Column _buildMainColumn(BuildContext context) {
+  Widget _buildMainColumn(BuildContext context) {
     var theme = Theme.of(context);
     TextStyle titleStyle = theme.textTheme.displayMedium!;
-    return Column(
-      children: [
-        Text(
-          "Characters",
-          style: titleStyle,
-        ),
-        Column(children: _buildCharacterButtons(context)),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Characters",
+            style: titleStyle,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: _buildCharacterButtons(context),
+          ),
+        ],
+      ),
     );
   }
 
@@ -45,8 +52,7 @@ class CharacterSelectionView extends StatelessWidget {
     return characterButtons;
   }
 
-  Widget _buildCharacterButton(
-      Character character, BuildContext context) {
+  Widget _buildCharacterButton(Character character, BuildContext context) {
     var eventBus = getIt.get<EventBus>();
     var theme = Theme.of(context);
     TextStyle buttonStyle = theme.textTheme.button!;
@@ -57,7 +63,7 @@ class CharacterSelectionView extends StatelessWidget {
           eventBus.fire(OpenCharacterViewEvent(character));
         },
         child: Text(
-          character.name,
+          character.getDisplayValue(),
           style: buttonStyle,
         ),
       ),
