@@ -1,7 +1,7 @@
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 
-import '../custom_colors.dart';
+import '../theme/custom_colors.dart';
 import '../events/open_character_selection_view_event.dart';
 import '../fields/display_field.dart';
 import '../get_it_context.dart';

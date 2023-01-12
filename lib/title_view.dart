@@ -4,7 +4,7 @@ import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 
 import 'assetPaths/image_paths.dart';
-import 'custom_colors.dart';
+import 'theme/custom_colors.dart';
 
 class TitleView extends StatelessWidget {
   static const String welcomeMessage = "Welcome to the Ceal Chronicler f!";
