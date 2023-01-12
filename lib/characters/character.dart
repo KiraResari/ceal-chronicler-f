@@ -8,20 +8,20 @@ class Character {
   static const nameFieldName = "Name: ";
   static const weaponFieldName = "Weapon: ";
   static const speciesFieldName = "Species: ";
+  static const defaultName = "Unnamed Character";
+  static const defaultWeapon = "No weapon";
+  static const defaultSpecies = "Unknown species";
 
   CharacterName name;
   Weapon weapon;
   Species species;
 
-  List<DisplayField> get displayFields{
+  List<DisplayField> get displayFields {
     return [name, weapon, species];
   }
 
-
   Character(
-      {name = "Unnamed Character",
-      weapon = "No weapon",
-      species = "Unknown species"})
+      {name = defaultName, weapon = defaultName, species = defaultSpecies})
       : name = CharacterName(nameFieldName, name),
         weapon = Weapon(weaponFieldName, weapon),
         species = Species(speciesFieldName, species);

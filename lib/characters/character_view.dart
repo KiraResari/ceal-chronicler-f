@@ -9,6 +9,8 @@ import '../theme/button_styles.dart';
 import 'character.dart';
 
 class CharacterView extends StatelessWidget {
+  static const backButtonText = "↩ Back";
+
   final Character character;
 
   const CharacterView({super.key, required this.character});
@@ -85,7 +87,7 @@ class CharacterView extends StatelessWidget {
         eventBus.fire(OpenCharacterSelectionViewEvent());
       },
       child: Text(
-        "↩ Back",
+        backButtonText,
         style: buttonTextStyle,
       ),
     );

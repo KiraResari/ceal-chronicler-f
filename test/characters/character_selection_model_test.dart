@@ -4,6 +4,8 @@ import 'package:ceal_chronicler_f/get_it_context.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  setUp(() => initializeGetItContext());
+  tearDown(() => getIt.reset());
   test(
     "AddCharacter should increase Character Count by one",
     () {
@@ -13,8 +15,6 @@ void main() {
 }
 
 addCharacterShouldIncreaseCharacterCountByOne() {
-  initializeGetItContext();
-
   var model = CharacterSelectionModel();
   var initialCharacterCount = model.characters.length;
 
@@ -22,6 +22,4 @@ addCharacterShouldIncreaseCharacterCountByOne() {
 
   var finalCharacterCount = model.characters.length;
   expect(finalCharacterCount, initialCharacterCount + 1);
-
-  getIt.reset();
 }
