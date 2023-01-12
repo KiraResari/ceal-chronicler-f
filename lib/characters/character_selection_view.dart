@@ -1,18 +1,25 @@
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../custom_colors.dart';
-import '../app_state.dart';
 import '../events/open_character_view_event.dart';
 import '../get_it_context.dart';
 import 'character.dart';
+import 'character_selection_model.dart';
 
-class CharacterSelectionView extends StatelessWidget {
+class CharacterSelectionView extends StatefulWidget {
 
   static const String titleText = "Characters";
 
   const CharacterSelectionView({super.key});
+
+  @override
+  State<CharacterSelectionView> createState() => _CharacterSelectionViewState();
+}
+
+class _CharacterSelectionViewState extends State<CharacterSelectionView> {
+
+  var characterSelectionModel = getIt<CharacterSelectionModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +38,7 @@ class CharacterSelectionView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            titleText,
+            CharacterSelectionView.titleText,
             style: titleStyle,
           ),
           Column(
@@ -44,8 +51,7 @@ class CharacterSelectionView extends StatelessWidget {
   }
 
   List<Widget> _buildCharacterButtons(BuildContext context) {
-    var appState = context.watch<AppState>();
-    List<Character> characters = appState.getCharacters();
+    List<Character> characters = characterSelectionModel.characters;
 
     List<Widget> characterButtons = [];
     for (var character in characters) {

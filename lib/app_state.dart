@@ -14,7 +14,6 @@ class AppState extends ChangeNotifier {
   Widget activeView = const TitleView();
 
   final _characterSelectionView = const CharacterSelectionView();
-  final _characterRepository = CharacterRepository();
 
   AppState() {
     var eventBus = getIt.get<EventBus>();
@@ -33,10 +32,6 @@ class AppState extends ChangeNotifier {
   void _onOpenCharacterSelectionViewEvent() {
     activeView = _characterSelectionView;
     notifyListeners();
-  }
-
-  List<Character> getCharacters() {
-    return _characterRepository.characters;
   }
 
   void _onOpenCharacterViewEvent(OpenCharacterViewEvent event) {

@@ -17,4 +17,8 @@ class CharacterRepository {
   List<Character> get characters {
     return _characters;
   }
+
+  void add(Character character) {
+    _characters.add(character);
+  }
 }
