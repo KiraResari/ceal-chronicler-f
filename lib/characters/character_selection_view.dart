@@ -9,6 +9,9 @@ import '../get_it_context.dart';
 import 'character.dart';
 
 class CharacterSelectionView extends StatelessWidget {
+
+  static const String titleText = "Characters";
+
   const CharacterSelectionView({super.key});
 
   @override
@@ -28,7 +31,7 @@ class CharacterSelectionView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Characters",
+            titleText,
             style: titleStyle,
           ),
           Column(

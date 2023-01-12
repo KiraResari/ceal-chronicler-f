@@ -1,30 +1,49 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
+import 'package:ceal_chronicler_f/ceal_chronicler_f.dart';
+import 'package:ceal_chronicler_f/characters/character_selection_view.dart';
+import 'package:ceal_chronicler_f/get_it_context.dart';
+import 'package:ceal_chronicler_f/title_view.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:ceal_chronicler_f/main.dart';
-
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets(
+    'Title screen should have welcome message',
+    (WidgetTester tester) async {
+      initializeGetItContext();
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+      await tester.pumpWidget(const CealChroniclerF());
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+      expect(find.text(TitleView.welcomeMessage), findsOneWidget);
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
-  });
+      getIt.reset();
+    },
+  );
+
+  testWidgets(
+    'Title screen should have start button with correct message',
+    (WidgetTester tester) async {
+      initializeGetItContext();
+
+      await tester.pumpWidget(const CealChroniclerF());
+
+      expect(find.text(TitleView.startButtonText), findsOneWidget);
+
+      getIt.reset();
+    },
+  );
+
+  testWidgets(
+    'Navigating to Character Selection should work',
+    (WidgetTester tester) async {
+      initializeGetItContext();
+
+      await tester.pumpWidget(const CealChroniclerF());
+
+      await tester.tap(find.bySemanticsLabel(TitleView.startButtonText));
+      await tester.pump();
+
+      expect(find.text(CharacterSelectionView.titleText), findsOneWidget);
+
+      getIt.reset();
+    },
+  );
 }

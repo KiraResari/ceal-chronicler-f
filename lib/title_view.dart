@@ -3,9 +3,13 @@ import 'package:ceal_chronicler_f/get_it_context.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 
+import 'assetPaths/image_paths.dart';
 import 'custom_colors.dart';
 
 class TitleView extends StatelessWidget {
+  static const String welcomeMessage = "Welcome to the Ceal Chronicler f!";
+  static const String startButtonText = "Go to Character Selection Screen";
+
   const TitleView({super.key});
 
   @override
@@ -25,13 +29,13 @@ class TitleView extends StatelessWidget {
   }
 
   _buildCealChroniclerImage() {
-    return Image.asset("assets/images/CealChroniclerLogo.png");
+    return Image.asset(ImagePaths.logo);
   }
 
   Text _buildWelcomeText(ThemeData theme) {
     TextStyle textStyle = theme.textTheme.displaySmall!;
     return Text(
-      "Welcome to the Ceal Chronicler f!",
+      welcomeMessage,
       textAlign: TextAlign.center,
       style: textStyle,
     );
@@ -46,7 +50,7 @@ class TitleView extends StatelessWidget {
         eventBus.fire(OpenCharacterSelectionViewEvent());
       },
       child: Text(
-        "Go to Character Selection Screen",
+        startButtonText,
         style: buttonStyle,
       ),
     );
