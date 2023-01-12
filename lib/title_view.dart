@@ -41,12 +41,17 @@ class TitleView extends StatelessWidget {
 
   ElevatedButton _buildStartButton(ThemeData theme, BuildContext context) {
     var eventBus = getIt.get<EventBus>();
+    var theme = Theme.of(context);
+    TextStyle buttonStyle = theme.textTheme.button!;
 
     return ElevatedButton(
       onPressed: () {
         eventBus.fire(OpenCharacterSelectionViewEvent());
       },
-      child: const Text("Go to Character Selection Screen"),
+      child: Text(
+        "Go to Character Selection Screen",
+        style: buttonStyle,
+      ),
     );
   }
 }

@@ -12,9 +12,21 @@ class CharacterSelectionView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: CustomColors.background,
-      child: Column(
-        children: _buildCharacterCards(context),
-      ),
+      child: _buildMainColumn(context),
+    );
+  }
+
+  Column _buildMainColumn(BuildContext context) {
+    var theme = Theme.of(context);
+    TextStyle titleStyle = theme.textTheme.displayMedium!;
+    return Column(
+      children: [
+        Text(
+          "Characters",
+          style: titleStyle,
+        ),
+        Column(children: _buildCharacterCards(context)),
+      ],
     );
   }
 
@@ -24,9 +36,25 @@ class CharacterSelectionView extends StatelessWidget {
 
     List<Card> characterCards = [];
     for (var character in characters) {
-      var card = Card(child: Text(character.name));
+      var card = _buildCharacterCard(character, context);
       characterCards.add(card);
     }
     return characterCards;
+  }
+
+  Card _buildCharacterCard(Character character, BuildContext context) {
+    var theme = Theme.of(context);
+    TextStyle buttonStyle = theme.textTheme.button!;
+    return Card(
+      color: theme.colorScheme.primary,
+      elevation: 5,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          character.name,
+          style: buttonStyle,
+        ),
+      ),
+    );
   }
 }
