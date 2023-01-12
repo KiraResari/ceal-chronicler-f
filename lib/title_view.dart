@@ -2,10 +2,8 @@ import 'package:ceal_chronicler_f/events/open_character_selection_view_event.dar
 import 'package:ceal_chronicler_f/get_it_context.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'custom_colors.dart';
-import 'app_state.dart';
 
 class TitleView extends StatelessWidget {
   const TitleView({super.key});
@@ -20,7 +18,7 @@ class TitleView extends StatelessWidget {
         children: [
           _buildCealChroniclerImage(),
           _buildWelcomeText(theme),
-          _buildStartButton(theme, context),
+          _buildStartButton(theme),
         ],
       ),
     );
@@ -39,9 +37,8 @@ class TitleView extends StatelessWidget {
     );
   }
 
-  ElevatedButton _buildStartButton(ThemeData theme, BuildContext context) {
+  ElevatedButton _buildStartButton(ThemeData theme) {
     var eventBus = getIt.get<EventBus>();
-    var theme = Theme.of(context);
     TextStyle buttonStyle = theme.textTheme.button!;
 
     return ElevatedButton(

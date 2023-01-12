@@ -1,8 +1,11 @@
+import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../custom_colors.dart';
 import '../app_state.dart';
+import '../events/open_character_view_event.dart';
+import '../get_it_context.dart';
 import 'character.dart';
 
 class CharacterSelectionView extends StatelessWidget {
@@ -25,31 +28,34 @@ class CharacterSelectionView extends StatelessWidget {
           "Characters",
           style: titleStyle,
         ),
-        Column(children: _buildCharacterCards(context)),
+        Column(children: _buildCharacterButtons(context)),
       ],
     );
   }
 
-  List<Card> _buildCharacterCards(BuildContext context) {
+  List<Widget> _buildCharacterButtons(BuildContext context) {
     var appState = context.watch<AppState>();
     List<Character> characters = appState.getCharacters();
 
-    List<Card> characterCards = [];
+    List<Widget> characterButtons = [];
     for (var character in characters) {
-      var card = _buildCharacterCard(character, context);
-      characterCards.add(card);
+      var button = _buildCharacterButton(character, context);
+      characterButtons.add(button);
     }
-    return characterCards;
+    return characterButtons;
   }
 
-  Card _buildCharacterCard(Character character, BuildContext context) {
+  Widget _buildCharacterButton(
+      Character character, BuildContext context) {
+    var eventBus = getIt.get<EventBus>();
     var theme = Theme.of(context);
     TextStyle buttonStyle = theme.textTheme.button!;
-    return Card(
-      color: theme.colorScheme.primary,
-      elevation: 5,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
+    return Padding(
+      padding: const EdgeInsets.all(5),
+      child: ElevatedButton(
+        onPressed: () {
+          eventBus.fire(OpenCharacterViewEvent(character));
+        },
         child: Text(
           character.name,
           style: buttonStyle,

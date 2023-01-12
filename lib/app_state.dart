@@ -1,11 +1,13 @@
 import 'package:ceal_chronicler_f/characters/character.dart';
 import 'package:ceal_chronicler_f/characters/character_repository.dart';
 import 'package:ceal_chronicler_f/characters/character_selection_view.dart';
+import 'package:ceal_chronicler_f/characters/character_view.dart';
 import 'package:ceal_chronicler_f/events/open_character_selection_view_event.dart';
 import 'package:ceal_chronicler_f/title_view.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/widgets.dart';
 
+import 'events/open_character_view_event.dart';
 import 'get_it_context.dart';
 
 class AppState extends ChangeNotifier {
@@ -21,6 +23,11 @@ class AppState extends ChangeNotifier {
         _onOpenCharacterSelectionViewEvent();
       },
     );
+    eventBus.on<OpenCharacterViewEvent>().listen(
+          (event) {
+        _onOpenCharacterViewEvent(event);
+      },
+    );
   }
 
   void _onOpenCharacterSelectionViewEvent() {
@@ -30,5 +37,10 @@ class AppState extends ChangeNotifier {
 
   List<Character> getCharacters() {
     return _characterRepository.characters;
+  }
+
+  void _onOpenCharacterViewEvent(OpenCharacterViewEvent event) {
+    activeView = CharacterView(character: event.character);
+    notifyListeners();
   }
 }
