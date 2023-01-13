@@ -1,3 +1,4 @@
+import 'package:ceal_chronicler_f/fields/display_field_widget.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 
@@ -45,7 +46,7 @@ class CharacterView extends StatelessWidget {
   Widget _buildFields(Character character, BuildContext context) {
     List<Widget> fields = [];
     for (var displayField in character.displayFields) {
-      var fieldWidget = _buildField(displayField, context);
+      var fieldWidget = DisplayFieldWidget(displayField: displayField);
       fields.add(fieldWidget);
     }
     return Padding(
@@ -54,25 +55,6 @@ class CharacterView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: fields,
       ),
-    );
-  }
-
-  Widget _buildField(DisplayField displayField, BuildContext context) {
-    var theme = Theme.of(context);
-    TextStyle fieldNameStyle = theme.textTheme.bodyLarge!;
-    TextStyle fieldValueStyle = theme.textTheme.bodyMedium!;
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          "${displayField.fieldName}: ",
-          style: fieldNameStyle,
-        ),
-        Text(
-          displayField.getDisplayValue(),
-          style: fieldValueStyle,
-        ),
-      ],
     );
   }
 
