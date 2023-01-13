@@ -16,7 +16,7 @@ class CharacterRepository {
   Optional<Character> get(CharacterId id) {
     var character = _characters[id];
     if (character != null){
-      return Optional.of(character);
+      return Optional.of(character.copy());
     }
     return const Optional.empty();
   }
