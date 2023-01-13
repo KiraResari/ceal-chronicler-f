@@ -1,14 +1,8 @@
-import 'package:ceal_chronicler_f/fields/display_field.dart';
+import '../fields/string_display_field.dart';
 
-class CharacterName extends DisplayField{
+class CharacterNameField extends StringDisplayField{
 
-  String name;
+  static const staticFieldName = "Name";
 
-  CharacterName(super.fieldName, this.name);
-
-  @override
-  String getDisplayValue() {
-    return name;
-  }
-
+  CharacterNameField(String value) : super(staticFieldName, value);
 }

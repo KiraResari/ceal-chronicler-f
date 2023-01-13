@@ -16,7 +16,7 @@ class CealChroniclerF extends StatelessWidget{
         theme: ThemeData(
           primarySwatch: Colors.teal,
         ),
-        home: MainView(),
+        home: const MainView(),
       ),
     );
   }

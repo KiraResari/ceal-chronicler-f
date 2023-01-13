@@ -65,7 +65,7 @@ class CharacterView extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          displayField.fieldName,
+          "${displayField.fieldName}: ",
           style: fieldNameStyle,
         ),
         Text(

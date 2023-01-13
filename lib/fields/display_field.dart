@@ -1,7 +1,8 @@
-abstract class DisplayField{
+abstract class DisplayField<T>{
   String fieldName;
+  T value;
 
-  DisplayField(this.fieldName);
+  DisplayField(this.fieldName, this.value);
 
   String getDisplayValue();
 }

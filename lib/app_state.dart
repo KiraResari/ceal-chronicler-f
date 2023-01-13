@@ -1,5 +1,3 @@
-import 'package:ceal_chronicler_f/characters/character.dart';
-import 'package:ceal_chronicler_f/characters/character_repository.dart';
 import 'package:ceal_chronicler_f/characters/character_selection_view.dart';
 import 'package:ceal_chronicler_f/characters/character_view.dart';
 import 'package:ceal_chronicler_f/events/open_character_selection_view_event.dart';

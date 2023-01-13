@@ -1,3 +1,4 @@
+import 'package:ceal_chronicler_f/events/update_character_selection_view_event.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 
@@ -22,6 +23,13 @@ class CharacterSelectionView extends StatefulWidget {
 
 class _CharacterSelectionViewState extends State<CharacterSelectionView> {
   List<Character> characters = CharacterSelectionView.model.characters;
+  final _eventBus = getIt.get<EventBus>();
+
+  _CharacterSelectionViewState() {
+    _eventBus.on<UpdateCharacterSelectionViewEvent>().listen((event) {
+      _updateCharacterSelectionView();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,10 +103,13 @@ class _CharacterSelectionViewState extends State<CharacterSelectionView> {
   }
 
   Widget _buildAddButton(BuildContext context) {
-    return ElevatedButton(
-      style: ButtonStyles.confirm,
-      onPressed: () => _onAddButtonPressed(),
-      child: _buildAddButtonText(context),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ElevatedButton(
+        style: ButtonStyles.confirm,
+        onPressed: () => _onAddButtonPressed(),
+        child: _buildAddButtonText(context),
+      ),
     );
   }
 
@@ -112,8 +123,10 @@ class _CharacterSelectionViewState extends State<CharacterSelectionView> {
   }
 
   void _onAddButtonPressed() {
-    var eventBus = getIt.get<EventBus>();
-    eventBus.fire(AddCharacterEvent());
+    _eventBus.fire(AddCharacterEvent());
+  }
+
+  void _updateCharacterSelectionView() {
     setState(
       () {
         characters = CharacterSelectionView.model.characters;

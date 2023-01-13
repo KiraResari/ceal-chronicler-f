@@ -1,24 +1,23 @@
 import 'package:ceal_chronicler_f/characters/character.dart';
+import 'package:ceal_chronicler_f/characters/character_id.dart';
+import 'package:optional/optional_internal.dart';
 
 class CharacterRepository {
-  List<Character> _characters = [
-    Character(
-      name: "Sylvia Zerin",
-      weapon: "Axe",
-      species: "Nefilim",
-    ),
-    Character(
-      name: "Idra Kegis",
-      weapon: "Claws",
-      species: "Dragon",
-    )
-  ];
+  final Map<CharacterId, Character> _characters = {};
 
   List<Character> get characters {
-    return _characters;
+    return _characters.values.toList();
   }
 
   void add(Character character) {
-    _characters.add(character);
+    _characters[character.id] = character.copy();
+  }
+
+  Optional<Character> get(CharacterId id) {
+    var character = _characters[id];
+    if (character != null){
+      return Optional.of(character);
+    }
+    return const Optional.empty();
   }
 }
