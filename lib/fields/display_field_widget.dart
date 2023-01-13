@@ -20,22 +20,37 @@ class _DisplayFieldWidgetState extends State<DisplayFieldWidget> {
     TextStyle fieldNameStyle = theme.textTheme.bodyLarge!;
     TextStyle fieldValueStyle = theme.textTheme.bodyMedium!;
     textController.text = widget.displayField.getDisplayValue();
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          "${widget.displayField.fieldName}: ",
-          style: fieldNameStyle,
-        ),
-        SizedBox(
-          width: 100,
-          height: 20,
-          child: TextField(
-            controller: textController,
-            style: fieldValueStyle,
+    return SizedBox(
+      width: 400,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            width: 75,
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                "${widget.displayField.fieldName}: ",
+                style: fieldNameStyle,
+              ),
+            ),
           ),
-        ),
-      ],
+          SizedBox(
+            width: 200,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: textController,
+                style: fieldValueStyle,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -6,9 +6,6 @@ import 'species.dart';
 import 'character_name.dart';
 
 class Character {
-  static const defaultName = "Unnamed Character";
-  static const defaultWeapon = "No weapon";
-  static const defaultSpecies = "Unknown species";
 
   CharacterId id;
   CharacterNameField nameField;
@@ -33,13 +30,13 @@ class Character {
 
   Character({
     id,
-    name = defaultName,
-    weapon = defaultName,
-    species = defaultSpecies,
+    name,
+    weapon,
+    species,
   })  : id = id ?? CharacterId(),
-        nameField = CharacterNameField(name),
-        weaponField = WeaponField(weapon),
-        speciesField = SpeciesField(species);
+        nameField = CharacterNameField(),
+        weaponField = WeaponField(),
+        speciesField = SpeciesField();
 
   String getDisplayValue() {
     return nameField.getDisplayValue();
