@@ -11,6 +11,7 @@ void main() {
   CharacterRepository repository;
   setUp(() => initializeGetItContext());
   tearDown(() => getIt.reset());
+
   test(
     "get should return added character",
     () {
@@ -18,12 +19,13 @@ void main() {
       TestCharacter character = addTestCharacterToRepository(repository);
 
       Character returnedCharacter =
-          getCharacterFromRepository(repository, character);
+          getCharacterFromRepository(repository, character.id);
 
       expect(returnedCharacter, character,
           reason: "Returned character did not equal original character");
     },
   );
+
   test(
     "get should return empty Optional if character was not added",
     () {
@@ -35,6 +37,7 @@ void main() {
       expect(returnedCharacterOption.isPresent, false);
     },
   );
+
   test(
     "Changing character after putting it into repository should not change it inside repository",
     () {
@@ -43,11 +46,12 @@ void main() {
 
       character.name = "Changed Name";
       Character returnedCharacter =
-          getCharacterFromRepository(repository, character);
+          getCharacterFromRepository(repository, character.id);
 
       expect(returnedCharacter.name, TestCharacter.testName);
     },
   );
+
   test(
     "Changing character after getting it out of repository should not change it inside repository",
     () {
@@ -55,19 +59,35 @@ void main() {
       TestCharacter character = addTestCharacterToRepository(repository);
 
       Character returnedCharacter =
-          getCharacterFromRepository(repository, character);
+          getCharacterFromRepository(repository, character.id);
       returnedCharacter.name = "Changed Name";
       Character returnedAgainCharacter =
-          getCharacterFromRepository(repository, character);
+          getCharacterFromRepository(repository, character.id);
 
       expect(returnedAgainCharacter.name, TestCharacter.testName);
+    },
+  );
+
+  test(
+    "Changing character after getting it out of repository via list should not change it inside repository",
+    () {
+      repository = getIt<CharacterRepository>();
+      addTestCharacterToRepository(repository);
+
+      List<Character> characters = repository.characters;
+      Character firstCharacter = characters.first;
+      firstCharacter.name = "Changed Name";
+
+      Character characterFromRepository =
+          getCharacterFromRepository(repository, firstCharacter.id);
+      expect(characterFromRepository.name, TestCharacter.testName);
     },
   );
 }
 
 Character getCharacterFromRepository(
-    CharacterRepository repository, TestCharacter character) {
-  Optional<Character> returnedCharacterOption = repository.get(character.id);
+    CharacterRepository repository, CharacterId id) {
+  Optional<Character> returnedCharacterOption = repository.get(id);
 
   expect(returnedCharacterOption.isPresent, true,
       reason: "Character was not found");

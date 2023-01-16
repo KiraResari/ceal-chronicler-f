@@ -6,7 +6,7 @@ class CharacterRepository {
   final Map<CharacterId, Character> _characters = {};
 
   List<Character> get characters {
-    return _characters.values.toList();
+    return _characters.values.map((character) => character.copy()).toList();
   }
 
   void add(Character character) {
@@ -15,7 +15,7 @@ class CharacterRepository {
 
   Optional<Character> get(CharacterId id) {
     var character = _characters[id];
-    if (character != null){
+    if (character != null) {
       return Optional.of(character.copy());
     }
     return const Optional.empty();

@@ -8,4 +8,12 @@ void main() {
 
     expect(firstCharacter, isNot(secondCharacter));
   });
+
+  test("Character should take name from constructor", () {
+    const characterName = "Some Name";
+
+    var character = Character(name: characterName);
+
+    expect(character.name, characterName);
+  });
 }

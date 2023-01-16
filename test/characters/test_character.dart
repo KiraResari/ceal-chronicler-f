@@ -1,5 +1,4 @@
 import 'package:ceal_chronicler_f/characters/character.dart';
-import 'package:ceal_chronicler_f/characters/character_name_field.dart';
 
 class TestCharacter extends Character {
   static const testName = "Test Character Name";

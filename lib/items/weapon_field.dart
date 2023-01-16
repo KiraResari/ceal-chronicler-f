@@ -4,5 +4,5 @@ class WeaponField extends StringDisplayField {
   static const staticFieldName = "Weapon";
   static const defaultValue = "No Weapon";
 
-  WeaponField({String value = defaultValue}) : super(staticFieldName, value);
+  WeaponField(String? value) : super(staticFieldName, value ?? defaultValue);
 }

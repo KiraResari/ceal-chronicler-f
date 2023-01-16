@@ -34,9 +34,9 @@ class Character {
     weapon,
     species,
   })  : id = id ?? CharacterId(),
-        nameField = CharacterNameField(),
-        weaponField = WeaponField(),
-        speciesField = SpeciesField();
+        nameField = CharacterNameField(name),
+        weaponField = WeaponField(weapon),
+        speciesField = SpeciesField(species);
 
   String getDisplayValue() {
     return nameField.getDisplayValue();
