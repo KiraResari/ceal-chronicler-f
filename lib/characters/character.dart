@@ -1,9 +1,9 @@
 import '../fields/display_field.dart';
-import '../items/weapon.dart';
+import '../items/weapon_field.dart';
 import 'character_id.dart';
-import 'species.dart';
+import 'species_field.dart';
 
-import 'character_name.dart';
+import 'character_name_field.dart';
 
 class Character {
 

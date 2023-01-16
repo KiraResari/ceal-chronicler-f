@@ -1,20 +1,26 @@
+import 'package:ceal_chronicler_f/fields/display_field.dart';
 import 'package:ceal_chronicler_f/fields/display_field_widget.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 
-import '../theme/custom_colors.dart';
 import '../events/open_character_selection_view_event.dart';
-import '../fields/display_field.dart';
 import '../get_it_context.dart';
 import '../theme/button_styles.dart';
+import '../theme/custom_colors.dart';
 import 'character.dart';
 
-class CharacterView extends StatelessWidget {
+class CharacterView extends StatefulWidget {
   static const backButtonText = "↩ Back";
 
   final Character character;
 
   const CharacterView({super.key, required this.character});
+
+  @override
+  State<CharacterView> createState() => _CharacterViewState();
+}
+
+class _CharacterViewState extends State<CharacterView> {
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +32,7 @@ class CharacterView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildTitle(context),
-            _buildFields(character, context),
+            _buildFields(widget.character, context),
             _buildBackButton(context),
           ],
         ),
@@ -38,7 +44,7 @@ class CharacterView extends StatelessWidget {
     var theme = Theme.of(context);
     TextStyle titleStyle = theme.textTheme.displayMedium!;
     return Text(
-      character.getDisplayValue(),
+      widget.character.getDisplayValue(),
       style: titleStyle,
     );
   }
@@ -46,7 +52,12 @@ class CharacterView extends StatelessWidget {
   Widget _buildFields(Character character, BuildContext context) {
     List<Widget> fields = [];
     for (var displayField in character.displayFields) {
-      var fieldWidget = DisplayFieldWidget(displayField: displayField);
+      var fieldWidget = DisplayFieldWidget(
+        displayField: displayField,
+        onChanged: (inputValue) {
+          _handleInputFieldChange(inputValue, displayField);
+        },
+      );
       fields.add(fieldWidget);
     }
     return Padding(
@@ -56,6 +67,12 @@ class CharacterView extends StatelessWidget {
         children: fields,
       ),
     );
+  }
+
+  void _handleInputFieldChange(String inputValue, DisplayField displayField) {
+    if(inputValue != displayField.getDisplayValue()){
+      displayField.setValueFromString(inputValue);
+    }
   }
 
   Widget _buildBackButton(BuildContext context) {
@@ -69,7 +86,7 @@ class CharacterView extends StatelessWidget {
         eventBus.fire(OpenCharacterSelectionViewEvent());
       },
       child: Text(
-        backButtonText,
+        CharacterView.backButtonText,
         style: buttonTextStyle,
       ),
     );

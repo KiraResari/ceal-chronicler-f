@@ -1,5 +1,5 @@
 import 'package:ceal_chronicler_f/ceal_chronicler_f.dart';
-import 'package:ceal_chronicler_f/characters/character.dart';
+import 'package:ceal_chronicler_f/characters/character_name_field.dart';
 import 'package:ceal_chronicler_f/characters/character_selection_view.dart';
 import 'package:ceal_chronicler_f/characters/character_view.dart';
 import 'package:ceal_chronicler_f/get_it_context.dart';
@@ -25,7 +25,7 @@ void main() {
     (WidgetTester tester) async {
       await navigateToCharacterSelectionViewAndAddCharacter(tester);
 
-      expect(find.text(Character.defaultName), findsOneWidget);
+      expect(find.text(CharacterNameField.defaultValue), findsOneWidget);
     },
   );
 
@@ -34,7 +34,7 @@ void main() {
     (WidgetTester tester) async {
       await navigateToCharacterSelectionViewAndAddCharacter(tester);
 
-      await tester.tap(find.bySemanticsLabel(Character.defaultName));
+      await tester.tap(find.bySemanticsLabel(CharacterNameField.defaultValue));
       await tester.pump();
 
       expect(find.text(CharacterView.backButtonText), findsOneWidget);

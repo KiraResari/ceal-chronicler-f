@@ -12,4 +12,9 @@ abstract class StringDisplayField extends DisplayField<String>{
   String toString(){
     return getDisplayValue();
   }
+
+  @override
+  void setValueFromString(String inputValue){
+      value = inputValue;
+  }
 }

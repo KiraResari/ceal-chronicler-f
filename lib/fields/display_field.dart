@@ -5,4 +5,6 @@ abstract class DisplayField<T>{
   DisplayField(this.fieldName, this.value);
 
   String getDisplayValue();
+
+  void setValueFromString(String inputValue);
 }
