@@ -33,7 +33,9 @@ class _DisplayFieldWidgetState extends State<DisplayFieldWidget> {
   }
 
   void setText() {
-    textController.text = widget.displayField.getDisplayValue();
+    if (textController.text != widget.displayField.getDisplayValue()) {
+      textController.text = widget.displayField.getDisplayValue();
+    }
   }
 
   SizedBox _buildFieldName(ThemeData theme) {
@@ -63,7 +65,7 @@ class _DisplayFieldWidgetState extends State<DisplayFieldWidget> {
             filled: true,
             fillColor: Colors.white,
           ),
-          onChanged: (inputValue) {
+          onChanged: (inputValue){
             widget.onChanged(inputValue);
           },
         ),
