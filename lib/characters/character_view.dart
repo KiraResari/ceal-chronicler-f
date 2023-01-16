@@ -14,6 +14,7 @@ import 'character.dart';
 class CharacterView extends StatefulWidget {
   static const backButtonText = "↩ Back";
   static const saveButtonText = "💾 Save";
+  static const resetButtonText = "✖ Reset";
 
   final Character character;
   final Character originalCharacter;
@@ -32,6 +33,11 @@ class _CharacterViewState extends State<CharacterView> {
     _eventBus.on<UpdateCharacterViewEvent>().listen((event) {
       _updateView();
     });
+  }
+
+  _updateView() {
+    widget.originalCharacter.copyValuesFrom(widget.character);
+    setState(() {});
   }
 
   @override
@@ -98,6 +104,7 @@ class _CharacterViewState extends State<CharacterView> {
     buttons.add(_buildBackButton(context));
     if (widget.character != widget.originalCharacter) {
       buttons.add(_buildSaveButton(context));
+      buttons.add(_buildResetButton(context));
     }
     return buttons;
   }
@@ -136,8 +143,24 @@ class _CharacterViewState extends State<CharacterView> {
     );
   }
 
-  _updateView() {
-    widget.originalCharacter.copyValuesFrom(widget.character);
+  Widget _buildResetButton(BuildContext context) {
+    var theme = Theme.of(context);
+    TextStyle buttonTextStyle = theme.textTheme.button!;
+
+    return ElevatedButton(
+      style: ButtonStyles.cancel,
+      onPressed: () {
+        _discardChanges();
+      },
+      child: Text(
+        CharacterView.resetButtonText,
+        style: buttonTextStyle,
+      ),
+    );
+  }
+
+  void _discardChanges() {
+    widget.character.copyValuesFrom(widget.originalCharacter);
     setState(() {});
   }
 }

@@ -61,9 +61,9 @@ void main() {
       Character returnedCharacter =
           getCharacterFromRepository(repository, character.id);
       returnedCharacter.name = "Changed Name";
+
       Character returnedAgainCharacter =
           getCharacterFromRepository(repository, character.id);
-
       expect(returnedAgainCharacter.name, TestCharacter.testName);
     },
   );
@@ -81,6 +81,24 @@ void main() {
       Character characterFromRepository =
           getCharacterFromRepository(repository, firstCharacter.id);
       expect(characterFromRepository.name, TestCharacter.testName);
+    },
+  );
+
+  test(
+    "Changing and saving character should change it inside repository",
+    () {
+      const changedName = "Changed Name";
+      repository = getIt<CharacterRepository>();
+      TestCharacter character = addTestCharacterToRepository(repository);
+
+      Character returnedCharacter =
+          getCharacterFromRepository(repository, character.id);
+      returnedCharacter.name = changedName;
+      repository.addOrUpdate(returnedCharacter);
+
+      Character returnedAgainCharacter =
+          getCharacterFromRepository(repository, character.id);
+      expect(returnedAgainCharacter.name, changedName);
     },
   );
 }
