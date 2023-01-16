@@ -20,15 +20,12 @@ class _DisplayFieldWidgetState extends State<DisplayFieldWidget> {
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     setText();
-    return SizedBox(
-      width: 400,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _buildFieldName(theme),
-          _buildTextInputField(theme),
-        ],
-      ),
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _buildFieldName(theme),
+        _buildTextInputField(theme),
+      ],
     );
   }
 
@@ -55,7 +52,7 @@ class _DisplayFieldWidgetState extends State<DisplayFieldWidget> {
   SizedBox _buildTextInputField(ThemeData theme) {
     TextStyle fieldValueStyle = theme.textTheme.bodyMedium!;
     return SizedBox(
-      width: 200,
+      width: 300,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: TextField(
@@ -65,7 +62,7 @@ class _DisplayFieldWidgetState extends State<DisplayFieldWidget> {
             filled: true,
             fillColor: Colors.white,
           ),
-          onChanged: (inputValue){
+          onChanged: (inputValue) {
             widget.onChanged(inputValue);
           },
         ),

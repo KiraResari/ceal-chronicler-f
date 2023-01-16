@@ -15,6 +15,7 @@ import 'character.dart';
 
 class CharacterView extends StatefulWidget {
   static const backButtonText = "↩ Back";
+  static const backWithoutSavingButtonText = "$backButtonText (without saving)";
   static const saveButtonText = "💾 Save";
   static const resetButtonText = "✖ Reset";
 
@@ -112,27 +113,50 @@ class _CharacterViewState extends State<CharacterView> {
 
   List<Widget> _buildDisplayedButtons(BuildContext context) {
     List<Widget> buttons = [];
-    buttons.add(_buildBackButton(context));
-    if (widget.character != widget.originalCharacter) {
-      buttons.add(_buildSaveButton(context));
+    if (widget.character == widget.originalCharacter) {
+      buttons.add(_buildBackButton(context));
+    } else {
+      buttons.add(_buildBackWithoutSavingButton(context));
       buttons.add(_buildResetButton(context));
+      buttons.add(const SizedBox(width: 50));
+      buttons.add(_buildSaveButton(context));
     }
     return buttons;
   }
 
   Widget _buildBackButton(BuildContext context) {
+    return _buildBackButtonBase(
+      context,
+      ButtonStyles.neutral,
+      CharacterView.backButtonText,
+    );
+  }
+
+  Widget _buildBackWithoutSavingButton(BuildContext context) {
+    return _buildBackButtonBase(
+      context,
+      ButtonStyles.cancel,
+      CharacterView.backWithoutSavingButtonText,
+    );
+  }
+
+  Widget _buildBackButtonBase(
+      BuildContext context, ButtonStyle buttonStyle, String text) {
     var eventBus = getIt.get<EventBus>();
     var theme = Theme.of(context);
     TextStyle buttonTextStyle = theme.textTheme.button!;
 
-    return ElevatedButton(
-      style: ButtonStyles.cancel,
-      onPressed: () {
-        eventBus.fire(OpenCharacterSelectionViewEvent());
-      },
-      child: Text(
-        CharacterView.backButtonText,
-        style: buttonTextStyle,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ElevatedButton(
+        style: buttonStyle,
+        onPressed: () {
+          eventBus.fire(OpenCharacterSelectionViewEvent());
+        },
+        child: Text(
+          text,
+          style: buttonTextStyle,
+        ),
       ),
     );
   }
@@ -142,14 +166,17 @@ class _CharacterViewState extends State<CharacterView> {
     var theme = Theme.of(context);
     TextStyle buttonTextStyle = theme.textTheme.button!;
 
-    return ElevatedButton(
-      style: ButtonStyles.confirm,
-      onPressed: () {
-        eventBus.fire(SaveCharacterEvent(widget.character));
-      },
-      child: Text(
-        CharacterView.saveButtonText,
-        style: buttonTextStyle,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ElevatedButton(
+        style: ButtonStyles.confirm,
+        onPressed: () {
+          eventBus.fire(SaveCharacterEvent(widget.character));
+        },
+        child: Text(
+          CharacterView.saveButtonText,
+          style: buttonTextStyle,
+        ),
       ),
     );
   }
@@ -158,14 +185,17 @@ class _CharacterViewState extends State<CharacterView> {
     var theme = Theme.of(context);
     TextStyle buttonTextStyle = theme.textTheme.button!;
 
-    return ElevatedButton(
-      style: ButtonStyles.cancel,
-      onPressed: () {
-        _discardChanges();
-      },
-      child: Text(
-        CharacterView.resetButtonText,
-        style: buttonTextStyle,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ElevatedButton(
+        style: ButtonStyles.cancel,
+        onPressed: () {
+          _discardChanges();
+        },
+        child: Text(
+          CharacterView.resetButtonText,
+          style: buttonTextStyle,
+        ),
       ),
     );
   }

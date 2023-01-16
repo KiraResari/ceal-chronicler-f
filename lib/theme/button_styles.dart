@@ -18,4 +18,9 @@ class ButtonStyles {
     padding: _defaultPadding,
     textStyle: _defaultTextStyle,
   );
+  static final neutral = ButtonStyle(
+    backgroundColor: MaterialStateProperty.all(CustomColors.neutralButton),
+    padding: _defaultPadding,
+    textStyle: _defaultTextStyle,
+  );
 }
