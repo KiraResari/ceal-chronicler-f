@@ -21,7 +21,6 @@ class CharacterView extends StatefulWidget {
 }
 
 class _CharacterViewState extends State<CharacterView> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -70,9 +69,10 @@ class _CharacterViewState extends State<CharacterView> {
   }
 
   void _handleInputFieldChange(String inputValue, DisplayField displayField) {
-    if(inputValue != displayField.getDisplayValue()){
+    if (inputValue != displayField.getDisplayValue()) {
       displayField.setValueFromString(inputValue);
     }
+    setState(() {});
   }
 
   Widget _buildBackButton(BuildContext context) {

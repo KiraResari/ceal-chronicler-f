@@ -19,7 +19,7 @@ class _DisplayFieldWidgetState extends State<DisplayFieldWidget> {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-    textController.text = widget.displayField.getDisplayValue();
+    setInitialText();
     return SizedBox(
       width: 400,
       child: Row(
@@ -30,6 +30,12 @@ class _DisplayFieldWidgetState extends State<DisplayFieldWidget> {
         ],
       ),
     );
+  }
+
+  void setInitialText() {
+    if(textController.text.isEmpty && widget.displayField.getDisplayValue().isNotEmpty){
+      textController.text = widget.displayField.getDisplayValue();
+    }
   }
 
   SizedBox _buildFieldName(ThemeData theme) {
@@ -65,5 +71,11 @@ class _DisplayFieldWidgetState extends State<DisplayFieldWidget> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
   }
 }
