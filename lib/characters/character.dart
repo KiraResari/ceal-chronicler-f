@@ -88,4 +88,10 @@ class Character {
   String toString(){
     return "[id: $id, name: $name, species: $species, weapon: $weapon]";
   }
+
+  void copyValuesFrom(Character character) {
+    name = character.name;
+    weapon = character.weapon;
+    species = character.species;
+  }
 }

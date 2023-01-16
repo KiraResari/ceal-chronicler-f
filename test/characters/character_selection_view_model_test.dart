@@ -1,4 +1,4 @@
-import 'package:ceal_chronicler_f/characters/character_selection_model.dart';
+import 'package:ceal_chronicler_f/characters/character_selection_view_model.dart';
 import 'package:ceal_chronicler_f/get_it_context.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -8,7 +8,7 @@ void main() {
   test(
     "AddCharacter should increase Character Count by one",
     () {
-      var model = CharacterSelectionModel();
+      var model = CharacterSelectionViewModel();
       var initialCharacterCount = model.characters.length;
 
       model.addCharacter();
@@ -20,7 +20,7 @@ void main() {
   test(
     "AddCharacter twice should increase Character Count by two",
         () {
-      var model = CharacterSelectionModel();
+      var model = CharacterSelectionViewModel();
       var initialCharacterCount = model.characters.length;
 
       model.addCharacter();

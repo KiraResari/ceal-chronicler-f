@@ -8,12 +8,12 @@ import '../theme/custom_colors.dart';
 import '../events/open_character_view_event.dart';
 import '../get_it_context.dart';
 import 'character.dart';
-import 'character_selection_model.dart';
+import 'character_selection_view_model.dart';
 
 class CharacterSelectionView extends StatefulWidget {
   static const String titleText = "Characters";
   static const String addCharacterButtonText = "Add Character";
-  static final model = getIt<CharacterSelectionModel>();
+  static final model = getIt<CharacterSelectionViewModel>();
 
   const CharacterSelectionView({super.key});
 

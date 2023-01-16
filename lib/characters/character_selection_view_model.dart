@@ -4,13 +4,15 @@ import 'package:event_bus/event_bus.dart';
 
 import '../get_it_context.dart';
 import 'character.dart';
+import 'character_model.dart';
 import 'character_repository.dart';
 
-class CharacterSelectionModel {
+class CharacterSelectionViewModel {
   final _characterRepository = getIt<CharacterRepository>();
   final _eventBus = getIt.get<EventBus>();
+  final _characterModel = getIt.get<CharacterModel>();
 
-  CharacterSelectionModel() {
+  CharacterSelectionViewModel() {
     _eventBus.on<AddCharacterEvent>().listen(
       (event) {
         addCharacter();
@@ -24,7 +26,7 @@ class CharacterSelectionModel {
 
   void addCharacter() {
     var character = Character();
-    _characterRepository.add(character);
+    _characterModel.addOrUpdate(character);
     _eventBus.fire(UpdateCharacterSelectionViewEvent());
   }
 }

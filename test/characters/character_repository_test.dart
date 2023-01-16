@@ -96,6 +96,6 @@ Character getCharacterFromRepository(
 
 TestCharacter addTestCharacterToRepository(CharacterRepository repository) {
   var character = TestCharacter();
-  repository.add(character);
+  repository.addOrUpdate(character);
   return character;
 }

@@ -9,7 +9,7 @@ class CharacterRepository {
     return _characters.values.map((character) => character.copy()).toList();
   }
 
-  void add(Character character) {
+  void addOrUpdate(Character character) {
     _characters[character.id] = character.copy();
   }
 

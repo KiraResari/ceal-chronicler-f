@@ -1,9 +1,11 @@
+import 'package:ceal_chronicler_f/events/save_character_event.dart';
 import 'package:ceal_chronicler_f/fields/display_field.dart';
 import 'package:ceal_chronicler_f/fields/display_field_widget.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 
 import '../events/open_character_selection_view_event.dart';
+import '../events/update_character_view_event.dart';
 import '../get_it_context.dart';
 import '../theme/button_styles.dart';
 import '../theme/custom_colors.dart';
@@ -11,16 +13,27 @@ import 'character.dart';
 
 class CharacterView extends StatefulWidget {
   static const backButtonText = "↩ Back";
+  static const saveButtonText = "💾 Save";
 
   final Character character;
+  final Character originalCharacter;
 
-  const CharacterView({super.key, required this.character});
+  CharacterView({super.key, required this.character})
+      : originalCharacter = character.copy();
 
   @override
   State<CharacterView> createState() => _CharacterViewState();
 }
 
 class _CharacterViewState extends State<CharacterView> {
+  final _eventBus = getIt.get<EventBus>();
+
+  _CharacterViewState() {
+    _eventBus.on<UpdateCharacterViewEvent>().listen((event) {
+      _updateView();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,7 +45,7 @@ class _CharacterViewState extends State<CharacterView> {
           children: [
             _buildTitle(context),
             _buildFields(widget.character, context),
-            _buildBackButton(context),
+            _buildButtonRow(context),
           ],
         ),
       ),
@@ -75,6 +88,20 @@ class _CharacterViewState extends State<CharacterView> {
     setState(() {});
   }
 
+  Widget _buildButtonRow(BuildContext context) {
+    List<Widget> displayedButtons = _buildDisplayedButtons(context);
+    return Row(children: displayedButtons);
+  }
+
+  List<Widget> _buildDisplayedButtons(BuildContext context) {
+    List<Widget> buttons = [];
+    buttons.add(_buildBackButton(context));
+    if (widget.character != widget.originalCharacter) {
+      buttons.add(_buildSaveButton(context));
+    }
+    return buttons;
+  }
+
   Widget _buildBackButton(BuildContext context) {
     var eventBus = getIt.get<EventBus>();
     var theme = Theme.of(context);
@@ -90,5 +117,27 @@ class _CharacterViewState extends State<CharacterView> {
         style: buttonTextStyle,
       ),
     );
+  }
+
+  Widget _buildSaveButton(BuildContext context) {
+    var eventBus = getIt.get<EventBus>();
+    var theme = Theme.of(context);
+    TextStyle buttonTextStyle = theme.textTheme.button!;
+
+    return ElevatedButton(
+      style: ButtonStyles.confirm,
+      onPressed: () {
+        eventBus.fire(SaveCharacterEvent(widget.character));
+      },
+      child: Text(
+        CharacterView.saveButtonText,
+        style: buttonTextStyle,
+      ),
+    );
+  }
+
+  _updateView() {
+    widget.originalCharacter.copyValuesFrom(widget.character);
+    setState(() {});
   }
 }
