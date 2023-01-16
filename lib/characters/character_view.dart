@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:ceal_chronicler_f/events/save_character_event.dart';
 import 'package:ceal_chronicler_f/fields/display_field.dart';
 import 'package:ceal_chronicler_f/fields/display_field_widget.dart';
@@ -28,11 +30,20 @@ class CharacterView extends StatefulWidget {
 
 class _CharacterViewState extends State<CharacterView> {
   final _eventBus = getIt.get<EventBus>();
+  late final StreamSubscription<UpdateCharacterViewEvent>
+      _onUpdateCharacterViewEventSubscription;
 
   _CharacterViewState() {
-    _eventBus.on<UpdateCharacterViewEvent>().listen((event) {
+    _onUpdateCharacterViewEventSubscription =
+        _eventBus.on<UpdateCharacterViewEvent>().listen((event) {
       _updateView();
     });
+  }
+
+  @override
+  dispose() {
+    super.dispose();
+    _onUpdateCharacterViewEventSubscription.cancel();
   }
 
   _updateView() {

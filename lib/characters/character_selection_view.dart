@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:ceal_chronicler_f/events/update_character_selection_view_event.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
@@ -24,11 +26,18 @@ class CharacterSelectionView extends StatefulWidget {
 class _CharacterSelectionViewState extends State<CharacterSelectionView> {
   List<Character> characters = CharacterSelectionView.model.characters;
   final _eventBus = getIt.get<EventBus>();
+  late final StreamSubscription<UpdateCharacterSelectionViewEvent> _subscription;
 
   _CharacterSelectionViewState() {
-    _eventBus.on<UpdateCharacterSelectionViewEvent>().listen((event) {
+    _subscription = _eventBus.on<UpdateCharacterSelectionViewEvent>().listen((event) {
       _updateCharacterSelectionView();
     });
+  }
+
+  @override
+  dispose() {
+    super.dispose();
+    _subscription.cancel();
   }
 
   @override
