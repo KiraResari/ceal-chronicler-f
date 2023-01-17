@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:uuid/uuid.dart';
 
 import 'json_serializable.dart';
@@ -12,11 +10,16 @@ class ReadableUuid extends JsonSerializable {
 
   ReadableUuid();
 
-  ReadableUuid.fromJson(Map<String, dynamic> json)
-      : uuid = json[_uuidFieldName];
-
   ReadableUuid.fromJsonString(String jsonString)
-      : this.fromJson(jsonDecode(jsonString));
+      : super.fromJsonString(jsonString);
+
+  ReadableUuid.fromJson(Map<String, dynamic> jsonMap)
+      : super.fromJson(jsonMap);
+
+  @override
+  decodeJson(Map<String, dynamic> jsonMap) {
+    uuid = jsonMap[_uuidFieldName];
+  }
 
   @override
   Map<String, dynamic> toJson() => {

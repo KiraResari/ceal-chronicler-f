@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:ceal_chronicler_f/utils/readable_uuid.dart';
 
 import '../utils/json_serializable.dart';
@@ -11,11 +9,16 @@ class CharacterId extends JsonSerializable {
 
   CharacterId();
 
-  CharacterId.fromJson(Map<String, dynamic> json)
-      : id = ReadableUuid.fromJson(json[_idFieldName]);
-
   CharacterId.fromJsonString(String jsonString)
-      : this.fromJson(jsonDecode(jsonString));
+      : super.fromJsonString(jsonString);
+
+  CharacterId.fromJson(Map<String, dynamic> jsonMap)
+      : super.fromJson(jsonMap);
+
+  @override
+  decodeJson(Map<String, dynamic> jsonMap) {
+    id = ReadableUuid.fromJson(jsonMap[_idFieldName]);
+  }
 
   @override
   Map<String, dynamic> toJson() => {
