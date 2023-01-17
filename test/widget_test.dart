@@ -1,5 +1,5 @@
 import 'package:ceal_chronicler_f/ceal_chronicler_f.dart';
-import 'package:ceal_chronicler_f/characters/character_selection_view.dart';
+import 'package:ceal_chronicler_f/characters/character_selection_view/character_selection_view.dart';
 import 'package:ceal_chronicler_f/get_it_context.dart';
 import 'package:ceal_chronicler_f/title_view.dart';
 import 'package:flutter_test/flutter_test.dart';

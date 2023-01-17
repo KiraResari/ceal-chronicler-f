@@ -4,13 +4,13 @@ import 'package:ceal_chronicler_f/events/update_character_selection_view_event.d
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 
-import '../events/add_character_event.dart';
-import '../theme/button_styles.dart';
-import '../theme/custom_colors.dart';
-import '../events/open_character_view_event.dart';
-import '../get_it_context.dart';
-import 'character.dart';
-import 'character_selection_view_model.dart';
+import '../../events/add_character_event.dart';
+import '../../theme/button_styles.dart';
+import '../../theme/custom_colors.dart';
+import '../../events/open_character_view_event.dart';
+import '../../get_it_context.dart';
+import '../character.dart';
+import '../character_selection_view/character_selection_view_model.dart';
 
 class CharacterSelectionView extends StatefulWidget {
   static const String titleText = "Characters";

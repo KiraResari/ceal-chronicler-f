@@ -2,15 +2,15 @@ import 'package:ceal_chronicler_f/events/add_character_event.dart';
 import 'package:ceal_chronicler_f/events/update_character_selection_view_event.dart';
 import 'package:event_bus/event_bus.dart';
 
-import '../get_it_context.dart';
-import 'character.dart';
-import 'character_model.dart';
-import 'character_repository.dart';
+import '../../get_it_context.dart';
+import '../character.dart';
+import '../character_view/character_view_model.dart';
+import '../character_repository.dart';
 
 class CharacterSelectionViewModel {
   final _characterRepository = getIt<CharacterRepository>();
   final _eventBus = getIt.get<EventBus>();
-  final _characterModel = getIt.get<CharacterModel>();
+  final _characterModel = getIt.get<CharacterViewModel>();
 
   CharacterSelectionViewModel() {
     _eventBus.on<AddCharacterEvent>().listen(

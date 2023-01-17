@@ -6,12 +6,12 @@ import 'package:ceal_chronicler_f/fields/display_field_row.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 
-import '../events/open_character_selection_view_event.dart';
-import '../events/update_character_view_event.dart';
-import '../get_it_context.dart';
-import '../theme/button_styles.dart';
-import '../theme/custom_colors.dart';
-import 'character.dart';
+import '../../events/open_character_selection_view_event.dart';
+import '../../events/update_character_view_event.dart';
+import '../../get_it_context.dart';
+import '../../theme/button_styles.dart';
+import '../../theme/custom_colors.dart';
+import '../character.dart';
 
 class CharacterView extends StatefulWidget {
   static const backButtonText = "↩ Back";
@@ -122,7 +122,7 @@ class _CharacterViewState extends State<CharacterView> {
     } else {
       buttons.add(_buildBackWithoutSavingButton(context));
       buttons.add(_buildResetButton(context));
-      buttons.add(const SizedBox(width: 50));
+      buttons.add(const Spacer());
       buttons.add(_buildSaveButton(context));
     }
     return buttons;

@@ -1,16 +1,16 @@
 import 'package:ceal_chronicler_f/events/update_character_view_event.dart';
 import 'package:event_bus/event_bus.dart';
 
-import '../events/save_character_event.dart';
-import '../get_it_context.dart';
-import 'character.dart';
-import 'character_repository.dart';
+import '../../events/save_character_event.dart';
+import '../../get_it_context.dart';
+import '../character.dart';
+import '../character_repository.dart';
 
-class CharacterModel {
+class CharacterViewModel {
   final _characterRepository = getIt<CharacterRepository>();
   final _eventBus = getIt.get<EventBus>();
 
-  CharacterModel() {
+  CharacterViewModel() {
     _eventBus.on<SaveCharacterEvent>().listen(
       (event) {
         addOrUpdate(event.character);

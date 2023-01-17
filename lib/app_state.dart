@@ -1,10 +1,10 @@
-import 'package:ceal_chronicler_f/characters/character_selection_view.dart';
-import 'package:ceal_chronicler_f/characters/character_view.dart';
+import 'package:ceal_chronicler_f/characters/character_view/character_view.dart';
 import 'package:ceal_chronicler_f/events/open_character_selection_view_event.dart';
 import 'package:ceal_chronicler_f/title_view.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/widgets.dart';
 
+import 'characters/character_selection_view/character_selection_view.dart';
 import 'events/open_character_view_event.dart';
 import 'get_it_context.dart';
 
