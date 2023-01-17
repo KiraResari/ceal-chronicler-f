@@ -5,6 +5,8 @@ import 'app_state.dart';
 import 'main_view.dart';
 
 class CealChroniclerF extends StatelessWidget{
+
+  static const title = "Ceal Chronicler f";
   const CealChroniclerF({super.key});
 
   @override
@@ -12,7 +14,7 @@ class CealChroniclerF extends StatelessWidget{
     return ChangeNotifierProvider(
       create: (context) => AppState(),
       child: MaterialApp(
-        title: "Ceal Chronicler f",
+        title: title,
         theme: ThemeData(
           primarySwatch: Colors.teal,
         ),

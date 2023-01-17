@@ -21,7 +21,6 @@ class _DisplayFieldWidgetState extends State<DisplayFieldWidget> {
     ThemeData theme = Theme.of(context);
     setText();
     return Row(
-      mainAxisSize: MainAxisSize.min,
       children: [
         _buildFieldName(theme),
         _buildTextInputField(theme),

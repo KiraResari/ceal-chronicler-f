@@ -58,16 +58,20 @@ class _CharacterViewState extends State<CharacterView> {
       color: CustomColors.background,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildTitle(context),
-            _buildFields(widget.character, context),
-            _buildButtonRow(context),
-          ],
-        ),
+        child: _buildMainColumn(context),
       ),
     );
+  }
+
+  Widget _buildMainColumn(BuildContext context) {
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildTitle(context),
+          _buildFields(widget.character, context),
+          _buildButtonRow(context),
+        ],
+      );
   }
 
   Text _buildTitle(BuildContext context) {

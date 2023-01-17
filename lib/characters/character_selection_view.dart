@@ -26,10 +26,12 @@ class CharacterSelectionView extends StatefulWidget {
 class _CharacterSelectionViewState extends State<CharacterSelectionView> {
   List<Character> characters = CharacterSelectionView.model.characters;
   final _eventBus = getIt.get<EventBus>();
-  late final StreamSubscription<UpdateCharacterSelectionViewEvent> _subscription;
+  late final StreamSubscription<UpdateCharacterSelectionViewEvent>
+      _subscription;
 
   _CharacterSelectionViewState() {
-    _subscription = _eventBus.on<UpdateCharacterSelectionViewEvent>().listen((event) {
+    _subscription =
+        _eventBus.on<UpdateCharacterSelectionViewEvent>().listen((event) {
       _updateCharacterSelectionView();
     });
   }
@@ -44,21 +46,21 @@ class _CharacterSelectionViewState extends State<CharacterSelectionView> {
   Widget build(BuildContext context) {
     return Container(
       color: CustomColors.background,
-      child: _buildMainColumn(context),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: _buildMainColumn(context),
+      ),
     );
   }
 
   Widget _buildMainColumn(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildTitleText(context),
-          _buildCharactersColumn(context),
-          _buildAddButton(context),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildTitleText(context),
+        _buildCharactersColumn(context),
+        _buildAddButton(context),
+      ],
     );
   }
 

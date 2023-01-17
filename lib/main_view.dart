@@ -10,6 +10,11 @@ class MainView extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<AppState>();
 
-    return Material(child: appState.activeView);
+    return Scaffold(
+      appBar: AppBar(toolbarHeight: 0),
+      body: SizedBox.expand(
+        child: Material(child: appState.activeView),
+      ),
+    );
   }
 }
