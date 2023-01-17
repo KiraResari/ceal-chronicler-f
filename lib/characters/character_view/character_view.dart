@@ -86,7 +86,7 @@ class _CharacterViewState extends State<CharacterView> {
   Widget _buildDisplayFieldTable(BuildContext context) {
     ThemeData theme = Theme.of(context);
     TextStyle? fieldNameStyle = theme.textTheme.bodyLarge;
-    TextStyle fieldValueStyle = theme.textTheme.bodyMedium!;
+    TextStyle? fieldValueStyle = theme.textTheme.bodyMedium;
     return DisplayFieldTable(
       displayFields: widget.character.displayFields,
       onChanged: (inputValue, displayField) {

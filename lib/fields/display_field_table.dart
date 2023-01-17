@@ -35,6 +35,8 @@ class DisplayFieldTable extends StatelessWidget {
           onChanged(inputValue, displayField);
         },
         nameFieldWidth: nameFieldWidth,
+        fieldNameStyle: fieldNameStyle,
+        fieldValueStyle: fieldValueStyle,
       );
       rows.add(row);
     }
