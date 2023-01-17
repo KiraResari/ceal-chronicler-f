@@ -1,14 +1,30 @@
+import 'dart:convert';
+
 import 'package:ceal_chronicler_f/utils/readable_uuid.dart';
 
 class CharacterId {
+  static const String _idFieldName = "id";
+
   var id = ReadableUuid();
 
   CharacterId();
 
-  CharacterId.from(this.id);
+  CharacterId.fromJson(Map<String, dynamic> json)
+      : id = ReadableUuid.fromJson(json[_idFieldName]);
+
+  CharacterId.fromJsonString(String jsonString)
+      : this.fromJson(jsonDecode(jsonString));
+
+  Map<String, dynamic> toJson() => {
+    _idFieldName: id,
+  };
+
+  String toJsonString() => jsonEncode(toJson());
 
   CharacterId copy() {
-    return CharacterId.from(id.copy());
+    var copy = CharacterId();
+    copy.id = id.copy();
+    return copy;
   }
 
   @override

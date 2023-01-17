@@ -8,4 +8,13 @@ void main() {
 
     expect(firstId, isNot(secondId));
   });
+
+  test("ReadableUuid can be json serialized and deserialized", () {
+    var originalId = ReadableUuid();
+
+    String jsonString = originalId.toJsonString();
+    var decodedId = ReadableUuid.fromJsonString(jsonString);
+
+    expect(originalId, decodedId);
+  });
 }

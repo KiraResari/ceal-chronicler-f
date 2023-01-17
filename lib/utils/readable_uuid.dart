@@ -1,12 +1,26 @@
+import 'dart:convert';
+
 import 'package:uuid/uuid.dart';
 
 class ReadableUuid {
   static const Uuid uuidGenerator = Uuid();
   String uuid = uuidGenerator.v4();
 
+  static const String _uuidFieldName = "uuid";
+
   ReadableUuid();
 
-  ReadableUuid.from(this.uuid);
+  ReadableUuid.fromJson(Map<String, dynamic> json)
+      : uuid = json[_uuidFieldName];
+
+  ReadableUuid.fromJsonString(String jsonString)
+      : this.fromJson(jsonDecode(jsonString));
+
+  Map<String, dynamic> toJson() => {
+        _uuidFieldName: uuid,
+      };
+
+  String toJsonString() => jsonEncode(toJson());
 
   static const List<String> _adjectives = [
     "Alert",
@@ -107,7 +121,9 @@ class ReadableUuid {
   }
 
   ReadableUuid copy() {
-    return ReadableUuid.from(uuid);
+    var copy = ReadableUuid();
+    copy.uuid = uuid;
+    return copy;
   }
 
   @override

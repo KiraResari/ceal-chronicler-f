@@ -2,7 +2,7 @@ import 'package:ceal_chronicler_f/characters/character_name_field.dart';
 import 'package:ceal_chronicler_f/characters/character_view/character_view.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../code_sample.dart';
+import '../../code_sample.dart';
 
 void main() {
   setUp(() => initializeGetItContext());
