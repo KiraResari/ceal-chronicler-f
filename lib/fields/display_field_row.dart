@@ -5,9 +5,19 @@ import 'display_field.dart';
 class DisplayFieldRow extends StatefulWidget {
   final DisplayField displayField;
   final ValueChanged<String> onChanged;
+  final double nameFieldWidth;
+  final TextStyle? fieldNameStyle;
+  final TextStyle? fieldValueStyle;
 
-  DisplayFieldRow({super.key, required this.displayField, onChanged})
-      : onChanged = onChanged ?? (() {});
+  DisplayFieldRow({
+    required this.displayField,
+    onChanged,
+    nameFieldWidth,
+    this.fieldNameStyle,
+    this.fieldValueStyle,
+    super.key,
+  })  : onChanged = onChanged ?? (() {}),
+        nameFieldWidth = nameFieldWidth ?? 75;
 
   @override
   State<DisplayFieldRow> createState() => _DisplayFieldRowState();
@@ -18,12 +28,11 @@ class _DisplayFieldRowState extends State<DisplayFieldRow> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
     setText();
     return Row(
       children: [
-        _buildFieldName(theme),
-        _buildWrappedInputField(theme),
+        _buildFieldName(),
+        _buildWrappedInputField(),
       ],
     );
   }
@@ -34,34 +43,32 @@ class _DisplayFieldRowState extends State<DisplayFieldRow> {
     }
   }
 
-  SizedBox _buildFieldName(ThemeData theme) {
-    TextStyle fieldNameStyle = theme.textTheme.bodyLarge!;
+  SizedBox _buildFieldName() {
     return SizedBox(
-      width: 75,
+      width: widget.nameFieldWidth,
       child: Align(
         alignment: Alignment.centerRight,
         child: Text(
-          "${widget.displayField.fieldName}: ",
-          style: fieldNameStyle,
+          widget.displayField.fieldName,
+          style: widget.fieldNameStyle,
         ),
       ),
     );
   }
 
-  Widget _buildWrappedInputField(ThemeData theme) {
+  Widget _buildWrappedInputField() {
     return Flexible(
       child: Padding(
         padding: const EdgeInsets.all(1.0),
-        child: _buildBareInputField(theme),
+        child: _buildBareInputField(),
       ),
     );
   }
 
-  TextField _buildBareInputField(ThemeData theme) {
-    TextStyle fieldValueStyle = theme.textTheme.bodyMedium!;
+  TextField _buildBareInputField() {
     return TextField(
       controller: textController,
-      style: fieldValueStyle,
+      style: widget.fieldValueStyle,
       decoration: _buildInputFieldDecoration(),
       onChanged: (inputValue) {
         widget.onChanged(inputValue);

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:ceal_chronicler_f/events/save_character_event.dart';
 import 'package:ceal_chronicler_f/fields/display_field.dart';
-import 'package:ceal_chronicler_f/fields/display_field_row.dart';
+import 'package:ceal_chronicler_f/fields/display_field_table.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 
@@ -65,13 +65,13 @@ class _CharacterViewState extends State<CharacterView> {
 
   Widget _buildMainColumn(BuildContext context) {
     return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildTitle(context),
-          _buildFields(widget.character, context),
-          _buildButtonRow(context),
-        ],
-      );
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildTitle(context),
+        _buildDisplayFieldTable(context),
+        _buildButtonRow(context),
+      ],
+    );
   }
 
   Text _buildTitle(BuildContext context) {
@@ -83,23 +83,17 @@ class _CharacterViewState extends State<CharacterView> {
     );
   }
 
-  Widget _buildFields(Character character, BuildContext context) {
-    List<Widget> fields = [];
-    for (var displayField in character.displayFields) {
-      var fieldWidget = DisplayFieldRow(
-        displayField: displayField,
-        onChanged: (inputValue) {
-          _handleInputFieldChange(inputValue, displayField);
-        },
-      );
-      fields.add(fieldWidget);
-    }
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: fields,
-      ),
+  Widget _buildDisplayFieldTable(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    TextStyle? fieldNameStyle = theme.textTheme.bodyLarge;
+    TextStyle fieldValueStyle = theme.textTheme.bodyMedium!;
+    return DisplayFieldTable(
+      displayFields: widget.character.displayFields,
+      onChanged: (inputValue, displayField) {
+        _handleInputFieldChange(inputValue, displayField);
+      },
+      fieldNameStyle: fieldNameStyle,
+      fieldValueStyle: fieldValueStyle,
     );
   }
 
