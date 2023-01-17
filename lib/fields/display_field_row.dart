@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 
 import 'display_field.dart';
 
-class DisplayFieldWidget extends StatefulWidget {
+class DisplayFieldRow extends StatefulWidget {
   final DisplayField displayField;
   final ValueChanged<String> onChanged;
 
-  DisplayFieldWidget({super.key, required this.displayField, onChanged})
+  DisplayFieldRow({super.key, required this.displayField, onChanged})
       : onChanged = onChanged ?? (() {});
 
   @override
-  State<DisplayFieldWidget> createState() => _DisplayFieldWidgetState();
+  State<DisplayFieldRow> createState() => _DisplayFieldRowState();
 }
 
-class _DisplayFieldWidgetState extends State<DisplayFieldWidget> {
+class _DisplayFieldRowState extends State<DisplayFieldRow> {
   TextEditingController textController = TextEditingController();
 
   @override
@@ -23,7 +23,7 @@ class _DisplayFieldWidgetState extends State<DisplayFieldWidget> {
     return Row(
       children: [
         _buildFieldName(theme),
-        _buildTextInputField(theme),
+        _buildWrappedInputField(theme),
       ],
     );
   }
@@ -48,24 +48,31 @@ class _DisplayFieldWidgetState extends State<DisplayFieldWidget> {
     );
   }
 
-  SizedBox _buildTextInputField(ThemeData theme) {
-    TextStyle fieldValueStyle = theme.textTheme.bodyMedium!;
-    return SizedBox(
-      width: 300,
+  Widget _buildWrappedInputField(ThemeData theme) {
+    return Flexible(
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: TextField(
-          controller: textController,
-          style: fieldValueStyle,
-          decoration: const InputDecoration(
-            filled: true,
-            fillColor: Colors.white,
-          ),
-          onChanged: (inputValue) {
-            widget.onChanged(inputValue);
-          },
-        ),
+        padding: const EdgeInsets.all(1.0),
+        child: _buildBareInputField(theme),
       ),
+    );
+  }
+
+  TextField _buildBareInputField(ThemeData theme) {
+    TextStyle fieldValueStyle = theme.textTheme.bodyMedium!;
+    return TextField(
+      controller: textController,
+      style: fieldValueStyle,
+      decoration: _buildInputFieldDecoration(),
+      onChanged: (inputValue) {
+        widget.onChanged(inputValue);
+      },
+    );
+  }
+
+  InputDecoration _buildInputFieldDecoration() {
+    return const InputDecoration(
+      filled: true,
+      fillColor: Colors.white,
     );
   }
 

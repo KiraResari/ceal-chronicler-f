@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:ceal_chronicler_f/events/save_character_event.dart';
 import 'package:ceal_chronicler_f/fields/display_field.dart';
-import 'package:ceal_chronicler_f/fields/display_field_widget.dart';
+import 'package:ceal_chronicler_f/fields/display_field_row.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 
@@ -86,7 +86,7 @@ class _CharacterViewState extends State<CharacterView> {
   Widget _buildFields(Character character, BuildContext context) {
     List<Widget> fields = [];
     for (var displayField in character.displayFields) {
-      var fieldWidget = DisplayFieldWidget(
+      var fieldWidget = DisplayFieldRow(
         displayField: displayField,
         onChanged: (inputValue) {
           _handleInputFieldChange(inputValue, displayField);
