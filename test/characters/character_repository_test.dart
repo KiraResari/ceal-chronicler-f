@@ -101,6 +101,17 @@ void main() {
       expect(returnedAgainCharacter.name, changedName);
     },
   );
+
+  test("CharacterRepository can be json serialized and deserialized", () {
+    var original = CharacterRepository();
+    original.addOrUpdate(Character(name: "First Character"));
+    original.addOrUpdate(Character(name: "Second Character"));
+
+    String jsonString = original.toJsonString();
+    var decoded = CharacterRepository.fromJsonString(jsonString);
+
+    expect(original, decoded);
+  });
 }
 
 Character getCharacterFromRepository(

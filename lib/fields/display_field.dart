@@ -1,4 +1,4 @@
-import 'package:ceal_chronicler_f/utils/json_serializable.dart';
+import 'package:ceal_chronicler_f/persistence/json_serializable.dart';
 
 import '../exceptions/serialization_exception.dart';
 

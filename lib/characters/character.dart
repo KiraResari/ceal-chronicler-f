@@ -1,6 +1,6 @@
 import '../fields/display_field.dart';
 import '../items/weapon_field.dart';
-import '../utils/json_serializable.dart';
+import '../persistence/json_serializable.dart';
 import 'character_id.dart';
 import 'species_field.dart';
 
@@ -66,30 +66,10 @@ class Character extends JsonSerializable {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is Character &&
-          isIdEqual(other) &&
-          isNameEqual(other) &&
-          isWeaponEqual(other) &&
-          isSpeciesEqual(other);
-
-  bool isSpeciesEqual(Character other) {
-    var isEqual = (species == other.species);
-    return isEqual;
-  }
-
-  bool isWeaponEqual(Character other) {
-    var isEqual = (weapon == other.weapon);
-    return isEqual;
-  }
-
-  bool isNameEqual(Character other) {
-    var isEqual = (name == other.name);
-    return isEqual;
-  }
-
-  bool isIdEqual(Character other) {
-    var isEqual = (id == other.id);
-    return isEqual;
-  }
+          (id == other.id) &&
+          (name == other.name) &&
+          (weapon == other.weapon) &&
+          (species == other.species);
 
   @override
   int get hashCode =>
