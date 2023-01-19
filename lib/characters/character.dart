@@ -8,10 +8,15 @@ import 'character_name_field.dart';
 
 class Character extends JsonSerializable {
 
-  CharacterId id;
-  CharacterNameField nameField;
-  WeaponField weaponField;
-  SpeciesField speciesField;
+  static const _idFieldName = "id";
+  static const _nameFieldName = "nameField";
+  static const _weaponFieldName = "weaponField";
+  static const _speciesFieldName = "speciesField";
+
+  late CharacterId id;
+  late CharacterNameField nameField;
+  late WeaponField weaponField;
+  late SpeciesField speciesField;
 
   String get name => nameField.value;
 
@@ -38,6 +43,11 @@ class Character extends JsonSerializable {
         nameField = CharacterNameField(name),
         weaponField = WeaponField(weapon),
         speciesField = SpeciesField(species);
+
+  Character.fromJsonString(String jsonString)
+      : super.fromJsonString(jsonString);
+
+  Character.fromJson(Map<String, dynamic> jsonMap) : super.fromJson(jsonMap);
 
   String getDisplayValue() {
     return nameField.getDisplayValue();
@@ -95,4 +105,20 @@ class Character extends JsonSerializable {
     weapon = character.weapon;
     species = character.species;
   }
+
+  @override
+  decodeJson(Map<String, dynamic> jsonMap) {
+    id = CharacterId.fromJson(jsonMap[_idFieldName]);
+    nameField = CharacterNameField.fromJson(jsonMap[_nameFieldName]);
+    speciesField = SpeciesField.fromJson(jsonMap[_speciesFieldName]);
+    weaponField = WeaponField.fromJson(jsonMap[_weaponFieldName]);
+  }
+
+  @override
+  Map<String, dynamic> toJson() => {
+    _idFieldName: id,
+    _nameFieldName: nameField,
+    _speciesFieldName: speciesField,
+    _weaponFieldName: weaponField,
+  };
 }
