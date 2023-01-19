@@ -112,6 +112,25 @@ void main() {
 
     expect(original, decoded);
   });
+
+  test("Exporting CharacterRepository to file should work", () {
+    var repository = CharacterRepository();
+    addTestCharacterToRepository(repository);
+
+    repository.exportToFile();
+  });
+  
+  test("Exported and then imported CharacterRepository should be equal", () {
+    var firstRepository = CharacterRepository();
+    addTestCharacterToRepository(firstRepository);
+
+    var futureFile = firstRepository.exportToFile();
+    expect(futureFile, completes);
+    var secondRepository = CharacterRepository();
+    var futureRepository = secondRepository.importFromFile();
+
+    expect(futureRepository, completion(firstRepository));
+  });
 }
 
 Character getCharacterFromRepository(

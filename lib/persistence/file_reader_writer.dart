@@ -18,9 +18,9 @@ class FileReaderWriter {
     return File("$path/$_fileName");
   }
 
-  write(String string) async {
+  Future<File> write(String string) async {
     final file = await _localFile;
-    file.writeAsString(string);
+    return file.writeAsString(string);
   }
 
   Future<String> read() async {

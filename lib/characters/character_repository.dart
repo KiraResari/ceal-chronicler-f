@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:ceal_chronicler_f/characters/character.dart';
 import 'package:ceal_chronicler_f/characters/character_id.dart';
 import 'package:ceal_chronicler_f/persistence/file_reader_writer.dart';
@@ -61,4 +64,15 @@ class CharacterRepository extends JsonSerializable {
 
   @override
   int get hashCode => _characters.hashCode;
+
+  Future<File> exportToFile() async {
+    var jsonString = toJsonString();
+    return _fileReaderWriter.write(jsonString);
+  }
+
+  Future<CharacterRepository> importFromFile() async {
+    String jsonString = await _fileReaderWriter.read();
+    decodeJson(jsonDecode(jsonString));
+    return this;
+  }
 }
