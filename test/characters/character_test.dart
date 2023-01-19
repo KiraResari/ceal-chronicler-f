@@ -16,4 +16,12 @@ void main() {
 
     expect(character.name, characterName);
   });
+  test("Character can be json serialized and deserialized", () {
+    var original = Character();
+
+    String jsonString = original.toJsonString();
+    var decoded = Character.fromJsonString(jsonString);
+
+    expect(original, decoded);
+  });
 }

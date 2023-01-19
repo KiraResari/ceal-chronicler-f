@@ -1,11 +1,12 @@
 import '../fields/display_field.dart';
 import '../items/weapon_field.dart';
+import '../utils/json_serializable.dart';
 import 'character_id.dart';
 import 'species_field.dart';
 
 import 'character_name_field.dart';
 
-class Character {
+class Character extends JsonSerializable {
 
   CharacterId id;
   CharacterNameField nameField;
