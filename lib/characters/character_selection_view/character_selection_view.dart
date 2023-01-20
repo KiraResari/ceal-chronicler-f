@@ -15,10 +15,18 @@ import '../character.dart';
 import '../character_selection_view/character_selection_view_model.dart';
 
 class CharacterSelectionView extends StatefulWidget {
-  static const String titleText = "Characters";
-  static const String addCharacterButtonText = "➕ Add Character";
-  static const String saveButtonText = "💾 Save";
-  static const String loadButtonText = "📁 Load";
+  static const titleText = "Characters";
+  static const addCharacterButtonText = "➕ Add Character";
+  static const saveButtonText = "💾 Save";
+  static const loadButtonText = "📁 Load";
+  static const characterViewKey = Key("view");
+  static const mainColumnKey = Key("body");
+  static const titleTextKey = Key("title");
+  static const charactersColumnKey = Key("characters");
+  static const characterButtonKeyBase = "characterButton";
+  static const addButtonKey = Key("addButton");
+  static const saveButtonKey = Key("saveButton");
+  static const loadButtonKey = Key("loadButton");
   static final model = getIt<CharacterSelectionViewModel>();
 
   const CharacterSelectionView({super.key});
@@ -49,6 +57,7 @@ class _CharacterSelectionViewState extends State<CharacterSelectionView> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      key: CharacterSelectionView.characterViewKey,
       color: CustomColors.background,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -59,6 +68,7 @@ class _CharacterSelectionViewState extends State<CharacterSelectionView> {
 
   Widget _buildMainColumn(BuildContext context) {
     return Column(
+      key: CharacterSelectionView.mainColumnKey,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildTitleText(context),
@@ -72,6 +82,7 @@ class _CharacterSelectionViewState extends State<CharacterSelectionView> {
     var theme = Theme.of(context);
     TextStyle titleStyle = theme.textTheme.displayMedium!;
     return Text(
+      key: CharacterSelectionView.titleTextKey,
       CharacterSelectionView.titleText,
       style: titleStyle,
     );
@@ -79,6 +90,7 @@ class _CharacterSelectionViewState extends State<CharacterSelectionView> {
 
   Column _buildCharactersColumn(BuildContext context) {
     return Column(
+      key: CharacterSelectionView.charactersColumnKey,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: _buildCharacterButtons(context),
     );
@@ -100,6 +112,7 @@ class _CharacterSelectionViewState extends State<CharacterSelectionView> {
     return Padding(
       padding: const EdgeInsets.all(5),
       child: ElevatedButton(
+        key: Key("characterButtonKeyBase$index"),
         onPressed: () => _onCharacterButtonPressed(character),
         child: _buildCharacterButtonText(character, context, index),
       ),
@@ -137,6 +150,7 @@ class _CharacterSelectionViewState extends State<CharacterSelectionView> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton(
+        key: CharacterSelectionView.addButtonKey,
         style: ButtonStyles.confirm,
         onPressed: () => _eventBus.fire(AddCharacterEvent()),
         child: _buildAddButtonText(theme),
@@ -157,6 +171,7 @@ class _CharacterSelectionViewState extends State<CharacterSelectionView> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton(
+        key: CharacterSelectionView.saveButtonKey,
         style: ButtonStyles.save,
         onPressed: () => _eventBus.fire(ExportCharactersEvent()),
         child: _buildSaveButtonText(theme),
@@ -177,6 +192,7 @@ class _CharacterSelectionViewState extends State<CharacterSelectionView> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton(
+        key: CharacterSelectionView.loadButtonKey,
         style: ButtonStyles.load,
         onPressed: () => _eventBus.fire(ImportCharactersEvent()),
         child: _buildLoadButtonText(theme),
