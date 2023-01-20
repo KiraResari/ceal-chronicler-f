@@ -42,6 +42,7 @@ class CharacterRepository extends JsonSerializable {
   @override
   decodeJson(Map<String, dynamic> jsonMap) {
     var charactersJson = jsonMap[_charactersFieldName];
+    _characters.clear();
     for (var characterJsonMap in charactersJson) {
       var character = Character.fromJson(characterJsonMap);
       addOrUpdate(character);

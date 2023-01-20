@@ -18,7 +18,6 @@ dependencies:
   event_bus: ^2.0.0
   uuid: ^3.0.7
   optional: ^6.1.0
-  flutter_launcher_icons: ^0.11.0
   path_provider: ^2.0.11
 
 dev_dependencies:
@@ -31,10 +30,3 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
-
-flutter_icons:
-  android: true
-  ios: true
-  image_path: "assets/images/CealChroniclerLogo.png"
-  adaptive_icon_background: "assets/images/CealChroniclerLogo.png"
-  adaptive_icon_foreground: "assets/images/CealChroniclerLogo.png"

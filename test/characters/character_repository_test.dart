@@ -119,18 +119,35 @@ void main() {
 
     repository.exportToFile();
   });
-  
+
   test("Exported and then imported CharacterRepository should be equal", () {
     var firstRepository = CharacterRepository();
     addTestCharacterToRepository(firstRepository);
 
-    var futureFile = firstRepository.exportToFile();
-    expect(futureFile, completes);
+    saveRepository(firstRepository);
     var secondRepository = CharacterRepository();
     var futureRepository = secondRepository.importFromFile();
 
     expect(futureRepository, completion(firstRepository));
   });
+
+  test("Loading should reset character count to last saved state", () {
+    var repository = CharacterRepository();
+    addTestCharacterToRepository(repository);
+
+    saveRepository(repository);
+    addTestCharacterToRepository(repository);
+    var futureRepository = repository.importFromFile();
+
+    futureRepository.then((resolvedFuture) {
+      expect(resolvedFuture.characters.length, 1);
+    });
+  });
+}
+
+void saveRepository(CharacterRepository firstRepository) {
+  var futureFile = firstRepository.exportToFile();
+  expect(futureFile, completes);
 }
 
 Character getCharacterFromRepository(
