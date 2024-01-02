@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import 'app_state.dart';
-import 'main_view.dart';
+import 'main_body.dart';
 
 class CealChroniclerF extends StatelessWidget{
 
@@ -11,15 +9,13 @@ class CealChroniclerF extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => AppState(),
-      child: MaterialApp(
-        title: title,
-        theme: ThemeData(
-          primarySwatch: Colors.teal,
-        ),
-        home: const MainView(),
-      ),
+    var themeData = ThemeData(
+        primarySwatch: Colors.teal,
+      );
+    return MaterialApp(
+      title: title,
+      theme: themeData,
+      home: const MainBody(),
     );
   }
 }

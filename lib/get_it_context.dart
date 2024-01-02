@@ -8,8 +8,5 @@ import 'characters/character_view/character_view_model.dart';
 final getIt = GetIt.instance;
 
 void initializeGetItContext() {
-  getIt.registerSingleton<EventBus>(EventBus());
-  getIt.registerSingleton<CharacterRepository>(CharacterRepository());
-  getIt.registerSingleton<CharacterViewModel>(CharacterViewModel());
-  getIt.registerSingleton<CharacterSelectionViewModel>(CharacterSelectionViewModel());
+
 }
