@@ -14,4 +14,9 @@ class TimeBarController extends ChangeNotifier {
   }
 
   List<PointInTime> get pointsInTime => _pointInTimeRepository.all;
+
+  void addPointInTimeAtIndex(int index) {
+    _pointInTimeRepository.createNewAtIndex(index);
+    notifyListeners();
+  }
 }

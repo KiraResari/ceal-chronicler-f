@@ -117,6 +117,10 @@
     * However, I think I'd better experiment a bit with the options I have for adding new elements into the `List<PointInTime>`
       * I now did that, and I think from that I have a good idea of how to implement this
 
+  * So, what I want is to add the buttons in between, and I just added functionality to the `PointInTimeRepository` that it can add new points in time based on an index
+  * Alright, that now works! Awesome!
+  * We can probably still tweak the style a bit, but that the functionality works is already pretty rad!
+
 
 # User Story
 
@@ -130,7 +134,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [ ] By default, there is only one point in time 
 - [ ] Points in time can be given names
   - [ ] These names have to be unique
-- [ ] Points in time can be added before or after any other point in time
+- [x] Points in time can be added before or after any other point in time
 - [ ] Points in time can be deleted only, if no event happens at that point in time
   - [ ] If an event happens at a certain point in time and someone attempts to delete that point is time, a message appears stating which events prevent the deletion of that point in time
   - [ ] If there is only a single point in time, that point in time can't be deleted
