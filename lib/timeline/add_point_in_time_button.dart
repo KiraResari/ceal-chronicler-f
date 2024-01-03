@@ -9,9 +9,17 @@ class AddPointInTimeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
-      child: const Icon(Icons.add),
-      onPressed: () => _addPointInTime(context),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SizedBox(
+        height: 24,
+        width: 24,
+        child: FloatingActionButton(
+          tooltip: "Add new point in time",
+          onPressed: () => _addPointInTime(context),
+          child: const Icon(Icons.add),
+        ),
+      ),
     );
   }
 

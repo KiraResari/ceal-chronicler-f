@@ -120,7 +120,9 @@
   * So, what I want is to add the buttons in between, and I just added functionality to the `PointInTimeRepository` that it can add new points in time based on an index
   * Alright, that now works! Awesome!
   * We can probably still tweak the style a bit, but that the functionality works is already pretty rad!
+  * Aaaand, now I also improved their style, which means I am quite happy with what I got here now
 
+* This is as far as I'm getting with this today
 
 # User Story
 
