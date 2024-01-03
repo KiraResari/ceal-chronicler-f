@@ -1,4 +1,4 @@
-import 'package:ceal_chronicler_f/timeBar/time_bar.dart';
+import 'package:ceal_chronicler_f/timeline/time_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'main_view.dart';

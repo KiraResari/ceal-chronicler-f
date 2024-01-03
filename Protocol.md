@@ -70,7 +70,15 @@
               );
           ````
 
-        * 
+* Right, so next, I'm gonna continue working on the time bar
+
+  * The basic idea is that I have an ordered list of points in time, can add to or remove from that list (up to a minimum of 1 point in time), and can rename the points in time
+  * So the very basic object here is the `PointInTime`, which has only a name
+    * We can use the name as the identifier, since we defined that the name of points in time has to be unique
+
+  * We need something to hold all points in time, which I am going to name `PointInTimeRepository`
+    * ...thus coining the convention for this project that all classes that are responsible for holding data objects are called repositories
+
 
 # User Story
 
