@@ -29,7 +29,48 @@
 * For starters, I am going to leave the old bits in place and then remove them as they become obsolete
 * Okay, turns out already that is giving me some really weird problems
   * All I did was try to create a simple screen with two placeholders and a background color, but I didn't manage to make it get the background color from the theme, in spite of that being supposed to work like that
+  * Maybe this will help?
+    * https://stackoverflow.com/questions/57666495/flutter-app-theme-ofcontext-style-doesnt-work-on-text
 * Well, this is as far as I'm getting with this today
+
+# 3-Jan-2024
+
+* Now continuing with this
+
+* Last time, I ended with that strange bug with the background colors
+
+  * The post I read on stack overflow did shed some light on it, and it makes sense that this has to do with the background color being set in a context that is not yet active, and yet...
+
+  * ...it feels somewhat strange since I think that same thing worked in the sample project
+
+  * Maybe it has to do with stateful and stateless widgets?
+
+  * Let me try this with a fresh project to see
+
+    * In there, it works as expected, even if I do it the same way
+
+    * The difference seems to be that the new project uses a newer flutter version, which is also something I wanted to do for the Ceal Chronicler, so let's try migrating up and see if that helps 
+
+      * Nah, didn't help, but I'll still keep it since I wanted to migrate to the new version anyways
+
+    * There are still some differences in how the theme data is set, so maybe that holds the key
+
+      * Yes, that looks good
+
+      * So, if I set the theme like that then it works:
+
+        * ````dart
+              var themeData = ThemeData(
+                colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
+              );
+              return MaterialApp(
+                title: title,
+                theme: themeData,
+                home: const MainBody(),
+              );
+          ````
+
+        * 
 
 # User Story
 

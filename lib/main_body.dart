@@ -21,7 +21,7 @@ class MainBody extends StatelessWidget{
           ],
         ),
       ),
-      backgroundColor: theme.colorScheme.primary,
+      backgroundColor: theme.colorScheme.inversePrimary,
     );
   }
 }
