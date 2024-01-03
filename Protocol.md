@@ -79,6 +79,13 @@
   * We need something to hold all points in time, which I am going to name `PointInTimeRepository`
     * ...thus coining the convention for this project that all classes that are responsible for holding data objects are called repositories
 
+  * I now managed to get to the point where I can display a single point in time
+
+* Next, I want to implement a scrollable list of points in time
+
+  * There, the main issue seems to be getting it scrollable
+  * While scrolling works on Android, it does not work on Windows & Chrome, and the scroll bar stays locked in one place
+
 
 # User Story
 

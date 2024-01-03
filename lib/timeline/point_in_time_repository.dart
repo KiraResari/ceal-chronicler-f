@@ -6,6 +6,12 @@ class PointInTimeRepository {
     PointInTime("Test Zeitpunkt 1"),
     PointInTime("Test Zeitpunkt 2"),
     PointInTime("Test Zeitpunkt 3"),
+    PointInTime("Test Zeitpunkt 4"),
+    PointInTime("Test Zeitpunkt 5"),
+    PointInTime("Test Zeitpunkt 36"),
+    PointInTime("Test Zeitpunkt 37"),
+    PointInTime("Test Zeitpunkt 38"),
+    PointInTime("Test Zeitpunkt 39"),
   ];
 
   get all => _pointsInTime;
