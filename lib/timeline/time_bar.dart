@@ -1,7 +1,7 @@
 import 'package:ceal_chronicler_f/timeline/point_in_time.dart';
 import 'package:ceal_chronicler_f/timeline/time_bar_controller.dart';
+import 'package:ceal_chronicler_f/timeline/time_bar_panel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
 class TimeBar extends StatelessWidget {
@@ -25,20 +25,10 @@ class TimeBar extends StatelessWidget {
         controller: controller,
         scrollDirection: Axis.horizontal,
         child: Row(
-          children: points.map((point) => _buildPointCard(point)).toList(),
+          children:
+              points.map((point) => TimeBarPanel(pointInTime: point)).toList(),
         ),
       ),
-    );
-  }
-
-  Widget _buildPointCard(PointInTime point) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(),
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      padding: const EdgeInsets.all(10.0),
-      child: Text(point.name, style: const TextStyle(fontSize: 18.0)),
     );
   }
 }

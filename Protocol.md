@@ -84,8 +84,32 @@
 * Next, I want to implement a scrollable list of points in time
 
   * There, the main issue seems to be getting it scrollable
+
   * While scrolling works on Android, it does not work on Windows & Chrome, and the scroll bar stays locked in one place
 
+  * I now managed to get it to work like this:
+
+    * ````dart
+        Widget _buildTimeBar(BuildContext context) {
+          List<PointInTime> points = context.watch<TimeBarController>().pointsInTime;
+          ScrollController controller = ScrollController();
+      
+          return Scrollbar(
+            controller: controller,
+            child: SingleChildScrollView(
+              controller: controller,
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children:
+                    points.map((point) => TimeBarPanel(pointInTime: point)).toList(),
+              ),
+            ),
+          );
+      ````
+
+* Right, so now we have a list of dummy points in a scrollable list
+
+* Next, I want to add the functionality to add additional points in time 
 
 # User Story
 
@@ -103,7 +127,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [ ] Points in time can be deleted only, if no event happens at that point in time
   - [ ] If an event happens at a certain point in time and someone attempts to delete that point is time, a message appears stating which events prevent the deletion of that point in time
   - [ ] If there is only a single point in time, that point in time can't be deleted
-- [ ] Points in time can't be re-ordered
+- [x] Points in time can't be re-ordered
 
 ### Characters Overview
 
