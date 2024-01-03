@@ -109,7 +109,14 @@
 
 * Right, so now we have a list of dummy points in a scrollable list
 
-* Next, I want to add the functionality to add additional points in time 
+* Next, I want to add the functionality to add additional points in time
+
+  * I could add that functionality into the `TimeBarPanel`, or between them
+  * I think between would look cleaner, but it would require additional thought
+    * Each button would  have to know its position relative to the existing panels, which is possible
+    * However, I think I'd better experiment a bit with the options I have for adding new elements into the `List<PointInTime>`
+      * I now did that, and I think from that I have a good idea of how to implement this
+
 
 # User Story
 
