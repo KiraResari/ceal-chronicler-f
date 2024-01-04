@@ -1,3 +1,4 @@
+import 'package:ceal_chronicler_f/exceptions/invalid_operation_exception.dart';
 import 'package:ceal_chronicler_f/timeline/point_in_time.dart';
 
 class PointInTimeRepository {
@@ -39,5 +40,13 @@ class PointInTimeRepository {
 
   List<String> _getExistingNames() {
     return _pointsInTime.map((point) => point.name).toList();
+  }
+
+  void remove(PointInTime pointToBeRemoved) {
+    if (_pointsInTime.length == 1) {
+      throw InvalidOperationException(
+          "The final point in time can't be removed");
+    }
+    _pointsInTime.remove(pointToBeRemoved);
   }
 }

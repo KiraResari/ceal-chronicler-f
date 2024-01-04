@@ -128,6 +128,9 @@
 
 * Now continuing with this
 * Now that adding points in time works, I want to add the functionality to delete points in time, as long as more than one remains
+  * One interesting problem I am running into here is trying to make the `TimeBarPanel` the exact same color as the `FloatingActionButton`s
+    * The documentations that I read say something that sounds reasonable, but doesn't hold up when I try it out
+    * Okay, I had to take a deep dive, and eventually found out that the color used for buttons is `theme.colorScheme.primaryContainer`
 
 # User Story
 

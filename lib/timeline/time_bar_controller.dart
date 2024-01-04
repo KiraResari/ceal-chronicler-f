@@ -15,8 +15,15 @@ class TimeBarController extends ChangeNotifier {
 
   List<PointInTime> get pointsInTime => _pointInTimeRepository.all;
 
+  get isDeletingAllowed => _pointInTimeRepository.all.length > 1;
+
   void addPointInTimeAtIndex(int index) {
     _pointInTimeRepository.createNewAtIndex(index);
+    notifyListeners();
+  }
+
+  void delete(PointInTime point) {
+    _pointInTimeRepository.remove(point);
     notifyListeners();
   }
 }

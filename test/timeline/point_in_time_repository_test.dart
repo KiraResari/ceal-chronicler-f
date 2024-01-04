@@ -1,3 +1,4 @@
+import 'package:ceal_chronicler_f/exceptions/invalid_operation_exception.dart';
 import 'package:ceal_chronicler_f/timeline/point_in_time.dart';
 import 'package:ceal_chronicler_f/timeline/point_in_time_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -42,5 +43,24 @@ main() {
       names.remove(uniqueName);
     }
     expect(names, isEmpty, reason: 'Duplicate names found: $names');
+  });
+
+  test("Removing point in time should work", () {
+    var repository = PointInTimeRepository();
+    repository.createNewAtIndex(0);
+    PointInTime pointToBeRemoved = repository.first;
+
+    repository.remove(pointToBeRemoved);
+
+    expect(repository.all.length, equals(1));
+    expect(repository.all, isNot(contains(pointToBeRemoved)));
+  });
+
+  test("Attempting to remove final point in time should cause exception", () {
+    var repository = PointInTimeRepository();
+    PointInTime pointToBeRemoved = repository.first;
+    expect((){
+      repository.remove(pointToBeRemoved);
+    }, throwsA(isA<InvalidOperationException>()));
   });
 }
