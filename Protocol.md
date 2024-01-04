@@ -93,7 +93,7 @@
         Widget _buildTimeBar(BuildContext context) {
           List<PointInTime> points = context.watch<TimeBarController>().pointsInTime;
           ScrollController controller = ScrollController();
-      
+        
           return Scrollbar(
             controller: controller,
             child: SingleChildScrollView(
@@ -123,6 +123,11 @@
   * Aaaand, now I also improved their style, which means I am quite happy with what I got here now
 
 * This is as far as I'm getting with this today
+
+# 4-Jan-2024
+
+* Now continuing with this
+* Now that adding points in time works, I want to add the functionality to delete points in time, as long as more than one remains
 
 # User Story
 
