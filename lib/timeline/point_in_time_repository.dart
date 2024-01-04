@@ -24,7 +24,6 @@ class PointInTimeRepository {
   }
 
   String _determineUniqueName() {
-    List<String> existingNames = _getExistingNames();
     if (!existingNames.contains(defaultPointInTimeName)) {
       return defaultPointInTimeName;
     }
@@ -38,15 +37,38 @@ class PointInTimeRepository {
     }
   }
 
-  List<String> _getExistingNames() {
+  List<String> get existingNames {
     return _pointsInTime.map((point) => point.name).toList();
   }
 
   void remove(PointInTime pointToBeRemoved) {
+    _assertPointExistsInRepository(pointToBeRemoved);
     if (_pointsInTime.length == 1) {
       throw InvalidOperationException(
           "The final point in time can't be removed");
     }
     _pointsInTime.remove(pointToBeRemoved);
+  }
+
+  void _assertPointExistsInRepository(PointInTime point) {
+    if (!_pointsInTime.contains(point)) {
+      throw InvalidOperationException(
+          "PointInTimeRepository does not contain PointInTime with name ${point.name}");
+    }
+  }
+
+  void rename(PointInTime pointToBeRenamed, String newName) {
+    _assertPointExistsInRepository(pointToBeRenamed);
+    if(newName != pointToBeRenamed.name) {
+      _assertNameIsUnique(newName);
+      pointToBeRenamed.name = newName;
+    }
+  }
+
+  void _assertNameIsUnique(String newName) {
+    if (existingNames.contains(newName)) {
+      throw InvalidOperationException(
+          "Name $newName already exists in PointInTime repository");
+    }
   }
 }

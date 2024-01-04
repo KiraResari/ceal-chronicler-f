@@ -134,6 +134,8 @@
   * Now, the primary decision here is whether I want these buttons to be part of the `TimeBarPanel`, or below it
   * Each time bar panel will have two buttons that are associated directly with it: Delete and Rename, so I think it makes sense to have these buttons be part of the panel logically, even if they are visually located, say, below it
   * I now managed to get this to work
+* Okay, next I want to get re-naming of points in time to work
+  * I am making good progress with this, but still want to tweak it a little
 
 # User Story
 
@@ -145,8 +147,8 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 
 - [ ] All screens have a time bar at the top, which allows going back and forth in time
 - [x] By default, there is only one point in time 
-- [ ] Points in time can be given names
-  - [ ] These names have to be unique
+- [x] Points in time can be given names
+  - [x] These names have to be unique
 - [x] Points in time can be added before or after any other point in time
 - [x] Points in time can be deleted
   - [ ] If an event happens at a point in time, that point can't be deleted

@@ -10,7 +10,7 @@ class DeletePointInTimeButton extends SmallCircularButton {
 
   const DeletePointInTimeButton({super.key, required this.point})
       : super(
-          tooltip: "Delete this point in time",
+          tooltip: "Delete",
           disabledTooltip: "The last point in time can't be deleted",
           icon: Icons.delete,
         );

@@ -1,5 +1,8 @@
+import '../utils/readable_uuid.dart';
+
 class PointInTime{
-  final String name;
+  final ReadableUuid id = ReadableUuid();
+  String name;
 
   PointInTime(this.name);
 }

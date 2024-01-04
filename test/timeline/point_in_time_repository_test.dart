@@ -36,8 +36,7 @@ main() {
 
     repository.createNewAtIndex(0);
 
-    List<PointInTime> points = repository.all;
-    List<String> names = points.map((point) => point.name).toList();
+    List<String> names = repository.existingNames;
     Set<String> uniqueNames = Set<String>.from(names);
     for (String uniqueName in uniqueNames) {
       names.remove(uniqueName);
@@ -59,8 +58,43 @@ main() {
   test("Attempting to remove final point in time should cause exception", () {
     var repository = PointInTimeRepository();
     PointInTime pointToBeRemoved = repository.first;
-    expect((){
+
+    expect(() {
       repository.remove(pointToBeRemoved);
     }, throwsA(isA<InvalidOperationException>()));
+  });
+
+  test("Renaming point in time should work", () {
+    var repository = PointInTimeRepository();
+    PointInTime pointToBeRenamed = repository.first;
+    String newName = "New Name";
+
+    repository.rename(pointToBeRenamed, newName);
+
+    expect(repository.existingNames, contains(newName));
+  });
+
+  test(
+      "Attempting to rename point in time to the name of another point in time should cause exception",
+      () {
+    var repository = PointInTimeRepository();
+    repository.createNewAtIndex(1);
+    PointInTime firstPoint = repository.first;
+    PointInTime secondPoint = repository.all[1];
+
+    expect(() {
+      repository.rename(firstPoint, secondPoint.name);
+    }, throwsA(isA<InvalidOperationException>()));
+  });
+
+  test("Renaming point in time to its current name should not cause exception",
+      () {
+    var repository = PointInTimeRepository();
+    PointInTime pointToBeRenamed = repository.first;
+    String newName = pointToBeRenamed.name;
+
+    repository.rename(pointToBeRenamed, pointToBeRenamed.name);
+
+    expect(repository.existingNames, contains(newName));
   });
 }
