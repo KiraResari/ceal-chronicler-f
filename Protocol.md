@@ -136,6 +136,10 @@
   * I now managed to get this to work
 * Okay, next I want to get re-naming of points in time to work
   * I am making good progress with this, but still want to tweak it a little
+  * Basically, I still want to do two things:
+    * The text field in the editing popup should contain the current name by default
+      * I now got that to work
+    * If the input in the editing popup is invalid, the popup should disable the confirm button and show an error
 
 # User Story
 

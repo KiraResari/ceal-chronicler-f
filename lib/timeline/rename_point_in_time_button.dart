@@ -31,7 +31,8 @@ class RenamePointInTimeButton extends SmallCircularButton {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
-        TextEditingController textEditingController = TextEditingController();
+        TextEditingController textEditingController =
+            TextEditingController(text: point.name);
         return AlertDialog(
           title: const Text("Rename point in time"),
           content: _buildRenameTextField(textEditingController),
@@ -57,7 +58,9 @@ class RenamePointInTimeButton extends SmallCircularButton {
   }
 
   TextButton _buildRenameConfirmButton(
-      BuildContext context, TextEditingController textEditingController) {
+    BuildContext context,
+    TextEditingController textEditingController,
+  ) {
     return TextButton(
       onPressed: () {
         Navigator.of(context).pop(textEditingController.text);
