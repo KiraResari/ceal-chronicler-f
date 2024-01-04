@@ -131,6 +131,9 @@
   * One interesting problem I am running into here is trying to make the `TimeBarPanel` the exact same color as the `FloatingActionButton`s
     * The documentations that I read say something that sounds reasonable, but doesn't hold up when I try it out
     * Okay, I had to take a deep dive, and eventually found out that the color used for buttons is `theme.colorScheme.primaryContainer`
+  * Now, the primary decision here is whether I want these buttons to be part of the `TimeBarPanel`, or below it
+  * Each time bar panel will have two buttons that are associated directly with it: Delete and Rename, so I think it makes sense to have these buttons be part of the panel logically, even if they are visually located, say, below it
+  * I now managed to get this to work
 
 # User Story
 
@@ -141,13 +144,14 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 ### Time Bar
 
 - [ ] All screens have a time bar at the top, which allows going back and forth in time
-- [ ] By default, there is only one point in time 
+- [x] By default, there is only one point in time 
 - [ ] Points in time can be given names
   - [ ] These names have to be unique
 - [x] Points in time can be added before or after any other point in time
-- [ ] Points in time can be deleted only, if no event happens at that point in time
-  - [ ] If an event happens at a certain point in time and someone attempts to delete that point is time, a message appears stating which events prevent the deletion of that point in time
-  - [ ] If there is only a single point in time, that point in time can't be deleted
+- [x] Points in time can be deleted
+  - [ ] If an event happens at a point in time, that point can't be deleted
+    - [ ] There is a functionality that allows skipping to the event in question
+  - [x] If there is only a single point in time, that point in time can't be deleted
 - [x] Points in time can't be re-ordered
 
 ### Characters Overview
