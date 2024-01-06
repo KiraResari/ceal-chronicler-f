@@ -31,9 +31,13 @@ flutter:
   assets:
     - assets/images/
 
-flutter_icons:
-  android: true
+flutter_launcher_icons:
+  android: "launcher_icon"
   ios: true
   image_path: "assets/images/CealChroniclerLogo.png"
-  adaptive_icon_background: "assets/images/CealChroniclerLogo.png"
-  adaptive_icon_foreground: "assets/images/CealChroniclerLogo.png"
+  adaptive_icon_foreground: "assets/images/CealChroniclerLogoFG.png"
+  adaptive_icon_background: "#ffffff"
+  windows:
+    generate: true
+    image_path: "assets/images/CealChroniclerLogo.png"
+    icon_size: 256

@@ -155,6 +155,27 @@
   * The complication here is that this leaves me with having to supply both the `TextEditingController` as well as the `RenamePointInTimeAlertDialogController` to the `ChangeNotifierProvider`, and that doesn't seem to be supported
   * I now managed to basically get this to work by putting the `TextEditingController` inside the `RenamePointInTimeAlertDialogController`, but now I have the issue that changes in the text field do not trigger a re-evaluation
   * With some help from ChatGPT, I now got this to work
+  
+* Now trying to get the background of the icon transparent, which is apparently also difficult
+
+  * I now added a feature request for this here:
+
+    * https://github.com/fluttercommunity/flutter_launcher_icons/issues/535
+
+  * Well, I did manage to get the icon transparent now on my home screen, and what I did to do that was:
+
+    * In the `android/app/src/main/AndroidManifest.xml`, reverted the `android:icon` entry back to this:
+
+      * ````
+           <application
+                android:label="Ceal Chronicler F"
+                android:name="${applicationName}"
+                android:icon="@mipmap/ic_launcher">
+        ````
+
+    * Removed a lot of files that flutter_launcher_icons added
+
+* This is as far as I'm getting with this now
 
 # User Story
 
