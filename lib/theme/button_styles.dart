@@ -23,4 +23,14 @@ class ButtonStyles {
     padding: _defaultPadding,
     textStyle: _defaultTextStyle,
   );
+  static final save = ButtonStyle(
+    backgroundColor: MaterialStateProperty.all(CustomColors.saveButton),
+    padding: _defaultPadding,
+    textStyle: _defaultTextStyle,
+  );
+  static final load = ButtonStyle(
+    backgroundColor: MaterialStateProperty.all(CustomColors.loadButton),
+    padding: _defaultPadding,
+    textStyle: _defaultTextStyle,
+  );
 }

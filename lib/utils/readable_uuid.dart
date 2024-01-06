@@ -1,6 +1,6 @@
 import 'package:uuid/uuid.dart';
 
-import 'json_serializable.dart';
+import '../persistence/json_serializable.dart';
 
 class ReadableUuid extends JsonSerializable {
   static const Uuid uuidGenerator = Uuid();

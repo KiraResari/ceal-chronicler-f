@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:ceal_chronicler_f/events/export_characters_event.dart';
+import 'package:ceal_chronicler_f/events/import_characters_event.dart';
 import 'package:ceal_chronicler_f/events/update_character_selection_view_event.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +15,18 @@ import '../character.dart';
 import '../character_selection_view/character_selection_view_model.dart';
 
 class CharacterSelectionView extends StatefulWidget {
-  static const String titleText = "Characters";
-  static const String addCharacterButtonText = "Add Character";
+  static const titleText = "Characters";
+  static const addCharacterButtonText = "➕ Add Character";
+  static const saveButtonText = "💾 Save";
+  static const loadButtonText = "📁 Load";
+  static const characterViewKey = Key("view");
+  static const mainColumnKey = Key("body");
+  static const titleTextKey = Key("title");
+  static const charactersColumnKey = Key("characters");
+  static const characterButtonKeyBase = "characterButton";
+  static const addButtonKey = Key("addButton");
+  static const saveButtonKey = Key("saveButton");
+  static const loadButtonKey = Key("loadButton");
   static final model = getIt<CharacterSelectionViewModel>();
 
   const CharacterSelectionView({super.key});
@@ -45,6 +57,7 @@ class _CharacterSelectionViewState extends State<CharacterSelectionView> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      key: CharacterSelectionView.characterViewKey,
       color: CustomColors.background,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -55,11 +68,12 @@ class _CharacterSelectionViewState extends State<CharacterSelectionView> {
 
   Widget _buildMainColumn(BuildContext context) {
     return Column(
+      key: CharacterSelectionView.mainColumnKey,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildTitleText(context),
         _buildCharactersColumn(context),
-        _buildAddButton(context),
+        _buildActionButtonRow(context),
       ],
     );
   }
@@ -68,6 +82,7 @@ class _CharacterSelectionViewState extends State<CharacterSelectionView> {
     var theme = Theme.of(context);
     TextStyle titleStyle = theme.textTheme.displayMedium!;
     return Text(
+      key: CharacterSelectionView.titleTextKey,
       CharacterSelectionView.titleText,
       style: titleStyle,
     );
@@ -75,6 +90,7 @@ class _CharacterSelectionViewState extends State<CharacterSelectionView> {
 
   Column _buildCharactersColumn(BuildContext context) {
     return Column(
+      key: CharacterSelectionView.charactersColumnKey,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: _buildCharacterButtons(context),
     );
@@ -82,19 +98,23 @@ class _CharacterSelectionViewState extends State<CharacterSelectionView> {
 
   List<Widget> _buildCharacterButtons(BuildContext context) {
     List<Widget> characterButtons = [];
+    var index = 0;
     for (var character in characters) {
-      var button = _buildCharacterButton(character, context);
+      var button = _buildCharacterButton(character, context, index);
       characterButtons.add(button);
+      index++;
     }
     return characterButtons;
   }
 
-  Widget _buildCharacterButton(Character character, BuildContext context) {
+  Widget _buildCharacterButton(
+      Character character, BuildContext context, int index) {
     return Padding(
       padding: const EdgeInsets.all(5),
       child: ElevatedButton(
+        key: Key("characterButtonKeyBase$index"),
         onPressed: () => _onCharacterButtonPressed(character),
-        child: _buildCharacterButtonText(character, context),
+        child: _buildCharacterButtonText(character, context, index),
       ),
     );
   }
@@ -104,37 +124,89 @@ class _CharacterSelectionViewState extends State<CharacterSelectionView> {
     eventBus.fire(OpenCharacterViewEvent(character));
   }
 
-  Text _buildCharacterButtonText(Character character, BuildContext context) {
+  Text _buildCharacterButtonText(
+      Character character, BuildContext context, int index) {
     var theme = Theme.of(context);
     TextStyle buttonStyle = theme.textTheme.button!;
     return Text(
       character.getDisplayValue(),
       style: buttonStyle,
+      semanticsLabel: "Character Button $index",
     );
   }
 
-  Widget _buildAddButton(BuildContext context) {
+  Widget _buildActionButtonRow(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    return Row(
+      children: [
+        _buildAddCharacterButton(theme),
+        _buildSaveButton(theme),
+        _buildLoadButton(theme),
+      ],
+    );
+  }
+
+  Widget _buildAddCharacterButton(ThemeData theme) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton(
+        key: CharacterSelectionView.addButtonKey,
         style: ButtonStyles.confirm,
-        onPressed: () => _onAddButtonPressed(),
-        child: _buildAddButtonText(context),
+        onPressed: () => _eventBus.fire(AddCharacterEvent()),
+        child: _buildAddButtonText(theme),
       ),
     );
   }
 
-  Text _buildAddButtonText(BuildContext context) {
-    var theme = Theme.of(context);
+  Text _buildAddButtonText(ThemeData theme) {
     TextStyle buttonTextStyle = theme.textTheme.button!;
     return Text(
       CharacterSelectionView.addCharacterButtonText,
       style: buttonTextStyle,
+      semanticsLabel: "Add Character Button",
     );
   }
 
-  void _onAddButtonPressed() {
-    _eventBus.fire(AddCharacterEvent());
+  Widget _buildSaveButton(ThemeData theme) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ElevatedButton(
+        key: CharacterSelectionView.saveButtonKey,
+        style: ButtonStyles.save,
+        onPressed: () => _eventBus.fire(ExportCharactersEvent()),
+        child: _buildSaveButtonText(theme),
+      ),
+    );
+  }
+
+  Text _buildSaveButtonText(ThemeData theme) {
+    TextStyle buttonTextStyle = theme.textTheme.button!;
+    return Text(
+      CharacterSelectionView.saveButtonText,
+      style: buttonTextStyle,
+      semanticsLabel: "Save Button",
+    );
+  }
+
+  Widget _buildLoadButton(ThemeData theme) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ElevatedButton(
+        key: CharacterSelectionView.loadButtonKey,
+        style: ButtonStyles.load,
+        onPressed: () => _eventBus.fire(ImportCharactersEvent()),
+        child: _buildLoadButtonText(theme),
+      ),
+    );
+  }
+
+  Text _buildLoadButtonText(ThemeData theme) {
+    TextStyle buttonTextStyle = theme.textTheme.button!;
+    return Text(
+      CharacterSelectionView.loadButtonText,
+      style: buttonTextStyle,
+      semanticsLabel: "Load Button",
+    );
   }
 
   void _updateCharacterSelectionView() {

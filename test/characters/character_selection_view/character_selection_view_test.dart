@@ -46,6 +46,8 @@ Future<void> navigateToCharacterSelectionViewAndAddCharacter(
     WidgetTester tester) async {
   await navigateToCharacterSelectionView(tester);
 
+  expect(
+      find.text(CharacterSelectionView.addCharacterButtonText), findsOneWidget);
   await tester.tap(
       find.bySemanticsLabel(CharacterSelectionView.addCharacterButtonText));
   await tester.pump();

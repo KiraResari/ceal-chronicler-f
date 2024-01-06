@@ -1,16 +1,22 @@
 import '../fields/display_field.dart';
 import '../items/weapon_field.dart';
+import '../persistence/json_serializable.dart';
 import 'character_id.dart';
 import 'species_field.dart';
 
 import 'character_name_field.dart';
 
-class Character {
+class Character extends JsonSerializable {
 
-  CharacterId id;
-  CharacterNameField nameField;
-  WeaponField weaponField;
-  SpeciesField speciesField;
+  static const _idFieldName = "id";
+  static const _nameFieldName = "nameField";
+  static const _weaponFieldName = "weaponField";
+  static const _speciesFieldName = "speciesField";
+
+  late CharacterId id;
+  late CharacterNameField nameField;
+  late WeaponField weaponField;
+  late SpeciesField speciesField;
 
   String get name => nameField.value;
 
@@ -38,6 +44,11 @@ class Character {
         weaponField = WeaponField(weapon),
         speciesField = SpeciesField(species);
 
+  Character.fromJsonString(String jsonString)
+      : super.fromJsonString(jsonString);
+
+  Character.fromJson(Map<String, dynamic> jsonMap) : super.fromJson(jsonMap);
+
   String getDisplayValue() {
     return nameField.getDisplayValue();
   }
@@ -55,30 +66,10 @@ class Character {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is Character &&
-          isIdEqual(other) &&
-          isNameEqual(other) &&
-          isWeaponEqual(other) &&
-          isSpeciesEqual(other);
-
-  bool isSpeciesEqual(Character other) {
-    var isEqual = (species == other.species);
-    return isEqual;
-  }
-
-  bool isWeaponEqual(Character other) {
-    var isEqual = (weapon == other.weapon);
-    return isEqual;
-  }
-
-  bool isNameEqual(Character other) {
-    var isEqual = (name == other.name);
-    return isEqual;
-  }
-
-  bool isIdEqual(Character other) {
-    var isEqual = (id == other.id);
-    return isEqual;
-  }
+          (id == other.id) &&
+          (name == other.name) &&
+          (weapon == other.weapon) &&
+          (species == other.species);
 
   @override
   int get hashCode =>
@@ -94,4 +85,20 @@ class Character {
     weapon = character.weapon;
     species = character.species;
   }
+
+  @override
+  decodeJson(Map<String, dynamic> jsonMap) {
+    id = CharacterId.fromJson(jsonMap[_idFieldName]);
+    nameField = CharacterNameField.fromJson(jsonMap[_nameFieldName]);
+    speciesField = SpeciesField.fromJson(jsonMap[_speciesFieldName]);
+    weaponField = WeaponField.fromJson(jsonMap[_weaponFieldName]);
+  }
+
+  @override
+  Map<String, dynamic> toJson() => {
+    _idFieldName: id,
+    _nameFieldName: nameField,
+    _speciesFieldName: speciesField,
+    _weaponFieldName: weaponField,
+  };
 }
