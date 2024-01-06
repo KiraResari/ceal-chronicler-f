@@ -141,6 +141,21 @@
       * I now got that to work
     * If the input in the editing popup is invalid, the popup should disable the confirm button and show an error
 
+# 6-Jan-2024
+
+* Now continuing with this
+* Last time I got stuck trying to improve the renaming dialog
+  * I'd like for it to function like this:
+    * While typing, it should validate the input and if the input is not valid, it should disable the confirm button and display a respective warning text
+    * The input is invalid when:
+      * It is the same as the original name
+      * It is empty
+      * The name is already taken
+        * For this last one, the renaming dialog needs to access the  `PointInTimeRepository`
+  * The complication here is that this leaves me with having to supply both the `TextEditingController` as well as the `RenamePointInTimeAlertDialogController` to the `ChangeNotifierProvider`, and that doesn't seem to be supported
+  * I now managed to basically get this to work by putting the `TextEditingController` inside the `RenamePointInTimeAlertDialogController`, but now I have the issue that changes in the text field do not trigger a re-evaluation
+  * With some help from ChatGPT, I now got this to work
+
 # User Story
 
 As a Game Designer and Author, I want a tool to help me keep track of characters, events, items, knowledge, locations, affiliations and other things that can change over the course of a story. For example, I want to be able to go back and forth in time to figure out who learned what at what time, or who was where at what time and with whom.

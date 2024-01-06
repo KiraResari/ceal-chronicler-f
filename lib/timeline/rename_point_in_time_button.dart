@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../utils/widgets/small_circular_button.dart';
+import 'rename_point_in_time_alert_dialog.dart';
 
 class RenamePointInTimeButton extends SmallCircularButton {
   final PointInTime point;
@@ -31,50 +32,8 @@ class RenamePointInTimeButton extends SmallCircularButton {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
-        TextEditingController textEditingController =
-            TextEditingController(text: point.name);
-        return AlertDialog(
-          title: const Text("Rename point in time"),
-          content: _buildRenameTextField(textEditingController),
-          actions: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildRenameCancelButton(context),
-                _buildRenameConfirmButton(context, textEditingController),
-              ],
-            ),
-          ],
-        );
+        return RenamePointInTimeAlertDialog(point: point);
       },
-    );
-  }
-
-  Widget _buildRenameTextField(TextEditingController textEditingController) {
-    return TextField(
-      controller: textEditingController,
-      decoration: const InputDecoration(labelText: "New Name"),
-    );
-  }
-
-  TextButton _buildRenameConfirmButton(
-    BuildContext context,
-    TextEditingController textEditingController,
-  ) {
-    return TextButton(
-      onPressed: () {
-        Navigator.of(context).pop(textEditingController.text);
-      },
-      child: const Text("✔️"),
-    );
-  }
-
-  TextButton _buildRenameCancelButton(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-      child: const Text("❌"),
     );
   }
 

@@ -37,9 +37,10 @@ class TimeBarController extends ChangeNotifier {
 
   ValidationResult validateNewName(String newName) {
     if (_pointInTimeRepository.existingNames.contains(newName)) {
-      return InvalidResult(
-          "There is already a point in time named '$newName'.\n"
-          "All points in time must have unique names.");
+      return InvalidResult("Name is already taken");
+    }
+    if (newName.isEmpty) {
+      return InvalidResult("Name can't be empty");
     }
     return ValidResult();
   }
