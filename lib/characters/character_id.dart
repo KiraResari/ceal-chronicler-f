@@ -12,8 +12,7 @@ class CharacterId extends JsonSerializable {
   CharacterId.fromJsonString(String jsonString)
       : super.fromJsonString(jsonString);
 
-  CharacterId.fromJson(Map<String, dynamic> jsonMap)
-      : super.fromJson(jsonMap);
+  CharacterId.fromJson(Map<String, dynamic> jsonMap) : super.fromJson(jsonMap);
 
   @override
   decodeJson(Map<String, dynamic> jsonMap) {
@@ -22,8 +21,8 @@ class CharacterId extends JsonSerializable {
 
   @override
   Map<String, dynamic> toJson() => {
-    _idFieldName: id,
-  };
+        _idFieldName: id,
+      };
 
   CharacterId copy() {
     var copy = CharacterId();

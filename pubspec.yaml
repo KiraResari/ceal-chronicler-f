@@ -6,20 +6,19 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.18.6 <3.0.0'
+  sdk: '>=3.2.3 <4.0.0'
 
 
 dependencies:
   flutter:
     sdk: flutter
 
-  provider: ^6.0.0
-  get_it: ^7.2.0
+  provider: ^6.1.1
+  get_it: ^7.6.4
   event_bus: ^2.0.0
-  uuid: ^3.0.7
+  uuid: ^4.2.0
   optional: ^6.1.0
-  flutter_launcher_icons: ^0.11.0
-  path_provider: ^2.0.11
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:
@@ -32,17 +31,13 @@ flutter:
   assets:
     - assets/images/
 
-flutter_icons:
-  android: true
-  image_path: "assets/images/CealChroniclerIcon.png"
-  adaptive_icon_background: "assets/images/CealChroniclerAppIconBackground.png"
-  adaptive_icon_foreground: "assets/images/CealChroniclerAppIconForeground.png"
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/CealChroniclerLogo.png"
+  adaptive_icon_foreground: "assets/images/CealChroniclerLogoFG.png"
+  adaptive_icon_background: "#ffffff"
   windows:
     generate: true
-    image_path: "assets/images/CealChroniclerIcon.png"
+    image_path: "assets/images/CealChroniclerLogo.png"
     icon_size: 256
-  web:
-    generate: true
-    image_path: "assets/images/CealChroniclerIcon.png"
-    background_color: "#007fff"
-    theme_color: "#007fff"

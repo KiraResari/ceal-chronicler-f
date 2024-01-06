@@ -13,8 +13,7 @@ class ReadableUuid extends JsonSerializable {
   ReadableUuid.fromJsonString(String jsonString)
       : super.fromJsonString(jsonString);
 
-  ReadableUuid.fromJson(Map<String, dynamic> jsonMap)
-      : super.fromJson(jsonMap);
+  ReadableUuid.fromJson(Map<String, dynamic> jsonMap) : super.fromJson(jsonMap);
 
   @override
   decodeJson(Map<String, dynamic> jsonMap) {
