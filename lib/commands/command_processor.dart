@@ -9,11 +9,7 @@ class CommandProcessor extends ChangeNotifier {
 
   void process(Command command) {
     try {
-      _clearHistoryPastCurrentIndex();
-      command.execute();
-      _commandHistory.add(command);
-      _index++;
-      notifyListeners();
+      _processCommand(command);
     } catch (e) {
       throw CommandFailedException(
         "Processing of command failed\n"
@@ -21,6 +17,14 @@ class CommandProcessor extends ChangeNotifier {
         "Cause: $e",
       );
     }
+  }
+
+  void _processCommand(Command command) {
+    _clearHistoryPastCurrentIndex();
+    command.execute();
+    _commandHistory.add(command);
+    _index++;
+    notifyListeners();
   }
 
   void _clearHistoryPastCurrentIndex() {
@@ -31,13 +35,9 @@ class CommandProcessor extends ChangeNotifier {
 
   void undo() {
     try {
-      if (_historyIsEmpty) {
-        return;
+      if (isUndoPossible) {
+        _performUndo();
       }
-      _index--;
-      Command commandToUndo = _commandHistory[_index];
-      commandToUndo.undo();
-      notifyListeners();
     } catch (e) {
       Command command = _commandHistory[_index - 1];
       throw CommandFailedException(
@@ -48,11 +48,20 @@ class CommandProcessor extends ChangeNotifier {
     }
   }
 
-  bool get _historyIsEmpty => _index == 0;
+  void _performUndo() {
+    _index--;
+    Command commandToUndo = _commandHistory[_index];
+    commandToUndo.undo();
+    notifyListeners();
+  }
+
+  bool get isUndoPossible => _index > 0;
 
   void redo() {
     try {
-      _performRedo();
+      if (isRedoPossible) {
+        _performRedo();
+      }
     } catch (e) {
       Command command = _commandHistory[_index];
       throw CommandFailedException(
@@ -64,14 +73,11 @@ class CommandProcessor extends ChangeNotifier {
   }
 
   void _performRedo() {
-    if (_nothingToRedo) {
-      return;
-    }
     Command commandToRedo = _commandHistory[_index];
     commandToRedo.execute();
     _index++;
     notifyListeners();
   }
 
-  bool get _nothingToRedo => _index == _commandHistory.length;
+  bool get isRedoPossible => _index < _commandHistory.length;
 }

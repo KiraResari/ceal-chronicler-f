@@ -17,13 +17,11 @@ class DeletePointInTimeButton extends SmallCircularButton {
 
   @override
   void onPressed(BuildContext context) {
-    TimeBarController controller = context.read<TimeBarController>();
+    var controller = context.read<TimeBarController>();
     controller.delete(point);
   }
 
   @override
-  bool isEnabled(BuildContext context) {
-    TimeBarController controller = context.read<TimeBarController>();
-    return controller.isDeletingAllowed;
-  }
+  bool isEnabled(BuildContext context) =>
+      context.watch<TimeBarController>().isDeletingAllowed;
 }

@@ -247,8 +247,17 @@
     * One question is whether to put those commands in the `commands` folder or the `timeline` folder
       * Hmm, since putting them in the  `commands` folder is too close to layer-architecture for my taste, I think I'll put them into the `timeline` folder instead, possibly a subfolder though to keep them bundled
     * Hmm, come to think about it, I think I might not even need to make the `CommandStack` a change notifier because the controllers can just call `await addAndExecute(command)` and then notify their listeners afterwards
+      * Wait, no, there's still the problem that the undo and redo buttons exist in a different context than the controllers, so it's important that the controllers listen to the `CommandStack` so they get notified even when something changes that they did not trigger
     * And Come to Think of it 2 ~ The Thinkening, I don't believe there are any asynchronous commands that I need to consider, thus I can also save myself the whole locking logic 
       * Well, following the teachings of the great prophet YANGI, let's try with synchronous commands now, and see how far that will get us
+
+  * I now managed to successfully create the `CreatePointInTimeCommand` and get it to work, which is a good start
+
+  * And now I managed to add the commands for Deleting and Renaming points in time too, and they work as well
+
+  * The next part will be the Undo and Redo buttons
+
+    * Score! Undo works now!
 
 # User Story
 
