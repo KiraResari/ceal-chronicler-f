@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../utils/widgets/small_circular_button.dart';
+import '../utils/widgets/medium_square_button.dart';
 import 'tool_bar_controller.dart';
 
-class UndoButton extends SmallCircularButton {
+class UndoButton extends MediumSquareButton {
   const UndoButton({super.key})
       : super(
           tooltip: "Undo",

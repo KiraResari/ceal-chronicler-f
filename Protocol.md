@@ -274,6 +274,16 @@
 
   * With that, the Undo-Redo logic is working nicely!
 
+  * Now, for the finishing touch I still want to polish the buttons a bit
+
+  * And now it looks pretty good too
+
+  * With that, I declare the Undo-Redo done
+
+* This is as far as I'm getting with this today
+
+[Time elapsed so far: 18.75 hours]
+
 # User Story
 
 As a Game Designer and Author, I want a tool to help me keep track of characters, events, items, knowledge, locations, affiliations and other things that can change over the course of a story. For example, I want to be able to go back and forth in time to figure out who learned what at what time, or who was where at what time and with whom.
@@ -320,7 +330,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 
 - [ ] A chronicle can be saved to a file
 - [ ] A chronicle can be loaded from a file
-- [ ] Actions can be undone
-- [ ] Actions can be re-done
+- [x] Actions can be undone
+- [x] Actions can be re-done
 - [ ] You can navigate back to the last visited view
 - [ ] You can navigate forward, which undoes navigating backwards

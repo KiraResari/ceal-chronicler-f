@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-abstract class SmallCircularButton extends StatelessWidget {
+abstract class MediumSquareButton extends StatelessWidget {
   final String tooltip;
   final String? disabledTooltip;
   final IconData icon;
 
-  const SmallCircularButton({
+  const MediumSquareButton({
     super.key,
     required this.tooltip,
     required this.icon,
@@ -17,8 +17,8 @@ abstract class SmallCircularButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
-        height: 24,
-        width: 24,
+        height: 36,
+        width: 36,
         child: _buildButton(context),
       ),
     );
@@ -34,6 +34,9 @@ abstract class SmallCircularButton extends StatelessWidget {
       backgroundColor: isEnabled(context) ? enabledColor : disabledColor,
       tooltip: isEnabled(context) ? tooltip : disabledTooltip,
       onPressed: isEnabled(context) ? () => onPressed(context) : null,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5),
+      ),
       child: Icon(
         icon,
         color: isEnabled(context) ? enabledIconColor : disabledIconColor,
