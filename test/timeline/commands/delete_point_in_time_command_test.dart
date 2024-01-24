@@ -10,6 +10,7 @@ main() {
   late PointInTimeRepository repository;
 
   setUp(() {
+    getIt.reset();
     repository = PointInTimeRepository();
     getIt.registerSingleton<PointInTimeRepository>(repository);
     processor = CommandProcessor();
