@@ -15,6 +15,10 @@ class PointInTimeRepository {
 
   PointInTime createNewAtIndex(int index) {
     PointInTime newPoint = _createPointWithUniqueName();
+    return createAtIndex(index, newPoint);
+  }
+
+  PointInTime createAtIndex(int index, PointInTime newPoint) {
     _pointsInTime.insert(index, newPoint);
     return newPoint;
   }
@@ -60,7 +64,7 @@ class PointInTimeRepository {
 
   void rename(PointInTime pointToBeRenamed, String newName) {
     _assertPointExistsInRepository(pointToBeRenamed);
-    if(newName != pointToBeRenamed.name) {
+    if (newName != pointToBeRenamed.name) {
       _assertNameIsUnique(newName);
       pointToBeRenamed.name = newName;
     }
@@ -72,4 +76,6 @@ class PointInTimeRepository {
           "Name $newName already exists in PointInTime repository");
     }
   }
+
+  int getPointIndex(PointInTime point) => _pointsInTime.indexOf(point);
 }
