@@ -177,6 +177,17 @@
 
 * This is as far as I'm getting with this now
 
+# 24-Jan-2024
+
+* Now continuing with this
+* Okay, currently the program does not have much, but I think what it does have is still enough already that I should now tackle the structural issues of undo- and redo logic, along with saving and loading, since this is going to affect a lot of things
+* I'll start with undo-redo legic
+  * This is already quite a problem
+  * The theory is simple: By applying the command pattern, I can keep a stack of executed commands that one can navigate back and forth across
+  * The question is: How do I apply that, especially if I want to avoid using an EventBus?
+  * Let me try to illustrate the issue with a simple use case for creating a new point in time, and then undoing it
+    * Creating a new point in time is done via 
+
 # User Story
 
 As a Game Designer and Author, I want a tool to help me keep track of characters, events, items, knowledge, locations, affiliations and other things that can change over the course of a story. For example, I want to be able to go back and forth in time to figure out who learned what at what time, or who was where at what time and with whom.

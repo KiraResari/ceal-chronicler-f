@@ -1,9 +1,6 @@
 import 'package:ceal_chronicler_f/get_it_context.dart';
 import 'package:ceal_chronicler_f/timeline/point_in_time.dart';
 import 'package:ceal_chronicler_f/timeline/point_in_time_repository.dart';
-import 'package:ceal_chronicler_f/utils/validation/invalid_result.dart';
-import 'package:ceal_chronicler_f/utils/validation/valid_result.dart';
-import 'package:ceal_chronicler_f/utils/validation/validation_result.dart';
 import 'package:flutter/material.dart';
 
 class TimeBarController extends ChangeNotifier {
@@ -33,15 +30,5 @@ class TimeBarController extends ChangeNotifier {
   void rename(PointInTime point, String newName) {
     _pointInTimeRepository.rename(point, newName);
     notifyListeners();
-  }
-
-  ValidationResult validateNewName(String newName) {
-    if (_pointInTimeRepository.existingNames.contains(newName)) {
-      return InvalidResult("Name is already taken");
-    }
-    if (newName.isEmpty) {
-      return InvalidResult("Name can't be empty");
-    }
-    return ValidResult();
   }
 }

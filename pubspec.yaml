@@ -19,6 +19,7 @@ dependencies:
   uuid: ^4.2.0
   optional: ^6.1.0
   flutter_launcher_icons: ^0.13.1
+  path_provider: ^2.1.2
 
 dev_dependencies:
   flutter_test:
