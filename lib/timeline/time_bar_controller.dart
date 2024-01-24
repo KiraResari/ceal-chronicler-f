@@ -1,18 +1,21 @@
-import 'package:ceal_chronicler_f/get_it_context.dart';
-import 'package:ceal_chronicler_f/timeline/point_in_time.dart';
-import 'package:ceal_chronicler_f/timeline/point_in_time_repository.dart';
-import 'package:ceal_chronicler_f/utils/validation/invalid_result.dart';
-import 'package:ceal_chronicler_f/utils/validation/valid_result.dart';
-import 'package:ceal_chronicler_f/utils/validation/validation_result.dart';
 import 'package:flutter/material.dart';
 
+import '../commands/command_processor.dart';
+import '../get_it_context.dart';
+import 'commands/create_point_in_time_command.dart';
+import 'commands/delete_point_in_time_command.dart';
+import 'commands/rename_point_in_time_command.dart';
+import 'point_in_time.dart';
+import 'point_in_time_repository.dart';
+
 class TimeBarController extends ChangeNotifier {
-  final PointInTimeRepository _pointInTimeRepository =
-      getIt.get<PointInTimeRepository>();
+  final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
+  final _commandProcessor = getIt.get<CommandProcessor>();
 
   late PointInTime _activePointInTime;
 
   TimeBarController() {
+    _commandProcessor.addListener(() => notifyListeners());
     _activePointInTime = _pointInTimeRepository.first;
   }
 
@@ -21,27 +24,17 @@ class TimeBarController extends ChangeNotifier {
   get isDeletingAllowed => _pointInTimeRepository.all.length > 1;
 
   void addPointInTimeAtIndex(int index) {
-    _pointInTimeRepository.createNewAtIndex(index);
-    notifyListeners();
+    var command = CreatePointInTimeCommand(index);
+    _commandProcessor.process(command);
   }
 
   void delete(PointInTime point) {
-    _pointInTimeRepository.remove(point);
-    notifyListeners();
+    var command = DeletePointInTimeCommand(point);
+    _commandProcessor.process(command);
   }
 
   void rename(PointInTime point, String newName) {
-    _pointInTimeRepository.rename(point, newName);
-    notifyListeners();
-  }
-
-  ValidationResult validateNewName(String newName) {
-    if (_pointInTimeRepository.existingNames.contains(newName)) {
-      return InvalidResult("Name is already taken");
-    }
-    if (newName.isEmpty) {
-      return InvalidResult("Name can't be empty");
-    }
-    return ValidResult();
+    var command = RenamePointInTimeCommand(point, newName);
+    _commandProcessor.process(command);
   }
 }

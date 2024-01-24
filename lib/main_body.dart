@@ -2,7 +2,7 @@ import 'package:ceal_chronicler_f/timeline/time_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'main_view.dart';
-import 'menuBar/chronicler_menu_bar.dart';
+import 'toolBar/chronicler_tool_bar.dart';
 
 class MainBody extends StatelessWidget{
   const MainBody({super.key});
@@ -15,7 +15,7 @@ class MainBody extends StatelessWidget{
       body: const SizedBox.expand(
         child: Column(
           children: [
-            ChroniclerMenuBar(),
+            ChroniclerToolBar(),
             TimeBar(),
             MainView(),
           ],

@@ -33,6 +33,8 @@
     * https://stackoverflow.com/questions/57666495/flutter-app-theme-ofcontext-style-doesnt-work-on-text
 * Well, this is as far as I'm getting with this today
 
+[Time elapsed so far: 2.5 hours]
+
 # 3-Jan-2024
 
 * Now continuing with this
@@ -124,6 +126,8 @@
 
 * This is as far as I'm getting with this today
 
+[Time elapsed so far: 6.5 hours]
+
 # 4-Jan-2024
 
 * Now continuing with this
@@ -140,6 +144,8 @@
     * The text field in the editing popup should contain the current name by default
       * I now got that to work
     * If the input in the editing popup is invalid, the popup should disable the confirm button and show an error
+
+[Time elapsed so far: 10.75 hours]
 
 # 6-Jan-2024
 
@@ -176,6 +182,107 @@
     * Removed a lot of files that flutter_launcher_icons added
 
 * This is as far as I'm getting with this now
+
+[Time elapsed so far: 13 hours]
+
+# 24-Jan-2024
+
+* Now continuing with this
+
+* Okay, currently the program does not have much, but I think what it does have is still enough already that I should now tackle the structural issues of undo- and redo logic, along with saving and loading, since this is going to affect a lot of things
+
+* I'll start with undo-redo legic
+
+  * This is already quite a problem
+
+  * The theory is simple: By applying the command pattern, I can keep a stack of executed commands that one can navigate back and forth across
+
+  * The question is: How do I apply that, especially if I want to avoid using an `EventBus`?
+
+  * Let me try to illustrate the issue with a simple use case for creating a new point in time, and then undoing it
+
+    * Presently, creating a new point in time is done via clicking the `AddPointInTimeButton`, which calls a method in the `TimeBarController`, which in turn calls a method in the `PointInTimeRepository` and then notifies its listeners so that the `TimeBar` gets updated
+      * It would be no problem to rewrite this logic so that the `TimeBarController` creates a command and hands it to some sort of `CommandController`, which in turn keeps track of the executed commands and forwards it to the `PointInTimeRepository`
+    * Undoing that action would involve clicking on an `UndoButton` in some sort of `Toolbar`, which would then trigger an action in the `ToolbarController`
+      * That action could then trigger an undo from the `CommandController`, which takes care of everything beyond that
+    * Right, and if I put it like that, I think it *should* be possible to do it without an `EventBus` like this:
+      * All widget controllers need to listen to the `CommandController`, which in turn is a `ChangeNotifier` itself and notifies its listeners every time a command was executed
+
+  * Okay, so far the theory, and if I lay it out like that it seems pretty straightforward
+
+  * That's the control flow
+
+  * Next, I also want to consider how to keep as much logic as possible within the individual commands, so that the `CommandController` does not end up becoming a mega-freaking HUGE god class
+
+    * Obviously, the commands can't be `ChangeNotifier`s because that would require a fixed set of commands
+
+    * Rather, where we want to go is probably somewhere along the lines of:
+
+      * ````
+        execute(Command command){
+        	command.execute();
+        	commandStack.add(command);
+        	notifyListeners();
+        }
+        
+        undoLast(){
+        	Command lastCommand = commandStack.last;
+        	lastCommand.undo();
+        	commandStack.remove(lastCommand);
+        	notifyListeners();
+        }
+        ````
+
+    * ...I was going to suggest using the visitor pattern here, but looking at it like this, I don't think we actually need it
+
+    * While the commands can't be change notifies, I don't see a reason why they should not be allowed to operate on the repositories
+
+    * The question is whether the updating is going to work through the entire chain, but since all the things that can change should be subject to `context.watch` calls, I *think* that should work
+
+  * Okay, so much for the theory, now to put it to the test
+
+    * Now, two things need to be kept in mind here:
+      * In addition to the undo-logic I also need redo-logic
+      * Safeguarding against bad states by too quick command execution or undo/redo frenzies
+        * Such as, you undo two commands in quick succession, like undo renaming of a point in time then undo adding it, and if the undoing of the adding completes before the renaming, then the renaming undo will fail because the point in time no longer exists
+        * I *think* I can safeguard against that by introducing locks 
+        * I *think* this package supports that:
+          * https://pub.dev/packages/synchronized
+    * Okay, so let's see, which commands do I need for a start?
+      * `CreatePointInTimeCommand`
+      * `RenamePointInTimeCommand`
+      * `DeletePointInTimeCommand`
+    * One question is whether to put those commands in the `commands` folder or the `timeline` folder
+      * Hmm, since putting them in the  `commands` folder is too close to layer-architecture for my taste, I think I'll put them into the `timeline` folder instead, possibly a subfolder though to keep them bundled
+    * Hmm, come to think about it, I think I might not even need to make the `CommandStack` a change notifier because the controllers can just call `await addAndExecute(command)` and then notify their listeners afterwards
+      * Wait, no, there's still the problem that the undo and redo buttons exist in a different context than the controllers, so it's important that the controllers listen to the `CommandStack` so they get notified even when something changes that they did not trigger
+    * And Come to Think of it 2 ~ The Thinkening, I don't believe there are any asynchronous commands that I need to consider, thus I can also save myself the whole locking logic 
+      * Well, following the teachings of the great prophet YANGI, let's try with synchronous commands now, and see how far that will get us
+
+  * I now managed to successfully create the `CreatePointInTimeCommand` and get it to work, which is a good start
+
+  * And now I managed to add the commands for Deleting and Renaming points in time too, and they work as well
+
+  * The next part will be the Undo and Redo buttons
+
+    * Score! Undo works now!
+    * Redo is now also implemented, however, it still fails when attempting to redo renaming of a point after its creation was undone
+      * I think the reason for this is that when undoing and redoing the creation of a point in time, the redo creates a different point in time instead of restoring the undone point in time
+      * I now managed to fix this
+
+  * BREAKTHROUGH! We won!
+
+  * With that, the Undo-Redo logic is working nicely!
+
+  * Now, for the finishing touch I still want to polish the buttons a bit
+
+  * And now it looks pretty good too
+
+  * With that, I declare the Undo-Redo done
+
+* This is as far as I'm getting with this today
+
+[Time elapsed so far: 18.75 hours]
 
 # User Story
 
@@ -223,7 +330,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 
 - [ ] A chronicle can be saved to a file
 - [ ] A chronicle can be loaded from a file
-- [ ] Actions can be undone
-- [ ] Actions can be re-done
+- [x] Actions can be undone
+- [x] Actions can be re-done
 - [ ] You can navigate back to the last visited view
 - [ ] You can navigate forward, which undoes navigating backwards
