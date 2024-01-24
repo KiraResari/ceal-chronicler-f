@@ -180,13 +180,66 @@
 # 24-Jan-2024
 
 * Now continuing with this
+
 * Okay, currently the program does not have much, but I think what it does have is still enough already that I should now tackle the structural issues of undo- and redo logic, along with saving and loading, since this is going to affect a lot of things
+
 * I'll start with undo-redo legic
+
   * This is already quite a problem
+
   * The theory is simple: By applying the command pattern, I can keep a stack of executed commands that one can navigate back and forth across
-  * The question is: How do I apply that, especially if I want to avoid using an EventBus?
+
+  * The question is: How do I apply that, especially if I want to avoid using an `EventBus`?
+
   * Let me try to illustrate the issue with a simple use case for creating a new point in time, and then undoing it
-    * Creating a new point in time is done via 
+
+    * Presently, creating a new point in time is done via clicking the `AddPointInTimeButton`, which calls a method in the `TimeBarController`, which in turn calls a method in the `PointInTimeRepository` and then notifies its listeners so that the `TimeBar` gets updated
+      * It would be no problem to rewrite this logic so that the `TimeBarController` creates a command and hands it to some sort of `CommandController`, which in turn keeps track of the executed commands and forwards it to the `PointInTimeRepository`
+    * Undoing that action would involve clicking on an `UndoButton` in some sort of `Toolbar`, which would then trigger an action in the `ToolbarController`
+      * That action could then trigger an undo from the `CommandController`, which takes care of everything beyond that
+    * Right, and if I put it like that, I think it *should* be possible to do it without an `EventBus` like this:
+      * All widget controllers need to listen to the `CommandController`, which in turn is a `ChangeNotifier` itself and notifies its listeners every time a command was executed
+
+  * Okay, so far the theory, and if I lay it out like that it seems pretty straightforward
+
+  * That's the control flow
+
+  * Next, I also want to consider how to keep as much logic as possible within the individual commands, so that the `CommandController` does not end up becoming a mega-freaking HUGE god class
+
+    * Obviously, the commands can't be `ChangeNotifier`s because that would require a fixed set of commands
+
+    * Rather, where we want to go is probably somewhere along the lines of:
+
+      * ````
+        execute(Command command){
+        	command.execute();
+        	commandStack.add(command);
+        	notifyListeners();
+        }
+        
+        undoLast(){
+        	Command lastCommand = commandStack.last;
+        	lastCommand.undo();
+        	commandStack.remove(lastCommand);
+        	notifyListeners();
+        }
+        ````
+
+    * ...I was going to suggest using the visitor pattern here, but looking at it like this, I don't think we actually need it
+
+    * While the commands can't be change notifies, I don't see a reason why they should not be allowed to operate on the repositories
+
+    * The question is whether the updating is going to work through the entire chain, but since all the things that can change should be subject to `context.watch` calls, I *think* that should work
+
+  * Okay, so much for the theory, now to put it to the test
+
+    * Now, two things need to be kept in mind here:
+      * In addition to the undo-logic I also need redo-logic
+      * Safeguarding against bad states by too quick command execution or undo/redo frenzies
+        * Such as, you undo two commands in quick succession, like undo renaming of a point in time then undo adding it, and if the undoing of the adding completes before the renaming, then the renaming undo will fail because the point in time no longer exists
+        * I *think* I can safeguard against that by introducing locks 
+        * I *think* this package supports that:
+          * https://pub.dev/packages/synchronized
 
 # User Story
 
