@@ -240,6 +240,15 @@
         * I *think* I can safeguard against that by introducing locks 
         * I *think* this package supports that:
           * https://pub.dev/packages/synchronized
+    * Okay, so let's see, which commands do I need for a start?
+      * `CreatePointInTimeCommand`
+      * `RenamePointInTimeCommand`
+      * `DeletePointInTimeCommand`
+    * One question is whether to put those commands in the `commands` folder or the `timeline` folder
+      * Hmm, since putting them in the  `commands` folder is too close to layer-architecture for my taste, I think I'll put them into the `timeline` folder instead, possibly a subfolder though to keep them bundled
+    * Hmm, come to think about it, I think I might not even need to make the `CommandStack` a change notifier because the controllers can just call `await addAndExecute(command)` and then notify their listeners afterwards
+    * And Come to Think of it 2 ~ The Thinkening, I don't believe there are any asynchronous commands that I need to consider, thus I can also save myself the whole locking logic 
+      * Well, following the teachings of the great prophet YANGI, let's try with synchronous commands now, and see how far that will get us
 
 # User Story
 

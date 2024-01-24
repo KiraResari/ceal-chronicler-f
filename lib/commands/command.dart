@@ -1,5 +1,5 @@
 abstract class Command {
-  Future<void> execute();
+  void execute();
 
-  Future<void> undo();
+  void undo();
 }

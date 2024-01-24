@@ -13,9 +13,10 @@ class PointInTimeRepository {
 
   PointInTime get first => _pointsInTime.first;
 
-  void createNewAtIndex(int index) {
+  PointInTime createNewAtIndex(int index) {
     PointInTime newPoint = _createPointWithUniqueName();
     _pointsInTime.insert(index, newPoint);
+    return newPoint;
   }
 
   PointInTime _createPointWithUniqueName() {
