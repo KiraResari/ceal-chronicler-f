@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'redo_button.dart';
 import 'tool_bar_controller.dart';
 import 'undo_button.dart';
 
@@ -19,6 +20,7 @@ class ChroniclerToolBar extends StatelessWidget {
     return const Row(
       children: [
         UndoButton(),
+        RedoButton(),
       ],
     );
   }

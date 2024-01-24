@@ -12,7 +12,11 @@ class CreatePointInTimeCommand extends Command {
 
   @override
   void execute() {
-    _createdPoint = _pointInTimeRepository.createNewAtIndex(creationIndex);
+    if (_createdPoint == null) {
+      _createdPoint = _pointInTimeRepository.createNewAtIndex(creationIndex);
+    } else {
+      _pointInTimeRepository.createAtIndex(creationIndex, _createdPoint!);
+    }
   }
 
   @override

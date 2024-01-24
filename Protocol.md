@@ -33,6 +33,8 @@
     * https://stackoverflow.com/questions/57666495/flutter-app-theme-ofcontext-style-doesnt-work-on-text
 * Well, this is as far as I'm getting with this today
 
+[Time elapsed so far: 2.5 hours]
+
 # 3-Jan-2024
 
 * Now continuing with this
@@ -124,6 +126,8 @@
 
 * This is as far as I'm getting with this today
 
+[Time elapsed so far: 6.5 hours]
+
 # 4-Jan-2024
 
 * Now continuing with this
@@ -140,6 +144,8 @@
     * The text field in the editing popup should contain the current name by default
       * I now got that to work
     * If the input in the editing popup is invalid, the popup should disable the confirm button and show an error
+
+[Time elapsed so far: 10.75 hours]
 
 # 6-Jan-2024
 
@@ -176,6 +182,8 @@
     * Removed a lot of files that flutter_launcher_icons added
 
 * This is as far as I'm getting with this now
+
+[Time elapsed so far: 13 hours]
 
 # 24-Jan-2024
 
@@ -258,6 +266,13 @@
   * The next part will be the Undo and Redo buttons
 
     * Score! Undo works now!
+    * Redo is now also implemented, however, it still fails when attempting to redo renaming of a point after its creation was undone
+      * I think the reason for this is that when undoing and redoing the creation of a point in time, the redo creates a different point in time instead of restoring the undone point in time
+      * I now managed to fix this
+
+  * BREAKTHROUGH! We won!
+
+  * With that, the Undo-Redo logic is working nicely!
 
 # User Story
 
