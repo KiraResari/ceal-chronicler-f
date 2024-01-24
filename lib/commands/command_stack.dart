@@ -1,14 +1,17 @@
+import 'package:flutter/material.dart';
+
 import 'command.dart';
 
-class CommandStack {
+class CommandStack extends ChangeNotifier {
   final List<Command> _commandHistory = [];
   int _index = 0;
 
-  void addAndExecute(Command command) {
+  void process(Command command) {
     _clearHistoryPastCurrentIndex();
     command.execute();
     _commandHistory.add(command);
     _index++;
+    notifyListeners();
   }
 
   void _clearHistoryPastCurrentIndex() {
@@ -24,6 +27,7 @@ class CommandStack {
     _index--;
     Command commandToUndo = _commandHistory[_index];
     commandToUndo.undo();
+    notifyListeners();
   }
 
   bool get _historyIsEmpty => _index == 0;
@@ -35,6 +39,7 @@ class CommandStack {
     _index++;
     Command commandToRedo = _commandHistory[_index];
     commandToRedo.execute();
+    notifyListeners();
   }
 
   bool get _nothingToRedo => _index == _commandHistory.length;

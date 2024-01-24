@@ -13,6 +13,7 @@ class TimeBarController extends ChangeNotifier {
   late PointInTime _activePointInTime;
 
   TimeBarController() {
+    _commandStack.addListener(() => notifyListeners());
     _activePointInTime = _pointInTimeRepository.first;
   }
 
@@ -22,8 +23,7 @@ class TimeBarController extends ChangeNotifier {
 
   void addPointInTimeAtIndex(int index) {
     var command = CreatePointInTimeCommand(index);
-    _commandStack.addAndExecute(command);
-    notifyListeners();
+    _commandStack.process(command);
   }
 
   void delete(PointInTime point) {
