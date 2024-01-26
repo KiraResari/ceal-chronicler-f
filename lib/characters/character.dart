@@ -1,12 +1,12 @@
 import '../fields/display_field.dart';
 import '../items/weapon_field.dart';
-import '../persistence/json_serializable.dart';
+import '../io/json_serializable_old.dart';
 import 'character_id.dart';
 import 'species_field.dart';
 
 import 'character_name_field.dart';
 
-class Character extends JsonSerializable {
+class Character extends JsonSerializableOld {
 
   static const _idFieldName = "id";
   static const _nameFieldName = "nameField";

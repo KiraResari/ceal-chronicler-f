@@ -1,14 +1,14 @@
 import 'dart:convert';
 
-abstract class JsonSerializable {
+abstract class JsonSerializableOld {
 
-  JsonSerializable();
+  JsonSerializableOld();
 
-  JsonSerializable.fromJsonString(String jsonString)
+  JsonSerializableOld.fromJsonString(String jsonString)
       : this.fromJson(jsonDecode(jsonString));
 
   //Name convention from dart:convert. Recommended to not change
-  JsonSerializable.fromJson(Map<String, dynamic> jsonMap){
+  JsonSerializableOld.fromJson(Map<String, dynamic> jsonMap){
     decodeJson(jsonMap);
   }
 

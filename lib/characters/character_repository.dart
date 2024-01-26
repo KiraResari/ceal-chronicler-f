@@ -3,12 +3,12 @@ import 'dart:io';
 
 import 'package:ceal_chronicler_f/characters/character.dart';
 import 'package:ceal_chronicler_f/characters/character_id.dart';
-import 'package:ceal_chronicler_f/persistence/file_reader_writer.dart';
-import 'package:ceal_chronicler_f/persistence/json_serializable.dart';
+import 'package:ceal_chronicler_f/io/file_reader_writer.dart';
+import 'package:ceal_chronicler_f/io/json_serializable_old.dart';
 import 'package:flutter/foundation.dart';
 import 'package:optional/optional_internal.dart';
 
-class CharacterRepository extends JsonSerializable {
+class CharacterRepository extends JsonSerializableOld {
   static const fileName = "ceal.characters.json";
   static const _charactersFieldName = "characters";
 

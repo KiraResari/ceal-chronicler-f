@@ -1,8 +1,8 @@
 import 'package:ceal_chronicler_f/utils/readable_uuid.dart';
 
-import '../persistence/json_serializable.dart';
+import '../io/json_serializable_old.dart';
 
-class CharacterId extends JsonSerializable {
+class CharacterId extends JsonSerializableOld {
   static const String _idFieldName = "id";
 
   var id = ReadableUuid();

@@ -284,6 +284,39 @@
 
 [Time elapsed so far: 18.75 hours]
 
+# 26-Jan-2024
+
+* Now continuing with this
+* Last, I finished the undo-redo functionality
+* Now, I want to tackle saving and loading
+  * This is gonna be a bit more tricky, since I need to target the different platforms differently
+    * Technically, I only need it for PC, but since I also want to use this as a learning project, I also want to implement saving and loading for web and Android
+  * I'll start with the PC save/load functionality
+    * Right now, we have only one type of object that needs to persisted, and that is the `PointInTime`
+    * However, I think at this point I think it makes sense to consider what a save consists of, and create an object for that
+    * One save represents a chronicle, with everything that belongs to it, points in time, characters, places, etc... so it would make sense to have a `Chronicle` object and persist that, and through it everything else
+    * The thing is, I already have a `PointInTimeRepository`, the task of which it is to watch over all the points in time
+      * Let us consider for a moment if it makes sense to have a `ChronicleRepository` instead
+        * My first instinct is to say "no", because that would create something of a god class, and the `PointInTimeRepository` is already 80 lines long and still growing
+        * The `PointInTimeRepository` contains the following public functions:
+          * `get all`
+          * `get first`
+          * `createNewAtIndex`
+          * `createAtIndex`
+          * `get existingNames`
+          * `remove`
+          * `rename`
+          * `getPointIndex`
+        * Literally all of those functions operate on the `List<PointInTime> _pointsInTime`, which is the one and only instance variable of this class, thus meaning this class has extremely high cohesion
+        * If I were to add a `ChronicleRepository` and store the points in time there, I think that would over-complicate things because for pretty much all of those operations, the points in time would have to be fetched from the `ChronicleRepository` repository instead
+        * So, yeah, no, I don't think a `ChronicleRepository` makes sense after all
+      * So, what is the alternative?
+      * I could, whenever a save is called, get all the relevant objects out of their respective repositories, assemble them into a `Chronicle` and then read that, and whenever a load is called I could read the `Chronicle`, and then disassemble its fields into the relevant repositories
+        * This still feels a bit weird, but at least it has the advantage that the `Chronicle` is an object with a very clearly defined purpose: Bundling all the relevant objects for saving and loading
+    * Okay, so let's go with that for now
+    * For starters, though, I need to make the `PointInTime` into a `JsonSerializable` and test that
+      * Yoshu, looks good!
+
 # User Story
 
 As a Game Designer and Author, I want a tool to help me keep track of characters, events, items, knowledge, locations, affiliations and other things that can change over the course of a story. For example, I want to be able to go back and forth in time to figure out who learned what at what time, or who was where at what time and with whom.

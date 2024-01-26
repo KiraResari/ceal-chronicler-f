@@ -1,8 +1,8 @@
-import 'package:ceal_chronicler_f/persistence/json_serializable.dart';
+import 'package:ceal_chronicler_f/io/json_serializable_old.dart';
 
 import '../exceptions/serialization_exception.dart';
 
-abstract class DisplayField<T> extends JsonSerializable {
+abstract class DisplayField<T> extends JsonSerializableOld {
   static const String _fieldNameFieldName = "fieldName";
   static const String _valueFieldName = "value";
 
