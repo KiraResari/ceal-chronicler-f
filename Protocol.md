@@ -316,6 +316,10 @@
     * Okay, so let's go with that for now
     * For starters, though, I need to make the `PointInTime` into a `JsonSerializable` and test that
       * Yoshu, looks good!
+    * Right, next is adding the `Chronicle` object and doing the same for that
+      * This is gonna be more interesting since it involves parsing a list, and my previous solution on that is a bit bogus
+      * I now did that too, and it works
+      * I have to say though, the JSON encoding and decoding is a bit funky, but since I now have a template for most cases, I should be fine from here on out
 
 # User Story
 

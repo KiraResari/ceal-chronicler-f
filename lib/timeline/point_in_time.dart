@@ -4,8 +4,8 @@ import '../io/json_serializable.dart';
 import '../utils/readable_uuid.dart';
 
 class PointInTime extends JsonSerializable {
-  static const String idKey = "idKey";
-  static const String nameKey = "nameKey";
+  static const String idKey = "id";
+  static const String nameKey = "name";
 
   final ReadableUuid id;
   String name;
