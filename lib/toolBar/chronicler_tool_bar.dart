@@ -1,3 +1,4 @@
+import 'package:ceal_chronicler_f/toolBar/save_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,8 +20,11 @@ class ChroniclerToolBar extends StatelessWidget {
   Widget _buildToolBar() {
     return const Row(
       children: [
+        SaveButton(),
+        Spacer(),
         UndoButton(),
         RedoButton(),
+        Spacer(flex: 20),
       ],
     );
   }

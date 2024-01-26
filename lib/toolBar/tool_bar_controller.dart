@@ -14,6 +14,8 @@ class ToolBarController extends ChangeNotifier {
 
   bool get isRedoPossible => _commandProcessor.isRedoPossible;
 
+  bool get isSavingPossible => _commandProcessor.isSavingNecessary;
+
   void undo() {
     _commandProcessor.undo();
   }
@@ -21,4 +23,6 @@ class ToolBarController extends ChangeNotifier {
   void redo() {
     _commandProcessor.redo();
   }
+
+  void save() {}
 }

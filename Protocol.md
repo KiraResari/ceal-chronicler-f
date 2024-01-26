@@ -320,6 +320,22 @@
       * This is gonna be more interesting since it involves parsing a list, and my previous solution on that is a bit bogus
       * I now did that too, and it works
       * I have to say though, the JSON encoding and decoding is a bit funky, but since I now have a template for most cases, I should be fine from here on out
+    * Okay, so next is the actual saving and loading, now that I have the objects prepared and ready to be parsed to and from JSONs
+    * I suppose it makes sense to start with the saving
+      * When saving, I want a system popup to appear that asks me where I want to save the file to
+      * Oooh, but before that, there's some really fancy interaction with saving and the undo-redo logic
+        * "Saving should not be necessary if a command has been executed and saved" is the name of the test that is a bit of a twister
+          * The question that needs to be answered at this point is how saving is going to be implemented structurally
+            * Whatever class is gonna do the saving needs access to all the repositories
+            * I feel a strong tug to simply put it into the `CommandProcessor`, but at the same time that also feels like it's outside of its responsibility
+            * At the same time, it would make the interaction between the undo-redo logic that is housed in the `CommandProcessor` and the saving logic so much easier to process if all the saving logic would go through there
+            * And yet, save and load clearly should not be commands, because I don't want them to be un- and redo-able
+            * With all that in mind, I feel it probably is a good start to give the  `CommandProcessor` `save` and `load` functions, aiming at that they will forward to a dedicated class while at the same time modifying the undo/redo logic accordingly 
+      * Right, I think I figured out a good logic for that now
+* This is as far as I'm getting with this today
+* What I want to do next:
+  * Add actual saving functionality
+
 
 # User Story
 

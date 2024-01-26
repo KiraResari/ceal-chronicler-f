@@ -6,6 +6,7 @@ import 'command.dart';
 class CommandProcessor extends ChangeNotifier {
   final List<Command> _commandHistory = [];
   int _index = 0;
+  int _savedAtIndex = 0;
 
   void process(Command command) {
     try {
@@ -31,6 +32,13 @@ class CommandProcessor extends ChangeNotifier {
     int removalRangeStart = _index;
     int removalRangeEnd = _commandHistory.length;
     _commandHistory.removeRange(removalRangeStart, removalRangeEnd);
+    _makeSavingNecessaryIfSavedIndexWasRemoved();
+  }
+
+  void _makeSavingNecessaryIfSavedIndexWasRemoved() {
+    if (_savedAtIndex > _index) {
+      _savedAtIndex = -1;
+    }
   }
 
   void undo() {
@@ -80,4 +88,14 @@ class CommandProcessor extends ChangeNotifier {
   }
 
   bool get isRedoPossible => _index < _commandHistory.length;
+
+  bool get isSavingNecessary {
+    return _index != _savedAtIndex;
+  }
+
+  Future<void> save() async {
+    //TODO: Implement saving
+    _savedAtIndex = _index;
+    notifyListeners();
+  }
 }
