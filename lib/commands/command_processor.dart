@@ -7,11 +7,20 @@ import '../exceptions/command_failed_exception.dart';
 import 'command.dart';
 
 class CommandProcessor extends ChangeNotifier {
+  static const String saveCancelledMessage = "Saving cancelled";
+  static const String saveCompletedMessage = "Chronicle saved!";
+  static const String loadCancelledMessage = "Loading cancelled";
+  static const String loadCompletedMessage = "Loaded chronicle";
+
   final _fileService = getIt.get<FileService>();
 
   final List<Command> _commandHistory = [];
   int _index = 0;
   int _savedAtIndex = 0;
+
+  String _statusMessage = "Welcome to the Ceal Chronicler";
+
+  String get statusMessage => _statusMessage;
 
   void process(Command command) {
     try {
@@ -102,20 +111,22 @@ class CommandProcessor extends ChangeNotifier {
     try {
       await _fileService.save();
       _savedAtIndex = _index;
-      notifyListeners();
+      _statusMessage = saveCompletedMessage;
     } on OperationCanceledException {
-      return;
+      _statusMessage = saveCancelledMessage;
     }
+    notifyListeners();
   }
 
   Future<void> load() async {
     try {
       await _fileService.load();
       _resetHistoryAndIndexes();
-      notifyListeners();
+      _statusMessage = loadCompletedMessage;
     } on OperationCanceledException {
-      return;
+      _statusMessage = loadCancelledMessage;
     }
+    notifyListeners();
   }
 
   void _resetHistoryAndIndexes() {

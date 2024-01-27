@@ -368,7 +368,13 @@
         * But that's a problem for another day
         * For now, I'll just wrap it up nicely by disabling these buttons on web
   * With that, saving and loading works good enough for my taste now
-* TODO: Quick add a status message bar for status messages
+* Next, I quickly want to add a status message bar for status messages
+  * Though this is not in the acceptance criteria, I have regularly witnessed in the Kanji Tree R how useful that could be, so I want to add it here too
+  * While easy in theory, I seem to have some trouble with the `MessageBar` not reacting to the `notifyListeners()` of the `CommandProcessor`, despite me having watched it via `context.watch<CommandProcessor>().statusMessage`
+  * Ah, I figured out what the issue was: I accidentally created a second `CommandProcessor` that was never triggered, but which the `MessageBar` listened to
+    * I now fixed that by interposing a `MessageBarController` that gets the `CommandProcessor` from the context
+  * Okay, so now the message bar basically works
+  * For now, I'm just gonna add messages for every command
 
 # User Story
 

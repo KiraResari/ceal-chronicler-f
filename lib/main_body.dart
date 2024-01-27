@@ -1,3 +1,4 @@
+import 'package:ceal_chronicler_f/message_bar/message_bar.dart';
 import 'package:ceal_chronicler_f/timeline/time_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,7 @@ class MainBody extends StatelessWidget{
       body: const SizedBox.expand(
         child: Column(
           children: [
+            MessageBar(),
             ChroniclerToolBar(),
             TimeBar(),
             MainView(),
