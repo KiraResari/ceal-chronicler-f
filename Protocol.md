@@ -346,6 +346,19 @@
     * Gosh, I wonder if I'll even *have* to implement different logic for the different platforms with that
     * Let's try
     * Awesome! That worked unexpectedly easily!
+  * Cool, let's see if it also works on other platforms just like that
+    * Okay, looks like it doesn't work on web
+    * And looking at the documentation, it won't work for android as well, so I need special cases for those, but I don't think I'll need separate classes for just that
+    * Okay, so, saving for web seems to be more complicated
+    * It looks like I can probably get it to work *somehow* for Android, but for Web it's another matter altogether
+    * This plugin seems to support saving for Android and iOS, but not for web: https://pub.dev/packages/flutter_file_dialog 
+      * Ah, no, that also works differently, I'm afraid
+    * Well, since my targeted platform is Windows anyway, I suppose we can skip this for now
+    * Since I tend to have pretty big gaps between when I actually get to work on this project, odds are that this plugin will support saving for these platforms before I'm done with it
+    * And until then, for mobile I can at least use the same solution that I used in the first draft, and simply save to a fixed file for now
+      * Well, at least that doesn't throw an error, though I suppose I won't be able to tell if it really worked on mobile until I implement loading
+  * Okay, so much for saving, now let's try loading
+    * Again, loading first comes with its own baggage of interaction with the undo-redo functionality, so I want to write test cases for that and get those to work first
 * TODO: Quick add a status message bar for status messages
 
 # User Story
