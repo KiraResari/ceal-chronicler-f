@@ -5,13 +5,11 @@ class PointInTimeRepository {
   static const String defaultPointInTimeName = "Point in Time";
   static const int startingRunningNumber = 2;
 
-  final List<PointInTime> _pointsInTime = [
+  List<PointInTime> pointsInTime = [
     PointInTime(defaultPointInTimeName),
   ];
 
-  List<PointInTime> get all => _pointsInTime;
-
-  PointInTime get first => _pointsInTime.first;
+  PointInTime get first => pointsInTime.first;
 
   PointInTime createNewAtIndex(int index) {
     PointInTime newPoint = _createPointWithUniqueName();
@@ -19,7 +17,7 @@ class PointInTimeRepository {
   }
 
   PointInTime createAtIndex(int index, PointInTime newPoint) {
-    _pointsInTime.insert(index, newPoint);
+    pointsInTime.insert(index, newPoint);
     return newPoint;
   }
 
@@ -43,20 +41,20 @@ class PointInTimeRepository {
   }
 
   List<String> get existingNames {
-    return _pointsInTime.map((point) => point.name).toList();
+    return pointsInTime.map((point) => point.name).toList();
   }
 
   void remove(PointInTime pointToBeRemoved) {
     _assertPointExistsInRepository(pointToBeRemoved);
-    if (_pointsInTime.length == 1) {
+    if (pointsInTime.length == 1) {
       throw InvalidOperationException(
           "The final point in time can't be removed");
     }
-    _pointsInTime.remove(pointToBeRemoved);
+    pointsInTime.remove(pointToBeRemoved);
   }
 
   void _assertPointExistsInRepository(PointInTime point) {
-    if (!_pointsInTime.contains(point)) {
+    if (!pointsInTime.contains(point)) {
       throw InvalidOperationException(
           "PointInTimeRepository does not contain PointInTime with name ${point.name}");
     }
@@ -77,5 +75,5 @@ class PointInTimeRepository {
     }
   }
 
-  int getPointIndex(PointInTime point) => _pointsInTime.indexOf(point);
+  int getPointIndex(PointInTime point) => pointsInTime.indexOf(point);
 }

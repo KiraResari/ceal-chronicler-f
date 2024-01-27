@@ -7,7 +7,7 @@ main() {
   test("Newly created repository should contain one point in time", () {
     var repository = PointInTimeRepository();
 
-    expect(repository.all.length, equals(1));
+    expect(repository.pointsInTime.length, equals(1));
   });
 
   test("Adding a point in time before the default one should work", () {
@@ -15,7 +15,7 @@ main() {
 
     repository.createNewAtIndex(0);
 
-    expect(repository.all.length, equals(2));
+    expect(repository.pointsInTime.length, equals(2));
     String secondPointName =
         "${PointInTimeRepository.defaultPointInTimeName}${PointInTimeRepository.startingRunningNumber}";
     expect(repository.first.name, equals(secondPointName));
@@ -26,7 +26,7 @@ main() {
 
     repository.createNewAtIndex(1);
 
-    expect(repository.all.length, equals(2));
+    expect(repository.pointsInTime.length, equals(2));
     String secondPointName = PointInTimeRepository.defaultPointInTimeName;
     expect(repository.first.name, equals(secondPointName));
   });
@@ -51,8 +51,8 @@ main() {
 
     repository.remove(pointToBeRemoved);
 
-    expect(repository.all.length, equals(1));
-    expect(repository.all, isNot(contains(pointToBeRemoved)));
+    expect(repository.pointsInTime.length, equals(1));
+    expect(repository.pointsInTime, isNot(contains(pointToBeRemoved)));
   });
 
   test("Attempting to remove final point in time should cause exception", () {
@@ -80,7 +80,7 @@ main() {
     var repository = PointInTimeRepository();
     repository.createNewAtIndex(1);
     PointInTime firstPoint = repository.first;
-    PointInTime secondPoint = repository.all[1];
+    PointInTime secondPoint = repository.pointsInTime[1];
 
     expect(() {
       repository.rename(firstPoint, secondPoint.name);

@@ -24,7 +24,7 @@ main() {
 
       processor.process(command);
 
-      List<PointInTime> pointsInRepository = repository.all;
+      List<PointInTime> pointsInRepository = repository.pointsInTime;
       expect(pointsInRepository, isNot(contains(pointToDelete)));
     },
   );
@@ -38,7 +38,7 @@ main() {
       processor.process(command);
       processor.undo();
 
-      List<PointInTime> pointsInRepository = repository.all;
+      List<PointInTime> pointsInRepository = repository.pointsInTime;
       expect(pointsInRepository, contains(pointToDelete));
     },
   );
@@ -53,7 +53,7 @@ main() {
       processor.undo();
       processor.redo();
 
-      List<PointInTime> pointsInRepository = repository.all;
+      List<PointInTime> pointsInRepository = repository.pointsInTime;
       expect(pointsInRepository, isNot(contains(pointToDelete)));
     },
   );

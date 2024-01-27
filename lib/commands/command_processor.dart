@@ -107,4 +107,20 @@ class CommandProcessor extends ChangeNotifier {
       return;
     }
   }
+
+  Future<void> load() async {
+    try {
+      await _fileService.load();
+      _resetHistoryAndIndexes();
+      notifyListeners();
+    } on OperationCanceledException {
+      return;
+    }
+  }
+
+  void _resetHistoryAndIndexes() {
+    _commandHistory.clear();
+    _index = 0;
+    _savedAtIndex = 0;
+  }
 }

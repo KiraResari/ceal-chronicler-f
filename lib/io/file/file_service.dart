@@ -6,23 +6,18 @@ import 'package:path_provider/path_provider.dart';
 
 import '../../exceptions/operation_canceled_exception.dart';
 import '../../get_it_context.dart';
-import '../../timeline/point_in_time.dart';
-import '../../timeline/point_in_time_repository.dart';
 import '../chronicle.dart';
+import '../repository_service.dart';
 
 class FileService {
   static const saveDialogText = "Choose where to save the Chronicle";
   static const defaultFileName = "chronicle.json";
-  final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
+
+  final _repositoryService = getIt.get<RepositoryService>();
 
   Future<void> save() async {
-    Chronicle chronicle = assembleChronicle();
+    Chronicle chronicle = _repositoryService.assembleChronicle();
     await _saveChronicle(chronicle);
-  }
-
-  Chronicle assembleChronicle() {
-    List<PointInTime> pointsInTime = _pointInTimeRepository.all;
-    return Chronicle(pointsInTime: pointsInTime);
   }
 
   Future<void> _saveChronicle(Chronicle chronicle) async {
@@ -50,4 +45,6 @@ class FileService {
     Directory directory = await getApplicationDocumentsDirectory();
     return directory.path + defaultFileName;
   }
+
+  Future<void> load() async {}
 }

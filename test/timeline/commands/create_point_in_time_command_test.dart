@@ -19,12 +19,12 @@ main() {
   test(
     "Processing command should add new point in time",
     () {
-      int initialPointsInTime = repository.all.length;
+      int initialPointsInTime = repository.pointsInTime.length;
       var command = CreatePointInTimeCommand(0);
 
       processor.process(command);
 
-      expect(repository.all.length, equals(initialPointsInTime + 1));
+      expect(repository.pointsInTime.length, equals(initialPointsInTime + 1));
     },
   );
 
@@ -37,7 +37,7 @@ main() {
       PointInTime createdPoint = repository.first;
       processor.undo();
 
-      expect(repository.all, isNot(contains(createdPoint)));
+      expect(repository.pointsInTime, isNot(contains(createdPoint)));
     },
   );
 
@@ -51,7 +51,7 @@ main() {
       processor.undo();
       processor.redo();
 
-      expect(repository.all, contains(createdPoint));
+      expect(repository.pointsInTime, contains(createdPoint));
     },
   );
 }

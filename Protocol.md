@@ -359,6 +359,7 @@
       * Well, at least that doesn't throw an error, though I suppose I won't be able to tell if it really worked on mobile until I implement loading
   * Okay, so much for saving, now let's try loading
     * Again, loading first comes with its own baggage of interaction with the undo-redo functionality, so I want to write test cases for that and get those to work first
+      * I now did that, though it turns out there were not as many necessary, given that loading is always possible, and pretty much only resets the command history which triggers everything else
 * TODO: Quick add a status message bar for status messages
 
 # User Story

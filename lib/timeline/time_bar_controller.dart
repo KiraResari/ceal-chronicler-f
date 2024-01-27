@@ -19,9 +19,9 @@ class TimeBarController extends ChangeNotifier {
     _activePointInTime = _pointInTimeRepository.first;
   }
 
-  List<PointInTime> get pointsInTime => _pointInTimeRepository.all;
+  List<PointInTime> get pointsInTime => _pointInTimeRepository.pointsInTime;
 
-  get isDeletingAllowed => _pointInTimeRepository.all.length > 1;
+  get isDeletingAllowed => _pointInTimeRepository.pointsInTime.length > 1;
 
   void addPointInTimeAtIndex(int index) {
     var command = CreatePointInTimeCommand(index);
