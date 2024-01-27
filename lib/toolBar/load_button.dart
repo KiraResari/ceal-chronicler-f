@@ -5,26 +5,21 @@ import 'package:provider/provider.dart';
 import '../utils/widgets/medium_square_button.dart';
 import 'tool_bar_controller.dart';
 
-class SaveButton extends MediumSquareButton {
-  const SaveButton({super.key})
+class LoadButton extends MediumSquareButton {
+  const LoadButton({super.key})
       : super(
-          tooltip: "Save chronicle",
+          tooltip: "Load chronicle",
           disabledTooltip:
-              kIsWeb ? "Saving in browser is not supported" : "Nothing to save",
-          icon: Icons.save,
+              kIsWeb ? "Loading in browser is not supported" : null,
+          icon: Icons.folder_rounded,
         );
 
   @override
   void onPressed(BuildContext context) {
     var controller = context.read<ToolBarController>();
-    controller.save();
+    controller.load();
   }
 
   @override
-  bool isEnabled(BuildContext context) {
-    if (kIsWeb) {
-      return false;
-    }
-    return context.watch<ToolBarController>().isSavingPossible;
-  }
+  bool isEnabled(BuildContext context) => !kIsWeb;
 }

@@ -10,8 +10,10 @@ import '../chronicle.dart';
 import '../repository_service.dart';
 
 class FileService {
-  static const saveDialogText = "Choose where to save the Chronicle";
-  static const defaultFileName = "chronicle.json";
+  static const saveDialogText = "Save chronicle";
+  static const loadDialogText = "Load chronicle";
+  static const defaultFileName = "ceal";
+  static const fileExtension = "chronicle";
 
   final _repositoryService = getIt.get<RepositoryService>();
 
@@ -36,15 +38,49 @@ class FileService {
       return await _mobileSavePath;
     }
     return await FilePicker.platform.saveFile(
+      allowedExtensions: [fileExtension],
+      type: FileType.custom,
       dialogTitle: saveDialogText,
-      fileName: defaultFileName,
+      fileName: "$defaultFileName.$fileExtension",
     );
   }
 
-  Future<String?> get _mobileSavePath async {
+  Future<String> get _mobileSavePath async {
     Directory directory = await getApplicationDocumentsDirectory();
-    return directory.path + defaultFileName;
+    return "${directory.path}$defaultFileName.$fileExtension";
   }
 
-  Future<void> load() async {}
+  Future<void> load() async {
+    Chronicle chronicle = await _loadChronicle();
+    _repositoryService.distributeChronicle(chronicle);
+  }
+
+  Future<Chronicle> _loadChronicle() async {
+    String path = await _getLoadFilePath();
+    File file = File(path);
+    String content = await file.readAsString();
+    return Chronicle.fromJsonString(content);
+  }
+
+  Future<String> _getLoadFilePath() async {
+    if (Platform.isAndroid || Platform.isIOS) {
+      return await _mobileSavePath;
+    }
+    return await _getLoadFilePathFromFilePicker();
+  }
+
+  Future<String> _getLoadFilePathFromFilePicker() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      allowedExtensions: [fileExtension],
+      type: FileType.custom,
+      dialogTitle: loadDialogText,
+    );
+    if (result != null) {
+      String? path = result.files.single.path;
+      if (path != null) {
+        return path;
+      }
+    }
+    throw OperationCanceledException();
+  }
 }

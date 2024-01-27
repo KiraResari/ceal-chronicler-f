@@ -1,3 +1,4 @@
+import 'package:ceal_chronicler_f/toolBar/load_button.dart';
 import 'package:ceal_chronicler_f/toolBar/save_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +22,7 @@ class ChroniclerToolBar extends StatelessWidget {
     return const Row(
       children: [
         SaveButton(),
+        LoadButton(),
         Spacer(),
         UndoButton(),
         RedoButton(),

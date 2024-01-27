@@ -360,6 +360,14 @@
   * Okay, so much for saving, now let's try loading
     * Again, loading first comes with its own baggage of interaction with the undo-redo functionality, so I want to write test cases for that and get those to work first
       * I now did that, though it turns out there were not as many necessary, given that loading is always possible, and pretty much only resets the command history which triggers everything else
+    * Okay, now onward to making it work
+      * Alright! loading now works on Windows
+      * And on Android too! Sweet!
+      * Only web still has issues, oh well
+        * I suppose it makes sense that saving and loading require somewhat special handling in web, since there it's more like upload and download, or export and import I guess
+        * But that's a problem for another day
+        * For now, I'll just wrap it up nicely by disabling these buttons on web
+  * With that, saving and loading works good enough for my taste now
 * TODO: Quick add a status message bar for status messages
 
 # User Story
@@ -406,8 +414,8 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 
 ### Technical
 
-- [ ] A chronicle can be saved to a file
-- [ ] A chronicle can be loaded from a file
+- [x] A chronicle can be saved to a file
+- [x] A chronicle can be loaded from a file
 - [x] Actions can be undone
 - [x] Actions can be re-done
 - [ ] You can navigate back to the last visited view
