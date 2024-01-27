@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../get_it_context.dart';
 import '../io/file/file_service.dart';
-import '../exceptions/command_failed_exception.dart';
 import 'command.dart';
 
 class CommandProcessor extends ChangeNotifier {
@@ -26,7 +25,7 @@ class CommandProcessor extends ChangeNotifier {
     try {
       _processCommand(command);
     } catch (e) {
-      throw CommandFailedException(
+      _updateStatusMessageAndNotifyListeners(
         "Processing of command failed\n"
         "Command: $command\n"
         "Cause: $e",
@@ -39,6 +38,11 @@ class CommandProcessor extends ChangeNotifier {
     command.execute();
     _commandHistory.add(command);
     _index++;
+    _updateStatusMessageAndNotifyListeners(command.executeMessage);
+  }
+
+  void _updateStatusMessageAndNotifyListeners(String message) {
+    _statusMessage = message;
     notifyListeners();
   }
 
@@ -62,7 +66,7 @@ class CommandProcessor extends ChangeNotifier {
       }
     } catch (e) {
       Command command = _commandHistory[_index - 1];
-      throw CommandFailedException(
+      _updateStatusMessageAndNotifyListeners(
         "Undo of command failed\n"
         "Command: $command\n"
         "Cause: $e",
@@ -74,7 +78,7 @@ class CommandProcessor extends ChangeNotifier {
     _index--;
     Command commandToUndo = _commandHistory[_index];
     commandToUndo.undo();
-    notifyListeners();
+    _updateStatusMessageAndNotifyListeners(commandToUndo.undoMessage);
   }
 
   bool get isUndoPossible => _index > 0;
@@ -86,7 +90,7 @@ class CommandProcessor extends ChangeNotifier {
       }
     } catch (e) {
       Command command = _commandHistory[_index];
-      throw CommandFailedException(
+      _updateStatusMessageAndNotifyListeners(
         "Redo of command failed\n"
         "Command: $command\n"
         "Cause: $e",
@@ -98,7 +102,7 @@ class CommandProcessor extends ChangeNotifier {
     Command commandToRedo = _commandHistory[_index];
     commandToRedo.execute();
     _index++;
-    notifyListeners();
+    _updateStatusMessageAndNotifyListeners(commandToRedo.executeMessage);
   }
 
   bool get isRedoPossible => _index < _commandHistory.length;
@@ -111,22 +115,20 @@ class CommandProcessor extends ChangeNotifier {
     try {
       await _fileService.save();
       _savedAtIndex = _index;
-      _statusMessage = saveCompletedMessage;
+      _updateStatusMessageAndNotifyListeners(saveCompletedMessage);
     } on OperationCanceledException {
-      _statusMessage = saveCancelledMessage;
+      _updateStatusMessageAndNotifyListeners(saveCancelledMessage);
     }
-    notifyListeners();
   }
 
   Future<void> load() async {
     try {
       await _fileService.load();
       _resetHistoryAndIndexes();
-      _statusMessage = loadCompletedMessage;
+      _updateStatusMessageAndNotifyListeners(loadCompletedMessage);
     } on OperationCanceledException {
-      _statusMessage = loadCancelledMessage;
+      _updateStatusMessageAndNotifyListeners(loadCancelledMessage);
     }
-    notifyListeners();
   }
 
   void _resetHistoryAndIndexes() {

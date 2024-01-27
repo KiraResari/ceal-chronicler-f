@@ -5,17 +5,32 @@ import '../point_in_time_repository.dart';
 
 class CreatePointInTimeCommand extends Command {
   final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
-  final int creationIndex;
+  final int _creationIndex;
   PointInTime? _createdPoint;
 
-  CreatePointInTimeCommand(this.creationIndex);
+  @override
+  String get executeMessage =>
+      "Created new Point in Time$_pointNameSuffixOrNothing";
+
+  @override
+  String get undoMessage =>
+      "Undid creation of Point in Time$_pointNameSuffixOrNothing";
+
+  String get _pointNameSuffixOrNothing {
+    if (_createdPoint != null) {
+      return " '${_createdPoint!.name}'";
+    }
+    return "";
+  }
+
+  CreatePointInTimeCommand(this._creationIndex);
 
   @override
   void execute() {
     if (_createdPoint == null) {
-      _createdPoint = _pointInTimeRepository.createNewAtIndex(creationIndex);
+      _createdPoint = _pointInTimeRepository.createNewAtIndex(_creationIndex);
     } else {
-      _pointInTimeRepository.createAtIndex(creationIndex, _createdPoint!);
+      _pointInTimeRepository.createAtIndex(_creationIndex, _createdPoint!);
     }
   }
 

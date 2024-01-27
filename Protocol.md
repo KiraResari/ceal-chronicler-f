@@ -375,6 +375,9 @@
     * I now fixed that by interposing a `MessageBarController` that gets the `CommandProcessor` from the context
   * Okay, so now the message bar basically works
   * For now, I'm just gonna add messages for every command
+  * I now did that
+  * The message bar is still a bit crude for now, but since it's mostly for providing feedback of what is happening in the app to me right now, I think this is good enough for now
+* This is as far as I'm getting with this for now
 
 # User Story
 
