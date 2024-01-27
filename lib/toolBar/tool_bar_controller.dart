@@ -24,5 +24,7 @@ class ToolBarController extends ChangeNotifier {
     _commandProcessor.redo();
   }
 
-  void save() {}
+  void save() {
+    _commandProcessor.save();
+  }
 }

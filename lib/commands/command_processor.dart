@@ -1,9 +1,14 @@
-import 'package:ceal_chronicler_f/exceptions/command_failed_exception.dart';
+import 'package:ceal_chronicler_f/exceptions/operation_canceled_exception.dart';
 import 'package:flutter/material.dart';
 
+import '../get_it_context.dart';
+import '../io/file/file_service.dart';
+import '../exceptions/command_failed_exception.dart';
 import 'command.dart';
 
 class CommandProcessor extends ChangeNotifier {
+  final _fileService = getIt.get<FileService>();
+
   final List<Command> _commandHistory = [];
   int _index = 0;
   int _savedAtIndex = 0;
@@ -94,8 +99,12 @@ class CommandProcessor extends ChangeNotifier {
   }
 
   Future<void> save() async {
-    //TODO: Implement saving
-    _savedAtIndex = _index;
-    notifyListeners();
+    try {
+      await _fileService.save();
+      _savedAtIndex = _index;
+      notifyListeners();
+    } on OperationCanceledException {
+      return;
+    }
   }
 }

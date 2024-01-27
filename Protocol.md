@@ -336,6 +336,17 @@
 * What I want to do next:
   * Add actual saving functionality
 
+# 27-Jan-2024
+
+* Now continuing with this
+* Last time I got started with the save-load functionality
+  * The next thing I wanted to do was adding the actual saving functionality when the button is clicked
+  * And that's where things are gonna get more interesting because they're getting platform-dependent
+  * Hey, this looks like a convenient way for picking the file name https://pub.dev/packages/file_picker
+    * Gosh, I wonder if I'll even *have* to implement different logic for the different platforms with that
+    * Let's try
+    * Awesome! That worked unexpectedly easily!
+* TODO: Quick add a status message bar for status messages
 
 # User Story
 

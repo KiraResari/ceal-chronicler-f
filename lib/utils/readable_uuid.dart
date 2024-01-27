@@ -10,6 +10,8 @@ class ReadableUuid extends JsonSerializableOld {
 
   ReadableUuid();
 
+  ReadableUuid.fromString(this.uuid);
+
   ReadableUuid.fromJsonString(String jsonString)
       : super.fromJsonString(jsonString);
 

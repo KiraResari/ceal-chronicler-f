@@ -16,7 +16,7 @@ class PointInTime extends JsonSerializable {
       : this.fromJson(jsonDecode(jsonString));
 
   PointInTime.fromJson(Map<String, dynamic> json)
-      : id = ReadableUuid.fromJson(json[idKey]),
+      : id = ReadableUuid.fromString(json[idKey]),
         name = json[nameKey];
 
   @override
@@ -24,7 +24,7 @@ class PointInTime extends JsonSerializable {
 
   @override
   Map<String, dynamic> toJson() => {
-        idKey: id,
+        idKey: id.uuid,
         nameKey: name,
       };
 
