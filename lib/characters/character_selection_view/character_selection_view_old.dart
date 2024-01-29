@@ -12,9 +12,9 @@ import '../../theme/custom_colors.dart';
 import '../../events/open_character_view_event.dart';
 import '../../get_it_context.dart';
 import '../character.dart';
-import '../character_selection_view/character_selection_view_model.dart';
+import '../character_selection_view/character_selection_view_old_model.dart';
 
-class CharacterSelectionView extends StatefulWidget {
+class CharacterSelectionViewOld extends StatefulWidget {
   static const titleText = "Characters";
   static const addCharacterButtonText = "➕ Add Character";
   static const saveButtonText = "💾 Save";
@@ -27,21 +27,21 @@ class CharacterSelectionView extends StatefulWidget {
   static const addButtonKey = Key("addButton");
   static const saveButtonKey = Key("saveButton");
   static const loadButtonKey = Key("loadButton");
-  static final model = getIt<CharacterSelectionViewModel>();
+  static final model = getIt<CharacterSelectionViewOldModel>();
 
-  const CharacterSelectionView({super.key});
+  const CharacterSelectionViewOld({super.key});
 
   @override
-  State<CharacterSelectionView> createState() => _CharacterSelectionViewState();
+  State<CharacterSelectionViewOld> createState() => _CharacterSelectionViewOldState();
 }
 
-class _CharacterSelectionViewState extends State<CharacterSelectionView> {
-  List<Character> characters = CharacterSelectionView.model.characters;
+class _CharacterSelectionViewOldState extends State<CharacterSelectionViewOld> {
+  List<Character> characters = CharacterSelectionViewOld.model.characters;
   final _eventBus = getIt.get<EventBus>();
   late final StreamSubscription<UpdateCharacterSelectionViewEvent>
       _subscription;
 
-  _CharacterSelectionViewState() {
+  _CharacterSelectionViewOldState() {
     _subscription =
         _eventBus.on<UpdateCharacterSelectionViewEvent>().listen((event) {
       _updateCharacterSelectionView();
@@ -57,7 +57,7 @@ class _CharacterSelectionViewState extends State<CharacterSelectionView> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      key: CharacterSelectionView.characterViewKey,
+      key: CharacterSelectionViewOld.characterViewKey,
       color: CustomColors.background,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -68,7 +68,7 @@ class _CharacterSelectionViewState extends State<CharacterSelectionView> {
 
   Widget _buildMainColumn(BuildContext context) {
     return Column(
-      key: CharacterSelectionView.mainColumnKey,
+      key: CharacterSelectionViewOld.mainColumnKey,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildTitleText(context),
@@ -82,15 +82,15 @@ class _CharacterSelectionViewState extends State<CharacterSelectionView> {
     var theme = Theme.of(context);
     TextStyle titleStyle = theme.textTheme.displayMedium!;
     return Text(
-      key: CharacterSelectionView.titleTextKey,
-      CharacterSelectionView.titleText,
+      key: CharacterSelectionViewOld.titleTextKey,
+      CharacterSelectionViewOld.titleText,
       style: titleStyle,
     );
   }
 
   Column _buildCharactersColumn(BuildContext context) {
     return Column(
-      key: CharacterSelectionView.charactersColumnKey,
+      key: CharacterSelectionViewOld.charactersColumnKey,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: _buildCharacterButtons(context),
     );
@@ -150,7 +150,7 @@ class _CharacterSelectionViewState extends State<CharacterSelectionView> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton(
-        key: CharacterSelectionView.addButtonKey,
+        key: CharacterSelectionViewOld.addButtonKey,
         style: ButtonStyles.confirm,
         onPressed: () => _eventBus.fire(AddCharacterEvent()),
         child: _buildAddButtonText(theme),
@@ -161,7 +161,7 @@ class _CharacterSelectionViewState extends State<CharacterSelectionView> {
   Text _buildAddButtonText(ThemeData theme) {
     TextStyle buttonTextStyle = theme.textTheme.button!;
     return Text(
-      CharacterSelectionView.addCharacterButtonText,
+      CharacterSelectionViewOld.addCharacterButtonText,
       style: buttonTextStyle,
       semanticsLabel: "Add Character Button",
     );
@@ -171,7 +171,7 @@ class _CharacterSelectionViewState extends State<CharacterSelectionView> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton(
-        key: CharacterSelectionView.saveButtonKey,
+        key: CharacterSelectionViewOld.saveButtonKey,
         style: ButtonStyles.save,
         onPressed: () => _eventBus.fire(ExportCharactersEvent()),
         child: _buildSaveButtonText(theme),
@@ -182,7 +182,7 @@ class _CharacterSelectionViewState extends State<CharacterSelectionView> {
   Text _buildSaveButtonText(ThemeData theme) {
     TextStyle buttonTextStyle = theme.textTheme.button!;
     return Text(
-      CharacterSelectionView.saveButtonText,
+      CharacterSelectionViewOld.saveButtonText,
       style: buttonTextStyle,
       semanticsLabel: "Save Button",
     );
@@ -192,7 +192,7 @@ class _CharacterSelectionViewState extends State<CharacterSelectionView> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton(
-        key: CharacterSelectionView.loadButtonKey,
+        key: CharacterSelectionViewOld.loadButtonKey,
         style: ButtonStyles.load,
         onPressed: () => _eventBus.fire(ImportCharactersEvent()),
         child: _buildLoadButtonText(theme),
@@ -203,7 +203,7 @@ class _CharacterSelectionViewState extends State<CharacterSelectionView> {
   Text _buildLoadButtonText(ThemeData theme) {
     TextStyle buttonTextStyle = theme.textTheme.button!;
     return Text(
-      CharacterSelectionView.loadButtonText,
+      CharacterSelectionViewOld.loadButtonText,
       style: buttonTextStyle,
       semanticsLabel: "Load Button",
     );
@@ -212,7 +212,7 @@ class _CharacterSelectionViewState extends State<CharacterSelectionView> {
   void _updateCharacterSelectionView() {
     setState(
       () {
-        characters = CharacterSelectionView.model.characters;
+        characters = CharacterSelectionViewOld.model.characters;
       },
     );
   }

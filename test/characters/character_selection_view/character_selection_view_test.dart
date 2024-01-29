@@ -1,6 +1,6 @@
 import 'package:ceal_chronicler_f/ceal_chronicler_f.dart';
 import 'package:ceal_chronicler_f/characters/character_name_field.dart';
-import 'package:ceal_chronicler_f/characters/character_selection_view/character_selection_view.dart';
+import 'package:ceal_chronicler_f/characters/character_selection_view/character_selection_view_old.dart';
 import 'package:ceal_chronicler_f/characters/character_view/character_view.dart';
 import 'package:ceal_chronicler_f/get_it_context.dart';
 import 'package:ceal_chronicler_f/title_view.dart';
@@ -15,7 +15,7 @@ void main() {
     (WidgetTester tester) async {
       await navigateToCharacterSelectionView(tester);
 
-      expect(find.text(CharacterSelectionView.addCharacterButtonText),
+      expect(find.text(CharacterSelectionViewOld.addCharacterButtonText),
           findsOneWidget);
     },
   );
@@ -47,9 +47,9 @@ Future<void> navigateToCharacterSelectionViewAndAddCharacter(
   await navigateToCharacterSelectionView(tester);
 
   expect(
-      find.text(CharacterSelectionView.addCharacterButtonText), findsOneWidget);
+      find.text(CharacterSelectionViewOld.addCharacterButtonText), findsOneWidget);
   await tester.tap(
-      find.bySemanticsLabel(CharacterSelectionView.addCharacterButtonText));
+      find.bySemanticsLabel(CharacterSelectionViewOld.addCharacterButtonText));
   await tester.pump();
 }
 

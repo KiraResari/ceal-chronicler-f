@@ -1,5 +1,5 @@
 import 'package:ceal_chronicler_f/ceal_chronicler_f.dart';
-import 'package:ceal_chronicler_f/characters/character_selection_view/character_selection_view.dart';
+import 'package:ceal_chronicler_f/characters/character_selection_view/character_selection_view_old.dart';
 import 'package:ceal_chronicler_f/get_it_context.dart';
 import 'package:ceal_chronicler_f/title_view.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -34,7 +34,7 @@ void main() {
       await tester.tap(find.bySemanticsLabel(TitleView.startButtonText));
       await tester.pump();
 
-      expect(find.text(CharacterSelectionView.titleText), findsOneWidget);
+      expect(find.text(CharacterSelectionViewOld.titleText), findsOneWidget);
     },
   );
 }

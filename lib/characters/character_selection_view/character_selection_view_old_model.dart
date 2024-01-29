@@ -8,11 +8,11 @@ import '../../get_it_context.dart';
 import '../character.dart';
 import '../character_repository.dart';
 
-class CharacterSelectionViewModel {
+class CharacterSelectionViewOldModel {
   final _characterRepository = getIt<CharacterRepository>();
   final _eventBus = getIt.get<EventBus>();
 
-  CharacterSelectionViewModel() {
+  CharacterSelectionViewOldModel() {
     _eventBus.on<AddCharacterEvent>().listen(
           (event) => addCharacter(),
         );

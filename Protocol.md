@@ -336,6 +336,8 @@
 * What I want to do next:
   * Add actual saving functionality
 
+[Time elapsed so far: 21 hours]
+
 # 27-Jan-2024
 
 * Now continuing with this
@@ -378,6 +380,18 @@
   * I now did that
   * The message bar is still a bit crude for now, but since it's mostly for providing feedback of what is happening in the app to me right now, I think this is good enough for now
 * This is as far as I'm getting with this for now
+
+[Time elapsed so far: 26.5 hours]
+
+# 29-Jan-2024
+
+* Now continuing with this
+* Now it's time to fill the main body of the app with some content
+  * For that, I need to consider the views that I want to exist
+  * Also, I need to give navigation a thought
+  * I think, for starters it makes sense to hard-code the central view as a character overview that displays all the characters that exist at this point in time
+    * Or maybe, I'll make it so that it displays all the characters, including those not yet introduced and those that already stage outed
+  * Starting from there, I'll probably already be able to work quite some time until everything works nicely 
 
 # User Story
 

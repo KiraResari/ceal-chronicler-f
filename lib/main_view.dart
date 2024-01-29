@@ -1,3 +1,4 @@
+import 'package:ceal_chronicler_f/characters/overview/character_overview.dart';
 import 'package:flutter/material.dart';
 
 class MainView extends StatelessWidget {
@@ -5,6 +6,6 @@ class MainView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Expanded(child: Placeholder());
+    return const CharacterOverview();
   }
 }
