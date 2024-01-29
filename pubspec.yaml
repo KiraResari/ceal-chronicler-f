@@ -15,11 +15,9 @@ dependencies:
 
   provider: ^6.1.1
   get_it: ^7.6.4
-  event_bus: ^2.0.0
   uuid: ^4.2.0
-  optional: ^6.1.0
   flutter_launcher_icons: ^0.13.1
-  path_provider: ^2.1.2
+  path_provider: ^2.1.2 #saving on mobile
   file_picker: ^6.1.1 #saving for windows and loading for all
 
 dev_dependencies:

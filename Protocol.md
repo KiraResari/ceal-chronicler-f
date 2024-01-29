@@ -392,6 +392,12 @@
   * I think, for starters it makes sense to hard-code the central view as a character overview that displays all the characters that exist at this point in time
     * Or maybe, I'll make it so that it displays all the characters, including those not yet introduced and those that already stage outed
   * Starting from there, I'll probably already be able to work quite some time until everything works nicely 
+  * Okay, so, up until this point I've held on to all my old classes, figuring that maybe I would use them again, but looking at it now I think it's best to just throw them away and make a clean slate
+  * I now finished cleaning up, and managed to throw quite a bit of gunk out
+    * Also, now I can finally run all the tests again, which feels quite liberating
+* Since I don't have much time today, this is already as far as I'm getting with this now
+
+[Time elapsed so far: 27.75 hours]
 
 # User Story
 
