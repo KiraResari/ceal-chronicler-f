@@ -429,6 +429,14 @@
     * Or, I can just make the `DeleteIncidentCommand` a bit more clunky by requiring it to pass along the related `PointInTime`
       * That would definitely work for now, but it would also disable the ability to delete `Incident`s from a separate `IncidentView` that may exist at one point in the future
     * So likewise, I'm also gonna go for "slightly slower but more flexible" here
+  * I now finished with the commands
+  * Right, that is the backbone for the Incidents
+  * After this, I have to work on the `IncidentView` and related controller, which is also going to entail enabling switching between the active point in time
+  * Aaand, this is something I am not gonna get done today after all
+  * Oh well, I suppose I can still afford some time to finish this off at the beginning of the new month
+* Anyway, this is as far as I'm getting with this today
+
+[Time elapsed so far: 31.75 hours]
 
 TODO:
 
