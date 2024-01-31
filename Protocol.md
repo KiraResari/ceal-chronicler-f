@@ -399,6 +399,24 @@
 
 [Time elapsed so far: 27.75 hours]
 
+# 31-Jan-2024
+
+* Now continuing with this
+* This is the last time that I'll get to work on this for a bit, so I want to leave the project at a stable float today
+  * As such, I don't want to open up the whole characters-task complex after all, but rather focus on something that I can finish with the next few hours
+  * For that, I think, the incidents are ideally suited, although I did not write acceptance criteria for those yet, so I'll do that now
+* So, incidents it is now
+  * An incident is anything notable that happens at a certain point in time
+  * That means an incident is always tied to a particular point in time
+  * An incident is pretty much just a string
+  * I am thinking about whether to make incidents into objects with their own ID
+    * The advantage of that would be that it would be easy to reference and extend them later on, thus keeping later saves compatible with earlier ones
+    * The disadvantage would be that it would make it more complicated
+    * However, I think it makes sense to spend some time to put that infrastructure in place now
+  * Funnily, I just noticed how Incidents currently are pretty much identical to  points in time, but they will diverge soon enough
+    * Still, that naturally makes introducing them a lot easier, since I can just copy a lot from the points in time to use as a template
+      * This will mean duplication for now, but since the idea is to keep the objects separate and flexible, I figure this is okay for now
+
 # User Story
 
 As a Game Designer and Author, I want a tool to help me keep track of characters, events, items, knowledge, locations, affiliations and other things that can change over the course of a story. For example, I want to be able to go back and forth in time to figure out who learned what at what time, or who was where at what time and with whom.
@@ -413,10 +431,16 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
   - [x] These names have to be unique
 - [x] Points in time can be added before or after any other point in time
 - [x] Points in time can be deleted
-  - [ ] If an event happens at a point in time, that point can't be deleted
-    - [ ] There is a functionality that allows skipping to the event in question
+  - [ ] If something happens at a point in time, that point can't be deleted
+    - [ ] There is a functionality that allows skipping to whatever blocks the deletion
   - [x] If there is only a single point in time, that point in time can't be deleted
 - [x] Points in time can't be re-ordered
+
+## Incidents
+
+- [ ] Incidents can be created at points in time
+- [ ] Incidents can be renamed
+- [ ] Incidents can be deleted
 
 ### Characters Overview
 
