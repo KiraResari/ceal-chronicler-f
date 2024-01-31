@@ -416,6 +416,12 @@
   * Funnily, I just noticed how Incidents currently are pretty much identical to  points in time, but they will diverge soon enough
     * Still, that naturally makes introducing them a lot easier, since I can just copy a lot from the points in time to use as a template
       * This will mean duplication for now, but since the idea is to keep the objects separate and flexible, I figure this is okay for now
+  * Now, for how to tie points in time and incidents together
+    * I could just put the incidents directly into the points in time
+    * However, that would mean that the `PointInTimeRepository` would have to know about the `IncidentRepository`, and I kinda wanna avoid dependencies at the same level
+    * So, how to avoid that then?
+    * Well, fortunately, I did already give each `PointInTime` and `Incident` a unique ID, so I can refer to them via that
+    * 
 
 # User Story
 
