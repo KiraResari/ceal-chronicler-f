@@ -421,6 +421,14 @@
     * However, that would mean that the `PointInTimeRepository` would have to know about the `IncidentRepository`, and I kinda wanna avoid dependencies at the same level
     * So, how to avoid that then?
     * Well, fortunately, I did already give each `PointInTime` and `Incident` a unique ID, so I can refer to them via that
+  * I'm making good progress thus far
+  * Now working on the incident commands
+    * There, the one thing that is a bit tricky is the `DeleteIncidentCommand`, because that one needs to search all the `PointInTime`s and remove the references from them
+    * But it's either that, or have the `Incident` reference the `PointInTime` instead, which would either create the opposite problem if done unilaterally, or a bilateral connection which I kinda want to avoid because it can result in a situation where the objects are out of sync and really weird stuff starts happening
+    * So I think I'm gonna go for "slightly slower but more sturdy" here (it should not make a noticeable difference anyway)
+    * Or, I can just make the `DeleteIncidentCommand` a bit more clunky by requiring it to pass along the related `PointInTime`
+      * That would definitely work for now, but it would also disable the ability to delete `Incident`s from a separate `IncidentView` that may exist at one point in the future
+    * So likewise, I'm also gonna go for "slightly slower but more flexible" here
 
 TODO:
 

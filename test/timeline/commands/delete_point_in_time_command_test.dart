@@ -11,6 +11,7 @@ import '../../mocks/file_service_mock_lite.dart';
 main() {
   late CommandProcessor processor;
   late PointInTimeRepository repository;
+  late PointInTime pointToDelete;
 
   setUp(() {
     getIt.reset();
@@ -18,12 +19,12 @@ main() {
     getIt.registerSingleton<PointInTimeRepository>(repository);
     getIt.registerSingleton<FileService>(FileServiceMockLite());
     processor = CommandProcessor();
+    pointToDelete = repository.createNewAtIndex(0);
   });
 
   test(
     "Processing command should delete point in time",
     () {
-      PointInTime pointToDelete = repository.createNewAtIndex(0);
       var command = DeletePointInTimeCommand(pointToDelete);
 
       processor.process(command);
@@ -36,7 +37,6 @@ main() {
   test(
     "Undoing command should restore point in time",
         () {
-      PointInTime pointToDelete = repository.createNewAtIndex(0);
       var command = DeletePointInTimeCommand(pointToDelete);
 
       processor.process(command);
@@ -50,7 +50,6 @@ main() {
   test(
     "Redoing command should re-delete point in time",
         () {
-      PointInTime pointToDelete = repository.createNewAtIndex(0);
       var command = DeletePointInTimeCommand(pointToDelete);
 
       processor.process(command);
