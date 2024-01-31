@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../commands/command_processor.dart';
-import '../get_it_context.dart';
-import 'commands/create_point_in_time_command.dart';
-import 'commands/delete_point_in_time_command.dart';
-import 'commands/rename_point_in_time_command.dart';
-import 'point_in_time.dart';
-import 'point_in_time_repository.dart';
+import '../../commands/command_processor.dart';
+import '../../get_it_context.dart';
+import '../commands/create_point_in_time_command.dart';
+import '../commands/delete_point_in_time_command.dart';
+import '../commands/rename_point_in_time_command.dart';
+import '../model/point_in_time.dart';
+import '../model/point_in_time_repository.dart';
 
 class TimeBarController extends ChangeNotifier {
   final _pointInTimeRepository = getIt.get<PointInTimeRepository>();

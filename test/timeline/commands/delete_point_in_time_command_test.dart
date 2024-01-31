@@ -2,8 +2,8 @@ import 'package:ceal_chronicler_f/commands/command_processor.dart';
 import 'package:ceal_chronicler_f/get_it_context.dart';
 import 'package:ceal_chronicler_f/io/file/file_service.dart';
 import 'package:ceal_chronicler_f/timeline/commands/delete_point_in_time_command.dart';
-import 'package:ceal_chronicler_f/timeline/point_in_time.dart';
-import 'package:ceal_chronicler_f/timeline/point_in_time_repository.dart';
+import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
+import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../mocks/file_service_mock_lite.dart';

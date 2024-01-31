@@ -1,5 +1,5 @@
-import 'package:ceal_chronicler_f/timeline/point_in_time.dart';
-import 'package:ceal_chronicler_f/timeline/rename_point_in_time_button.dart';
+import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
+import 'package:ceal_chronicler_f/timeline/widgets/rename_point_in_time_button.dart';
 import 'package:flutter/material.dart';
 
 import 'delete_point_in_time_button.dart';

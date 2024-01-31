@@ -1,22 +1,23 @@
 import 'dart:convert';
 
-import '../io/json_serializable.dart';
-import '../utils/readable_uuid.dart';
+import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
+
+import '../../io/json_serializable.dart';
 
 class PointInTime extends JsonSerializable {
   static const String idKey = "id";
   static const String nameKey = "name";
 
-  final ReadableUuid id;
+  final PointInTimeId id;
   String name;
 
-  PointInTime(this.name) : id = ReadableUuid();
+  PointInTime(this.name) : id = PointInTimeId();
 
   PointInTime.fromJsonString(String jsonString)
       : this.fromJson(jsonDecode(jsonString));
 
   PointInTime.fromJson(Map<String, dynamic> json)
-      : id = ReadableUuid.fromString(json[idKey]),
+      : id = PointInTimeId.fromString(json[idKey]),
         name = json[nameKey];
 
   @override

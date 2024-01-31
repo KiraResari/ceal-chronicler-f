@@ -1,4 +1,4 @@
-import 'package:ceal_chronicler_f/incidents/incident.dart';
+import 'package:ceal_chronicler_f/incidents/model/incident.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 main() {

@@ -1,5 +1,5 @@
 import 'package:ceal_chronicler_f/io/chronicle.dart';
-import 'package:ceal_chronicler_f/timeline/point_in_time.dart';
+import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 main() {

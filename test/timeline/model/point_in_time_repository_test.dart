@@ -1,6 +1,6 @@
 import 'package:ceal_chronicler_f/exceptions/invalid_operation_exception.dart';
-import 'package:ceal_chronicler_f/timeline/point_in_time.dart';
-import 'package:ceal_chronicler_f/timeline/point_in_time_repository.dart';
+import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
+import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 main() {

@@ -1,6 +1,6 @@
 import '../get_it_context.dart';
-import '../timeline/point_in_time.dart';
-import '../timeline/point_in_time_repository.dart';
+import '../timeline/model/point_in_time.dart';
+import '../timeline/model/point_in_time_repository.dart';
 import 'chronicle.dart';
 
 class RepositoryService {

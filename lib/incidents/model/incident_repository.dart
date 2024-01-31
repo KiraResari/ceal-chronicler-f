@@ -1,4 +1,4 @@
-import '../exceptions/invalid_operation_exception.dart';
+import '../../exceptions/invalid_operation_exception.dart';
 import 'incident.dart';
 
 class IncidentRepository {

@@ -1,5 +1,5 @@
 import 'package:ceal_chronicler_f/message_bar/message_bar.dart';
-import 'package:ceal_chronicler_f/timeline/time_bar.dart';
+import 'package:ceal_chronicler_f/timeline/widgets/time_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'main_view.dart';

@@ -1,5 +1,5 @@
-import 'package:ceal_chronicler_f/timeline/point_in_time.dart';
-import 'package:ceal_chronicler_f/timeline/rename_point_in_time_alert_dialog_controller.dart';
+import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
+import 'package:ceal_chronicler_f/timeline/widgets/rename_point_in_time_alert_dialog_controller.dart';
 import 'package:ceal_chronicler_f/utils/validation/invalid_result.dart';
 import 'package:ceal_chronicler_f/utils/validation/validation_result.dart';
 import 'package:flutter/material.dart';

@@ -2,22 +2,22 @@ import 'dart:convert';
 
 import 'package:ceal_chronicler_f/io/json_serializable.dart';
 
-import '../utils/readable_uuid.dart';
+import 'incident_id.dart';
 
 class Incident extends JsonSerializable {
   static const String idKey = "id";
   static const String nameKey = "name";
 
-  final ReadableUuid id;
+  final IncidentId id;
   String name;
 
-  Incident(this.name) : id = ReadableUuid();
+  Incident(this.name) : id = IncidentId();
 
   Incident.fromJsonString(String jsonString)
       : this.fromJson(jsonDecode(jsonString));
 
   Incident.fromJson(Map<String, dynamic> json)
-      : id = ReadableUuid.fromString(json[idKey]),
+      : id = IncidentId.fromString(json[idKey]),
         name = json[nameKey];
 
   @override

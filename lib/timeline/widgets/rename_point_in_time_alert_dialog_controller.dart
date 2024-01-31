@@ -1,10 +1,10 @@
-import 'package:ceal_chronicler_f/timeline/point_in_time_repository.dart';
+import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
 import 'package:ceal_chronicler_f/utils/validation/valid_result.dart';
 import 'package:flutter/material.dart';
 
-import '../get_it_context.dart';
-import '../utils/validation/invalid_result.dart';
-import '../utils/validation/validation_result.dart';
+import '../../get_it_context.dart';
+import '../../utils/validation/invalid_result.dart';
+import '../../utils/validation/validation_result.dart';
 
 class RenamePointInTimeAlertDialogController extends ChangeNotifier {
   final PointInTimeRepository _pointInTimeRepository =

@@ -1,7 +1,7 @@
 import '../../commands/command.dart';
 import '../../get_it_context.dart';
-import '../point_in_time.dart';
-import '../point_in_time_repository.dart';
+import '../model/point_in_time.dart';
+import '../model/point_in_time_repository.dart';
 
 class RenamePointInTimeCommand extends Command {
   final _pointInTimeRepository = getIt.get<PointInTimeRepository>();

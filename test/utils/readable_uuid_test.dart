@@ -9,11 +9,11 @@ void main() {
     expect(firstId, isNot(secondId));
   });
 
-  test("ReadableUuid can be json serialized and deserialized", () {
+  test("ReadableUuid can be serialized and deserialized", () {
     var originalId = ReadableUuid();
 
-    String jsonString = originalId.toJsonString();
-    var decodedId = ReadableUuid.fromJsonString(jsonString);
+    String uuidString = originalId.uuid;
+    var decodedId = ReadableUuid.fromString(uuidString);
 
     expect(originalId, decodedId);
   });

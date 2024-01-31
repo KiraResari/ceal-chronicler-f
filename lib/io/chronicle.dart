@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../timeline/point_in_time.dart';
+import '../timeline/model/point_in_time.dart';
 import '../utils/list_comparer.dart';
 import 'json_serializable.dart';
 
