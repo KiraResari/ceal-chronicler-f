@@ -5,7 +5,7 @@ main() {
   test(
     "Parsing Incident to JSON and back should return equal object",
     () {
-      var originalIncident = Incident("Test");
+      var originalIncident = Incident();
 
       String jsonString = originalIncident.toJsonString();
       var decodedIncident = Incident.fromJsonString(jsonString);

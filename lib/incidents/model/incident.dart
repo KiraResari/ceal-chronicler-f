@@ -7,11 +7,12 @@ import 'incident_id.dart';
 class Incident extends JsonSerializable {
   static const String idKey = "id";
   static const String nameKey = "name";
+  static const defaultName = "New incident";
 
   final IncidentId id;
-  String name;
+  String name = defaultName;
 
-  Incident(this.name) : id = IncidentId();
+  Incident() : id = IncidentId();
 
   Incident.fromJsonString(String jsonString)
       : this.fromJson(jsonDecode(jsonString));

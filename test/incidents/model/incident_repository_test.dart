@@ -1,3 +1,4 @@
+import 'package:ceal_chronicler_f/incidents/model/incident.dart';
 import 'package:ceal_chronicler_f/incidents/model/incident_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -12,13 +13,15 @@ main() {
   });
 
   test("Adding new incident should work", () {
-    repository.createNew();
+    var incident = Incident();
+    repository.add(incident);
 
     expect(repository.incidents.length, equals(1));
   });
 
   test("Removing incident should work", () {
-    repository.createNew();
+    var incident = Incident();
+    repository.add(incident);
     var incidentToBeRemoved = repository.incidents.first;
 
     repository.remove(incidentToBeRemoved);

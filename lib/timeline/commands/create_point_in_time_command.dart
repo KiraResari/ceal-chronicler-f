@@ -8,6 +8,8 @@ class CreatePointInTimeCommand extends Command {
   final int _creationIndex;
   PointInTime? _createdPoint;
 
+  CreatePointInTimeCommand(this._creationIndex);
+
   @override
   String get executeMessage =>
       "Created new Point in Time$_pointNameSuffixOrNothing";
@@ -22,8 +24,6 @@ class CreatePointInTimeCommand extends Command {
     }
     return "";
   }
-
-  CreatePointInTimeCommand(this._creationIndex);
 
   @override
   void execute() {

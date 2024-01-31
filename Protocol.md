@@ -421,7 +421,10 @@
     * However, that would mean that the `PointInTimeRepository` would have to know about the `IncidentRepository`, and I kinda wanna avoid dependencies at the same level
     * So, how to avoid that then?
     * Well, fortunately, I did already give each `PointInTime` and `Incident` a unique ID, so I can refer to them via that
-    * 
+
+TODO:
+
+* Simplify `PointInTimeRepository` to match `IncidentRepository`
 
 # User Story
 

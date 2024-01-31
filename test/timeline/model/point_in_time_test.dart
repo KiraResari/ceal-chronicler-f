@@ -23,7 +23,20 @@ main() {
 
       point.addIncidentReference(incidentReference);
 
-      expect(point.incidentReferences.length, equals(1));
+      expect(point.incidentReferences, contains(incidentReference));
+    },
+  );
+
+  test(
+    "Removing incident reference should work",
+        () {
+      var point = PointInTime("Test Point");
+      var incidentReference = IncidentId();
+      point.addIncidentReference(incidentReference);
+
+      point.removeIncidentReference(incidentReference);
+
+      expect(point.incidentReferences, isNot(contains(incidentReference)));
     },
   );
 

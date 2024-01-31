@@ -2,12 +2,9 @@ import '../../exceptions/invalid_operation_exception.dart';
 import 'incident.dart';
 
 class IncidentRepository {
-  static const defaultName = "New incident";
-
   List<Incident> incidents = [];
 
-  void createNew() {
-    var incident = Incident(defaultName);
+  void add(Incident incident) {
     incidents.add(incident);
   }
 

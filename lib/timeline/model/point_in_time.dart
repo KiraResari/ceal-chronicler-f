@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ceal_chronicler_f/exceptions/invalid_operation_exception.dart';
 import 'package:ceal_chronicler_f/incidents/model/incident_id.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
 
@@ -32,6 +33,17 @@ class PointInTime extends JsonSerializable {
 
   void addIncidentReference(IncidentId incidentReference) {
     incidentReferences.add(incidentReference);
+  }
+
+  void removeIncidentReference(IncidentId incidentReference) {
+    if (incidentReferences.contains(incidentReference)) {
+      incidentReferences.remove(incidentReference);
+    } else {
+      throw InvalidOperationException(
+          "Can't remove Incident Reference from point in time because this point in time does not contain the incident reference\n"
+          "Point: $this\n"
+          "Incident Reference: $incidentReference");
+    }
   }
 
   @override
