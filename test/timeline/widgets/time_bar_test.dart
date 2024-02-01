@@ -12,6 +12,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   setUp(() {
+    getIt.reset();
     getIt.registerSingleton<PointInTimeRepository>(PointInTimeRepository());
     getIt.registerSingleton<RepositoryService>(RepositoryService());
     getIt.registerSingleton<FileService>(FileService());
@@ -48,11 +49,46 @@ void main() {
         matching: find.byType(FloatingActionButton),
       );
       FloatingActionButton button = tester.widget(floatingActionButtonFinder);
-
       expect(button.onPressed, isNull);
+    },
+  );
+
+  testWidgets(
+    'Adding new point in time should work',
+    (WidgetTester tester) async {
+      await tester.pumpWidget(const MaterialApp(home: TimeBar()));
+
+      await tapAddButton(tester, 0);
+
+      expect(find.byType(TimeBarPanel), findsExactly(2));
+    },
+  );
+
+  testWidgets(
+    'Delete button of new point in time should be enabled',
+    (WidgetTester tester) async {
+      await tester.pumpWidget(const MaterialApp(home: TimeBar()));
+      await tapAddButton(tester, 0);
+
+      var deleteButtonFinder = find.byKey(buildDeleteButtonKey(1));
+      var floatingActionButtonFinder = find.descendant(
+        of: deleteButtonFinder,
+        matching: find.byType(FloatingActionButton),
+      );
+      FloatingActionButton button = tester.widget(floatingActionButtonFinder);
+      expect(button.onPressed, isNotNull);
     },
   );
 }
 
 StringKey buildDeleteButtonKey(int index) => StringKey(
     "${TimeBar.timeBarPanelsKeyBase}$index${TimeBarPanel.deleteButtonKeyBase}");
+
+Future<void> tapAddButton(WidgetTester tester, int index) async {
+  var addButtonFinder = find.byKey(buildAddButtonKey(index));
+  await tester.tap(addButtonFinder);
+  await tester.pump();
+}
+
+Key buildAddButtonKey(int index) =>
+    Key("${TimeBar.addPointInTimeButtonKeyBase}$index");
