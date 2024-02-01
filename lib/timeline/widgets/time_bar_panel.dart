@@ -1,4 +1,5 @@
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
+import 'package:ceal_chronicler_f/timeline/widgets/point_in_time_button.dart';
 import 'package:ceal_chronicler_f/timeline/widgets/rename_point_in_time_button.dart';
 import 'package:flutter/material.dart';
 
@@ -13,21 +14,9 @@ class TimeBarPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _buildNamePanel(context),
+        PointInTimeButton(point: pointInTime),
         _buildButtonRow(context),
       ],
-    );
-  }
-
-  Widget _buildNamePanel(BuildContext context) {
-    ThemeData theme = Theme.of(context);
-    return Container(
-      decoration: BoxDecoration(
-        color: theme.colorScheme.primaryContainer,
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      padding: const EdgeInsets.all(10.0),
-      child: Text(pointInTime.name, style: theme.textTheme.bodyLarge),
     );
   }
 

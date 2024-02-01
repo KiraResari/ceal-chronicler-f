@@ -438,8 +438,21 @@
 
 [Time elapsed so far: 31.75 hours]
 
+# 1-Feb-2024
+
+* Now continuing with this
+* I am presently in the middle of implementing the Incidents
+* There, I realized that this also necessitates me implementing the functionality for changing the current point in time
+  * Basically, the `IncidentOverview` that will be the component for displaying the incidents needs to know which point in time is active in order to display the incidents for that point in time
+  * Currently, the `TimeBarController` contains the information about which point in time is the active point in time, but I think it would be better to extract that into a dedicated class, since multiple views would need that one
+  * Right, so, since I already have a `CommandProcessor`, let's call that class the `TimeProcessor` until I can think of a better name
+  * So, before I continue with the incidents then, I should work on the logic for switching the active point in time
+    * I got that one basically down
+  * Now, I also have to consider what happens if you delete the active point in time
+
 TODO:
 
+* `RepositoryService` needs to save Incidents
 * Simplify `PointInTimeRepository` to match `IncidentRepository`
 
 # User Story

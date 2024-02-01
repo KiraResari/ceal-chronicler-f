@@ -1,3 +1,5 @@
+import 'package:ceal_chronicler_f/incidents/model/incident_repository.dart';
+import 'package:ceal_chronicler_f/timeline/time_processor.dart';
 import 'package:get_it/get_it.dart';
 
 import 'commands/command_processor.dart';
@@ -9,7 +11,11 @@ final getIt = GetIt.instance;
 
 void initializeGetItContext() {
   getIt.registerSingleton<PointInTimeRepository>(PointInTimeRepository());
+  getIt.registerSingleton<IncidentRepository>(IncidentRepository());
+
   getIt.registerSingleton<RepositoryService>(RepositoryService());
   getIt.registerSingleton<FileService>(FileService());
+
+  getIt.registerSingleton<TimeProcessor>(TimeProcessor());
   getIt.registerSingleton<CommandProcessor>(CommandProcessor());
 }
