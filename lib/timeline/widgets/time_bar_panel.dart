@@ -3,6 +3,7 @@ import 'package:ceal_chronicler_f/timeline/widgets/point_in_time_button.dart';
 import 'package:ceal_chronicler_f/timeline/widgets/rename_point_in_time_button.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/string_key.dart';
 import 'delete_point_in_time_button.dart';
 
 class TimeBarPanel extends StatelessWidget {
@@ -11,8 +12,10 @@ class TimeBarPanel extends StatelessWidget {
   static const String renameButtonKeyBase = "renameButton";
 
   final PointInTime pointInTime;
+  final StringKey stringKey;
 
-  const TimeBarPanel({super.key, required this.pointInTime});
+  const TimeBarPanel({required this.stringKey, required this.pointInTime})
+      : super(key: stringKey);
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +35,11 @@ class TimeBarPanel extends StatelessWidget {
       children: [
         DeletePointInTimeButton(
           point: pointInTime,
-          key: Key("$key$deleteButtonKeyBase"),
+          key: StringKey("$key$deleteButtonKeyBase"),
         ),
         RenamePointInTimeButton(
           point: pointInTime,
-          key: Key("$key$renameButtonKeyBase"),
+          key: StringKey("$key$renameButtonKeyBase"),
         ),
       ],
     );

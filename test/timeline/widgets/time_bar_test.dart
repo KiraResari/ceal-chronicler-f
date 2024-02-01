@@ -6,6 +6,7 @@ import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
 import 'package:ceal_chronicler_f/timeline/time_processor.dart';
 import 'package:ceal_chronicler_f/timeline/widgets/time_bar.dart';
 import 'package:ceal_chronicler_f/timeline/widgets/time_bar_panel.dart';
+import 'package:ceal_chronicler_f/utils/string_key.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -26,4 +27,32 @@ void main() {
       expect(find.byType(TimeBarPanel), findsOne);
     },
   );
+
+  testWidgets(
+    'First point in time should have delete button',
+    (WidgetTester tester) async {
+      await tester.pumpWidget(const MaterialApp(home: TimeBar()));
+
+      expect(find.byKey(buildDeleteButtonKey(0)), findsOne);
+    },
+  );
+
+  testWidgets(
+    'Delete button of first point in time should be disabled',
+    (WidgetTester tester) async {
+      await tester.pumpWidget(const MaterialApp(home: TimeBar()));
+
+      var deleteButtonFinder = find.byKey(buildDeleteButtonKey(0));
+      var floatingActionButtonFinder = find.descendant(
+        of: deleteButtonFinder,
+        matching: find.byType(FloatingActionButton),
+      );
+      FloatingActionButton button = tester.widget(floatingActionButtonFinder);
+
+      expect(button.onPressed, isNull);
+    },
+  );
 }
+
+StringKey buildDeleteButtonKey(int index) => StringKey(
+    "${TimeBar.timeBarPanelsKeyBase}$index${TimeBarPanel.deleteButtonKeyBase}");

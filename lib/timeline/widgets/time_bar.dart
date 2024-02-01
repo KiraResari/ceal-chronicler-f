@@ -5,6 +5,8 @@ import 'package:ceal_chronicler_f/timeline/widgets/time_bar_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../utils/string_key.dart';
+
 class TimeBar extends StatelessWidget {
   static const String timeBarPanelsKeyBase = "timeBarPanel";
   static const String addPointInTimeButtonKeyBase = "addPointInTimeButton";
@@ -47,7 +49,7 @@ class TimeBar extends StatelessWidget {
       scrollBarElements.add(addButton);
       var timeBarPanel = TimeBarPanel(
         pointInTime: point,
-        key: Key("$timeBarPanelsKeyBase$insertionIndex"),
+        stringKey: StringKey("$timeBarPanelsKeyBase$insertionIndex"),
       );
       scrollBarElements.add(timeBarPanel);
       insertionIndex++;
