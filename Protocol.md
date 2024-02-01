@@ -476,30 +476,53 @@
       * However, when the point in time that is the furthest to the right is deleted, there's no active point in time
       * Right, I think in order to tackle this, I need complex unit tests after all instead of widget tests
       * Hmm, I wonder if this has some subtle interference with the keys?
-      * 
+      * Hmm, nope, doesn't seem to be the case
+      * Weird
+      * Okay, by trying around I found that apparently, for whatever strange reason, when a point in time is deleted, the next point in time button "adopts" that point in time, leaving us with a situation where the button labeled "Point in Time3" activates "Point in Time2"
+      * Really Weird
+      * I don't quite grep this, but I figure it is related to how both the `PointInTimeButton` and the `PointInTimeButtonController` save the `PointInTime`, and since the button passes the point to the controller, I assumed that it would always be the same, but clearly this is not the case
+      * How the fuck is it possible that they get unsynched like this?
+      * Okay, so, I now managed to fix it like this:
+    
+        * ````
+            @override
+            Widget build(BuildContext context) {
+              var controller = PointInTimeButtonController(point);
+              return ChangeNotifierProvider.value(
+                value: controller,
+                builder: (context, child) => _buildPaddedButton(context),
+              );
+            }
+          ````
+      * I'm not quite sure why this works, but clearly it does, so...
 
     * Also, we have an annoying `A PointInTimeButtonController was used after being disposed.` error
-
+    
       * Okay, I think I managed to solve that like this:
-
+    
         * ````
             PointInTimeButtonController(this._point) {
               _timeProcessor.addListener(_notifyListenersCall);
             }
-          
+            
             void _notifyListenersCall() => notifyListeners();
-          
+            
             @override
             void dispose() {
               super.dispose();
               _timeProcessor.removeListener(_notifyListenersCall);
             }
           ````
+    
+    * Well, those bugs certainly threw me off my schedule
+  
+* This is as far as I'm getting with this today
 
-        * 
+[Time elapsed so far: 36.25 hours]
 
 TODO:
 
+* Implement correct setting of active point in time when deleting
 * `RepositoryService` needs to save Incidents
 * Simplify `PointInTimeRepository` to match `IncidentRepository`
 

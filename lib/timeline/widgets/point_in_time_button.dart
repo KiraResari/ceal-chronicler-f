@@ -14,8 +14,9 @@ class PointInTimeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => PointInTimeButtonController(point),
+    var controller = PointInTimeButtonController(point);
+    return ChangeNotifierProvider.value(
+      value: controller,
       builder: (context, child) => _buildPaddedButton(context),
     );
   }
@@ -50,7 +51,7 @@ class PointInTimeButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(5),
       ),
       child: Text(
-        point.name,
+        controller.point.name,
         style: textStyle,
       ),
     );
