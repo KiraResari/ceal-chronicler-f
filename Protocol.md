@@ -449,6 +449,8 @@
   * So, before I continue with the incidents then, I should work on the logic for switching the active point in time
     * I got that one basically down
   * Now, I also have to consider what happens if you delete the active point in time
+    * Okay, so, until now I managed to avoid widget tests, but I can see how adding this functionality is going to affect so many things that I might as well just write a widget test for this
+    * 
 
 TODO:
 

@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TimeBar extends StatelessWidget {
+  static const String timeBarPanelsKeyBase = "timeBarPanel";
+  static const String addPointInTimeButtonKeyBase = "addPointInTimeButton";
+
   const TimeBar({super.key});
 
   @override
@@ -37,9 +40,15 @@ class TimeBar extends StatelessWidget {
     List<Widget> scrollBarElements = [];
 
     for (PointInTime point in points) {
-      var addButton = AddPointInTimeButton(insertionIndex: insertionIndex);
+      var addButton = AddPointInTimeButton(
+        insertionIndex: insertionIndex,
+        key: Key("$addPointInTimeButtonKeyBase$insertionIndex"),
+      );
       scrollBarElements.add(addButton);
-      var timeBarPanel = TimeBarPanel(pointInTime: point);
+      var timeBarPanel = TimeBarPanel(
+        pointInTime: point,
+        key: Key("$timeBarPanelsKeyBase$insertionIndex"),
+      );
       scrollBarElements.add(timeBarPanel);
       insertionIndex++;
     }

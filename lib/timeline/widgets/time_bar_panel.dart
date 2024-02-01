@@ -6,6 +6,10 @@ import 'package:flutter/material.dart';
 import 'delete_point_in_time_button.dart';
 
 class TimeBarPanel extends StatelessWidget {
+  static const String pointInTimeButtonKeyBase = "pointInTimeButton";
+  static const String deleteButtonKeyBase = "deleteButton";
+  static const String renameButtonKeyBase = "renameButton";
+
   final PointInTime pointInTime;
 
   const TimeBarPanel({super.key, required this.pointInTime});
@@ -14,7 +18,10 @@ class TimeBarPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        PointInTimeButton(point: pointInTime),
+        PointInTimeButton(
+          point: pointInTime,
+          key: Key("$key$pointInTimeButtonKeyBase"),
+        ),
         _buildButtonRow(context),
       ],
     );
@@ -23,8 +30,14 @@ class TimeBarPanel extends StatelessWidget {
   Widget _buildButtonRow(BuildContext context) {
     return Row(
       children: [
-        DeletePointInTimeButton(point: pointInTime),
-        RenamePointInTimeButton(point: pointInTime),
+        DeletePointInTimeButton(
+          point: pointInTime,
+          key: Key("$key$deleteButtonKeyBase"),
+        ),
+        RenamePointInTimeButton(
+          point: pointInTime,
+          key: Key("$key$renameButtonKeyBase"),
+        ),
       ],
     );
   }
