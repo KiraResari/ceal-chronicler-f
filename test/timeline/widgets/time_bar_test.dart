@@ -43,12 +43,7 @@ void main() {
     (WidgetTester tester) async {
       await tester.pumpWidget(const MaterialApp(home: TimeBar()));
 
-      var deleteButtonFinder = find.byKey(buildDeleteButtonKey(0));
-      var floatingActionButtonFinder = find.descendant(
-        of: deleteButtonFinder,
-        matching: find.byType(FloatingActionButton),
-      );
-      FloatingActionButton button = tester.widget(floatingActionButtonFinder);
+      FloatingActionButton button = findDeleteButton(tester, 0);
       expect(button.onPressed, isNull);
     },
   );
@@ -68,17 +63,45 @@ void main() {
     'Delete button of new point in time should be enabled',
     (WidgetTester tester) async {
       await tester.pumpWidget(const MaterialApp(home: TimeBar()));
+
       await tapAddButton(tester, 0);
 
-      var deleteButtonFinder = find.byKey(buildDeleteButtonKey(1));
-      var floatingActionButtonFinder = find.descendant(
-        of: deleteButtonFinder,
-        matching: find.byType(FloatingActionButton),
-      );
-      FloatingActionButton button = tester.widget(floatingActionButtonFinder);
+      FloatingActionButton button = findDeleteButton(tester, 1);
       expect(button.onPressed, isNotNull);
     },
   );
+
+  testWidgets(
+    'Initial point in time should be active',
+    (WidgetTester tester) async {
+      await tester.pumpWidget(const MaterialApp(home: TimeBar()));
+
+      FloatingActionButton button = findPointInTimeButton(tester, 0);
+      expect(button.onPressed, isNull);
+    },
+  );
+
+  testWidgets(
+    'New point in time should be inactive',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(const MaterialApp(home: TimeBar()));
+
+      await tapAddButton(tester, 0);
+
+      FloatingActionButton button = findPointInTimeButton(tester, 1);
+      expect(button.onPressed, isNull);
+    },
+  );
+}
+
+FloatingActionButton findDeleteButton(WidgetTester tester, int index) {
+  var deleteButtonFinder = find.byKey(buildDeleteButtonKey(index));
+  var floatingActionButtonFinder = find.descendant(
+    of: deleteButtonFinder,
+    matching: find.byType(FloatingActionButton),
+  );
+  FloatingActionButton button = tester.widget(floatingActionButtonFinder);
+  return button;
 }
 
 StringKey buildDeleteButtonKey(int index) => StringKey(
@@ -92,3 +115,16 @@ Future<void> tapAddButton(WidgetTester tester, int index) async {
 
 Key buildAddButtonKey(int index) =>
     Key("${TimeBar.addPointInTimeButtonKeyBase}$index");
+
+FloatingActionButton findPointInTimeButton(WidgetTester tester, int index) {
+  var buttonFinder = find.byKey(buildPointInTimeButtonKey(index));
+  var floatingActionButtonFinder = find.descendant(
+    of: buttonFinder,
+    matching: find.byType(FloatingActionButton),
+  );
+  FloatingActionButton button = tester.widget(floatingActionButtonFinder);
+  return button;
+}
+
+Key buildPointInTimeButtonKey(int index) => Key(
+    "${TimeBar.timeBarPanelsKeyBase}$index${TimeBarPanel.pointInTimeButtonKeyBase}");

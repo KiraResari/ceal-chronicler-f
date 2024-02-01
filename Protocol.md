@@ -450,7 +450,9 @@
     * I got that one basically down
   * Now, I also have to consider what happens if you delete the active point in time
     * Okay, so, until now I managed to avoid widget tests, but I can see how adding this functionality is going to affect so many things that I might as well just write a widget test for this
-    * 
+    * Aaaaand, it's fucking me up because keys are not strings, and I can't get the string values that I assigned to keys back out of these keys, which means I can't easily create unique keys for objects such as the `DeletePointInTimeButton` of a certain `TimeBarPanel` 
+    * I now managed to get around that by implementing a custom `StringKey` class
+    * Okay, so by now I added what I feel is a solid widget test suite that I can work from 
 
 TODO:
 
