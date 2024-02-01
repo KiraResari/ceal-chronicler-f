@@ -441,18 +441,62 @@
 # 1-Feb-2024
 
 * Now continuing with this
+
 * I am presently in the middle of implementing the Incidents
+
 * There, I realized that this also necessitates me implementing the functionality for changing the current point in time
+
   * Basically, the `IncidentOverview` that will be the component for displaying the incidents needs to know which point in time is active in order to display the incidents for that point in time
+
   * Currently, the `TimeBarController` contains the information about which point in time is the active point in time, but I think it would be better to extract that into a dedicated class, since multiple views would need that one
+
   * Right, so, since I already have a `CommandProcessor`, let's call that class the `TimeProcessor` until I can think of a better name
+
   * So, before I continue with the incidents then, I should work on the logic for switching the active point in time
+
     * I got that one basically down
+
   * Now, I also have to consider what happens if you delete the active point in time
+
     * Okay, so, until now I managed to avoid widget tests, but I can see how adding this functionality is going to affect so many things that I might as well just write a widget test for this
+
     * Aaaaand, it's fucking me up because keys are not strings, and I can't get the string values that I assigned to keys back out of these keys, which means I can't easily create unique keys for objects such as the `DeletePointInTimeButton` of a certain `TimeBarPanel` 
+
     * I now managed to get around that by implementing a custom `StringKey` class
-    * Okay, so by now I added what I feel is a solid widget test suite that I can work from 
+
+    * Okay, so by now I added what I feel is a solid widget test suite that I can work from
+
+    * Aaand, the widget tests once again behave kinda unexpectedly 
+
+      * Okay, so apparently the keys are not really reliable, because they apparently get changed when the widgets are rebuilt, thus making widget testing yet even more interesting 
+
+    * Okay, so interestingly, the tests exposed that there is apparently already some nascent logic that unexpectedly changes the active point in time when it is deleted
+
+      * So, apparently, when a point in time is deleted, the next time is automatically active, though I don't understand how
+      * However, when the point in time that is the furthest to the right is deleted, there's no active point in time
+      * Right, I think in order to tackle this, I need complex unit tests after all instead of widget tests
+      * Hmm, I wonder if this has some subtle interference with the keys?
+      * 
+
+    * Also, we have an annoying `A PointInTimeButtonController was used after being disposed.` error
+
+      * Okay, I think I managed to solve that like this:
+
+        * ````
+            PointInTimeButtonController(this._point) {
+              _timeProcessor.addListener(_notifyListenersCall);
+            }
+          
+            void _notifyListenersCall() => notifyListeners();
+          
+            @override
+            void dispose() {
+              super.dispose();
+              _timeProcessor.removeListener(_notifyListenersCall);
+            }
+          ````
+
+        * 
 
 TODO:
 

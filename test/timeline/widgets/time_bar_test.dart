@@ -39,7 +39,7 @@ void main() {
   );
 
   testWidgets(
-    'Delete button of first point in time should be disabled',
+    'Delete button of only point in time should be disabled',
     (WidgetTester tester) async {
       await tester.pumpWidget(const MaterialApp(home: TimeBar()));
 
@@ -72,6 +72,18 @@ void main() {
   );
 
   testWidgets(
+    'Delete button of first point in time should be enabled after new point is added',
+    (WidgetTester tester) async {
+      await tester.pumpWidget(const MaterialApp(home: TimeBar()));
+
+      await tapAddButton(tester, 0);
+
+      FloatingActionButton button = findDeleteButton(tester, 0);
+      expect(button.onPressed, isNotNull);
+    },
+  );
+
+  testWidgets(
     'Initial point in time should be active',
     (WidgetTester tester) async {
       await tester.pumpWidget(const MaterialApp(home: TimeBar()));
@@ -83,12 +95,49 @@ void main() {
 
   testWidgets(
     'New point in time should be inactive',
-        (WidgetTester tester) async {
+    (WidgetTester tester) async {
       await tester.pumpWidget(const MaterialApp(home: TimeBar()));
 
       await tapAddButton(tester, 0);
 
       FloatingActionButton button = findPointInTimeButton(tester, 1);
+      expect(button.onPressed, isNull);
+    },
+  );
+
+  testWidgets(
+    'Deleting point in time should work once there are at least two',
+    (WidgetTester tester) async {
+      await tester.pumpWidget(const MaterialApp(home: TimeBar()));
+      await tapAddButton(tester, 0);
+
+      await tapDeleteButton(tester, 0);
+
+      expect(find.byType(TimeBarPanel), findsOne);
+    },
+  );
+
+  testWidgets(
+    'Deleting first point in time should leave second point in time',
+    (WidgetTester tester) async {
+      await tester.pumpWidget(const MaterialApp(home: TimeBar()));
+      await tapAddButton(tester, 0);
+
+      await tapDeleteButton(tester, 0);
+
+      expect(find.byKey(buildPointInTimeButtonKey(0)), findsOne);
+    },
+  );
+
+  testWidgets(
+    'Deleting first point in time should make remaining point in time active',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(const MaterialApp(home: TimeBar()));
+      await tapAddButton(tester, 1);
+
+      await tapDeleteButton(tester, 0);
+
+      FloatingActionButton button = findPointInTimeButton(tester, 0);
       expect(button.onPressed, isNull);
     },
   );
@@ -128,3 +177,9 @@ FloatingActionButton findPointInTimeButton(WidgetTester tester, int index) {
 
 Key buildPointInTimeButtonKey(int index) => Key(
     "${TimeBar.timeBarPanelsKeyBase}$index${TimeBarPanel.pointInTimeButtonKeyBase}");
+
+Future<void> tapDeleteButton(WidgetTester tester, int index) async {
+  var addButtonFinder = find.byKey(buildDeleteButtonKey(index));
+  await tester.tap(addButtonFinder);
+  await tester.pump();
+}

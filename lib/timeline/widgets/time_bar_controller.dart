@@ -12,11 +12,8 @@ class TimeBarController extends ChangeNotifier {
   final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
   final _commandProcessor = getIt.get<CommandProcessor>();
 
-  late PointInTime _activePointInTime;
-
   TimeBarController() {
     _commandProcessor.addListener(() => notifyListeners());
-    _activePointInTime = _pointInTimeRepository.first;
   }
 
   List<PointInTime> get pointsInTime => _pointInTimeRepository.pointsInTime;

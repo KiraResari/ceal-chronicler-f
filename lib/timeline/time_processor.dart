@@ -9,14 +9,14 @@ class TimeProcessor extends ChangeNotifier{
 
   late PointInTime _activePointInTime;
 
+  TimeProcessor(){
+    _activePointInTime = _pointInTimeRepository.first;
+  }
+
   PointInTime get activePointInTime => _activePointInTime;
 
   set activePointInTime(PointInTime value) {
     _activePointInTime = value;
     notifyListeners();
-  }
-
-  TimeProcessor(){
-    _activePointInTime = _pointInTimeRepository.first;
   }
 }

@@ -55,7 +55,10 @@ class TimeBar extends StatelessWidget {
       insertionIndex++;
     }
 
-    var finalAddButton = AddPointInTimeButton(insertionIndex: insertionIndex);
+    var finalAddButton = AddPointInTimeButton(
+      insertionIndex: insertionIndex,
+      key: Key("$addPointInTimeButtonKeyBase$insertionIndex"),
+    );
     scrollBarElements.add(finalAddButton);
 
     return scrollBarElements;
