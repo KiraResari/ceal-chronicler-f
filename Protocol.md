@@ -535,10 +535,13 @@
   * I suppose the architecture that I set up really facilitates this
 * Right, so next I want to work off a few things that have been accumulating on my todo list
 * First, I noticed that the architecture I described above is not what I actually have in place: Currently, the repositories don't do any notifying, so I want to see if I can change that and if that will work
+  * Well, I merged the `TimeProcessor` into the `PointInTimeRepository` , which cleaned up a bit
+  * But then I realized that while this made the `PointInTimeRepository` a `ChangeNotifier` by necessity, I don't actually need to have it throw around notifications in all the other cases (same goes for the `IncidentRepository`), since all changes to them are made by commands, and handling of any commands triggers a change notification through the `CommandProcessor` anyway, so it looks like we're good
+  * In the long term, I'll probably even get the `ChangeNotifier` out of the `PointInTimeRepository` again as I implement a view change history like what I have with undo-redo right now, which will probably move all the notifying into a central `ViewProcessor` or something like that
+  * Anyway, this part is good for now then
 
 TODO:
 
-* Consider merging `TimeProcessor` into `PointInTimeRepository` and implementing the architecture that all repositories are `ChangeNotifier`s
 * `RepositoryService` needs to save Incidents
 * Simplify `PointInTimeRepository` to match `IncidentRepository`
 

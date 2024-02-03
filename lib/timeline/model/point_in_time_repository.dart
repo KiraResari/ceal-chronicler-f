@@ -27,12 +27,12 @@ class PointInTimeRepository extends ChangeNotifier {
 
   PointInTime createNewAtIndex(int index) {
     PointInTime newPoint = _createPointWithUniqueName();
-    return createAtIndex(index, newPoint);
+    createAtIndex(index, newPoint);
+    return newPoint;
   }
 
-  PointInTime createAtIndex(int index, PointInTime newPoint) {
+  void createAtIndex(int index, PointInTime newPoint) {
     pointsInTime.insert(index, newPoint);
-    return newPoint;
   }
 
   PointInTime _createPointWithUniqueName() {
