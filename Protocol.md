@@ -539,10 +539,14 @@
   * But then I realized that while this made the `PointInTimeRepository` a `ChangeNotifier` by necessity, I don't actually need to have it throw around notifications in all the other cases (same goes for the `IncidentRepository`), since all changes to them are made by commands, and handling of any commands triggers a change notification through the `CommandProcessor` anyway, so it looks like we're good
   * In the long term, I'll probably even get the `ChangeNotifier` out of the `PointInTimeRepository` again as I implement a view change history like what I have with undo-redo right now, which will probably move all the notifying into a central `ViewProcessor` or something like that
   * Anyway, this part is good for now then
+* Very well, as for my next move, the `RepositoryService` currently does not save the incidents, which is something that I still need to add
+  * I now did that
+* This is as far as I'm getting with this today
+
+[Time elapsed so far: 38.25 hours]
 
 TODO:
 
-* `RepositoryService` needs to save Incidents
 * Simplify `PointInTimeRepository` to match `IncidentRepository`
 
 # User Story

@@ -1,3 +1,4 @@
+import 'package:ceal_chronicler_f/incidents/model/incident.dart';
 import 'package:ceal_chronicler_f/io/chronicle.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -21,5 +22,12 @@ Chronicle _buildTestChronicle() {
     PointInTime("Test Point 1"),
     PointInTime("Test Point 2"),
   ];
-  return Chronicle(pointsInTime: pointsInTime);
+  var incidents = [
+    Incident(),
+    Incident(),
+  ];
+  return Chronicle(
+    pointsInTime: pointsInTime,
+    incidents: incidents,
+  );
 }
