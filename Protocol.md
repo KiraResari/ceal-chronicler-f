@@ -520,9 +520,24 @@
 
 [Time elapsed so far: 36.25 hours]
 
+# 3-Feb-2024
+
+* Now continuing with this
+* Presently, the issue is that the point of time is incorrectly set while deleting
+  * In the preface of this, I uncovered really weird behavior in regards to the controller, which caused this to mostly behave, but only due to a bug
+    * I did manage to fix that, so I am all clear to work on the actual issue here now
+  * "Deleting first point in time should make remaining point in time active" is the issue I'm working on right now
+    * And that's actually quite tricky, since I also need to consider how undoing this works
+    * But anyway, it seems pretty obvious that this is tied to the `DeletePointInTimeCommand`
+    * The commands are actually pretty neat:  Since they represent user interactions, they can never, ever chain, always come form a controller, and always target one or more repositories, which then notify their listeners after being changed, thus creating a very solid control flow
+    * Actually, now that I write it like that, I figure I can simply write a unit test for that to keep it simpler
+  * Okay, so I now fixed that, and it was actually pretty straightforwar
+  * I suppose the architecture that I set up really facilitates this
+
 TODO:
 
 * Implement correct setting of active point in time when deleting
+* Consider merging `TimeProcessor` into `PointInTimeRepository` and implementing the architecture that all repositories are `ChangeNotifier`s
 * `RepositoryService` needs to save Incidents
 * Simplify `PointInTimeRepository` to match `IncidentRepository`
 

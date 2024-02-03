@@ -10,6 +10,7 @@ main() {
   late TimeProcessor timeProcessor;
 
   setUp(() {
+    getIt.reset();
     repository = PointInTimeRepository();
     getIt.registerSingleton<PointInTimeRepository>(repository);
     timeProcessor = TimeProcessor();
