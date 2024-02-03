@@ -4,14 +4,12 @@ import 'package:ceal_chronicler_f/io/file/file_service.dart';
 import 'package:ceal_chronicler_f/timeline/commands/delete_point_in_time_command.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
-import 'package:ceal_chronicler_f/timeline/time_processor.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../mocks/file_service_mock_lite.dart';
 
 main() {
   late CommandProcessor commandProcessor;
-  late TimeProcessor timeProcessor;
   late PointInTimeRepository repository;
   late PointInTime newPoint;
 
@@ -20,8 +18,6 @@ main() {
     getIt.registerSingleton<FileService>(FileServiceMockLite());
     repository = PointInTimeRepository();
     getIt.registerSingleton<PointInTimeRepository>(repository);
-    timeProcessor = TimeProcessor();
-    getIt.registerSingleton<TimeProcessor>(timeProcessor);
     commandProcessor = CommandProcessor();
     newPoint = repository.createNewAtIndex(0);
   });
@@ -68,12 +64,12 @@ main() {
   test(
     "Deleting active point in time should make other point in time active",
     () {
-      PointInTime activePoint = timeProcessor.activePointInTime;
+      PointInTime activePoint = repository.activePointInTime;
       var command = DeletePointInTimeCommand(activePoint);
 
       commandProcessor.process(command);
 
-      PointInTime newActivePoint = timeProcessor.activePointInTime;
+      PointInTime newActivePoint = repository.activePointInTime;
       expect(newActivePoint, equals(newPoint));
     },
   );
@@ -81,13 +77,13 @@ main() {
   test(
     "Undoing deletion of active point in time should make that point in time active again",
     () {
-      PointInTime activePoint = timeProcessor.activePointInTime;
+      PointInTime activePoint = repository.activePointInTime;
       var command = DeletePointInTimeCommand(activePoint);
 
       commandProcessor.process(command);
       commandProcessor.undo();
 
-      PointInTime newActivePoint = timeProcessor.activePointInTime;
+      PointInTime newActivePoint = repository.activePointInTime;
       expect(newActivePoint, equals(activePoint));
     },
   );
@@ -95,14 +91,14 @@ main() {
   test(
     "Redoing deletion of active point in time should make other point in time active again",
     () {
-      PointInTime activePoint = timeProcessor.activePointInTime;
+      PointInTime activePoint = repository.activePointInTime;
       var command = DeletePointInTimeCommand(activePoint);
 
       commandProcessor.process(command);
       commandProcessor.undo();
       commandProcessor.redo();
 
-      PointInTime newActivePoint = timeProcessor.activePointInTime;
+      PointInTime newActivePoint = repository.activePointInTime;
       expect(newActivePoint, equals(newPoint));
     },
   );
@@ -113,12 +109,12 @@ main() {
       repository.createNewAtIndex(0);
       PointInTime secondPoint = repository.pointsInTime[1];
       PointInTime thirdPoint = repository.pointsInTime[2];
-      timeProcessor.activePointInTime = secondPoint;
+      repository.activePointInTime = secondPoint;
       var command = DeletePointInTimeCommand(secondPoint);
 
       commandProcessor.process(command);
 
-      PointInTime newActivePoint = timeProcessor.activePointInTime;
+      PointInTime newActivePoint = repository.activePointInTime;
       expect(newActivePoint, equals(thirdPoint));
     },
   );
@@ -128,12 +124,12 @@ main() {
     () {
       PointInTime firstPoint = repository.pointsInTime[0];
       PointInTime secondPoint = repository.pointsInTime[1];
-      timeProcessor.activePointInTime = secondPoint;
+      repository.activePointInTime = secondPoint;
       var command = DeletePointInTimeCommand(secondPoint);
 
       commandProcessor.process(command);
 
-      PointInTime newActivePoint = timeProcessor.activePointInTime;
+      PointInTime newActivePoint = repository.activePointInTime;
       expect(newActivePoint, equals(firstPoint));
     },
   );

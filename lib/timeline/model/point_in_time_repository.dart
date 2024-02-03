@@ -1,13 +1,25 @@
 import 'package:ceal_chronicler_f/exceptions/invalid_operation_exception.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
+import 'package:flutter/material.dart';
 
-class PointInTimeRepository {
+class PointInTimeRepository extends ChangeNotifier {
   static const String defaultPointInTimeName = "Point in Time";
   static const int startingRunningNumber = 2;
 
-  List<PointInTime> pointsInTime = [
-    PointInTime(defaultPointInTimeName),
-  ];
+  PointInTime _activePointInTime = PointInTime(defaultPointInTimeName);
+
+  List<PointInTime> pointsInTime = [];
+
+  PointInTimeRepository() {
+    pointsInTime.add(_activePointInTime);
+  }
+
+  PointInTime get activePointInTime => _activePointInTime;
+
+  set activePointInTime(PointInTime value) {
+    _activePointInTime = value;
+    notifyListeners();
+  }
 
   PointInTime get first => pointsInTime.first;
 

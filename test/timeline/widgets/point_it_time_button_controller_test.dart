@@ -1,20 +1,16 @@
 import 'package:ceal_chronicler_f/get_it_context.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
-import 'package:ceal_chronicler_f/timeline/time_processor.dart';
 import 'package:ceal_chronicler_f/timeline/widgets/point_in_time_button_controller.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 main() {
   late PointInTimeRepository repository;
-  late TimeProcessor timeProcessor;
 
   setUp(() {
     getIt.reset();
     repository = PointInTimeRepository();
     getIt.registerSingleton<PointInTimeRepository>(repository);
-    timeProcessor = TimeProcessor();
-    getIt.registerSingleton<TimeProcessor>(timeProcessor);
   });
 
   test("Button of initially created PointInTime should be disabled", () {
@@ -50,7 +46,7 @@ main() {
       var controller = PointInTimeButtonController(point);
       controller.activatePointInTime();
 
-      expect(timeProcessor.activePointInTime, equals(point));
+      expect(repository.activePointInTime, equals(point));
     },
   );
 }

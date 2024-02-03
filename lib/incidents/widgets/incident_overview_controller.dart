@@ -1,13 +1,13 @@
-import 'package:ceal_chronicler_f/timeline/time_processor.dart';
 import 'package:flutter/material.dart';
 
 import '../../get_it_context.dart';
+import '../../timeline/model/point_in_time_repository.dart';
 
 class IncidentOverviewController extends ChangeNotifier {
-  final _timeProcessor = getIt.get<TimeProcessor>();
+  final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
 
   IncidentOverviewController() {
-    _timeProcessor.addListener(_notifyListenersCall);
+    _pointInTimeRepository.addListener(_notifyListenersCall);
   }
 
   void _notifyListenersCall() => notifyListeners();
@@ -15,8 +15,9 @@ class IncidentOverviewController extends ChangeNotifier {
   @override
   void dispose() {
     super.dispose();
-    _timeProcessor.removeListener(_notifyListenersCall);
+    _pointInTimeRepository.removeListener(_notifyListenersCall);
   }
 
-  String get activePointInTimeName => _timeProcessor.activePointInTime.name;
+  String get activePointInTimeName =>
+      _pointInTimeRepository.activePointInTime.name;
 }

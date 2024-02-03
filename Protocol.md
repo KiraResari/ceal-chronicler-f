@@ -533,10 +533,11 @@
     * Actually, now that I write it like that, I figure I can simply write a unit test for that to keep it simpler
   * Okay, so I now fixed that, and it was actually pretty straightforwar
   * I suppose the architecture that I set up really facilitates this
+* Right, so next I want to work off a few things that have been accumulating on my todo list
+* First, I noticed that the architecture I described above is not what I actually have in place: Currently, the repositories don't do any notifying, so I want to see if I can change that and if that will work
 
 TODO:
 
-* Implement correct setting of active point in time when deleting
 * Consider merging `TimeProcessor` into `PointInTimeRepository` and implementing the architecture that all repositories are `ChangeNotifier`s
 * `RepositoryService` needs to save Incidents
 * Simplify `PointInTimeRepository` to match `IncidentRepository`

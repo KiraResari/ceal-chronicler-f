@@ -3,7 +3,6 @@ import 'package:ceal_chronicler_f/get_it_context.dart';
 import 'package:ceal_chronicler_f/io/file/file_service.dart';
 import 'package:ceal_chronicler_f/io/repository_service.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
-import 'package:ceal_chronicler_f/timeline/time_processor.dart';
 import 'package:ceal_chronicler_f/timeline/widgets/time_bar.dart';
 import 'package:ceal_chronicler_f/timeline/widgets/time_bar_panel.dart';
 import 'package:ceal_chronicler_f/utils/string_key.dart';
@@ -16,7 +15,6 @@ void main() {
     getIt.registerSingleton<PointInTimeRepository>(PointInTimeRepository());
     getIt.registerSingleton<RepositoryService>(RepositoryService());
     getIt.registerSingleton<FileService>(FileService());
-    getIt.registerSingleton<TimeProcessor>(TimeProcessor());
     getIt.registerSingleton<CommandProcessor>(CommandProcessor());
   });
 
