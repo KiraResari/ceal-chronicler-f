@@ -139,6 +139,22 @@ void main() {
       expect(button.onPressed, isNull);
     },
   );
+
+  testWidgets(
+    'Undoing creation of active point in time should select other point in time',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(const MaterialApp(home: TimeBar()));
+      await tapAddButton(tester, 1);
+
+      await tapPointInTimeButton(tester, 1);
+      var commandProcessor = getIt.get<CommandProcessor>();
+      commandProcessor.undo();
+      await tester.pump();
+
+      FloatingActionButton button = findPointInTimeButton(tester, 0);
+      expect(button.onPressed, isNull);
+    },
+  );
 }
 
 FloatingActionButton findDeleteButton(WidgetTester tester, int index) {
@@ -155,8 +171,8 @@ StringKey buildDeleteButtonKey(int index) => StringKey(
     "${TimeBar.timeBarPanelsKeyBase}$index${TimeBarPanel.deleteButtonKeyBase}");
 
 Future<void> tapAddButton(WidgetTester tester, int index) async {
-  var addButtonFinder = find.byKey(buildAddButtonKey(index));
-  await tester.tap(addButtonFinder);
+  var buttonFinder = find.byKey(buildAddButtonKey(index));
+  await tester.tap(buttonFinder);
   await tester.pump();
 }
 
@@ -165,6 +181,7 @@ Key buildAddButtonKey(int index) =>
 
 FloatingActionButton findPointInTimeButton(WidgetTester tester, int index) {
   var buttonFinder = find.byKey(buildPointInTimeButtonKey(index));
+  Widget widget = tester.widget(buttonFinder);
   var floatingActionButtonFinder = find.descendant(
     of: buttonFinder,
     matching: find.byType(FloatingActionButton),
@@ -177,7 +194,13 @@ Key buildPointInTimeButtonKey(int index) => Key(
     "${TimeBar.timeBarPanelsKeyBase}$index${TimeBarPanel.pointInTimeButtonKeyBase}");
 
 Future<void> tapDeleteButton(WidgetTester tester, int index) async {
-  var addButtonFinder = find.byKey(buildDeleteButtonKey(index));
-  await tester.tap(addButtonFinder);
+  var buttonFinder = find.byKey(buildDeleteButtonKey(index));
+  await tester.tap(buttonFinder);
+  await tester.pump();
+}
+
+Future<void> tapPointInTimeButton(WidgetTester tester, int index) async {
+  var buttonFinder = find.byKey(buildPointInTimeButtonKey(index));
+  await tester.tap(buttonFinder);
   await tester.pump();
 }

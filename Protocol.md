@@ -557,6 +557,12 @@
   * Okay, that works now
 * However, I uncovered a bug:
   * When undoing the creation of a point in time that is the active point in time, that point in time remains active, leaving one stranded at an unreachable point in time
+  * I now fixed that
+* This is as far as I'm getting with this today
+
+[Time elapsed so far: 39.75 hours]
+
+
 
 # User Story
 
