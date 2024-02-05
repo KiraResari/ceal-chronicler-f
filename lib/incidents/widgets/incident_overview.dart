@@ -1,6 +1,8 @@
+import 'package:ceal_chronicler_f/incidents/widgets/add_incident_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../model/incident.dart';
 import 'incident_overview_controller.dart';
 
 class IncidentOverview extends StatelessWidget {
@@ -10,8 +12,31 @@ class IncidentOverview extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => IncidentOverviewController(),
-      builder: (context, child) => _buildTitle(context),
+      builder: (context, child) => _buildContent(context),
     );
+  }
+
+  Widget _buildContent(BuildContext context) {
+    return Column(
+      children: _buildContentElements(context),
+    );
+  }
+
+  List<Widget> _buildContentElements(BuildContext context) {
+    List<Widget> contentElements = [];
+    contentElements.add(_buildTitle(context));
+    contentElements.addAll(_buildIncidentTiles(context));
+    contentElements.add(const AddIncidentButton());
+    return contentElements;
+  }
+
+  List<Widget> _buildIncidentTiles(BuildContext context) {
+    var controller = context.watch<IncidentOverviewController>();
+    List<Widget> incidentTiles = [];
+    for(Incident incident in controller.incidentsAtActivePointInTime){
+      incidentTiles.add(Text(incident.name));
+    }
+    return incidentTiles;
   }
 
   Center _buildTitle(BuildContext context) {

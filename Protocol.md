@@ -552,6 +552,11 @@
   * The reason for this is that I find that the interface of the `IncidentRepository` is better defined with its `add(Incident incident)` and `void remove(Incident incidentToBeRemoved)` functions, as well as the public `List<Incident> incidents = []`, so I want to change the `PointInTimeRepository` to mirror that and move all more specific logic such as `createNewAtIndex` out into whatever class is calling that
   * However, upon closer inspection, I realize that the `createNewAtIndex` is actually not quite as out of place there as I thought, because unlike with the incidents, the creation of points with unique names is a concern that fits the `PointInTimeRepository` very well
   * So, in the end I only ended up renaming the `createAtIndex` function to `addAtIndex`, which is still an improvement
+* Right, now on to the actual functionality of adding, editing and removing incidents
+* I'll start with adding incidents
+  * Okay, that works now
+* However, I uncovered a bug:
+  * When undoing the creation of a point in time that is the active point in time, that point in time remains active, leaving one stranded at an unreachable point in time
 
 # User Story
 

@@ -1,16 +1,27 @@
+import 'package:ceal_chronicler_f/incidents/model/incident_id.dart';
+
 import '../../exceptions/invalid_operation_exception.dart';
 import 'incident.dart';
 
 class IncidentRepository {
-  List<Incident> incidents = [];
+  Map<IncidentId, Incident> _incidents = {};
+
+  List<Incident> get incidents => _incidents.values.toList();
+
+  set incidents(List<Incident> incidents) {
+    _incidents = {};
+    for(Incident incident in incidents){
+      add(incident);
+    }
+  }
 
   void add(Incident incident) {
-    incidents.add(incident);
+    _incidents[incident.id] = incident;
   }
 
   void remove(Incident incidentToBeRemoved) {
     _assertExistsInRepository(incidentToBeRemoved);
-    incidents.remove(incidentToBeRemoved);
+    _incidents.remove(incidentToBeRemoved.id);
   }
 
   void _assertExistsInRepository(Incident incident) {
@@ -18,5 +29,16 @@ class IncidentRepository {
       throw InvalidOperationException(
           "IncidentRepository does not contain Incident with name ${incident.name}");
     }
+  }
+
+  List<Incident> getIncidentsByReference(List<IncidentId> incidentReferences) {
+    List<Incident> incidents = [];
+    for(IncidentId incidentReference in incidentReferences){
+      Incident? incident = _incidents[incidentReference];
+      if (incident != null){
+        incidents.add(incident);
+      }
+    }
+    return incidents;
   }
 }
