@@ -37,7 +37,7 @@ class DeletePointInTimeCommand extends Command {
   @override
   void undo() {
     if (_deletionIndex != null) {
-      _pointInTimeRepository.createAtIndex(_deletionIndex!, _pointToDelete);
+      _pointInTimeRepository.addAtIndex(_deletionIndex!, _pointToDelete);
       if (_deletedPointWasActivePoint) {
         _pointInTimeRepository.activePointInTime = _pointToDelete;
       }

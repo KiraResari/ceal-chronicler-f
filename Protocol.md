@@ -545,9 +545,13 @@
 
 [Time elapsed so far: 38.25 hours]
 
-TODO:
+# 5-Feb-2024
 
-* Simplify `PointInTimeRepository` to match `IncidentRepository`
+* Now continuing with this
+* Next, I want to simplify the `PointInTimeRepository` to match the `IncidentRepository`
+  * The reason for this is that I find that the interface of the `IncidentRepository` is better defined with its `add(Incident incident)` and `void remove(Incident incidentToBeRemoved)` functions, as well as the public `List<Incident> incidents = []`, so I want to change the `PointInTimeRepository` to mirror that and move all more specific logic such as `createNewAtIndex` out into whatever class is calling that
+  * However, upon closer inspection, I realize that the `createNewAtIndex` is actually not quite as out of place there as I thought, because unlike with the incidents, the creation of points with unique names is a concern that fits the `PointInTimeRepository` very well
+  * So, in the end I only ended up renaming the `createAtIndex` function to `addAtIndex`, which is still an improvement
 
 # User Story
 

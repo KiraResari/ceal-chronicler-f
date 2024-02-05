@@ -30,7 +30,7 @@ class CreatePointInTimeCommand extends Command {
     if (_createdPoint == null) {
       _createdPoint = _pointInTimeRepository.createNewAtIndex(_creationIndex);
     } else {
-      _pointInTimeRepository.createAtIndex(_creationIndex, _createdPoint!);
+      _pointInTimeRepository.addAtIndex(_creationIndex, _createdPoint!);
     }
   }
 
