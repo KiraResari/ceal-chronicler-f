@@ -64,7 +64,22 @@ class PointInTimeRepository extends ChangeNotifier {
       throw InvalidOperationException(
           "The final point in time can't be removed");
     }
+    _handleRemovalOfActivePointInTime(pointToBeRemoved);
     pointsInTime.remove(pointToBeRemoved);
+  }
+
+  void _handleRemovalOfActivePointInTime(PointInTime pointToBeRemoved) {
+    if (pointToBeRemoved == activePointInTime) {
+      activePointInTime = _determineNewActivePoint(pointToBeRemoved);
+    }
+  }
+
+  PointInTime _determineNewActivePoint(PointInTime pointToBeRemoved) {
+    int pointIndex = getPointIndex(pointToBeRemoved);
+    if (pointToBeRemoved == last) {
+      return pointsInTime[pointIndex - 1];
+    }
+    return pointsInTime[pointIndex + 1];
   }
 
   void _assertPointExistsInRepository(PointInTime point) {

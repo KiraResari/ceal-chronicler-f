@@ -22,16 +22,7 @@ class DeletePointInTimeCommand extends Command {
     PointInTime activePoint = _pointInTimeRepository.activePointInTime;
     if (activePoint == _pointToDelete) {
       _deletedPointWasActivePoint = true;
-      PointInTime newActivePoint = _determineNewActivePoint();
-      _pointInTimeRepository.activePointInTime = newActivePoint;
     }
-  }
-
-  PointInTime _determineNewActivePoint() {
-    if (_pointToDelete == _pointInTimeRepository.last) {
-      return _pointInTimeRepository.pointsInTime[_deletionIndex! - 1];
-    }
-    return _pointInTimeRepository.pointsInTime[_deletionIndex! + 1];
   }
 
   @override
