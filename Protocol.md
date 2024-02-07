@@ -569,6 +569,14 @@
 * Now continuing with this
 * Next, I want to enable deleting of incidents
   * Well, that was quick
+* So finally, the last thing that is missing is the ability to rename incidents
+  * I now managed to get this to work
+
+TODO:
+
+* Bug: When chronicle is loaded, there is no active point in time
+* Consolidate `RenameDialog` & controller with `RenamePointInTimeAlertDialog` & controller
+* Points in time should not be deleteable if they have incidents
 
 # User Story
 
@@ -578,7 +586,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 
 ### Time Bar
 
-- [ ] All screens have a time bar at the top, which allows going back and forth in time
+- [x] All screens have a time bar at the top, which allows going back and forth in time
 - [x] By default, there is only one point in time 
 - [x] Points in time can be given names
   - [x] These names have to be unique
@@ -591,9 +599,10 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 
 ## Incidents
 
-- [ ] Incidents can be created at points in time
-- [ ] Incidents can be renamed
-- [ ] Incidents can be deleted
+- [x] Incidents can be created at points in time
+- [x] Incidents can be renamed
+- [x] Incidents can be deleted
+- [ ] Incidents can be re-ordered
 
 ### Characters Overview
 

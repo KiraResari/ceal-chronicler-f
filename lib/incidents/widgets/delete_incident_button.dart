@@ -10,7 +10,7 @@ class DeleteIncidentButton extends SmallCircularButton {
   final Incident incident;
 
   const DeleteIncidentButton(this.incident, {super.key})
-      : super(tooltip: "Add new incident", icon: Icons.delete);
+      : super(tooltip: "Delete incident", icon: Icons.delete);
 
   @override
   void onPressed(BuildContext context) {
