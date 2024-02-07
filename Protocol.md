@@ -564,6 +564,12 @@
 
 
 
+# 7-Feb-2024
+
+* Now continuing with this
+* Next, I want to enable deleting of incidents
+  * Well, that was quick
+
 # User Story
 
 As a Game Designer and Author, I want a tool to help me keep track of characters, events, items, knowledge, locations, affiliations and other things that can change over the course of a story. For example, I want to be able to go back and forth in time to figure out who learned what at what time, or who was where at what time and with whom.

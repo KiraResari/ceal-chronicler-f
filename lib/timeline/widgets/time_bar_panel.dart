@@ -33,13 +33,13 @@ class TimeBarPanel extends StatelessWidget {
   Widget _buildButtonRow(BuildContext context) {
     return Row(
       children: [
-        DeletePointInTimeButton(
-          point: pointInTime,
-          key: StringKey("$key$deleteButtonKeyBase"),
-        ),
         RenamePointInTimeButton(
           point: pointInTime,
           key: StringKey("$key$renameButtonKeyBase"),
+        ),
+        DeletePointInTimeButton(
+          point: pointInTime,
+          key: StringKey("$key$deleteButtonKeyBase"),
         ),
       ],
     );

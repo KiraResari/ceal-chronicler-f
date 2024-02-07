@@ -1,4 +1,5 @@
 import 'package:ceal_chronicler_f/incidents/widgets/add_incident_button.dart';
+import 'package:ceal_chronicler_f/incidents/widgets/incident_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,16 +26,16 @@ class IncidentOverview extends StatelessWidget {
   List<Widget> _buildContentElements(BuildContext context) {
     List<Widget> contentElements = [];
     contentElements.add(_buildTitle(context));
-    contentElements.addAll(_buildIncidentTiles(context));
+    contentElements.addAll(_buildIncidentPanels(context));
     contentElements.add(const AddIncidentButton());
     return contentElements;
   }
 
-  List<Widget> _buildIncidentTiles(BuildContext context) {
+  List<Widget> _buildIncidentPanels(BuildContext context) {
     var controller = context.watch<IncidentOverviewController>();
     List<Widget> incidentTiles = [];
-    for(Incident incident in controller.incidentsAtActivePointInTime){
-      incidentTiles.add(Text(incident.name));
+    for (Incident incident in controller.incidentsAtActivePointInTime) {
+      incidentTiles.add(IncidentPanel(incident));
     }
     return incidentTiles;
   }

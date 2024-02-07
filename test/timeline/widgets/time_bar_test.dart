@@ -181,7 +181,6 @@ Key buildAddButtonKey(int index) =>
 
 FloatingActionButton findPointInTimeButton(WidgetTester tester, int index) {
   var buttonFinder = find.byKey(buildPointInTimeButtonKey(index));
-  Widget widget = tester.widget(buttonFinder);
   var floatingActionButtonFinder = find.descendant(
     of: buttonFinder,
     matching: find.byType(FloatingActionButton),
