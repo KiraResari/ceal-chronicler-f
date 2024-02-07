@@ -42,7 +42,7 @@ main() {
 
   test(
     "Saving and loading should preserve incidents",
-        () async {
+    () async {
       Incident incident = Incident();
       incidentRepository.add(incident);
 
@@ -51,6 +51,20 @@ main() {
       await fileService.load();
 
       expect(incidentRepository.incidents, contains(incident));
+    },
+  );
+
+  test(
+    "After loading, a point in time of the loaded chronicle should be active",
+    () async {
+      await fileService.save();
+      PointInTime originalPoint = pointInTimeRepository.first;
+
+      PointInTime newPoint = pointInTimeRepository.createNewAtIndex(0);
+      pointInTimeRepository.activePointInTime = newPoint;
+      await fileService.load();
+
+      expect(pointInTimeRepository.activePointInTime, equals(originalPoint));
     },
   );
 }

@@ -571,10 +571,17 @@
   * Well, that was quick
 * So finally, the last thing that is missing is the ability to rename incidents
   * I now managed to get this to work
+* Right, so that's the core logic for incidents done, though naturally I already thought of new requirements
+* However, more importantly, I ran into a bug that I should fix right away:
+  * When a chronicle is loaded, the active point in time is still that of the previously loaded chronicle
+  * I now fix that
+* There's still a few small things that I would like to clean up before I set this down
+* But this is as far as I'm getting with this today
+
+[Time elapsed so far: 41.25 hours]
 
 TODO:
 
-* Bug: When chronicle is loaded, there is no active point in time
 * Consolidate `RenameDialog` & controller with `RenamePointInTimeAlertDialog` & controller
 * Points in time should not be deleteable if they have incidents
 

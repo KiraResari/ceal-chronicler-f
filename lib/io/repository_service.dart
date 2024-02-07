@@ -21,6 +21,8 @@ class RepositoryService {
 
   void distributeChronicle(Chronicle chronicle) {
     _pointInTimeRepository.pointsInTime = chronicle.pointsInTime;
+    _pointInTimeRepository.activePointInTime =
+        _pointInTimeRepository.pointsInTime.first;
     _incidentRepository.incidents = chronicle.incidents;
   }
 }
