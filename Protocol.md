@@ -621,6 +621,10 @@
   * Now let me just see if I can communicate the reason with relative ease
     * Yup, looks good
 
+* Cool, so, since I still have a bit of time left today, I figure I might as well use that to work on my lingering regret concerning the points in time, namely that shifting them up and down is not yet possible
+
+  * I now created the commands for that
+
 # User Story
 
 As a Game Designer and Author, I want a tool to help me keep track of characters, events, items, knowledge, locations, affiliations and other things that can change over the course of a story. For example, I want to be able to go back and forth in time to figure out who learned what at what time, or who was where at what time and with whom.

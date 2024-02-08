@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import '../incidents/model/incident.dart';
 import '../timeline/model/point_in_time.dart';
-import '../utils/list_comparer.dart';
+import '../utils/list_utils.dart';
 import 'json_serializable.dart';
 
 class Chronicle extends JsonSerializable {
@@ -49,9 +49,9 @@ class Chronicle extends JsonSerializable {
       identical(this, other) ||
       other is Chronicle &&
           runtimeType == other.runtimeType &&
-          ListComparer.containEqualElementsInSameOrder(
+          ListUtils.containEqualElementsInSameOrder(
               pointsInTime, other.pointsInTime) &&
-          ListComparer.containEqualElementsInSameOrder(
+          ListUtils.containEqualElementsInSameOrder(
               incidents, other.incidents);
 
   @override
