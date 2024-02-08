@@ -618,6 +618,8 @@
 
   * Stating the reason for why it can't be deleted is actually more complicated, so I am going to skip over that at this point and instead focus on the disabling part
   * I now did that
+  * Now let me just see if I can communicate the reason with relative ease
+    * Yup, looks good
 
 # User Story
 

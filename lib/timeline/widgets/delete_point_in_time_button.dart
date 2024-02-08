@@ -11,7 +11,6 @@ class DeletePointInTimeButton extends SmallCircularButton {
   const DeletePointInTimeButton({super.key, required this.point})
       : super(
           tooltip: "Delete",
-          disabledTooltip: "Point can't be deleted",
           icon: Icons.delete,
         );
 
@@ -24,4 +23,9 @@ class DeletePointInTimeButton extends SmallCircularButton {
   @override
   bool isEnabled(BuildContext context) =>
       context.watch<TimeBarController>().canPointBeDeleted(point);
+
+  @override
+  String? getDisabledReason(BuildContext context) => context
+      .watch<TimeBarController>()
+      .getPointDeleteButtonDisabledReason(point);
 }

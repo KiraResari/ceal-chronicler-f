@@ -9,6 +9,14 @@ import '../model/point_in_time.dart';
 import '../model/point_in_time_repository.dart';
 
 class TimeBarController extends ChangeNotifier {
+  static const String lastPointDeletionForbiddenReason =
+      "The last point in time can't be deleted";
+  static const String incidentsPresentDeletionForbiddenReason =
+      "A point in time with incidents can't be deleted";
+  static const String unknownDeletionForbiddenReason =
+      "The reason why this point in time can't be deleted is unknown\n"
+      "This might indicate a bug";
+
   final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
   final _commandProcessor = getIt.get<CommandProcessor>();
 
@@ -35,5 +43,15 @@ class TimeBarController extends ChangeNotifier {
   void rename(PointInTime point, String newName) {
     var command = RenamePointInTimeCommand(point, newName);
     _commandProcessor.process(command);
+  }
+
+  String getPointDeleteButtonDisabledReason(PointInTime point) {
+    if (_pointInTimeRepository.pointsInTime.length < 2) {
+      return lastPointDeletionForbiddenReason;
+    }
+    if (point.incidentReferences.isNotEmpty){
+      return incidentsPresentDeletionForbiddenReason;
+    }
+    return unknownDeletionForbiddenReason;
   }
 }

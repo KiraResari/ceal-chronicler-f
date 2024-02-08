@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 
 abstract class SmallCircularButton extends StatelessWidget {
   final String tooltip;
-  final String? disabledTooltip;
   final IconData icon;
 
   const SmallCircularButton({
     super.key,
     required this.tooltip,
     required this.icon,
-    this.disabledTooltip,
   });
 
   @override
@@ -32,7 +30,7 @@ abstract class SmallCircularButton extends StatelessWidget {
     Color disabledIconColor = theme.colorScheme.onSurfaceVariant;
     return FloatingActionButton(
       backgroundColor: isEnabled(context) ? enabledColor : disabledColor,
-      tooltip: isEnabled(context) ? tooltip : disabledTooltip,
+      tooltip: isEnabled(context) ? tooltip : getDisabledReason(context),
       onPressed: isEnabled(context) ? () => onPressed(context) : null,
       child: Icon(
         icon,
@@ -44,4 +42,6 @@ abstract class SmallCircularButton extends StatelessWidget {
   void onPressed(BuildContext context);
 
   bool isEnabled(BuildContext context) => true;
+
+  String? getDisabledReason(BuildContext context) => null;
 }
