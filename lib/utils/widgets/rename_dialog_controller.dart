@@ -6,17 +6,17 @@ import '../../utils/validation/validation_result.dart';
 
 class RenameDialogController extends ChangeNotifier {
   final TextEditingController textEditingController;
-  final String _originalName;
+  final String originalName;
 
-  RenameDialogController(this._originalName)
-      : textEditingController = TextEditingController(text: _originalName) {
+  RenameDialogController(this.originalName)
+      : textEditingController = TextEditingController(text: originalName) {
     textEditingController.addListener(_notifyListenersCall);
   }
 
   void _notifyListenersCall() => notifyListeners();
 
   ValidationResult validateNewName(String newName) {
-    if (newName == _originalName) {
+    if (newName == originalName) {
       return InvalidResult("Name is unchanged");
     }
     if (newName.isEmpty) {

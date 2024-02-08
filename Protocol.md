@@ -580,6 +580,15 @@
 
 [Time elapsed so far: 41.25 hours]
 
+# 8-Feb-2024
+
+* Now continuing with this
+* Today, I really plan to wrap up with the Incidents
+* I have mostly cleanup planned for today
+* First, I want to try and consolidate the `RenameDialog` & controller with the `RenamePointInTimeAlertDialog` & controller, since I actually pretty much copied the former from the latter, so they have a LOT of duplication that I want to get rid of
+  * The `RenameDialog` & controller are the more generic versions, so let's see if I can make the `RenamePointInTimeAlertDialog` & controller derive from them
+  * Okay, so making the `RenamePointInTimeAlertDialogController` inherit from the `RenameDialogController` already worked nicely
+
 TODO:
 
 * Consolidate `RenameDialog` & controller with `RenamePointInTimeAlertDialog` & controller
