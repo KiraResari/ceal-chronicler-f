@@ -583,15 +583,39 @@
 # 8-Feb-2024
 
 * Now continuing with this
+
 * Today, I really plan to wrap up with the Incidents
+
 * I have mostly cleanup planned for today
+
 * First, I want to try and consolidate the `RenameDialog` & controller with the `RenamePointInTimeAlertDialog` & controller, since I actually pretty much copied the former from the latter, so they have a LOT of duplication that I want to get rid of
+
   * The `RenameDialog` & controller are the more generic versions, so let's see if I can make the `RenamePointInTimeAlertDialog` & controller derive from them
+
   * Okay, so making the `RenamePointInTimeAlertDialogController` inherit from the `RenameDialogController` already worked nicely
+
+  * Meanwhile, trying to consolidate the `RenameDialog` with the `RenamePointInTimeAlertDialog` is more complicated because the call to `TextEditingController controller =    context.read<RenameDialogController>().textEditingController;` does apparently not recognize the `RenamePointInTimeAlertDialogController` at that point
+
+    * I added a pair of methods for reading and watching the controller, so I can override them like this in the `RenamePointInTimeAlertDialogController`:
+
+      * ````dart
+          @override
+          RenameDialogController readController(BuildContext context) {
+            return context.read<RenamePointInTimeAlertDialogController>();
+          }
+        
+          @override
+          RenameDialogController watchController(BuildContext context) {
+            return context.watch<RenamePointInTimeAlertDialogController>();
+          }
+        ````
+
+    * Now this works too
+
+  * With that, this part of the cleanup is done
 
 TODO:
 
-* Consolidate `RenameDialog` & controller with `RenamePointInTimeAlertDialog` & controller
 * Points in time should not be deleteable if they have incidents
 
 # User Story

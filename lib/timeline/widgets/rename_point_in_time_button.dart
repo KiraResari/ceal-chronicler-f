@@ -25,7 +25,7 @@ class RenamePointInTimeButton extends SmallCircularButton {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
-        return RenamePointInTimeAlertDialog(point: point);
+        return RenamePointInTimeAlertDialog(originalName: point.name);
       },
     );
   }

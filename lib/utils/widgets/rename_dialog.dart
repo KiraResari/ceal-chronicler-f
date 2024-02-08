@@ -18,11 +18,19 @@ class RenameDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => RenameDialogController(originalName),
-      builder: (context, child) => _buildAlertDialog(context),
+      builder: (context, child) => buildAlertDialog(context),
     );
   }
 
-  Widget _buildAlertDialog(BuildContext context) {
+  RenameDialogController readController(BuildContext context) {
+    return context.read<RenameDialogController>();
+  }
+
+  RenameDialogController watchController(BuildContext context) {
+    return context.watch<RenameDialogController>();
+  }
+
+  Widget buildAlertDialog(BuildContext context) {
     return AlertDialog(
       title: Text(labelText),
       content: _buildTextField(context),
@@ -40,7 +48,7 @@ class RenameDialog extends StatelessWidget {
 
   Widget _buildTextField(BuildContext context) {
     TextEditingController controller =
-        context.read<RenameDialogController>().textEditingController;
+        readController(context).textEditingController;
     return TextField(
       controller: controller,
       decoration: const InputDecoration(labelText: "New Name"),
@@ -48,7 +56,7 @@ class RenameDialog extends StatelessWidget {
   }
 
   Widget _buildConfirmButtonOrErrorText(BuildContext context) {
-    var controller = context.watch<RenameDialogController>();
+    var controller = watchController(context);
     String name = controller.textEditingController.text;
     ValidationResult nameValidationResult = controller.validateNewName(name);
     return nameValidationResult is InvalidResult
@@ -61,8 +69,7 @@ class RenameDialog extends StatelessWidget {
   }
 
   Widget _buildConfirmButton(BuildContext context) {
-    String name =
-        context.watch<RenameDialogController>().textEditingController.text;
+    String name = watchController(context).textEditingController.text;
     return TextButton(
       onPressed: () => Navigator.of(context).pop(name),
       child: const Text("✔️"),
