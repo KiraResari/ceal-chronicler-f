@@ -614,9 +614,10 @@
 
   * With that, this part of the cleanup is done
 
-TODO:
+* Next, there's a thing that's actually a requirement that I've overlooked, and that's that points in time should not be deleteable if they have incidents
 
-* Points in time should not be deleteable if they have incidents
+  * Stating the reason for why it can't be deleted is actually more complicated, so I am going to skip over that at this point and instead focus on the disabling part
+  * I now did that
 
 # User Story
 
@@ -632,7 +633,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
   - [x] These names have to be unique
 - [x] Points in time can be added before or after any other point in time
 - [x] Points in time can be deleted
-  - [ ] If something happens at a point in time, that point can't be deleted
+  - [x] If something happens at a point in time, that point can't be deleted
     - [ ] There is a functionality that allows skipping to whatever blocks the deletion
   - [x] If there is only a single point in time, that point in time can't be deleted
 - [x] Points in time can't be re-ordered
