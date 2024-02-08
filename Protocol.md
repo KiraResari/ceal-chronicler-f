@@ -627,9 +627,15 @@
   * Now to add the buttons
   * That was a bit more tricky, but it works now too
 
-TODO:
+* Since I had some time, I also tried to make it so that the text in the rename dialogs is initially selected, but nothing I tried there worked
 
-* Make it so that edit boxes start with all text selected so you can easily overwrite it
+  * Oh well, that's a tale for another day
+
+* With that, I am done for now
+
+[Time elapsed so far: 44 hours]
+
+
 
 # User Story
 
@@ -655,7 +661,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [x] Incidents can be created at points in time
 - [x] Incidents can be renamed
 - [x] Incidents can be deleted
-- [ ] Incidents can be re-ordered
+- [x] Incidents can be re-ordered
 
 ### Characters Overview
 
