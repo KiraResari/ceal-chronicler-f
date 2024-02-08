@@ -1,8 +1,10 @@
-import 'package:ceal_chronicler_f/incidents/widgets/delete_incident_button.dart';
-import 'package:ceal_chronicler_f/incidents/widgets/rename_incident_button.dart';
 import 'package:flutter/material.dart';
 
 import '../model/incident.dart';
+import 'delete_incident_button.dart';
+import 'move_incident_down_button.dart';
+import 'move_incident_up_button.dart';
+import 'rename_incident_button.dart';
 
 class IncidentPanel extends StatelessWidget {
   final Incident incident;
@@ -28,6 +30,8 @@ class IncidentPanel extends StatelessWidget {
           child: Text(incident.name),
         ),
         RenameIncidentButton(incident),
+        MoveIncidentUpButton(incident),
+        MoveIncidentDownButton(incident),
         DeleteIncidentButton(incident),
       ],
     );

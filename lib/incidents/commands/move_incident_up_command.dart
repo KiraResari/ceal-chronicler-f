@@ -4,11 +4,11 @@ import '../../commands/command.dart';
 import '../../timeline/model/point_in_time.dart';
 import '../model/incident.dart';
 
-class ShiftIncidentUpCommand extends Command {
+class MoveIncidentUpCommand extends Command {
   final Incident _incident;
   final PointInTime _point;
 
-  ShiftIncidentUpCommand(this._incident, this._point);
+  MoveIncidentUpCommand(this._incident, this._point);
 
   @override
   void execute() {

@@ -1,6 +1,6 @@
 import 'package:ceal_chronicler_f/commands/command_processor.dart';
 import 'package:ceal_chronicler_f/get_it_context.dart';
-import 'package:ceal_chronicler_f/incidents/commands/shift_incident_down_command.dart';
+import 'package:ceal_chronicler_f/incidents/commands/move_incident_down_command.dart';
 import 'package:ceal_chronicler_f/incidents/model/incident.dart';
 import 'package:ceal_chronicler_f/incidents/model/incident_repository.dart';
 import 'package:ceal_chronicler_f/io/file/file_service.dart';
@@ -28,7 +28,7 @@ main() {
       Incident firstIncident = Incident();
       Incident secondIncident = Incident();
       point.incidentReferences = [firstIncident.id, secondIncident.id];
-      var command = ShiftIncidentDownCommand(firstIncident, point);
+      var command = MoveIncidentDownCommand(firstIncident, point);
 
       processor.process(command);
 
@@ -43,7 +43,7 @@ main() {
       Incident firstIncident = Incident();
       Incident secondIncident = Incident();
       point.incidentReferences = [firstIncident.id, secondIncident.id];
-      var command = ShiftIncidentDownCommand(firstIncident, point);
+      var command = MoveIncidentDownCommand(firstIncident, point);
 
       processor.process(command);
       processor.undo();
@@ -59,7 +59,7 @@ main() {
       Incident firstIncident = Incident();
       Incident secondIncident = Incident();
       point.incidentReferences = [firstIncident.id, secondIncident.id];
-      var command = ShiftIncidentDownCommand(firstIncident, point);
+      var command = MoveIncidentDownCommand(firstIncident, point);
 
       processor.process(command);
       processor.undo();

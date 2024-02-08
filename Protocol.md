@@ -624,6 +624,12 @@
 * Cool, so, since I still have a bit of time left today, I figure I might as well use that to work on my lingering regret concerning the points in time, namely that shifting them up and down is not yet possible
 
   * I now created the commands for that
+  * Now to add the buttons
+  * That was a bit more tricky, but it works now too
+
+TODO:
+
+* Make it so that edit boxes start with all text selected so you can easily overwrite it
 
 # User Story
 
