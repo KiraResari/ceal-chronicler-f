@@ -50,7 +50,7 @@ main() {
       incidentRepository.remove(incident);
       await fileService.load();
 
-      expect(incidentRepository.incidents, contains(incident));
+      expect(incidentRepository.content, contains(incident));
     },
   );
 

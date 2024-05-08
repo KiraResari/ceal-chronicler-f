@@ -644,6 +644,9 @@
   * First, let's focus on adding characters
   * For starters, I think it makes sense to just display the characters next to the incidents, since there is ample space
     * °sigh° and already I am starting to run into an issue like "RenderFlex children have non-zero flex but incoming width constraints are unbounded."
+  * I just noticed that the character model classes are very similar to the incident model classes, so I'll try to abstract these
+  * On a closer look, CharacterId/IncidentId and Character/Incident are already tied to one another via their parent classes, and I don't think further abstraction makes sense, but I can probably abstract the repositories
+    * I now managed to abstract the repositories, which should make things easier down the line
 
 
 

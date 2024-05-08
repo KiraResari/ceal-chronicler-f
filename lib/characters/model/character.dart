@@ -1,32 +1,35 @@
 import 'dart:convert';
 
-import 'package:ceal_chronicler_f/io/json_serializable.dart';
-
+import '../../utils/model/id_holder.dart';
 import 'character_id.dart';
 
-class Character extends JsonSerializable {
-  static const String idKey = "id";
+class Character extends IdHolder<CharacterId> {
   static const String nameKey = "name";
   static const defaultName = "New Character";
 
-  final CharacterId id;
   String name = defaultName;
 
-  Character() : id = CharacterId();
+  Character() : super(CharacterId());
 
   Character.fromJsonString(String jsonString)
       : this.fromJson(jsonDecode(jsonString));
 
   Character.fromJson(Map<String, dynamic> json)
-      : id = CharacterId.fromString(json[idKey]),
-        name = json[nameKey];
+      : name = json[nameKey],
+        super(CharacterId.fromString(json[IdHolder.idKey]));
+
+  @override
+  String get identifier => name;
+
+  @override
+  String get identifierDescription => nameKey;
 
   @override
   String toString() => 'Character{id: $id, name: $name}';
 
   @override
   Map<String, dynamic> toJson() => {
-        idKey: id.uuid,
+        IdHolder.idKey: id.uuid,
         nameKey: name,
       };
 

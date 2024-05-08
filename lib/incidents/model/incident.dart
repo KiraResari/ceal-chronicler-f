@@ -1,42 +1,44 @@
 import 'dart:convert';
 
-import 'package:ceal_chronicler_f/io/json_serializable.dart';
-
+import '../../utils/model/id_holder.dart';
 import 'incident_id.dart';
 
-class Incident extends JsonSerializable {
-  static const String idKey = "id";
+class Incident extends IdHolder<IncidentId> {
   static const String nameKey = "name";
   static const defaultName = "New incident";
 
-  final IncidentId id;
   String name = defaultName;
 
-  Incident() : id = IncidentId();
+  Incident() : super(IncidentId());
 
   Incident.fromJsonString(String jsonString)
       : this.fromJson(jsonDecode(jsonString));
 
   Incident.fromJson(Map<String, dynamic> json)
-      : id = IncidentId.fromString(json[idKey]),
-        name = json[nameKey];
+      : name = json[nameKey],
+        super(IncidentId.fromString(json[IdHolder.idKey]));
+
+  @override
+  String get identifier => name;
+
+  @override
+  String get identifierDescription => nameKey;
 
   @override
   String toString() => 'Incident{id: $id, name: $name}';
 
   @override
   Map<String, dynamic> toJson() => {
-    idKey: id.uuid,
-    nameKey: name,
-  };
+        IdHolder.idKey: id.uuid,
+        nameKey: name,
+      };
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is Incident &&
-              runtimeType == other.runtimeType &&
-              id == other.id;
+      other is Incident && runtimeType == other.runtimeType && id == other.id;
 
   @override
   int get hashCode => id.hashCode;
+
 }

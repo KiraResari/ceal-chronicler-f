@@ -12,7 +12,7 @@ class RepositoryService {
 
   Chronicle assembleChronicle() {
     List<PointInTime> pointsInTime = _pointInTimeRepository.pointsInTime;
-    List<Incident> incidents = _incidentRepository.incidents;
+    List<Incident> incidents = _incidentRepository.content;
     return Chronicle(
       pointsInTime: pointsInTime,
       incidents: incidents,
@@ -23,6 +23,6 @@ class RepositoryService {
     _pointInTimeRepository.pointsInTime = chronicle.pointsInTime;
     _pointInTimeRepository.activePointInTime =
         _pointInTimeRepository.pointsInTime.first;
-    _incidentRepository.incidents = chronicle.incidents;
+    _incidentRepository.content = chronicle.incidents;
   }
 }

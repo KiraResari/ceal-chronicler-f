@@ -24,13 +24,13 @@ main() {
   test(
     "Processing command should add new incident",
     () {
-      int initialIncidentCount = repository.incidents.length;
+      int initialIncidentCount = repository.content.length;
       PointInTime point = PointInTime("Test");
       var command = CreateIncidentCommand(point);
 
       processor.process(command);
 
-      expect(repository.incidents.length, equals(initialIncidentCount + 1));
+      expect(repository.content.length, equals(initialIncidentCount + 1));
     },
   );
 
@@ -42,7 +42,7 @@ main() {
 
       processor.process(command);
 
-      Incident createdIncident = repository.incidents.first;
+      Incident createdIncident = repository.content.first;
       expect(point.incidentReferences, contains(createdIncident.id));
     },
   );
@@ -54,10 +54,10 @@ main() {
       var command = CreateIncidentCommand(point);
 
       processor.process(command);
-      Incident createdIncident = repository.incidents.first;
+      Incident createdIncident = repository.content.first;
       processor.undo();
 
-      expect(repository.incidents, isNot(contains(createdIncident)));
+      expect(repository.content, isNot(contains(createdIncident)));
     },
   );
 
@@ -68,7 +68,7 @@ main() {
       var command = CreateIncidentCommand(point);
 
       processor.process(command);
-      Incident createdIncident = repository.incidents.first;
+      Incident createdIncident = repository.content.first;
       processor.undo();
 
       expect(point.incidentReferences, isNot(contains(createdIncident.id)));
@@ -82,11 +82,11 @@ main() {
       var command = CreateIncidentCommand(point);
 
       processor.process(command);
-      Incident createdIncident = repository.incidents.first;
+      Incident createdIncident = repository.content.first;
       processor.undo();
       processor.redo();
 
-      expect(repository.incidents, contains(createdIncident));
+      expect(repository.content, contains(createdIncident));
     },
   );
 
@@ -97,7 +97,7 @@ main() {
       var command = CreateIncidentCommand(point);
 
       processor.process(command);
-      Incident createdIncident = repository.incidents.first;
+      Incident createdIncident = repository.content.first;
       processor.undo();
       processor.redo();
 

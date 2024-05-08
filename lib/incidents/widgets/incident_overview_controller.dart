@@ -33,7 +33,7 @@ class IncidentOverviewController extends ChangeNotifier {
 
   List<Incident> get incidentsAtActivePointInTime {
     return _incidentRepository
-        .getIncidentsByReference(activePointIncidentReferences);
+        .getContentElementsById(activePointIncidentReferences);
   }
 
   List<IncidentId> get activePointIncidentReferences =>

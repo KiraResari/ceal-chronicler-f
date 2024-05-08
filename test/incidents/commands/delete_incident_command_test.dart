@@ -30,7 +30,7 @@ main() {
     relatedPoint = pointInTimeRepository.first;
     var createIncidentCommand = CreateIncidentCommand(relatedPoint);
     createIncidentCommand.execute();
-    incidentToDelete = incidentRepository.incidents.first;
+    incidentToDelete = incidentRepository.content.first;
   });
 
   test(
@@ -40,7 +40,7 @@ main() {
 
       processor.process(command);
 
-      expect(incidentRepository.incidents, isNot(contains(incidentToDelete)));
+      expect(incidentRepository.content, isNot(contains(incidentToDelete)));
     },
   );
 
@@ -64,7 +64,7 @@ main() {
       processor.process(command);
       processor.undo();
 
-      expect(incidentRepository.incidents, contains(incidentToDelete));
+      expect(incidentRepository.content, contains(incidentToDelete));
     },
   );
 
@@ -89,7 +89,7 @@ main() {
       processor.undo();
       processor.redo();
 
-      expect(incidentRepository.incidents, isNot(contains(incidentToDelete)));
+      expect(incidentRepository.content, isNot(contains(incidentToDelete)));
     },
   );
 

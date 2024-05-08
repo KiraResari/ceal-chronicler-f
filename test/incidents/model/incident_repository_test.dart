@@ -9,23 +9,23 @@ main() {
   });
 
   test("Newly created repository should be empty", () {
-    expect(repository.incidents.length, equals(0));
+    expect(repository.content.length, equals(0));
   });
 
   test("Adding new incident should work", () {
     var incident = Incident();
     repository.add(incident);
 
-    expect(repository.incidents.length, equals(1));
+    expect(repository.content.length, equals(1));
   });
 
   test("Removing incident should work", () {
     var incident = Incident();
     repository.add(incident);
-    var incidentToBeRemoved = repository.incidents.first;
+    var incidentToBeRemoved = repository.content.first;
 
     repository.remove(incidentToBeRemoved);
 
-    expect(repository.incidents, isNot(contains(incidentToBeRemoved)));
+    expect(repository.content, isNot(contains(incidentToBeRemoved)));
   });
 }
