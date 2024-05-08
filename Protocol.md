@@ -645,9 +645,16 @@
   * For starters, I think it makes sense to just display the characters next to the incidents, since there is ample space
     * °sigh° and already I am starting to run into an issue like "RenderFlex children have non-zero flex but incoming width constraints are unbounded."
   * I just noticed that the character model classes are very similar to the incident model classes, so I'll try to abstract these
-  * On a closer look, CharacterId/IncidentId and Character/Incident are already tied to one another via their parent classes, and I don't think further abstraction makes sense, but I can probably abstract the repositories
+  * On a closer look, `CharacterId`/IncidentId and `Character`/`Incident` are already tied to one another via their parent classes, and I don't think further abstraction makes sense, but I can probably abstract the repositories
     * I now managed to abstract the repositories, which should make things easier down the line
     * Yes, because now adding a character repository is just a matter of adding a single line plus imports
+  * Anyway, with this groundwork done, the first thing to do is adding new characters
+    * Again, this is very similar to the `CreateIncidentCommand`, so maybe I can abstract those
+    * Hmm, no, doesn't look like it
+      * I'd like to do something like `CreateIncidentCommand<T extends Repository<U>, U extends IdHolder>`
+      * But that doesn't work because `_createdIncident ??= U();` is not accepted
+      * Oh well, it was worth a try
+    * 
 
 
 

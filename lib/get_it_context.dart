@@ -1,3 +1,4 @@
+import 'package:ceal_chronicler_f/characters/model/character_repository.dart';
 import 'package:ceal_chronicler_f/incidents/model/incident_repository.dart';
 import 'package:get_it/get_it.dart';
 
@@ -12,6 +13,7 @@ final getIt = GetIt.instance;
 void initializeGetItContext() {
   getIt.registerSingleton<PointInTimeRepository>(PointInTimeRepository());
   getIt.registerSingleton<IncidentRepository>(IncidentRepository());
+  getIt.registerSingleton<CharacterRepository>(CharacterRepository());
 
   getIt.registerSingleton<RepositoryService>(RepositoryService());
   getIt.registerSingleton<FileAdapter>(FileAdapter());
