@@ -647,6 +647,7 @@
   * I just noticed that the character model classes are very similar to the incident model classes, so I'll try to abstract these
   * On a closer look, CharacterId/IncidentId and Character/Incident are already tied to one another via their parent classes, and I don't think further abstraction makes sense, but I can probably abstract the repositories
     * I now managed to abstract the repositories, which should make things easier down the line
+    * Yes, because now adding a character repository is just a matter of adding a single line plus imports
 
 
 
