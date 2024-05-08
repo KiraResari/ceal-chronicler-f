@@ -1,5 +1,6 @@
 import 'package:ceal_chronicler_f/incidents/widgets/add_incident_button.dart';
 import 'package:ceal_chronicler_f/incidents/widgets/incident_panel.dart';
+import 'package:ceal_chronicler_f/utils/widgets/title_medium.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,14 +19,23 @@ class IncidentOverview extends StatelessWidget {
   }
 
   Widget _buildContent(BuildContext context) {
-    return Column(
-      children: _buildContentElements(context),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.yellow,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: _buildContentElements(context),
+        ),
+      ),
     );
   }
 
   List<Widget> _buildContentElements(BuildContext context) {
     List<Widget> contentElements = [];
-    contentElements.add(_buildTitle(context));
+    contentElements.add(const TitleMedium(title: "Incidents"));
     contentElements.addAll(_buildIncidentPanels(context));
     contentElements.add(const AddIncidentButton());
     return contentElements;
@@ -38,17 +48,5 @@ class IncidentOverview extends StatelessWidget {
       incidentTiles.add(IncidentPanel(incident));
     }
     return incidentTiles;
-  }
-
-  Center _buildTitle(BuildContext context) {
-    String activePointInTimeName =
-        context.watch<IncidentOverviewController>().activePointInTimeName;
-    TextStyle style = Theme.of(context).textTheme.headlineSmall!;
-    return Center(
-      child: FittedBox(
-        fit: BoxFit.scaleDown,
-        child: Text("Incidents at $activePointInTimeName", style: style),
-      ),
-    );
   }
 }

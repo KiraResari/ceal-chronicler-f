@@ -1,7 +1,6 @@
-import 'package:ceal_chronicler_f/incidents/model/incident_id.dart';
-
 import '../../exceptions/invalid_operation_exception.dart';
 import 'incident.dart';
+import 'incident_id.dart';
 
 class IncidentRepository {
   Map<IncidentId, Incident> _incidents = {};
@@ -10,7 +9,7 @@ class IncidentRepository {
 
   set incidents(List<Incident> incidents) {
     _incidents = {};
-    for(Incident incident in incidents){
+    for (Incident incident in incidents) {
       add(incident);
     }
   }
@@ -33,9 +32,9 @@ class IncidentRepository {
 
   List<Incident> getIncidentsByReference(List<IncidentId> incidentReferences) {
     List<Incident> incidents = [];
-    for(IncidentId incidentReference in incidentReferences){
+    for (IncidentId incidentReference in incidentReferences) {
       Incident? incident = _incidents[incidentReference];
-      if (incident != null){
+      if (incident != null) {
         incidents.add(incident);
       }
     }

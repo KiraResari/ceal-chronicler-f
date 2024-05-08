@@ -1,8 +1,8 @@
+import 'package:ceal_chronicler_f/utils/widgets/title_medium.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'character_overview_controller.dart';
-import 'characters_column.dart';
 
 class CharacterOverview extends StatelessWidget {
   static const String unintroducedCharactersTitle = "Unintroduced Characters";
@@ -15,35 +15,28 @@ class CharacterOverview extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => CharacterOverviewController(),
-      builder: (context, child) => _buildCharacterOverview(context),
+      builder: (context, child) => _buildContent(context),
+    );
+  }
+
+  Widget _buildContent(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.green,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: _buildCharacterOverview(context),
+      ),
     );
   }
 
   Widget _buildCharacterOverview(BuildContext context) {
-    return Row(
+    return Column(
       children: [
-        _buildCharactersNotIntroducedColumn(),
-        _buildActiveCharactersColumn(),
-        _buildExitedCharactersColumn(),
+        const TitleMedium(title: "Characters"),
       ],
-    );
-  }
-
-  Widget _buildCharactersNotIntroducedColumn() {
-    return const Expanded(
-      child: CharactersColumn(title: unintroducedCharactersTitle),
-    );
-  }
-
-  Widget _buildActiveCharactersColumn() {
-    return const Expanded(
-      child: CharactersColumn(title: activeCharactersTitle),
-    );
-  }
-
-  Widget _buildExitedCharactersColumn() {
-    return const Expanded(
-      child: CharactersColumn(title: exitedCharactersTitle),
     );
   }
 }

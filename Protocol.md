@@ -603,7 +603,7 @@
           RenameDialogController readController(BuildContext context) {
             return context.read<RenamePointInTimeAlertDialogController>();
           }
-        
+          
           @override
           RenameDialogController watchController(BuildContext context) {
             return context.watch<RenamePointInTimeAlertDialogController>();
@@ -634,6 +634,16 @@
 * With that, I am done for now
 
 [Time elapsed so far: 44 hours]
+
+# 8-May-2024
+
+* Now continuing with this
+* Next, I want to tackle the Characters
+  * Those are, in fact, tricky
+  * So, for starters, I want a very basic character, with a first appearance, a last appearance, and a name that can change
+  * First, let's focus on adding characters
+  * For starters, I think it makes sense to just display the characters next to the incidents, since there is ample space
+    * °sigh° and already I am starting to run into an issue like "RenderFlex children have non-zero flex but incoming width constraints are unbounded."
 
 
 
@@ -667,7 +677,6 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 
 - [ ] Contains an overview of all characters that exists at the current point in time
 - [ ] Allows creating new characters
-- [ ] Allows deleting existing characters
 
 ### Character View
 
@@ -675,16 +684,19 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [ ] The character screen has the following editable fields:
   - [ ] First Appearance
     - [ ] By default contains the point in time at which the character was created
-    - [ ] Can be edited to other points in time, but not to a point in time that is later than Stage Out (if that is filled)
+    - [ ] Can be edited to other points in time, but not to a point in time that is later than the Last Appearance (if that is filled)
+      - [ ] Only Points in time before which no more changes happen to the character can be selected
     - [ ] Allows jumping to that point in time
-  - [ ] Stage Out
+  - [ ] Last appearance
     - [ ] Is empty by default
     - [ ] Can hold points in time, including the first appearance, but not before that
     - [ ] Points in time can be selected from a menu (e.g. dropdown)
+      - [ ] Only Points in time after which no more changes happen to the character can be selected
     - [ ] Allows jumping to that point in time
   - [ ] Name 
 - [ ] Editing a field causes the contents to change from that point in time onward, until it is edited again
-  - [ ] The exception is Stage Out, which is always the same at all points in time 
+  - [ ] The exceptions are First and Last Appearance, which are logically always the same within a character 
+- [ ] Allows complete deletion of existing characters (with warning)
 
 ### Technical
 
