@@ -682,6 +682,15 @@
       * Ah, I think I had a renaming oversight somewhere
       * Okay, that fixed that
   * And yay, we're exactly at 100 tests now
+* Next, I want to make it so that characters can also be saved/loaded
+  * Assuming the framework that I built up is robust, that should be a simple matter of adding the `CharacterRepository` to the `Chronicle`
+  * Well, it's a bit more complicated, it would seem
+  * OOOOH, and it looks like presently adding new fields to saves breaks the loading! That's no good!
+    * Okay, I fixed that now
+    * With that, I can now load my old chronicle file again
+  * However, it looks like the loading of characters is not working yet
+    * Well, duh, looks like I forgot to add the line for transferring the loaded characters to the repository, so no surprise there =>,<=
+  * Okay, now saving and loading of characters works!
 
 
 
@@ -717,6 +726,8 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 
 - [x] Contains an overview of all characters that exists at the current point in time
 - [x] Allows creating new characters
+- [x] Characters can be saved/loaded
+- [ ] Point in Time can't be deleted if it is the first appearance of a character 
 
 ### Character View
 
