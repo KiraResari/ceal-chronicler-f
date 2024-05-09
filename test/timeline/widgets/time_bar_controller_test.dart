@@ -1,3 +1,5 @@
+import 'package:ceal_chronicler_f/characters/model/character.dart';
+import 'package:ceal_chronicler_f/characters/model/character_repository.dart';
 import 'package:ceal_chronicler_f/commands/command_processor.dart';
 import 'package:ceal_chronicler_f/get_it_context.dart';
 import 'package:ceal_chronicler_f/incidents/model/incident_id.dart';
@@ -10,20 +12,23 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../mocks/file_service_mock_lite.dart';
 
 main() {
-  late PointInTimeRepository repository;
+  late PointInTimeRepository pointInTimeRepository;
+  late CharacterRepository characterRepository;
   late TimeBarController controller;
 
   setUp(() {
     getIt.reset();
-    repository = PointInTimeRepository();
-    getIt.registerSingleton<PointInTimeRepository>(repository);
+    pointInTimeRepository = PointInTimeRepository();
+    characterRepository = CharacterRepository();
+    getIt.registerSingleton<PointInTimeRepository>(pointInTimeRepository);
+    getIt.registerSingleton<CharacterRepository>(characterRepository);
     getIt.registerSingleton<FileService>(FileServiceMockLite());
     getIt.registerSingleton<CommandProcessor>(CommandProcessor());
     controller = TimeBarController();
   });
 
   test("Point with incidents should not be deletable", () {
-    PointInTime newPoint = repository.createNewAtIndex(0);
+    PointInTime newPoint = pointInTimeRepository.createNewAtIndex(0);
 
     newPoint.incidentReferences.add(IncidentId());
 
@@ -31,14 +36,22 @@ main() {
   });
 
   test("Point without incidents should be deletable", () {
-    PointInTime newPoint = repository.createNewAtIndex(0);
+    PointInTime newPoint = pointInTimeRepository.createNewAtIndex(0);
 
     expect(controller.canPointBeDeleted(newPoint), isTrue);
   });
 
   test("Last point should not be deletable", () {
-    PointInTime onlyPoint = repository.first;
+    PointInTime onlyPoint = pointInTimeRepository.first;
 
     expect(controller.canPointBeDeleted(onlyPoint), isFalse);
+  });
+
+  test("Point that is first appearance of character should not be deletable",
+      () {
+    PointInTime newPoint = pointInTimeRepository.createNewAtIndex(0);
+    characterRepository.add(Character(newPoint.id));
+
+    expect(controller.canPointBeDeleted(newPoint), isFalse);
   });
 }
