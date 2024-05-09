@@ -37,7 +37,7 @@ class IncidentOverview extends StatelessWidget {
     List<Widget> contentElements = [];
     contentElements.add(const TitleMedium(title: "Incidents"));
     contentElements.addAll(_buildIncidentPanels(context));
-    contentElements.add(const AddIncidentButton());
+    contentElements.add(AddIncidentButton());
     return contentElements;
   }
 

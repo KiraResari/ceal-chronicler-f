@@ -1,6 +1,9 @@
 import 'package:ceal_chronicler_f/exceptions/invalid_operation_exception.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
+import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
 import 'package:flutter/material.dart';
+
+import '../../exceptions/point_in_time_not_found_exception.dart';
 
 class PointInTimeRepository extends ChangeNotifier {
   static const String defaultPointInTimeName = "Point in Time";
@@ -105,4 +108,24 @@ class PointInTimeRepository extends ChangeNotifier {
   }
 
   int getPointIndex(PointInTime point) => pointsInTime.indexOf(point);
+
+  bool activePointInTimeIsNotBefore(PointInTimeId id) {
+    int activePointIndex = getPointIndex(activePointInTime);
+    int comparisonPointIndex = _getPointIndexById(id);
+    return activePointIndex >= comparisonPointIndex;
+  }
+
+  int _getPointIndexById(PointInTimeId id) {
+    PointInTime? pointInTime = _getPointById(id);
+    return getPointIndex(pointInTime);
+  }
+
+  PointInTime _getPointById(PointInTimeId id) {
+    for (PointInTime pointInTime in pointsInTime) {
+      if (pointInTime.id == id) {
+        return pointInTime;
+      }
+    }
+    throw PointInTimeNotFoundException();
+  }
 }

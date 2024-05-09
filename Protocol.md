@@ -654,7 +654,25 @@
       * I'd like to do something like `CreateIncidentCommand<T extends Repository<U>, U extends IdHolder>`
       * But that doesn't work because `_createdIncident ??= U();` is not accepted
       * Oh well, it was worth a try
-    * 
+  * Alright, the very basic adding of characters works now
+  * However, thus far, the characters still exist at all points in time simultaneously, which is not the intention
+    * Instead, newly created characters should only be displayed at the point in time of their creation and thereafter
+    * I am currently in the process of trying to get that to behave correctly, but it's not yet working
+* This is as far as I'm getting with this today
+
+[Time elapsed so far: 47.5 hours]
+
+# 9-May-2024
+
+* Now continuing with this
+* Last time, I got to the point where I was able to add characters, and theoretically they should only appear at their designated points in time and thereafter, but didn't
+  * Ah, it looks like the change of a point in time currently does not trigger a rebuild of the characters overview
+  * Okay, this is potentially tricky, but it feels like this happens because currently view changes are not handled the same as commands
+  * However, it does work with incidents, so...
+  * Ah, I think the `CharacterOverviewController` is still missing a listener on the `PointInTimeRepository`
+    * Okay, looks like that fixed that
+
+
 
 
 
@@ -687,7 +705,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 ### Characters Overview
 
 - [ ] Contains an overview of all characters that exists at the current point in time
-- [ ] Allows creating new characters
+- [x] Allows creating new characters
 
 ### Character View
 

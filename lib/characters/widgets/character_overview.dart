@@ -1,14 +1,13 @@
-import 'package:ceal_chronicler_f/utils/widgets/title_medium.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../utils/widgets/title_medium.dart';
+import '../model/character.dart';
 import 'character_overview_controller.dart';
+import 'character_panel.dart';
+import 'add_character_button.dart';
 
 class CharacterOverview extends StatelessWidget {
-  static const String unintroducedCharactersTitle = "Unintroduced Characters";
-  static const String activeCharactersTitle = "Active Characters";
-  static const String exitedCharactersTitle = "Exited Characters";
-
   const CharacterOverview({super.key});
 
   @override
@@ -34,9 +33,24 @@ class CharacterOverview extends StatelessWidget {
 
   Widget _buildCharacterOverview(BuildContext context) {
     return Column(
-      children: [
-        const TitleMedium(title: "Characters"),
-      ],
+      children: _buildContentElements(context),
     );
+  }
+
+  List<Widget> _buildContentElements(BuildContext context) {
+    List<Widget> contentElements = [];
+    contentElements.add(const TitleMedium(title: "Characters"));
+    contentElements.addAll(_buildCharacterPanels(context));
+    contentElements.add(AddCharacterButton());
+    return contentElements;
+  }
+
+  List<Widget> _buildCharacterPanels(BuildContext context) {
+    var controller = context.watch<CharacterOverviewController>();
+    List<Widget> incidentTiles = [];
+    for (Character character in controller.charactersAtActivePointInTime) {
+      incidentTiles.add(CharacterPanel(character));
+    }
+    return incidentTiles;
   }
 }

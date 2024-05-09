@@ -1,6 +1,6 @@
-import 'package:ceal_chronicler_f/characters/overview/character_overview.dart';
 import 'package:flutter/material.dart';
 
+import 'characters/widgets/character_overview.dart';
 import 'incidents/widgets/incident_overview.dart';
 
 class MainView extends StatelessWidget {
