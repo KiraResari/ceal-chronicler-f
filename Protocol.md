@@ -671,6 +671,17 @@
   * However, it does work with incidents, so...
   * Ah, I think the `CharacterOverviewController` is still missing a listener on the `PointInTimeRepository`
     * Okay, looks like that fixed that
+* Right, next I wanted to see if I can improve the `PointInTimeRepository` a bit, because currently it looks notably different than my other repositories
+  * For starters, it uses a List rather than a Map, which makes it more complicated for me to find Points in Time by their ID
+  * However, the index that I use in the list is important too, since the order of the list is equal to the order of the points in time
+  * So let's see if I can just turn it into a map and get that still to work, and if that works, maybe I can even get it to inherit from the abstract `Repository` class that I introduced earlier
+    * Hmm, I think the problem lies with inserting things at a specific index...
+    * It's probably inevitable at this point to use the map on top of the list if I want to do that, which will at the same time kill off the option of consolidating this into the abstract `Repository` class, but oh well...
+    * Aaaand, now I seem to have busted the saving/loading in doing that...
+      * Thankfully the tests detected that
+      * Ah, I think I had a renaming oversight somewhere
+      * Okay, that fixed that
+  * And yay, we're exactly at 100 tests now
 
 
 
@@ -704,7 +715,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 
 ### Characters Overview
 
-- [ ] Contains an overview of all characters that exists at the current point in time
+- [x] Contains an overview of all characters that exists at the current point in time
 - [x] Allows creating new characters
 
 ### Character View

@@ -89,4 +89,34 @@ main() {
 
     expect(repository.existingNames, contains(newName));
   });
+
+  test(
+      "activePointInTimeIsNotBefore should return false if checked against later point",
+      () {
+    PointInTime laterPoint = repository.createNewAtIndex(1);
+
+    bool result = repository.activePointInTimeIsNotBefore(laterPoint.id);
+
+    expect(result, isFalse);
+  });
+
+  test(
+      "activePointInTimeIsNotBefore should return true if checked against earlier point",
+      () {
+    PointInTime earlierPoint = repository.createNewAtIndex(0);
+
+    bool result = repository.activePointInTimeIsNotBefore(earlierPoint.id);
+
+    expect(result, isTrue);
+  });
+
+  test(
+      "activePointInTimeIsNotBefore should return true if checked against active point",
+      () {
+    PointInTime activePoint = repository.activePointInTime;
+
+    bool result = repository.activePointInTimeIsNotBefore(activePoint.id);
+
+    expect(result, isTrue);
+  });
 }

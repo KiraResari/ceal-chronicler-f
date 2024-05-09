@@ -11,10 +11,22 @@ class PointInTimeRepository extends ChangeNotifier {
 
   PointInTime _activePointInTime = PointInTime(defaultPointInTimeName);
 
-  List<PointInTime> pointsInTime = [];
+  List<PointInTime> _pointsInTime = [];
+  final Map<PointInTimeId, PointInTime> _pointsInTimeIdMap = {};
+
+  List<PointInTime> get pointsInTime => _pointsInTime;
+
+  set pointsInTime(List<PointInTime> points) {
+    _pointsInTime = points;
+    _pointsInTimeIdMap.clear();
+    for (PointInTime point in points) {
+      _pointsInTimeIdMap[point.id] = point;
+    }
+  }
 
   PointInTimeRepository() {
     pointsInTime.add(_activePointInTime);
+    _pointsInTimeIdMap[_activePointInTime.id] = _activePointInTime;
   }
 
   PointInTime get activePointInTime => _activePointInTime;
@@ -36,6 +48,7 @@ class PointInTimeRepository extends ChangeNotifier {
 
   void addAtIndex(int index, PointInTime newPoint) {
     pointsInTime.insert(index, newPoint);
+    _pointsInTimeIdMap[newPoint.id] = newPoint;
   }
 
   PointInTime _createPointWithUniqueName() {
@@ -69,6 +82,7 @@ class PointInTimeRepository extends ChangeNotifier {
     }
     _handleRemovalOfActivePointInTime(pointToBeRemoved);
     pointsInTime.remove(pointToBeRemoved);
+    _pointsInTimeIdMap.remove(pointToBeRemoved.id);
   }
 
   void _handleRemovalOfActivePointInTime(PointInTime pointToBeRemoved) {
@@ -116,15 +130,9 @@ class PointInTimeRepository extends ChangeNotifier {
   }
 
   int _getPointIndexById(PointInTimeId id) {
-    PointInTime? pointInTime = _getPointById(id);
-    return getPointIndex(pointInTime);
-  }
-
-  PointInTime _getPointById(PointInTimeId id) {
-    for (PointInTime pointInTime in pointsInTime) {
-      if (pointInTime.id == id) {
-        return pointInTime;
-      }
+    PointInTime? pointInTime = _pointsInTimeIdMap[id];
+    if (pointInTime != null) {
+      return getPointIndex(pointInTime);
     }
     throw PointInTimeNotFoundException();
   }
