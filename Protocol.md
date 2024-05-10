@@ -693,8 +693,45 @@
   * Okay, now saving and loading of characters works!
 * Next, I have to make it so that Points in Time that are the first appearance of a character can't be deleted 
   * Alright, that works now too!
+* Alright, next will be the implementation of the character screen
+* Actually, before that, it might make sense to first implement the view navigation logic, since this is where it will start escalating
+  * Specifically, I can think of the following scenarios that might become relevant in the near future:
+    * In the character view, it  should be possible to jump to different points in time, for example to the point in time where the name has changed
+      * If we do it like the command pattern, and use something like a `ViewChangeCommand`, then this is easy because we can fire it from everywhere
+        * However, with this, we need to consider that since these are gonna use a separate stack from the `Command`s, some `Command`s may break this stack, so how do we deal with that?
+          * For example, if I create a new point, then go to that point, then to another point, then delete that point, and then try to navigate back, then that will clearly fail, since the point to which should be navigated no longer exists
+          * There's multiple ways to deal with this
+            * For one, we can simply say that any deletion empties the navigation stack
+              * Since I assume that `ViewChangeCommand`s are always going to target a specific entity via its ID, it should only be deletions that are problematic
+            * A more thorough way might be to scan the `ViewChangeCommand` stack every time a deletion is triggered and remove any `ViewChangeCommand`s that relate to the deleted item
+              * But restoring them might be tricky
+            * A way that preserves history through undo/redo of `Commands` and yet does not cause any problems would be more complicated, but possible:
+              * Basically, it involves making validity checks for every `ViewChangeCommand` in the stack to see if the forward/backward buttons are active
+        * Since `ViewChangeCommand`s never alter any data, it should not be possible for them to break the `Command` stack, so at least in this direction we should be clear
+    * In the character view, it should not be possible to jump to points in time at which the character does not exist
+      * That means the `TimeBarController` needs a way to know which character is active, meaning that similarly to how the `PointInTimeRepository` has an `activePointInTime`, the `CharacterRepository` needs an `activeCharacter`
+  * Right, that is a lot to process, but it all nicely converges on a system revolving around `ViewChangeCommand`s  
+    * The next question is how to best deal with this and the existing `CommandProcessor`
+      * Basically, I need to decide about whether to integrate it in the existing `CommandProcessor`, or whether to create a class for this, say, a `ViewProcessor`
+      * I mean, clearly I need a separate stack for this
+      * And keeping the complex logic for the validity checks mentioned above in mind, yeah, I think it's definitely gonna be a class of its own
+      * The disadvantage of this is that everything that listens to the `CommandProcessor` will now also have to listen to the `ViewProcessor`, but oh well
+  * Okay, let's try implementing that `ViewProcessor` for navigating back and forth along the time line at first 
+* This is as far as I'm getting with this today
+
+[Time elapsed so far: 50.5 hours]
 
 
+
+# 10-May-2024
+
+* I'll now start with implementing the `ViewProcessor`
+  * I am making good progress there
+  * I have gotten to the point where navigating to points in time and navigating backwards works in the tests
+  * Next, I will have to work on navigating forwards
+* This is as far as I'm getting with this today
+
+[Time elapsed so far: 52 hours]
 
 
 
@@ -749,7 +786,9 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
   - [ ] Name 
 - [ ] Editing a field causes the contents to change from that point in time onward, until it is edited again
   - [ ] The exceptions are First and Last Appearance, which are logically always the same within a character 
+  - [ ] It is possible to jump back and forth to points in time where a field's value has been edited
 - [ ] Allows complete deletion of existing characters (with warning)
+- [ ] While in the Character View, Points in Time at which the character does not exist should be greyed out in the time bar
 
 ### Technical
 

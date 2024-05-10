@@ -136,4 +136,17 @@ class PointInTimeRepository extends ChangeNotifier {
     }
     throw PointInTimeNotFoundException();
   }
+
+  void activatePointInTime(PointInTimeId id) {
+    PointInTime? pointInTime = _pointsInTimeIdMap[id];
+    if (pointInTime != null) {
+      _activePointInTime = pointInTime;
+    } else {
+      throw PointInTimeNotFoundException();
+    }
+  }
+
+  bool contains(PointInTimeId id) {
+    return _pointsInTimeIdMap.containsKey(id);
+  }
 }
