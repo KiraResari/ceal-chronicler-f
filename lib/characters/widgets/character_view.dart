@@ -1,10 +1,11 @@
+import 'package:ceal_chronicler_f/main_view/main_view_candidate.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../model/character_id.dart';
 import 'character_view_controller.dart';
 
-class CharacterView extends StatelessWidget {
+class CharacterView extends MainViewCandidate {
   final CharacterId id;
 
   const CharacterView({super.key, required this.id});

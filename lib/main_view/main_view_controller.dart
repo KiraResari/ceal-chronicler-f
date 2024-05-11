@@ -4,6 +4,7 @@ import '../commands/command_processor.dart';
 import '../get_it_context.dart';
 import '../view/view_processor.dart';
 import '../view/view_repository.dart';
+import 'main_view_candidate.dart';
 
 class MainViewController extends ChangeNotifier {
   final _commandProcessor = getIt.get<CommandProcessor>();
@@ -17,6 +18,6 @@ class MainViewController extends ChangeNotifier {
   }
   void _notifyListenersCall() => notifyListeners();
 
-  Widget get activeView => _viewRepository.activeView;
+  MainViewCandidate get activeView => _viewRepository.mainView;
 
 }
