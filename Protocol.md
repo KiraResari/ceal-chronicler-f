@@ -751,6 +751,11 @@
       * Maybe I could unite them into one class that takes both types of commands and delegates those, to dedicated sub-classes, but I think that would only make things more confusing
 * Next, I want to implement one of the reasons why I actually did this: Namely forward/backward navigation buttons 
   * Alright, those now work too! And with minimal effort too!
+* Right, and to finish off the navigation chapter, I want to make it so that loading a chronicles clears the `ViewProcessor` history
+  - Functionally, this makes no difference since all the `ViewCommand`s in the `ViewProcessor` are invalid and thus inaccessible anyway after loading, but they're still polluting the memory that way, so I'd better take them out
+  - Ah, no, wait. In fact, it *does* make a functional difference, since you could load a previous version of the chronicle you'te currently working on, which would allow some `ViewCommand`s to be valid, which would produce some weird behavior, so yeah, definitely gotta clear the history there
+  - Okay, I did that now
+* With that, the navigation is now complete
 
 
 

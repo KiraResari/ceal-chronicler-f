@@ -20,6 +20,6 @@ void initializeGetItContext() {
   getIt.registerSingleton<FileAdapter>(FileAdapter());
   getIt.registerSingleton<FileService>(FileService());
 
-  getIt.registerSingleton<CommandProcessor>(CommandProcessor());
   getIt.registerSingleton<ViewProcessor>(ViewProcessor());
+  getIt.registerSingleton<CommandProcessor>(CommandProcessor());
 }

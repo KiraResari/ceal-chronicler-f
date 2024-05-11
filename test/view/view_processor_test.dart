@@ -1,19 +1,33 @@
+import 'package:ceal_chronicler_f/characters/model/character_repository.dart';
+import 'package:ceal_chronicler_f/commands/command_processor.dart';
 import 'package:ceal_chronicler_f/get_it_context.dart';
+import 'package:ceal_chronicler_f/incidents/model/incident_repository.dart';
+import 'package:ceal_chronicler_f/io/file/file_service.dart';
+import 'package:ceal_chronicler_f/io/repository_service.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
 import 'package:ceal_chronicler_f/view/commands/activate_point_in_time_command.dart';
 import 'package:ceal_chronicler_f/view/view_processor.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../mocks/file_service_mock.dart';
+
 main() {
-  late ViewProcessor processor;
+  late ViewProcessor viewProcessor;
+  late CommandProcessor commandProcessor;
   late PointInTimeRepository repository;
 
   setUp(() {
     getIt.reset();
     repository = PointInTimeRepository();
     getIt.registerSingleton<PointInTimeRepository>(repository);
-    processor = ViewProcessor();
+    getIt.registerSingleton<IncidentRepository>(IncidentRepository());
+    getIt.registerSingleton<CharacterRepository>(CharacterRepository());
+    getIt.registerSingleton<RepositoryService>(RepositoryService());
+    getIt.registerSingleton<FileService>(FileServiceMock());
+    viewProcessor = ViewProcessor();
+    getIt.registerSingleton<ViewProcessor>(viewProcessor);
+    commandProcessor = CommandProcessor();
   });
 
   test("Process should correctly process command", () {
@@ -21,7 +35,7 @@ main() {
     repository.addAtIndex(0, newPoint);
     var command = ActivatePointInTimeCommand(newPoint.id);
 
-    processor.process(command);
+    viewProcessor.process(command);
 
     expect(repository.activePointInTime, equals(newPoint));
   });
@@ -29,7 +43,7 @@ main() {
   test(
       "Navigating back should not be possible if no commands have been processed",
       () {
-    expect(processor.isNavigatingBackPossible, isFalse);
+    expect(viewProcessor.isNavigatingBackPossible, isFalse);
   });
 
   test(
@@ -38,9 +52,9 @@ main() {
     var newPoint = PointInTime("test");
     repository.addAtIndex(0, newPoint);
     var command = ActivatePointInTimeCommand(newPoint.id);
-    processor.process(command);
+    viewProcessor.process(command);
 
-    var isNavigatingBackPossible = processor.isNavigatingBackPossible;
+    var isNavigatingBackPossible = viewProcessor.isNavigatingBackPossible;
 
     expect(isNavigatingBackPossible, isTrue);
   });
@@ -52,10 +66,10 @@ main() {
     var newPoint = PointInTime("test");
     repository.addAtIndex(0, newPoint);
     var command = ActivatePointInTimeCommand(newPoint.id);
-    processor.process(command);
+    viewProcessor.process(command);
     repository.remove(originalPoint);
 
-    var isNavigatingBackPossible = processor.isNavigatingBackPossible;
+    var isNavigatingBackPossible = viewProcessor.isNavigatingBackPossible;
 
     expect(isNavigatingBackPossible, isFalse);
   });
@@ -65,9 +79,9 @@ main() {
     var newPoint = PointInTime("test");
     repository.addAtIndex(0, newPoint);
     var command = ActivatePointInTimeCommand(newPoint.id);
-    processor.process(command);
+    viewProcessor.process(command);
 
-    processor.navigateBack();
+    viewProcessor.navigateBack();
 
     expect(repository.activePointInTime, equals(originalPoint));
   });
@@ -79,12 +93,12 @@ main() {
     repository.addAtIndex(0, firstNewPoint);
     repository.addAtIndex(0, secondNewPoint);
     var command = ActivatePointInTimeCommand(firstNewPoint.id);
-    processor.process(command);
+    viewProcessor.process(command);
     var command2 = ActivatePointInTimeCommand(secondNewPoint.id);
-    processor.process(command2);
+    viewProcessor.process(command2);
     repository.remove(firstNewPoint);
 
-    processor.navigateBack();
+    viewProcessor.navigateBack();
 
     expect(repository.activePointInTime, equals(originalPoint));
   });
@@ -92,7 +106,7 @@ main() {
   test(
       "Navigating forward should not be possible if no commands have been processed",
       () {
-    expect(processor.isNavigatingForwardPossible, isFalse);
+    expect(viewProcessor.isNavigatingForwardPossible, isFalse);
   });
 
   test("Navigating forward should be possible if a valid target command exists",
@@ -100,10 +114,10 @@ main() {
     var newPoint = PointInTime("test");
     repository.addAtIndex(0, newPoint);
     var command = ActivatePointInTimeCommand(newPoint.id);
-    processor.process(command);
-    processor.navigateBack();
+    viewProcessor.process(command);
+    viewProcessor.navigateBack();
 
-    var isNavigatingForwardPossible = processor.isNavigatingForwardPossible;
+    var isNavigatingForwardPossible = viewProcessor.isNavigatingForwardPossible;
 
     expect(isNavigatingForwardPossible, isTrue);
   });
@@ -114,11 +128,11 @@ main() {
     var newPoint = PointInTime("test");
     repository.addAtIndex(0, newPoint);
     var command = ActivatePointInTimeCommand(newPoint.id);
-    processor.process(command);
-    processor.navigateBack();
+    viewProcessor.process(command);
+    viewProcessor.navigateBack();
     repository.remove(newPoint);
 
-    var isNavigatingForwardPossible = processor.isNavigatingForwardPossible;
+    var isNavigatingForwardPossible = viewProcessor.isNavigatingForwardPossible;
 
     expect(isNavigatingForwardPossible, isFalse);
   });
@@ -127,10 +141,10 @@ main() {
     var newPoint = PointInTime("test");
     repository.addAtIndex(0, newPoint);
     var command = ActivatePointInTimeCommand(newPoint.id);
-    processor.process(command);
-    processor.navigateBack();
+    viewProcessor.process(command);
+    viewProcessor.navigateBack();
 
-    processor.navigateForward();
+    viewProcessor.navigateForward();
 
     expect(repository.activePointInTime, equals(newPoint));
   });
@@ -141,15 +155,28 @@ main() {
     repository.addAtIndex(0, firstNewPoint);
     repository.addAtIndex(0, secondNewPoint);
     var command = ActivatePointInTimeCommand(firstNewPoint.id);
-    processor.process(command);
+    viewProcessor.process(command);
     var command2 = ActivatePointInTimeCommand(secondNewPoint.id);
-    processor.process(command2);
+    viewProcessor.process(command2);
 
-    processor.navigateBack();
-    processor.navigateBack();
+    viewProcessor.navigateBack();
+    viewProcessor.navigateBack();
     repository.remove(firstNewPoint);
-    processor.navigateForward();
+    viewProcessor.navigateForward();
 
     expect(repository.activePointInTime, equals(secondNewPoint));
+  });
+
+  test("Navigating backward should not be possible after loading", () async {
+    var newPoint = PointInTime("test");
+    repository.addAtIndex(0, newPoint);
+    await commandProcessor.save();
+    var command = ActivatePointInTimeCommand(newPoint.id);
+    viewProcessor.process(command);
+
+    await commandProcessor.load();
+
+    var isNavigatingBackPossible = viewProcessor.isNavigatingBackPossible;
+    expect(isNavigatingBackPossible, isFalse);
   });
 }

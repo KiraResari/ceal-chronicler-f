@@ -92,4 +92,12 @@ class ViewProcessor extends ChangeNotifier {
     }
     return null;
   }
+
+  void reset() {
+    _commandHistory.clear();
+    var originalPointInTime = pointInTimeRepository.first;
+    var command = ActivateInitialViewCommand(originalPointInTime.id);
+    _commandHistory.add(command);
+    _index = 0;
+  }
 }
