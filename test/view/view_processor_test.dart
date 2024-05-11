@@ -1,6 +1,5 @@
 import 'package:ceal_chronicler_f/get_it_context.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
-import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
 import 'package:ceal_chronicler_f/view/commands/activate_point_in_time_command.dart';
 import 'package:ceal_chronicler_f/view/view_processor.dart';
@@ -47,13 +46,14 @@ main() {
   });
 
   test(
-      "Navigating back should not be possible if a command has been processed, but that command is no longer valid",
+      "Navigating back should not be possible if all previous commands are invalid",
       () {
+    var originalPoint = repository.first;
     var newPoint = PointInTime("test");
     repository.addAtIndex(0, newPoint);
     var command = ActivatePointInTimeCommand(newPoint.id);
     processor.process(command);
-    repository.remove(newPoint);
+    repository.remove(originalPoint);
 
     var isNavigatingBackPossible = processor.isNavigatingBackPossible;
 
@@ -93,5 +93,63 @@ main() {
       "Navigating forward should not be possible if no commands have been processed",
       () {
     expect(processor.isNavigatingForwardPossible, isFalse);
+  });
+
+  test("Navigating forward should be possible if a valid target command exists",
+      () {
+    var newPoint = PointInTime("test");
+    repository.addAtIndex(0, newPoint);
+    var command = ActivatePointInTimeCommand(newPoint.id);
+    processor.process(command);
+    processor.navigateBack();
+
+    var isNavigatingForwardPossible = processor.isNavigatingForwardPossible;
+
+    expect(isNavigatingForwardPossible, isTrue);
+  });
+
+  test(
+      "Navigating forward should not be possible if all forward targets are invalid",
+      () {
+    var newPoint = PointInTime("test");
+    repository.addAtIndex(0, newPoint);
+    var command = ActivatePointInTimeCommand(newPoint.id);
+    processor.process(command);
+    processor.navigateBack();
+    repository.remove(newPoint);
+
+    var isNavigatingForwardPossible = processor.isNavigatingForwardPossible;
+
+    expect(isNavigatingForwardPossible, isFalse);
+  });
+
+  test("Navigating forward should work if a valid target command exists", () {
+    var newPoint = PointInTime("test");
+    repository.addAtIndex(0, newPoint);
+    var command = ActivatePointInTimeCommand(newPoint.id);
+    processor.process(command);
+    processor.navigateBack();
+
+    processor.navigateForward();
+
+    expect(repository.activePointInTime, equals(newPoint));
+  });
+
+  test("Navigating forward should skip invalid commands", () {
+    var firstNewPoint = PointInTime("test");
+    var secondNewPoint = PointInTime("test2");
+    repository.addAtIndex(0, firstNewPoint);
+    repository.addAtIndex(0, secondNewPoint);
+    var command = ActivatePointInTimeCommand(firstNewPoint.id);
+    processor.process(command);
+    var command2 = ActivatePointInTimeCommand(secondNewPoint.id);
+    processor.process(command2);
+
+    processor.navigateBack();
+    processor.navigateBack();
+    repository.remove(firstNewPoint);
+    processor.navigateForward();
+
+    expect(repository.activePointInTime, equals(secondNewPoint));
   });
 }

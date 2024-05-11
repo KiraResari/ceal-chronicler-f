@@ -6,7 +6,7 @@ import '../get_it_context.dart';
 import '../timeline/model/point_in_time_repository.dart';
 
 class ViewProcessor extends ChangeNotifier {
-  late final  List<ViewCommand> _commandHistory;
+  late final List<ViewCommand> _commandHistory;
   int _index = 0;
 
   final PointInTimeRepository pointInTimeRepository =
@@ -46,14 +46,32 @@ class ViewProcessor extends ChangeNotifier {
   }
 
   bool get isNavigatingForwardPossible {
-    if (_index >= _commandHistory.length) {
+    if (_index + 1 >= _commandHistory.length) {
       return false;
     }
-    return true;
+    for (int i = _index + 1; i < _commandHistory.length; i++) {
+      if (_commandHistory[i].isValid()) {
+        return true;
+      }
+    }
+    return false;
   }
 
   void navigateBack() {
     int? targetIndex = _previousValidIndex;
+    _navigteToTargetIndex(targetIndex);
+  }
+
+  int? get _previousValidIndex {
+    for (int i = _index - 1; i >= 0; i--) {
+      if (_commandHistory[i].isValid()) {
+        return i;
+      }
+    }
+    return null;
+  }
+
+  void _navigteToTargetIndex(int? targetIndex) {
     if (targetIndex != null) {
       _index = targetIndex;
       _commandHistory[targetIndex].execute();
@@ -61,8 +79,13 @@ class ViewProcessor extends ChangeNotifier {
     }
   }
 
-  int? get _previousValidIndex {
-    for (int i = _index - 1; i >= 0; i--) {
+  void navigateForward() {
+    int? targetIndex = _nextTargetIndex;
+    _navigteToTargetIndex(targetIndex);
+  }
+
+  int? get _nextTargetIndex {
+    for (int i = _index + 1; i < _commandHistory.length; i++) {
       if (_commandHistory[i].isValid()) {
         return i;
       }
