@@ -149,4 +149,6 @@ class PointInTimeRepository extends ChangeNotifier {
   bool contains(PointInTimeId id) {
     return _pointsInTimeIdMap.containsKey(id);
   }
+
+  PointInTime? get(PointInTimeId id) => _pointsInTimeIdMap[id];
 }

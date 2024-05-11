@@ -18,7 +18,7 @@ class IncidentOverviewController extends ChangeNotifier {
   IncidentOverviewController() {
     _pointInTimeRepository.addListener(_notifyListenersCall);
     _commandProcessor.addListener(_notifyListenersCall);
-    _viewProcessor.addListener(() => notifyListeners());
+    _viewProcessor.addListener(_notifyListenersCall);
   }
 
   void _notifyListenersCall() => notifyListeners();

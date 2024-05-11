@@ -738,30 +738,78 @@
 # 11-May-2024
 
 * Now continuing with this
+
 * I am presently working on the `ViewProcessor`
+
   * The next thing I need to do there is navigating forwards
     * I now did that
   * With that, the `ViewProcessor` should be done
+
 * Now, the next step will be integrating it
+
   * Right now, the only view change I have is the change of active points in time in the time bar
   * Alright, I now managed to do this
   * Though, as expected, I had to add listeners to the `ViewProcessor` to all the  affected view controllers, that is, `TimeBarController`, `CharacterOverviewController` and `IncidentOverviewController`
     * However, putting the `ViewProcessor` next to the `CommandProcessor` now, I see that it was right to make it into a separate class, because while they both use the command pattern, they use it in slightly, yet irreconcilably different ways
     * Also, since I can't fathom needing a third type of command processor, I think it's okay if we have this duality here for now
       * Maybe I could unite them into one class that takes both types of commands and delegates those, to dedicated sub-classes, but I think that would only make things more confusing
+
 * Next, I want to implement one of the reasons why I actually did this: Namely forward/backward navigation buttons 
+
   * Alright, those now work too! And with minimal effort too!
+
 * Right, and to finish off the navigation chapter, I want to make it so that loading a chronicles clears the `ViewProcessor` history
+
   - Functionally, this makes no difference since all the `ViewCommand`s in the `ViewProcessor` are invalid and thus inaccessible anyway after loading, but they're still polluting the memory that way, so I'd better take them out
   - Ah, no, wait. In fact, it *does* make a functional difference, since you could load a previous version of the chronicle you'te currently working on, which would allow some `ViewCommand`s to be valid, which would produce some weird behavior, so yeah, definitely gotta clear the history there
   - Okay, I did that now
+
 * With that, the navigation is now complete
+
+* Okay, so next is implementing the character view, now that we have implemented a mechanic for navigating in general
+
+  * Well, actually, we still need to implement a mechanic for switching between the `MainView` and the `CharacterView`, but that can wait until we actually have a `CharacterView`
+
+  * So, what does the `CharacterView` need for the first iteration?
+
+    * A back-button
+    * A display field for the character name
+    * A display field for the first appearance
+
+  * Now, here's an interesting question regarding the layout:
+
+    * I could make it either column-based or row-based
+    * Row-based would mean that the fields and their labels could be one object
+    * Column-based would make them different objects, but they'd be vertically aligned better
+    * Hmm, is there some way to make grid- or table- layouts?
+    * Ah, yes, `Table`  looks like something good to try here
+    * I'll start simple for now and then see how to take it from there
+
+  * In the first iteration, I'll add a simplistic `CharacterView` with only display fields and no back button, and focus on making it possible to navigate there from the main view
+
+  * Hmm, I think I'll need to rethink the naming
+
+    * Right now, I have a `MainView` that holds the `IncidentsOverview` and the `CharactersOverview`
+    * The `MainView` is one one level with the `MessageBar`, `ToolBar` and `TimeBar`
+    * So it's basically my main layout component
+    * That means I can't just switch it with the `CharacterView`
+    * However, I think it would be a good place to handle the switching logic, which means I need to encapsulate the `IncidentsOveview` and the `CharactersOverview` into a different view
+    * I can't think of a better name than `OverviewView` right now, so let's go with that until I can think of something better
+
+  * Mmmh, as I start working on it, I realize that my architecture wants me to add a  `ViewRepository` to keep track of which view is active
+
+    * Specifically, I need something that the `ViewProcessor` may modify in order to change what is displayed in the `MainView`, and thus far I have held it in such a way that the controllers all listen to processors
+
+    * Okay, this is tricky, but I think I'm making good progress thus far
+
+      
 
 
 
 # TODO
 
-* Loading should clear `ViewProcessor` history
+* Add active point in time to the `ViewRepository`
+* Make a superclass for all `ChangeNotifier` listening to `CommandProcessor` and `ViewProcessor` (like `ProcessorListerner` or something)
 
 # User Story
 
@@ -817,6 +865,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
   - [ ] It is possible to jump back and forth to points in time where a field's value has been edited
 - [ ] Allows complete deletion of existing characters (with warning)
 - [ ] While in the Character View, Points in Time at which the character does not exist should be greyed out in the time bar
+- [ ] The character screen has a back button, which returns back to the main view
 
 ### Technical
 

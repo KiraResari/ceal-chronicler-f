@@ -41,4 +41,6 @@ abstract class Repository<T extends ReadableUuid, U extends IdHolder<T>> {
     }
     return contentElements;
   }
+
+  U? getContentElementById(T id) => _content[id];
 }
