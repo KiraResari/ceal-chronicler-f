@@ -6,16 +6,19 @@ import 'package:flutter/material.dart';
 import '../../get_it_context.dart';
 import '../../timeline/model/point_in_time_repository.dart';
 import '../../commands/command_processor.dart';
+import '../../view/view_processor.dart';
 import '../model/incident.dart';
 
 class IncidentOverviewController extends ChangeNotifier {
   final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
   final _incidentRepository = getIt.get<IncidentRepository>();
   final _commandProcessor = getIt.get<CommandProcessor>();
+  final _viewProcessor = getIt.get<ViewProcessor>();
 
   IncidentOverviewController() {
     _pointInTimeRepository.addListener(_notifyListenersCall);
     _commandProcessor.addListener(_notifyListenersCall);
+    _viewProcessor.addListener(() => notifyListeners());
   }
 
   void _notifyListenersCall() => notifyListeners();

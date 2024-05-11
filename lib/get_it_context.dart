@@ -1,5 +1,6 @@
 import 'package:ceal_chronicler_f/characters/model/character_repository.dart';
 import 'package:ceal_chronicler_f/incidents/model/incident_repository.dart';
+import 'package:ceal_chronicler_f/view/view_processor.dart';
 import 'package:get_it/get_it.dart';
 
 import 'commands/command_processor.dart';
@@ -20,4 +21,5 @@ void initializeGetItContext() {
   getIt.registerSingleton<FileService>(FileService());
 
   getIt.registerSingleton<CommandProcessor>(CommandProcessor());
+  getIt.registerSingleton<ViewProcessor>(ViewProcessor());
 }

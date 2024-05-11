@@ -6,6 +6,7 @@ import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
 import 'package:ceal_chronicler_f/timeline/widgets/time_bar.dart';
 import 'package:ceal_chronicler_f/timeline/widgets/time_bar_panel.dart';
 import 'package:ceal_chronicler_f/utils/string_key.dart';
+import 'package:ceal_chronicler_f/view/view_processor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -18,6 +19,7 @@ void main() {
     getIt.registerSingleton<PointInTimeRepository>(PointInTimeRepository());
     getIt.registerSingleton<CharacterRepository>(CharacterRepository());
     getIt.registerSingleton<CommandProcessor>(CommandProcessor());
+    getIt.registerSingleton<ViewProcessor>(ViewProcessor());
   });
 
   testWidgets(

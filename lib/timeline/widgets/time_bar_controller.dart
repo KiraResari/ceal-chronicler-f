@@ -1,4 +1,5 @@
 import 'package:ceal_chronicler_f/characters/model/character_repository.dart';
+import 'package:ceal_chronicler_f/view/view_processor.dart';
 import 'package:flutter/material.dart';
 
 import '../../characters/model/character.dart';
@@ -22,9 +23,11 @@ class TimeBarController extends ChangeNotifier {
   final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
   final _characterRepository = getIt.get<CharacterRepository>();
   final _commandProcessor = getIt.get<CommandProcessor>();
+  final _viewProcessor = getIt.get<ViewProcessor>();
 
   TimeBarController() {
     _commandProcessor.addListener(() => notifyListeners());
+    _viewProcessor.addListener(() => notifyListeners());
   }
 
   List<PointInTime> get pointsInTime => _pointInTimeRepository.pointsInTime;

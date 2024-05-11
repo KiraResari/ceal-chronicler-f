@@ -742,6 +742,20 @@
   * The next thing I need to do there is navigating forwards
     * I now did that
   * With that, the `ViewProcessor` should be done
+* Now, the next step will be integrating it
+  * Right now, the only view change I have is the change of active points in time in the time bar
+  * Alright, I now managed to do this
+  * Though, as expected, I had to add listeners to the `ViewProcessor` to all the  affected view controllers, that is, `TimeBarController`, `CharacterOverviewController` and `IncidentOverviewController`
+    * However, putting the `ViewProcessor` next to the `CommandProcessor` now, I see that it was right to make it into a separate class, because while they both use the command pattern, they use it in slightly, yet irreconcilably different ways
+    * Also, since I can't fathom needing a third type of command processor, I think it's okay if we have this duality here for now
+      * Maybe I could unite them into one class that takes both types of commands and delegates those, to dedicated sub-classes, but I think that would only make things more confusing
+* Next, I want to implement one of the reasons why I actually did this: Namely forward/backward navigation buttons 
+
+
+
+# TODO
+
+* Loading should clear `ViewProcessor` history
 
 # User Story
 
