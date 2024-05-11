@@ -1,4 +1,6 @@
 import 'package:ceal_chronicler_f/toolBar/load_button.dart';
+import 'package:ceal_chronicler_f/toolBar/navigate_back_button.dart';
+import 'package:ceal_chronicler_f/toolBar/navigate_forward_button.dart';
 import 'package:ceal_chronicler_f/toolBar/save_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +28,9 @@ class ChroniclerToolBar extends StatelessWidget {
         Spacer(),
         UndoButton(),
         RedoButton(),
+        Spacer(),
+        NavigateBackButton(),
+        NavigateForwardButton(),
         Spacer(flex: 20),
       ],
     );

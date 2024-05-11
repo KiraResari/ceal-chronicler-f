@@ -750,6 +750,7 @@
     * Also, since I can't fathom needing a third type of command processor, I think it's okay if we have this duality here for now
       * Maybe I could unite them into one class that takes both types of commands and delegates those, to dedicated sub-classes, but I think that would only make things more confusing
 * Next, I want to implement one of the reasons why I actually did this: Namely forward/backward navigation buttons 
+  * Alright, those now work too! And with minimal effort too!
 
 
 
@@ -818,5 +819,5 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [x] A chronicle can be loaded from a file
 - [x] Actions can be undone
 - [x] Actions can be re-done
-- [ ] You can navigate back to the last visited view
-- [ ] You can navigate forward, which undoes navigating backwards
+- [x] You can navigate back to the last visited view
+- [x] You can navigate forward, which undoes navigating backwards
