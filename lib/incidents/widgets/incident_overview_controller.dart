@@ -10,9 +10,7 @@ class IncidentOverviewController extends ProcessorListener {
   final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
   final _incidentRepository = getIt.get<IncidentRepository>();
 
-  IncidentOverviewController() : super() {
-    _pointInTimeRepository.addListener(notifyListenersCall);
-  }
+  IncidentOverviewController() : super();
 
   String get activePointInTimeName => activePointInTime.name;
 
@@ -34,11 +32,5 @@ class IncidentOverviewController extends ProcessorListener {
   bool canIncidentBeMovedDown(Incident incident) {
     return activePointIncidentReferences.contains(incident.id) &&
         activePointIncidentReferences.last != incident.id;
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _pointInTimeRepository.removeListener(notifyListenersCall);
   }
 }

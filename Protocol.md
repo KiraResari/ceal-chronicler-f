@@ -839,10 +839,14 @@
 # 15-May-2024
 
 * Now continuing with this
+
 * Last time we closed on several issues that became apparent due to the introduction of the character screen
+
   * Navigation back does not work as intended
   * Changing views causes the "A * was used after being disposed" error
+
 * First, let's address the "A * was used after being disposed" error
+
   * I *think* I can solve that by removing the listeners in the `dispose` function, which I can hopefully override
   * Yes, that's possible, and it works
   * With that, this issue is already resolved
@@ -866,7 +870,9 @@
     * The controllers clearly need the `ViewProcessor`
     * However, currently the `ViewProcessor` needs the `ActivateInitialViewCommand`, which needs the `ViewRepository`
     * Since I wanted to rework how the `ViewProcessor` works anyway, let's do that instead
+
 * Now, to reworking how the `ViewProcessor` works
+
   * I messed this up because I assumed that each `ViewCommand` is more or less the same, so that by executing the previous command you can undo a command
   * However, that only works as long as there's just one kind of command and it falls apart as soon as there are different kinds of commands
   * Like: `ActivatePointInTimeCommand` > `OpenCharacterViewCommand`
@@ -928,10 +934,14 @@
         * Falsely tries to undo ActivatePointInTimeCommand for Jolly_Goat_Xi because the targetIndex is 1 instead of 0
         * Ah, I missed changing on `isExecutePossible` into `isUndoPossible`
     * Alright, after ironing these out, all of the tests for the `ViewProcessor` are working again, yay!
+
 * Right, how about all the other tests?
+
   * Nope, still errors
   * I now managed to fix them
+
 * Okay, next let me do a manual test of the chronicler to see if all this refactoring caused any errors that are not covered by tests yet
+
   * Okay, it would seem that the navigating back is not working yet
     * Ah, I think I forgot the `notifyListeners` there
   * And there's still some odd behavior when combining undo and redo:
@@ -955,6 +965,40 @@
       * When navigating forward, the `execute` method of the `ViewCommand` is used, which changes the `_previousActivePointInTimeId` and thus messes everything up
       * So it seems I need a separate function for redo
     * Now this works 
+    * I also wrote a test for it to ensure that this or something like it doesn't happen again
+  * Right, back to the manual test to see if I can find anything else that isn't working as expected
+    * Okay, looks good! I can't find any other issues right now
+
+* So, back on track
+
+* Since I'm doing refactoring now, I might as well check if I can get rid of a few things that accumulated
+
+  * For one, it occurs to me that I should not need any listeners for the repositories since literally every action in the program that triggers a UI update should now be handled by either the `ViewProcessor` or `CommandProcessor`
+    * That means that the repositories should not have to be  `ChangeNotifier`s
+    * At least that's the theory. Let's see what happens if I change that
+    * Oh, looks like only the `PointInTimeRepository` was a `ChangeNotifier` in the first place anyway by now
+    * Well, that worked, though I left the `PointInTimeButtonController` as a `ChangeNotifier` since it presently does not need the `CommandProcessor`, so this is simpler
+    * I did manage to remove the `ChangeNotifier` from the `PointInTimeRepository` though
+
+* While testing the above, I ran into an error while messing with incidents
+
+  * I don't know the exact order, but it happened while having two incidents, moving them up and down, and then undoing stuff
+
+  * The final state at which the error occurred is as follows:
+
+    * One incident (the other is deleted)
+
+    * Undo & Redo are possible
+
+    * Error message:
+
+      * ````
+        Undo of command failed
+        Command: Instance of 'MoveIncidentUpCommand'
+        Cause: RangeError: Invalid value: Not in inclusive range 0..1: -1
+        ````
+
+      * 
 
 
 
@@ -963,6 +1007,8 @@
 # TODO
 
 * Check which `notifyListeners` other than to the processors are actually needed (possibly, no Repositiories need to be ChangeNotifiers)
+* Try separating `FileService` from `CommandProcessor`
+* Prettify `CharacterView`
 * Consolidate Buttons
 
 # User Story

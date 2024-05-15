@@ -12,7 +12,7 @@ class PointInTimeButtonController extends ChangeNotifier {
   final PointInTime point;
 
   PointInTimeButtonController(this.point) {
-    _pointInTimeRepository.addListener(_notifyListenersCall);
+    _viewProcessor.addListener(_notifyListenersCall);
   }
 
   void _notifyListenersCall() => notifyListeners();
@@ -27,6 +27,6 @@ class PointInTimeButtonController extends ChangeNotifier {
   @override
   void dispose() {
     super.dispose();
-    _pointInTimeRepository.removeListener(_notifyListenersCall);
+    _viewProcessor.removeListener(_notifyListenersCall);
   }
 }

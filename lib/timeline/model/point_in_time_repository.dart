@@ -1,15 +1,13 @@
-import 'package:ceal_chronicler_f/exceptions/invalid_operation_exception.dart';
-import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
-import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
-import 'package:flutter/material.dart';
-
+import '../../exceptions/invalid_operation_exception.dart';
 import '../../exceptions/point_in_time_not_found_exception.dart';
+import 'point_in_time.dart';
+import 'point_in_time_id.dart';
 
-class PointInTimeRepository extends ChangeNotifier {
+class PointInTimeRepository {
   static const String defaultPointInTimeName = "Point in Time";
   static const int startingRunningNumber = 2;
 
-  PointInTime _activePointInTime = PointInTime(defaultPointInTimeName);
+  PointInTime activePointInTime = PointInTime(defaultPointInTimeName);
 
   List<PointInTime> _pointsInTime = [];
   final Map<PointInTimeId, PointInTime> _pointsInTimeIdMap = {};
@@ -25,15 +23,8 @@ class PointInTimeRepository extends ChangeNotifier {
   }
 
   PointInTimeRepository() {
-    pointsInTime.add(_activePointInTime);
-    _pointsInTimeIdMap[_activePointInTime.id] = _activePointInTime;
-  }
-
-  PointInTime get activePointInTime => _activePointInTime;
-
-  set activePointInTime(PointInTime value) {
-    _activePointInTime = value;
-    notifyListeners();
+    pointsInTime.add(activePointInTime);
+    _pointsInTimeIdMap[activePointInTime.id] = activePointInTime;
   }
 
   PointInTime get first => pointsInTime.first;
@@ -140,7 +131,7 @@ class PointInTimeRepository extends ChangeNotifier {
   void activatePointInTime(PointInTimeId id) {
     PointInTime? pointInTime = _pointsInTimeIdMap[id];
     if (pointInTime != null) {
-      _activePointInTime = pointInTime;
+      activePointInTime = pointInTime;
     } else {
       throw PointInTimeNotFoundException();
     }

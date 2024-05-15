@@ -9,9 +9,7 @@ class CharacterOverviewController extends ProcessorListener {
   final _characterRepository = getIt.get<CharacterRepository>();
   final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
 
-  CharacterOverviewController() : super() {
-    _pointInTimeRepository.addListener(notifyListenersCall);
-  }
+  CharacterOverviewController() : super();
 
   List<Character> get charactersAtActivePointInTime {
     List<Character> allCharacters = _characterRepository.content;
@@ -31,11 +29,5 @@ class CharacterOverviewController extends ProcessorListener {
     } on PointInTimeNotFoundException catch (_) {
       return false;
     }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _pointInTimeRepository.removeListener(notifyListenersCall);
   }
 }

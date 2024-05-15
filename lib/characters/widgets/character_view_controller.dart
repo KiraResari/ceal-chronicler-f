@@ -13,9 +13,7 @@ class CharacterViewController extends ProcessorListener {
 
   CharacterViewController(CharacterId id)
       : character = getIt<CharacterRepository>().getContentElementById(id),
-        super() {
-    _pointInTimeRepository.addListener(notifyListenersCall);
-  }
+        super();
 
   bool get characterFound => character != null;
 
@@ -30,11 +28,5 @@ class CharacterViewController extends ProcessorListener {
       }
     }
     return "Unknown";
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _pointInTimeRepository.removeListener(notifyListenersCall);
   }
 }
