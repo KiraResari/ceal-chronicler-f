@@ -182,4 +182,25 @@ main() {
     var isNavigatingBackPossible = viewProcessor.isNavigatingBackPossible;
     expect(isNavigatingBackPossible, isFalse);
   });
+
+  //This happened because "execute()" was used instead of "redo()"
+  test("Skipping elements while navigating forward should not break history",
+      () {
+    var firstNewPoint = PointInTime("test");
+    var secondNewPoint = PointInTime("test2");
+    repository.addAtIndex(0, firstNewPoint);
+    repository.addAtIndex(0, secondNewPoint);
+
+    var command = ActivatePointInTimeCommand(firstNewPoint.id);
+    viewProcessor.process(command);
+    var command2 = ActivatePointInTimeCommand(secondNewPoint.id);
+    viewProcessor.process(command2);
+    repository.remove(firstNewPoint);
+    viewProcessor.navigateBack();
+    viewProcessor.navigateForward();
+    repository.addAtIndex(0, firstNewPoint);
+    viewProcessor.navigateBack();
+
+    expect(repository.activePointInTime, equals(firstNewPoint));
+  });
 }
