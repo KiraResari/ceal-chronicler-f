@@ -15,7 +15,7 @@ main() {
   late CommandProcessor processor;
   late IncidentRepository incidentRepository;
   late PointInTimeRepository pointInTimeRepository;
-  late Incident incidentToDelete;
+  late Incident firstIncident;
   late PointInTime relatedPoint;
 
   setUp(() {
@@ -28,82 +28,95 @@ main() {
     processor = CommandProcessor();
 
     relatedPoint = pointInTimeRepository.first;
-    var createIncidentCommand = CreateIncidentCommand(relatedPoint);
-    createIncidentCommand.execute();
-    incidentToDelete = incidentRepository.content.first;
+
+    CreateIncidentCommand(relatedPoint).execute();
+    firstIncident = incidentRepository.content.first;
   });
 
   test(
     "Processing command should delete incident",
     () {
-      var command = DeleteIncidentCommand(incidentToDelete);
+      var command = DeleteIncidentCommand(firstIncident);
 
       processor.process(command);
 
-      expect(incidentRepository.content, isNot(contains(incidentToDelete)));
+      expect(incidentRepository.content, isNot(contains(firstIncident)));
     },
   );
 
   test(
     "Processing command should remove incident reference from related point in time",
     () {
-      var command = DeleteIncidentCommand(incidentToDelete);
+      var command = DeleteIncidentCommand(firstIncident);
 
       processor.process(command);
 
-      expect(relatedPoint.incidentReferences,
-          isNot(contains(incidentToDelete.id)));
+      expect(
+          relatedPoint.incidentReferences, isNot(contains(firstIncident.id)));
     },
   );
 
   test(
     "Undoing command should restore incident",
     () {
-      var command = DeleteIncidentCommand(incidentToDelete);
+      var command = DeleteIncidentCommand(firstIncident);
 
       processor.process(command);
       processor.undo();
 
-      expect(incidentRepository.content, contains(incidentToDelete));
+      expect(incidentRepository.content, contains(firstIncident));
     },
   );
 
   test(
     "Undoing command should restore incident reference to related point in time",
     () {
-      var command = DeleteIncidentCommand(incidentToDelete);
+      var command = DeleteIncidentCommand(firstIncident);
 
       processor.process(command);
       processor.undo();
 
-      expect(relatedPoint.incidentReferences, contains(incidentToDelete.id));
+      expect(relatedPoint.incidentReferences, contains(firstIncident.id));
     },
   );
 
   test(
     "Redoing command should re-delete incident",
     () {
-      var command = DeleteIncidentCommand(incidentToDelete);
+      var command = DeleteIncidentCommand(firstIncident);
 
       processor.process(command);
       processor.undo();
       processor.redo();
 
-      expect(incidentRepository.content, isNot(contains(incidentToDelete)));
+      expect(incidentRepository.content, isNot(contains(firstIncident)));
     },
   );
 
   test(
     "Redoing command should re-remove incident reference from related point in time",
     () {
-      var command = DeleteIncidentCommand(incidentToDelete);
+      var command = DeleteIncidentCommand(firstIncident);
 
       processor.process(command);
       processor.undo();
       processor.redo();
 
-      expect(relatedPoint.incidentReferences,
-          isNot(contains(incidentToDelete.id)));
+      expect(
+          relatedPoint.incidentReferences, isNot(contains(firstIncident.id)));
+    },
+  );
+
+  test(
+    "After undo, incidents should still be in the same order",
+    () {
+      CreateIncidentCommand(relatedPoint).execute();
+
+      var command = DeleteIncidentCommand(firstIncident);
+      processor.process(command);
+      processor.undo();
+
+      expect(relatedPoint.incidentReferences.first, equals(firstIncident.id));
     },
   );
 }

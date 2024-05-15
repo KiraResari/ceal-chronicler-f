@@ -35,6 +35,13 @@ class PointInTime extends JsonSerializable {
     incidentReferences.add(incidentReference);
   }
 
+  int getIncidentReferenceIndex(IncidentId incidentReference) =>
+      incidentReferences.indexOf(incidentReference);
+
+  void addIncidentReferenceAtIndex(IncidentId incidentReference, int index) {
+    incidentReferences.insert(index, incidentReference);
+  }
+
   void removeIncidentReference(IncidentId incidentReference) {
     if (incidentReferences.contains(incidentReference)) {
       incidentReferences.remove(incidentReference);

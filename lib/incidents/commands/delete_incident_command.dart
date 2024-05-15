@@ -11,6 +11,7 @@ class DeleteIncidentCommand extends Command {
   final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
   final Incident _incident;
   final List<PointInTime> _relatedPointsInTime = [];
+  int? deletedIndex;
 
   DeleteIncidentCommand(this._incident);
 
@@ -25,6 +26,7 @@ class DeleteIncidentCommand extends Command {
     for (PointInTime point in _pointInTimeRepository.pointsInTime) {
       if (point.incidentReferences.contains(_incident.id)) {
         _relatedPointsInTime.add(point);
+        deletedIndex = point.getIncidentReferenceIndex(_incident.id);
         point.removeIncidentReference(_incident.id);
       }
     }
@@ -37,7 +39,11 @@ class DeleteIncidentCommand extends Command {
   void undo() {
     _incidentRepository.add(_incident);
     for (var point in _relatedPointsInTime) {
-      point.addIncidentReference(_incident.id);
+      if (deletedIndex != null && deletedIndex! >= 0) {
+        point.addIncidentReferenceAtIndex(_incident.id, deletedIndex!);
+      } else {
+        point.addIncidentReference(_incident.id);
+      }
     }
   }
 

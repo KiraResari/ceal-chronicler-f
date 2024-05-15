@@ -998,7 +998,42 @@
         Cause: RangeError: Invalid value: Not in inclusive range 0..1: -1
         ````
 
-      * 
+  * In a second run, I was able to reproduce it in a few seconds, using 2 incidents, undo, redo, and deletion, though the exact order and cause is still a mystery
+
+    * This time it notably was a `MoveIncidentDownCommand` though, but the rest of the error was the same
+    * It would seem this happens because there's an invalid command in the command history
+
+  * I'll try to create a repro:
+
+    * Start with 2 Incidents
+      * Incident1
+      * Incident2
+    * Move Incident1 down
+      * Incident2
+      * Incident1
+    * Delete Incident2
+      * Incident1
+    * Undo
+      * Incident1
+      * Incident2 <= why is the order different?
+    * Undo
+      * Incident2
+      * => Error Occurs
+
+  * Okay, so it seems that the undoing of deleting incidents messes up the incident order, and that causes issues with the incident move commands
+
+  * An easier repo for this is:
+
+    * Start with 2 Incidents
+      * Incident1
+      * Incident2
+    * Delete Incident1
+      * Incident2
+    * Undo
+      * Incident2
+      * Incident1 <= was moved down
+
+  * I now fixed this
 
 
 
