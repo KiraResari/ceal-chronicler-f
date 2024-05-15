@@ -1,9 +1,7 @@
 import 'package:ceal_chronicler_f/characters/model/character_repository.dart';
-import 'package:ceal_chronicler_f/view/view_processor.dart';
-import 'package:flutter/material.dart';
+import 'package:ceal_chronicler_f/commands/processor_listener.dart';
 
 import '../../characters/model/character.dart';
-import '../../commands/command_processor.dart';
 import '../../get_it_context.dart';
 import '../commands/create_point_in_time_command.dart';
 import '../commands/delete_point_in_time_command.dart';
@@ -11,7 +9,7 @@ import '../commands/rename_point_in_time_command.dart';
 import '../model/point_in_time.dart';
 import '../model/point_in_time_repository.dart';
 
-class TimeBarController extends ChangeNotifier {
+class TimeBarController extends ProcessorListener {
   static const String lastPointDeletionForbiddenReason =
       "The last point in time can't be deleted";
   static const String incidentsPresentDeletionForbiddenReason =
@@ -22,13 +20,8 @@ class TimeBarController extends ChangeNotifier {
 
   final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
   final _characterRepository = getIt.get<CharacterRepository>();
-  final _commandProcessor = getIt.get<CommandProcessor>();
-  final _viewProcessor = getIt.get<ViewProcessor>();
 
-  TimeBarController() {
-    _commandProcessor.addListener(() => notifyListeners());
-    _viewProcessor.addListener(() => notifyListeners());
-  }
+  TimeBarController(): super();
 
   List<PointInTime> get pointsInTime => _pointInTimeRepository.pointsInTime;
 
@@ -39,17 +32,17 @@ class TimeBarController extends ChangeNotifier {
 
   void addPointInTimeAtIndex(int index) {
     var command = CreatePointInTimeCommand(index);
-    _commandProcessor.process(command);
+    commandProcessor.process(command);
   }
 
   void delete(PointInTime point) {
     var command = DeletePointInTimeCommand(point);
-    _commandProcessor.process(command);
+    commandProcessor.process(command);
   }
 
   void rename(PointInTime point, String newName) {
     var command = RenamePointInTimeCommand(point, newName);
-    _commandProcessor.process(command);
+    commandProcessor.process(command);
   }
 
   String getPointDeleteButtonDisabledReason(PointInTime point) {

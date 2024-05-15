@@ -5,11 +5,11 @@ import '../view/view_processor.dart';
 import 'command_processor.dart';
 
 abstract class ProcessorListener extends ChangeNotifier {
-  final _commandProcessor = getIt.get<CommandProcessor>();
+  final commandProcessor = getIt.get<CommandProcessor>();
   final _viewProcessor = getIt.get<ViewProcessor>();
 
   ProcessorListener() {
-    _commandProcessor.addListener(notifyListenersCall);
+    commandProcessor.addListener(notifyListenersCall);
     _viewProcessor.addListener(notifyListenersCall);
   }
 
@@ -18,7 +18,7 @@ abstract class ProcessorListener extends ChangeNotifier {
   @override
   void dispose() {
     super.dispose();
-    _commandProcessor.removeListener(notifyListenersCall);
+    commandProcessor.removeListener(notifyListenersCall);
     _viewProcessor.removeListener(notifyListenersCall);
   }
 }

@@ -6,6 +6,7 @@ import 'package:ceal_chronicler_f/io/file/file_service.dart';
 import 'package:ceal_chronicler_f/io/repository_service.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
+import 'package:ceal_chronicler_f/toolBar/tool_bar_controller.dart';
 import 'package:ceal_chronicler_f/view/commands/activate_point_in_time_command.dart';
 import 'package:ceal_chronicler_f/view/view_processor.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -28,6 +29,7 @@ main() {
     viewProcessor = ViewProcessor();
     getIt.registerSingleton<ViewProcessor>(viewProcessor);
     commandProcessor = CommandProcessor();
+    getIt.registerSingleton<CommandProcessor>(commandProcessor);
   });
 
   test("Process should correctly process command", () {
@@ -168,13 +170,14 @@ main() {
   });
 
   test("Navigating backward should not be possible after loading", () async {
+    ToolBarController controller = ToolBarController();
     var newPoint = PointInTime("test");
     repository.addAtIndex(0, newPoint);
     await commandProcessor.save();
     var command = ActivatePointInTimeCommand(newPoint.id);
     viewProcessor.process(command);
 
-    await commandProcessor.load();
+    await controller.load();
 
     var isNavigatingBackPossible = viewProcessor.isNavigatingBackPossible;
     expect(isNavigatingBackPossible, isFalse);

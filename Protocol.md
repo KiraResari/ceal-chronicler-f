@@ -930,6 +930,7 @@
     * Alright, after ironing these out, all of the tests for the `ViewProcessor` are working again, yay!
 * Right, how about all the other tests?
   * Nope, still errors
+  * I now managed to fix them
 
 
 
