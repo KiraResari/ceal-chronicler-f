@@ -20,11 +20,13 @@ class ViewProcessor extends ChangeNotifier {
   }
 
   void process(ViewCommand command) {
-    _clearHistoryPastCurrentIndex();
-    command.execute();
-    _commandHistory.add(command);
-    _index++;
-    notifyListeners();
+    if (command.isValid) {
+      _clearHistoryPastCurrentIndex();
+      command.execute();
+      _commandHistory.add(command);
+      _index++;
+      notifyListeners();
+    }
   }
 
   void _clearHistoryPastCurrentIndex() {
@@ -38,7 +40,7 @@ class ViewProcessor extends ChangeNotifier {
       return false;
     }
     for (int i = 0; i < _index; i++) {
-      if (_commandHistory[i].isValid()) {
+      if (_commandHistory[i].isValid) {
         return true;
       }
     }
@@ -50,7 +52,7 @@ class ViewProcessor extends ChangeNotifier {
       return false;
     }
     for (int i = _index + 1; i < _commandHistory.length; i++) {
-      if (_commandHistory[i].isValid()) {
+      if (_commandHistory[i].isValid) {
         return true;
       }
     }
@@ -64,7 +66,7 @@ class ViewProcessor extends ChangeNotifier {
 
   int? get _previousValidIndex {
     for (int i = _index - 1; i >= 0; i--) {
-      if (_commandHistory[i].isValid()) {
+      if (_commandHistory[i].isValid) {
         return i;
       }
     }
@@ -86,7 +88,7 @@ class ViewProcessor extends ChangeNotifier {
 
   int? get _nextTargetIndex {
     for (int i = _index + 1; i < _commandHistory.length; i++) {
-      if (_commandHistory[i].isValid()) {
+      if (_commandHistory[i].isValid) {
         return i;
       }
     }

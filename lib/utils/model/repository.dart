@@ -43,4 +43,6 @@ abstract class Repository<T extends ReadableUuid, U extends IdHolder<T>> {
   }
 
   U? getContentElementById(T id) => _content[id];
+
+  bool contains(T id) => _content.containsKey(id);
 }

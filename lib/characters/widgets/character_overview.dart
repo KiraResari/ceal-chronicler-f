@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../../utils/widgets/title_medium.dart';
 import '../model/character.dart';
 import 'character_overview_controller.dart';
-import 'character_panel.dart';
+import 'character_button.dart';
 import 'add_character_button.dart';
 
 class CharacterOverview extends StatelessWidget {
@@ -49,7 +49,7 @@ class CharacterOverview extends StatelessWidget {
     var controller = context.watch<CharacterOverviewController>();
     List<Widget> incidentTiles = [];
     for (Character character in controller.charactersAtActivePointInTime) {
-      incidentTiles.add(CharacterPanel(character));
+      incidentTiles.add(CharacterButton(character));
     }
     return incidentTiles;
   }

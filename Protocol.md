@@ -799,10 +799,51 @@
   * Mmmh, as I start working on it, I realize that my architecture wants me to add a  `ViewRepository` to keep track of which view is active
 
     * Specifically, I need something that the `ViewProcessor` may modify in order to change what is displayed in the `MainView`, and thus far I have held it in such a way that the controllers all listen to processors
-
     * Okay, this is tricky, but I think I'm making good progress thus far
+    * But the character button is still giving me a hard time, cuz why can't buttons just be easy? =>,<=
+    * Well, clicking on a character button and moving to the character view works now
 
+  * However, when clicking the "Navigate Back" button afterwards, I get this lovely error again:
+
+    * ````
+      The following assertion was thrown while dispatching notifications for ViewProcessor:
+      A IncidentOverviewController was used after being disposed.
       
+      The following assertion was thrown while dispatching notifications for ViewProcessor:
+      A CharacterOverviewController was used after being disposed.
+      
+      Once you have called dispose() on a CharacterOverviewController, it can no longer be used.
+      ````
+
+    * °sigh° I hate this one, but at least I know why it happens
+
+      * This is precisely why I moved away from using Events for this project, but apparently it can still happen even so
+
+    * We either need to cancel the listeners somehow on the controllers, or make it so that all controllers are singletons
+
+      * Or was there another way to do that still? 
+
+  * Also, another issue that became apparent is that navigating backwards does not work properly:
+
+    * Navigate to another point in time, then open a character view
+    * Try to navigate backward
+      * Nothing will happen because the view navigator will attempt to evaluate the last navigation event, which was activating a point in time
+      * What should happen is going back to the main view
+
+* Uggh, what a mess! I am not committing this until I clean it up!
+
+* This is as far as I'm getting with this today
+
+[Time elapsed so far: 52 hours]
+
+
+
+
+
+# Immediate Issues 
+
+* Navigating back does not work properly (try selecting a different point in time, then opening a character view, then navigating back)
+* Changing views causes the dread "A * was used after being disposed" error
 
 
 
@@ -810,6 +851,7 @@
 
 * Add active point in time to the `ViewRepository`
 * Make a superclass for all `ChangeNotifier` listening to `CommandProcessor` and `ViewProcessor` (like `ProcessorListerner` or something)
+* Consolidate Buttons
 
 # User Story
 

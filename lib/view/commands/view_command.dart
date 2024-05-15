@@ -1,5 +1,5 @@
 abstract class ViewCommand {
   void execute();
 
-  bool isValid();
+  bool get isValid;
 }

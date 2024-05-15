@@ -10,12 +10,8 @@ class ActivatePointInTimeCommand extends ViewCommand {
   ActivatePointInTimeCommand(this.id);
 
   @override
-  void execute() {
-    repository.activatePointInTime(id);
-  }
+  void execute() => repository.activatePointInTime(id);
 
   @override
-  bool isValid() {
-    return repository.contains(id);
-  }
+  bool get isValid => repository.contains(id);
 }
