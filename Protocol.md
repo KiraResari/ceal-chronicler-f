@@ -836,6 +836,19 @@
 
 [Time elapsed so far: 52 hours]
 
+# 15-May-2024
+
+* Now continuing with this
+* Last time we closed on several issues that became apparent due to the introduction of the character screen
+  * Navigation back does not work as intended
+  * Changing views causes the "A * was used after being disposed" error
+* First, let's address the "A * was used after being disposed" error
+  * I *think* I can solve that by removing the listeners in the `dispose` function, which I can hopefully override
+  * Yes, that's possible, and it works
+  * With that, this issue is already resolved
+  * However, since especially the listening to the `CommandProcessor` and `ViewProcessor` is very repetitive, I figure I'd better make an abstract superclass that takes care of that
+    * That way, the inheriting classes only have to explicitly listen to any repositories important to them
+
 
 
 
@@ -843,7 +856,6 @@
 # Immediate Issues 
 
 * Navigating back does not work properly (try selecting a different point in time, then opening a character view, then navigating back)
-* Changing views causes the dread "A * was used after being disposed" error
 
 
 

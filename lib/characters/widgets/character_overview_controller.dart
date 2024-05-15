@@ -1,26 +1,17 @@
-import 'package:ceal_chronicler_f/exceptions/point_in_time_not_found_exception.dart';
-import 'package:flutter/material.dart';
-
-import '../../commands/command_processor.dart';
+import '../../commands/processor_listener.dart';
+import '../../exceptions/point_in_time_not_found_exception.dart';
 import '../../get_it_context.dart';
 import '../../timeline/model/point_in_time_repository.dart';
-import '../../view/view_processor.dart';
 import '../model/character.dart';
 import '../model/character_repository.dart';
 
-class CharacterOverviewController extends ChangeNotifier {
-  final _commandProcessor = getIt.get<CommandProcessor>();
+class CharacterOverviewController extends ProcessorListener {
   final _characterRepository = getIt.get<CharacterRepository>();
   final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
-  final _viewProcessor = getIt.get<ViewProcessor>();
 
-  CharacterOverviewController() {
-    _pointInTimeRepository.addListener(_notifyListenersCall);
-    _commandProcessor.addListener(_notifyListenersCall);
-    _viewProcessor.addListener(() => notifyListeners());
+  CharacterOverviewController() : super() {
+    _pointInTimeRepository.addListener(notifyListenersCall);
   }
-
-  void _notifyListenersCall() => notifyListeners();
 
   List<Character> get charactersAtActivePointInTime {
     List<Character> allCharacters = _characterRepository.content;
@@ -40,5 +31,11 @@ class CharacterOverviewController extends ChangeNotifier {
     } on PointInTimeNotFoundException catch (_) {
       return false;
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _pointInTimeRepository.removeListener(notifyListenersCall);
   }
 }

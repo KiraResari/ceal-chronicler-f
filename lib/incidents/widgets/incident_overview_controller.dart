@@ -1,33 +1,17 @@
-import 'package:ceal_chronicler_f/incidents/model/incident_id.dart';
-import 'package:ceal_chronicler_f/incidents/model/incident_repository.dart';
-import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
-import 'package:flutter/material.dart';
-
+import '../../commands/processor_listener.dart';
 import '../../get_it_context.dart';
+import '../../timeline/model/point_in_time.dart';
 import '../../timeline/model/point_in_time_repository.dart';
-import '../../commands/command_processor.dart';
-import '../../view/view_processor.dart';
 import '../model/incident.dart';
+import '../model/incident_id.dart';
+import '../model/incident_repository.dart';
 
-class IncidentOverviewController extends ChangeNotifier {
+class IncidentOverviewController extends ProcessorListener {
   final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
   final _incidentRepository = getIt.get<IncidentRepository>();
-  final _commandProcessor = getIt.get<CommandProcessor>();
-  final _viewProcessor = getIt.get<ViewProcessor>();
 
-  IncidentOverviewController() {
-    _pointInTimeRepository.addListener(_notifyListenersCall);
-    _commandProcessor.addListener(_notifyListenersCall);
-    _viewProcessor.addListener(_notifyListenersCall);
-  }
-
-  void _notifyListenersCall() => notifyListeners();
-
-  @override
-  void dispose() {
-    super.dispose();
-    _pointInTimeRepository.removeListener(_notifyListenersCall);
-    _commandProcessor.removeListener(_notifyListenersCall);
+  IncidentOverviewController() : super() {
+    _pointInTimeRepository.addListener(notifyListenersCall);
   }
 
   String get activePointInTimeName => activePointInTime.name;
@@ -50,5 +34,11 @@ class IncidentOverviewController extends ChangeNotifier {
   bool canIncidentBeMovedDown(Incident incident) {
     return activePointIncidentReferences.contains(incident.id) &&
         activePointIncidentReferences.last != incident.id;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _pointInTimeRepository.removeListener(notifyListenersCall);
   }
 }
