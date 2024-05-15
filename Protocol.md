@@ -834,7 +834,7 @@
 
 * This is as far as I'm getting with this today
 
-[Time elapsed so far: 52 hours]
+[Time elapsed so far: 56.5 hours]
 
 # 15-May-2024
 
@@ -1035,13 +1035,18 @@
 
   * I now fixed this
 
+* This is as far as I'm getting with this today
+
+* Welp, no new functionality, but at least I managed to clean up a whole lot of bugs and issues
+
+[Time elapsed so far: 63.5 hours]
+
 
 
 
 
 # TODO
 
-* Check which `notifyListeners` other than to the processors are actually needed (possibly, no Repositiories need to be ChangeNotifiers)
 * Try separating `FileService` from `CommandProcessor`
 * Prettify `CharacterView`
 * Consolidate Buttons
