@@ -931,14 +931,9 @@
 * Right, how about all the other tests?
   * Nope, still errors
   * I now managed to fix them
+* Okay, next let me do a manual test of the chronicler to see if all this refactoring caused any errors that are not covered by tests yet
 
 
-
-
-
-# Immediate Issues 
-
-* Navigating back does not work properly (try selecting a different point in time, then opening a character view, then navigating back)
 
 
 

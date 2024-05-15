@@ -38,6 +38,7 @@ class ViewProcessor extends ChangeNotifier {
     if(targetIndex != null){
       _commandHistory[targetIndex].undo();
       _index = targetIndex;
+      notifyListeners();
     }
   }
 
@@ -66,7 +67,8 @@ class ViewProcessor extends ChangeNotifier {
     int? targetIndex = _nextTargetIndex;
     if(targetIndex != null){
       _commandHistory[targetIndex].execute();
-      _index = targetIndex;
+      _index = targetIndex + 1;
+      notifyListeners();
     }
   }
 

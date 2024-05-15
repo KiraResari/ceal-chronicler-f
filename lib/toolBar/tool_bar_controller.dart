@@ -1,46 +1,36 @@
-import 'package:ceal_chronicler_f/view/view_processor.dart';
-import 'package:flutter/material.dart';
-
-import '../commands/command_processor.dart';
+import '../commands/processor_listener.dart';
 import '../exceptions/operation_canceled_exception.dart';
-import '../get_it_context.dart';
 
-class ToolBarController extends ChangeNotifier {
-  final _commandProcessor = getIt.get<CommandProcessor>();
-  final _viewProcessor = getIt.get<ViewProcessor>();
+class ToolBarController extends ProcessorListener {
+  ToolBarController() : super();
 
-  ToolBarController() {
-    _commandProcessor.addListener(() => notifyListeners());
-    _viewProcessor.addListener(() => notifyListeners());
-  }
+  bool get isUndoPossible => commandProcessor.isUndoPossible;
 
-  bool get isUndoPossible => _commandProcessor.isUndoPossible;
+  bool get isRedoPossible => commandProcessor.isRedoPossible;
 
-  bool get isRedoPossible => _commandProcessor.isRedoPossible;
+  bool get isSavingPossible => commandProcessor.isSavingNecessary;
 
-  bool get isSavingPossible => _commandProcessor.isSavingNecessary;
-
-  bool get isNavigatingBackPossible => _viewProcessor.isNavigatingBackPossible;
+  bool get isNavigatingBackPossible => viewProcessor.isNavigatingBackPossible;
 
   bool get isNavigatingForwardPossible =>
-      _viewProcessor.isNavigatingForwardPossible;
+      viewProcessor.isNavigatingForwardPossible;
 
-  void undo() => _commandProcessor.undo();
+  void undo() => commandProcessor.undo();
 
-  void redo() => _commandProcessor.redo();
+  void redo() => commandProcessor.redo();
 
-  void save() => _commandProcessor.save();
+  void save() => commandProcessor.save();
 
   Future<void> load() async {
     try {
-      await _commandProcessor.load();
-      _viewProcessor.reset();
+      await commandProcessor.load();
+      viewProcessor.reset();
     } on OperationCanceledException {
       //Don't reset viewProcessor if operation was canceled
     }
   }
 
-  void navigateBack() => _viewProcessor.navigateBack();
+  void navigateBack() => viewProcessor.navigateBack();
 
-  void navigateForward() => _viewProcessor.navigateForward();
+  void navigateForward() => viewProcessor.navigateForward();
 }

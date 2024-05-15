@@ -6,11 +6,11 @@ import 'command_processor.dart';
 
 abstract class ProcessorListener extends ChangeNotifier {
   final commandProcessor = getIt.get<CommandProcessor>();
-  final _viewProcessor = getIt.get<ViewProcessor>();
+  final viewProcessor = getIt.get<ViewProcessor>();
 
   ProcessorListener() {
     commandProcessor.addListener(notifyListenersCall);
-    _viewProcessor.addListener(notifyListenersCall);
+    viewProcessor.addListener(notifyListenersCall);
   }
 
   void notifyListenersCall() => notifyListeners();
@@ -19,6 +19,6 @@ abstract class ProcessorListener extends ChangeNotifier {
   void dispose() {
     super.dispose();
     commandProcessor.removeListener(notifyListenersCall);
-    _viewProcessor.removeListener(notifyListenersCall);
+    viewProcessor.removeListener(notifyListenersCall);
   }
 }
