@@ -6,7 +6,7 @@ class ViewProcessor extends ChangeNotifier {
   int _index = 0;
 
   void process(ViewCommand command) {
-    if (command.isExecutePossible) {
+    if (command.isRedoPossible) {
       _clearHistoryPastCurrentIndex();
       command.execute();
       _commandHistory.add(command);
@@ -35,7 +35,7 @@ class ViewProcessor extends ChangeNotifier {
 
   void navigateBack() {
     int? targetIndex = _previousValidIndex;
-    if(targetIndex != null){
+    if (targetIndex != null) {
       _commandHistory[targetIndex].undo();
       _index = targetIndex;
       notifyListeners();
@@ -56,7 +56,7 @@ class ViewProcessor extends ChangeNotifier {
       return false;
     }
     for (int i = _index; i < _commandHistory.length; i++) {
-      if (_commandHistory[i].isExecutePossible) {
+      if (_commandHistory[i].isRedoPossible) {
         return true;
       }
     }
@@ -64,17 +64,17 @@ class ViewProcessor extends ChangeNotifier {
   }
 
   void navigateForward() {
-    int? targetIndex = _nextTargetIndex;
-    if(targetIndex != null){
-      _commandHistory[targetIndex].execute();
+    int? targetIndex = _nextValidIndex;
+    if (targetIndex != null) {
+      _commandHistory[targetIndex].redo();
       _index = targetIndex + 1;
       notifyListeners();
     }
   }
 
-  int? get _nextTargetIndex {
+  int? get _nextValidIndex {
     for (int i = _index; i < _commandHistory.length; i++) {
-      if (_commandHistory[i].isExecutePossible) {
+      if (_commandHistory[i].isRedoPossible) {
         return i;
       }
     }
@@ -85,4 +85,31 @@ class ViewProcessor extends ChangeNotifier {
     _commandHistory.clear();
     _index = 0;
   }
+
+  String get historyStateString {
+    int? previousValidIndex = _previousValidIndex;
+    int? nextValidIndex = _nextValidIndex;
+    String historyStateString = "ViewProcessor history:\n";
+    for (int i = 0; i < _commandHistory.length; i++) {
+      if (i == _index) {
+        historyStateString += "(Current)";
+      }
+      historyStateString += "[";
+      if (previousValidIndex != null && previousValidIndex == i) {
+        historyStateString += "(Previous)";
+      }
+      if (nextValidIndex != null && nextValidIndex == i) {
+        historyStateString += "(Next)";
+      }
+      historyStateString += "${_commandHistory[i]}]\n";
+    }
+    if (_commandHistory.isEmpty) {
+      historyStateString += "(empty)";
+    } else if (_index == _commandHistory.length) {
+      historyStateString += "(Current)";
+    }
+    return historyStateString;
+  }
+
+  int get index => _index;
 }

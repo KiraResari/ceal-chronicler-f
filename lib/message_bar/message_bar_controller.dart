@@ -1,14 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'package:ceal_chronicler_f/commands/processor_listener.dart';
 
-import '../commands/command_processor.dart';
-import '../get_it_context.dart';
+class MessageBarController extends ProcessorListener {
+  MessageBarController() : super();
 
-class MessageBarController extends ChangeNotifier {
-  final _commandProcessor = getIt.get<CommandProcessor>();
+  String get message => commandProcessor.statusMessage;
 
-  MessageBarController() {
-    _commandProcessor.addListener(() => notifyListeners());
-  }
+  String get viewProcessorHistoryState => viewProcessor.historyStateString;
 
-  String get message => _commandProcessor.statusMessage;
+  int get viewProcessorHistoryIndex => viewProcessor.index;
 }

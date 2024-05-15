@@ -34,7 +34,7 @@ main() {
       repository.addAtIndex(0, newPoint);
       var command = ActivatePointInTimeCommand(newPoint.id);
 
-      var isValid = command.isExecutePossible;
+      var isValid = command.isRedoPossible;
 
       expect(isValid, isTrue);
     },
@@ -45,7 +45,7 @@ main() {
         () {
       var command = ActivatePointInTimeCommand(PointInTimeId());
 
-      var isValid = command.isExecutePossible;
+      var isValid = command.isRedoPossible;
 
       expect(isValid, isFalse);
     },

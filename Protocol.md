@@ -932,6 +932,29 @@
   * Nope, still errors
   * I now managed to fix them
 * Okay, next let me do a manual test of the chronicler to see if all this refactoring caused any errors that are not covered by tests yet
+  * Okay, it would seem that the navigating back is not working yet
+    * Ah, I think I forgot the `notifyListeners` there
+  * And there's still some odd behavior when combining undo and redo:
+    * Repro:
+      * Starting Point: Have three points in time, 1, 2, 3, with 1 active
+      * Navigate to 2
+      * Navigate to 3
+      * Delete 2
+      * Navigate back
+      * Navigate forward
+      * Undo
+      * Navigate back
+    * Expected behavior:
+      * 2 is selected
+    * Actual behavior:
+      * 1 is selected
+    * And "back" is still active
+      * If you click back, then forward twice, then back, 2 is selected, as expected, and everything works as intended again
+    * So, it seems there's some funky behavior when navigating backwards
+    * Debugging showed the issue:
+      * When navigating forward, the `execute` method of the `ViewCommand` is used, which changes the `_previousActivePointInTimeId` and thus messes everything up
+      * So it seems I need a separate function for redo
+    * Now this works 
 
 
 

@@ -16,9 +16,19 @@ class MessageBar extends StatelessWidget {
 
   Widget _buildMessageBar(BuildContext context) {
     String message = context.watch<MessageBarController>().message;
+    String viewProcessorHistoryState =
+        context.watch<MessageBarController>().viewProcessorHistoryState;
+    int viewProcessorHistoryIndex =
+        context.watch<MessageBarController>().viewProcessorHistoryIndex;
     return FittedBox(
       fit: BoxFit.scaleDown,
-      child: Text(message),
+      child: Column(
+        children: [
+          Text(message),
+          Text(viewProcessorHistoryState),
+          Text("ViewProcessorHistoryIndex: $viewProcessorHistoryIndex"),
+        ],
+      ),
     );
   }
 }

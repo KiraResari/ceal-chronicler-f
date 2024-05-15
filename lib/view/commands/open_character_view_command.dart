@@ -16,11 +16,8 @@ class OpenCharacterViewCommand extends ViewCommand {
   @override
   void execute() {
     _previousTemplate = viewRepository.mainViewTemplate;
-    viewRepository.mainViewTemplate = _template;
+    redo();
   }
-
-  @override
-  bool get isExecutePossible => _template.isValid;
 
   @override
   bool get isUndoPossible {
@@ -35,5 +32,18 @@ class OpenCharacterViewCommand extends ViewCommand {
     if (_previousTemplate != null) {
       viewRepository.mainViewTemplate = _previousTemplate!;
     }
+  }
+
+  @override
+  String toString() {
+    return 'OpenCharacterViewCommand{$id}';
+  }
+
+  @override
+  bool get isRedoPossible => _template.isValid;
+
+  @override
+  void redo() {
+    viewRepository.mainViewTemplate = _template;
   }
 }

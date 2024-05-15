@@ -3,7 +3,9 @@ abstract class ViewCommand {
 
   void undo();
 
-  bool get isExecutePossible;
+  void redo();
 
   bool get isUndoPossible;
+
+  bool get isRedoPossible;
 }

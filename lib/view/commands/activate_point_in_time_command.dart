@@ -11,12 +11,9 @@ class ActivatePointInTimeCommand extends ViewCommand {
   ActivatePointInTimeCommand(this._id);
 
   @override
-  bool get isExecutePossible => _repository.contains(_id);
-
-  @override
   void execute() {
     _previousActivePointInTimeId = _repository.activePointInTime.id;
-    _repository.activatePointInTime(_id);
+    redo();
   }
 
   @override
@@ -32,5 +29,18 @@ class ActivatePointInTimeCommand extends ViewCommand {
     if (_previousActivePointInTimeId != null) {
       _repository.activatePointInTime(_previousActivePointInTimeId!);
     }
+  }
+
+  @override
+  String toString() {
+    return 'ActivatePointInTimeCommand{Target: $_id; Previous: $_previousActivePointInTimeId; Can execute: $isRedoPossible; Can undo: $isUndoPossible}';
+  }
+
+  @override
+  bool get isRedoPossible => _repository.contains(_id);
+
+  @override
+  void redo() {
+    _repository.activatePointInTime(_id);
   }
 }
