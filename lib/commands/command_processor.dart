@@ -1,7 +1,6 @@
-import 'package:ceal_chronicler_f/exceptions/operation_canceled_exception.dart';
-import 'package:ceal_chronicler_f/view/view_processor.dart';
 import 'package:flutter/material.dart';
 
+import '../exceptions/operation_canceled_exception.dart';
 import '../get_it_context.dart';
 import '../io/file/file_service.dart';
 import 'command.dart';
@@ -13,7 +12,6 @@ class CommandProcessor extends ChangeNotifier {
   static const String loadCompletedMessage = "Loaded chronicle";
 
   final _fileService = getIt.get<FileService>();
-  final _viewProcessor = getIt.get<ViewProcessor>();
 
   final List<Command> _commandHistory = [];
   int _index = 0;
@@ -130,6 +128,7 @@ class CommandProcessor extends ChangeNotifier {
       _updateStatusMessageAndNotifyListeners(loadCompletedMessage);
     } on OperationCanceledException {
       _updateStatusMessageAndNotifyListeners(loadCancelledMessage);
+      throw OperationCanceledException();
     }
   }
 
@@ -137,6 +136,6 @@ class CommandProcessor extends ChangeNotifier {
     _commandHistory.clear();
     _index = 0;
     _savedAtIndex = 0;
-    _viewProcessor.reset();
+
   }
 }

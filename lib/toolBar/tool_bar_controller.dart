@@ -2,6 +2,7 @@ import 'package:ceal_chronicler_f/view/view_processor.dart';
 import 'package:flutter/material.dart';
 
 import '../commands/command_processor.dart';
+import '../exceptions/operation_canceled_exception.dart';
 import '../get_it_context.dart';
 
 class ToolBarController extends ChangeNotifier {
@@ -30,7 +31,14 @@ class ToolBarController extends ChangeNotifier {
 
   void save() => _commandProcessor.save();
 
-  void load() => _commandProcessor.load();
+  Future<void> load() async {
+    try {
+      await _commandProcessor.load();
+      _viewProcessor.reset();
+    } on OperationCanceledException {
+      //Don't reset viewProcessor if operation was canceled
+    }
+  }
 
   void navigateBack() => _viewProcessor.navigateBack();
 

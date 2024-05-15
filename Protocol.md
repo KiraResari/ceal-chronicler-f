@@ -928,6 +928,8 @@
         * Falsely tries to undo ActivatePointInTimeCommand for Jolly_Goat_Xi because the targetIndex is 1 instead of 0
         * Ah, I missed changing on `isExecutePossible` into `isUndoPossible`
     * Alright, after ironing these out, all of the tests for the `ViewProcessor` are working again, yay!
+* Right, how about all the other tests?
+  * Nope, still errors
 
 
 
