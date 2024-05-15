@@ -1,22 +1,39 @@
-import 'package:ceal_chronicler_f/characters/model/character_repository.dart';
-import 'package:ceal_chronicler_f/get_it_context.dart';
-import 'package:ceal_chronicler_f/view/commands/view_command.dart';
-import 'package:ceal_chronicler_f/view/templates/character_view_template.dart';
-import 'package:ceal_chronicler_f/view/view_repository.dart';
-
 import '../../characters/model/character_id.dart';
+import '../../get_it_context.dart';
+import '../templates/character_view_template.dart';
+import '../templates/main_view_template.dart';
+import '../view_repository.dart';
+import 'view_command.dart';
 
 class OpenCharacterViewCommand extends ViewCommand {
-  final CharacterRepository characterRepository = getIt<CharacterRepository>();
   final ViewRepository viewRepository = getIt.get<ViewRepository>();
   final CharacterId id;
+  final MainViewTemplate _template;
+  MainViewTemplate? _previousTemplate;
 
-  OpenCharacterViewCommand(this.id);
-
-  @override
-  void execute() =>
-      viewRepository.activeViewTemplate = CharacterViewTemplate(id);
+  OpenCharacterViewCommand(this.id) : _template = CharacterViewTemplate(id);
 
   @override
-  bool get isValid => characterRepository.contains(id);
+  void execute() {
+    _previousTemplate = viewRepository.mainViewTemplate;
+    viewRepository.mainViewTemplate = _template;
+  }
+
+  @override
+  bool get isExecutePossible => _template.isValid;
+
+  @override
+  bool get isUndoPossible {
+    if (_previousTemplate != null) {
+      return _previousTemplate!.isValid;
+    }
+    return false;
+  }
+
+  @override
+  void undo() {
+    if (_previousTemplate != null) {
+      viewRepository.mainViewTemplate = _previousTemplate!;
+    }
+  }
 }

@@ -848,6 +848,86 @@
   * With that, this issue is already resolved
   * However, since especially the listening to the `CommandProcessor` and `ViewProcessor` is very repetitive, I figure I'd better make an abstract superclass that takes care of that
     * That way, the inheriting classes only have to explicitly listen to any repositories important to them
+  * Anyway, this seems to work now
+  * HOWEVER, now many tests are failing because suddenly they all need a `ViewProcessor`, which in turn needs a `PointInTimeRepository`, which feels like things are starting to get ugly tangled here
+    * So, WTF?
+    * Okay, so , I *think* I can het the `PointInTimeRepository` out of the `ViewProcessor` by implementing the changes I have in mind to fix the navigation history issues
+    * At the same time it still bothers me that the `CommandProcessor` depends on the `ViewProcessor`
+      * Why does it do that?
+        * The `CommandProcessor` needs the `ViewProcessor` for exactly one thing, and that is for resetting the histoy and indexes when a file is loaded, which makes sense
+      * Why does the `CommandProcessor` contain the `load` function in the first place?
+        * Saving and loading are not commands, because they should not go into the command history 
+        * The calls for that come from the `ToolBarController`, which naturally has access to both the `CommandProcessor` and `ViewProcessor`
+        * Maybe the `save` and `load` functions actually belong in the `ToolBarController`?
+        * Or maybe, a simpler way would be for the `ToolBarController` to call `_viewProcessor.reset()` itself instead of having the `CommandProcessor` do that
+          * Yes, that sounds like a good solution, let's try that
+        * Right, that fixed a bunch of things
+  * Now, tests are failing because they miss a `ViewRepository`, which may actually be justified, but I'd still like to fully wrap my head around this dependency after we just had a dependency issue
+    * The controllers clearly need the `ViewProcessor`
+    * However, currently the `ViewProcessor` needs the `ActivateInitialViewCommand`, which needs the `ViewRepository`
+    * Since I wanted to rework how the `ViewProcessor` works anyway, let's do that instead
+* Now, to reworking how the `ViewProcessor` works
+  * I messed this up because I assumed that each `ViewCommand` is more or less the same, so that by executing the previous command you can undo a command
+  * However, that only works as long as there's just one kind of command and it falls apart as soon as there are different kinds of commands
+  * Like: `ActivatePointInTimeCommand` > `OpenCharacterViewCommand`
+    * Undo should return to the previous view
+    * Instead, nothing appears to happen because the Point in Time that is currently activated is activated again
+  * Right, so how do we better handle this?
+  * I think I now came up with a good approach:
+    * The `ViewStateRepository` stores the active point in time as well as the main view state
+      * This is collectively saved as `ViewState`
+    * This is accessed by any controllers that need to know what the active point in time or the main view state is
+      * Should we separate this?
+    * A `ViewCommand` that is executed keeps track of what the `ViewState` at the point before its execution was, as well as after execution
+      * That should give it good resilience against undo/redo
+      * A `ViewCommand` can be undone, if the before `ViewState` is valid
+      * Likewise, it can be redone if the after `ViewState` is valid
+  * Okay, so much for the theory, now let's try and do this!
+    * Turns out the `ViewStateRepository` needs to depend on the `PointInTimeRepository` since it needs to know the ID of the original `PointInTime`
+      * Mhh, and that's a problem
+        * Currently, if the active `PointInTime` is removed, the `PointInTimeRepository` handles the search for a new one
+        * But I think I can handle that, since part of it is in the command already
+      * Another issue is the `activatePointInTime` function
+    * Okay, no, rollback
+  * So, in this attempt I learned that the active `PointInTime` has a really strong affinity for staying inside the `PointInTimeRepository`
+  * So a different approach is needed
+  * And that approach needs to keep in mind that `ViewCommand`s can be skipped if they are not valid
+  * Maybe stick with a history of `ViewState`s?
+    * Then each `ViewCommand` would still have a before and after `ViewState` to check against for applicability, and only the application itself would change
+    * The `ViewCommand`s would all have to address both the  `PointInTimeRepository` and the `ViewRepository`, which is a proper thing for commands to do
+  * Okay, so let's try that
+    * Let's think about this scenario:
+      * I have a character named Paul and two Points in time Named AD1 and AD2
+      * Default State: Overview@AD1
+      * I change the Point in time to AD2
+        * => Overview@AD2
+      * I change the character to Paul
+        * => Paul@AD2
+      * I go back once
+        * => Overview@AD2
+      * I go back again
+        * => Overview@AD1
+      * Now I delete AD2
+      * Then I go forward
+      * What I would expect to happen is end up at Paul@AD1
+        * ...never mind that this might be invalid, if Paul does not exist at AD1 (might have been created @ AD1.5)
+    * With above logic, I can't do that
+    * I think what we need is different tracks for Main View Changes and Active Point in Time Changes
+    * So, bye-bye ViewState
+  * I think I may be thinking entirely too complicated here
+  * Let me try making the `ViewCommand`s simply like the normal `Command`s, maybe with some tweaks
+    * The main difference I think is that I need to check for validity for both executing and undoing
+  * Alright, that was a big batch, but I managed to get it into a stable float again
+  * Now let's see if the tests that I wrote for the `ViewProcessor` are still passing
+    * Most do, which is a start
+    * Let's try and fix the ones that don't
+    * I'll need a bit of writing space for that here
+      * Navigating back should skip invalid commands
+        * ActivatePointInTimeCommand for Old_Horse_Omicron
+        * ActivatePointInTimeCommand for Jolly_Goat_Xi
+        * Falsely tries to undo ActivatePointInTimeCommand for Jolly_Goat_Xi because the targetIndex is 1 instead of 0
+        * Ah, I missed changing on `isExecutePossible` into `isUndoPossible`
+    * Alright, after ironing these out, all of the tests for the `ViewProcessor` are working again, yay!
 
 
 
@@ -861,8 +941,7 @@
 
 # TODO
 
-* Add active point in time to the `ViewRepository`
-* Make a superclass for all `ChangeNotifier` listening to `CommandProcessor` and `ViewProcessor` (like `ProcessorListerner` or something)
+* Check which `notifyListeners` other than to the processors are actually needed (possibly, no Repositiories need to be ChangeNotifiers)
 * Consolidate Buttons
 
 # User Story

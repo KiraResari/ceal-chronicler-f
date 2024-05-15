@@ -1,5 +1,9 @@
 abstract class ViewCommand {
   void execute();
 
-  bool get isValid;
+  void undo();
+
+  bool get isExecutePossible;
+
+  bool get isUndoPossible;
 }
