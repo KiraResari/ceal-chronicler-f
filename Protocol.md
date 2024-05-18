@@ -1053,6 +1053,9 @@
   * At the same time, both saving and loading affect the `CommandProcessor`, because saving sets the `savedAtIndex` and loading resets the command queue
   * The reason why I would like to decouple them is that presently everything that needs the `CommandProcessor` also needs the `FileService`, which in turn needs more stuff, even if saving and loading are not needed
   * Okay, I *think* I can achieve that by separating the `CommandHistory` form the `CommandController`, making the `FileService` a `FileController` (and thus adding it to the `ProcessorListener`), and having the `FileController` access the `CommandHistory` for the necessary changes
+  * Also, the status message needs to go somewhere else
+  * Well, I now managed to separate
+  * I am not really sure if that made things simpler in the end, but at the very least, the responsibilities are now better separated
 
 
 
