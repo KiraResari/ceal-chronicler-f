@@ -1,9 +1,12 @@
 import 'package:ceal_chronicler_f/characters/model/character_repository.dart';
+import 'package:ceal_chronicler_f/commands/command_history.dart';
 import 'package:ceal_chronicler_f/commands/command_processor.dart';
 import 'package:ceal_chronicler_f/get_it_context.dart';
 import 'package:ceal_chronicler_f/incidents/model/incident_repository.dart';
-import 'package:ceal_chronicler_f/io/file/file_service.dart';
-import 'package:ceal_chronicler_f/io/repository_service.dart';
+import 'package:ceal_chronicler_f/io/chronicle_codec.dart';
+import 'package:ceal_chronicler_f/io/file/file_adapter.dart';
+import 'package:ceal_chronicler_f/io/file/file_processor.dart';
+import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
 import 'package:ceal_chronicler_f/toolBar/tool_bar_controller.dart';
@@ -11,12 +14,13 @@ import 'package:ceal_chronicler_f/view/commands/activate_point_in_time_command.d
 import 'package:ceal_chronicler_f/view/view_processor.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../mocks/file_service_mock.dart';
+import '../mocks/file_adapter_mock.dart';
 
 main() {
   late ViewProcessor viewProcessor;
   late CommandProcessor commandProcessor;
   late PointInTimeRepository repository;
+  late FileProcessor fileProcessor;
 
   setUp(() {
     getIt.reset();
@@ -24,12 +28,16 @@ main() {
     getIt.registerSingleton<PointInTimeRepository>(repository);
     getIt.registerSingleton<IncidentRepository>(IncidentRepository());
     getIt.registerSingleton<CharacterRepository>(CharacterRepository());
-    getIt.registerSingleton<RepositoryService>(RepositoryService());
-    getIt.registerSingleton<FileService>(FileServiceMock());
+    getIt.registerSingleton<ChronicleCodec>(ChronicleCodec());
     viewProcessor = ViewProcessor();
     getIt.registerSingleton<ViewProcessor>(viewProcessor);
+    getIt.registerSingleton<CommandHistory>(CommandHistory());
+    getIt.registerSingleton<MessageBarState>(MessageBarState());
     commandProcessor = CommandProcessor();
     getIt.registerSingleton<CommandProcessor>(commandProcessor);
+    getIt.registerSingleton<FileAdapter>(FileAdapterMock());
+    fileProcessor = FileProcessor();
+    getIt.registerSingleton<FileProcessor>(fileProcessor);
   });
 
   test("Process should correctly process command", () {
@@ -173,7 +181,7 @@ main() {
     ToolBarController controller = ToolBarController();
     var newPoint = PointInTime("test");
     repository.addAtIndex(0, newPoint);
-    await commandProcessor.save();
+    await fileProcessor.save();
     var command = ActivatePointInTimeCommand(newPoint.id);
     viewProcessor.process(command);
 

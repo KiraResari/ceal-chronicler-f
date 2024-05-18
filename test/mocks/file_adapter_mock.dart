@@ -2,7 +2,7 @@ import 'package:ceal_chronicler_f/exceptions/invalid_operation_exception.dart';
 import 'package:ceal_chronicler_f/io/chronicle.dart';
 import 'package:ceal_chronicler_f/io/file/file_adapter.dart';
 
-class FileAdaptorMock implements FileAdapter {
+class FileAdapterMock implements FileAdapter {
   String? savedChronicle;
 
   @override

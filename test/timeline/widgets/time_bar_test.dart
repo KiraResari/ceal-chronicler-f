@@ -1,7 +1,9 @@
 import 'package:ceal_chronicler_f/characters/model/character_repository.dart';
+import 'package:ceal_chronicler_f/commands/command_history.dart';
 import 'package:ceal_chronicler_f/commands/command_processor.dart';
 import 'package:ceal_chronicler_f/get_it_context.dart';
-import 'package:ceal_chronicler_f/io/file/file_service.dart';
+import 'package:ceal_chronicler_f/io/file/file_processor.dart';
+import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
 import 'package:ceal_chronicler_f/timeline/widgets/time_bar.dart';
 import 'package:ceal_chronicler_f/timeline/widgets/time_bar_panel.dart';
@@ -15,11 +17,13 @@ import '../../mocks/file_service_mock_lite.dart';
 void main() {
   setUp(() {
     getIt.reset();
-    getIt.registerSingleton<FileService>(FileServiceMockLite());
+    getIt.registerSingleton<CommandHistory>(CommandHistory());
+    getIt.registerSingleton<MessageBarState>(MessageBarState());
     getIt.registerSingleton<PointInTimeRepository>(PointInTimeRepository());
     getIt.registerSingleton<CharacterRepository>(CharacterRepository());
     getIt.registerSingleton<CommandProcessor>(CommandProcessor());
     getIt.registerSingleton<ViewProcessor>(ViewProcessor());
+    getIt.registerSingleton<FileProcessor>(FileProcessorMockLite());
   });
 
   testWidgets(

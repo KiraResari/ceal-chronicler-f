@@ -1,25 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../exceptions/operation_canceled_exception.dart';
 import '../get_it_context.dart';
-import '../io/file/file_service.dart';
+import '../message_bar/message_bar_state.dart';
 import 'command.dart';
+import 'command_history.dart';
 
 class CommandProcessor extends ChangeNotifier {
-  static const String saveCancelledMessage = "Saving cancelled";
-  static const String saveCompletedMessage = "Chronicle saved!";
-  static const String loadCancelledMessage = "Loading cancelled";
-  static const String loadCompletedMessage = "Loaded chronicle";
-
-  final _fileService = getIt.get<FileService>();
-
-  final List<Command> _commandHistory = [];
-  int _index = 0;
-  int _savedAtIndex = 0;
-
-  String _statusMessage = "Welcome to the Ceal Chronicler";
-
-  String get statusMessage => _statusMessage;
+  final _messageBarState = getIt.get<MessageBarState>();
+  final _commandHistory = getIt.get<CommandHistory>();
 
   void process(Command command) {
     try {
@@ -34,29 +22,15 @@ class CommandProcessor extends ChangeNotifier {
   }
 
   void _processCommand(Command command) {
-    _clearHistoryPastCurrentIndex();
+    _commandHistory.clearPastCurrentIndex();
     command.execute();
     _commandHistory.add(command);
-    _index++;
     _updateStatusMessageAndNotifyListeners(command.executeMessage);
   }
 
   void _updateStatusMessageAndNotifyListeners(String message) {
-    _statusMessage = message;
+    _messageBarState.statusMessage = message;
     notifyListeners();
-  }
-
-  void _clearHistoryPastCurrentIndex() {
-    int removalRangeStart = _index;
-    int removalRangeEnd = _commandHistory.length;
-    _commandHistory.removeRange(removalRangeStart, removalRangeEnd);
-    _makeSavingNecessaryIfSavedIndexWasRemoved();
-  }
-
-  void _makeSavingNecessaryIfSavedIndexWasRemoved() {
-    if (_savedAtIndex > _index) {
-      _savedAtIndex = -1;
-    }
   }
 
   void undo() {
@@ -65,7 +39,7 @@ class CommandProcessor extends ChangeNotifier {
         _performUndo();
       }
     } catch (e) {
-      Command command = _commandHistory[_index - 1];
+      Command command = _commandHistory.undoCommand;
       _updateStatusMessageAndNotifyListeners(
         "Undo of command failed\n"
         "Command: $command\n"
@@ -75,13 +49,13 @@ class CommandProcessor extends ChangeNotifier {
   }
 
   void _performUndo() {
-    _index--;
-    Command commandToUndo = _commandHistory[_index];
+    Command commandToUndo = _commandHistory.undoCommand;
+    _commandHistory.decrementIndex();
     commandToUndo.undo();
     _updateStatusMessageAndNotifyListeners(commandToUndo.undoMessage);
   }
 
-  bool get isUndoPossible => _index > 0;
+  bool get isUndoPossible => _commandHistory.isUndoPossible;
 
   void redo() {
     try {
@@ -89,7 +63,7 @@ class CommandProcessor extends ChangeNotifier {
         _performRedo();
       }
     } catch (e) {
-      Command command = _commandHistory[_index];
+      Command command = _commandHistory.redoCommand;
       _updateStatusMessageAndNotifyListeners(
         "Redo of command failed\n"
         "Command: $command\n"
@@ -99,43 +73,11 @@ class CommandProcessor extends ChangeNotifier {
   }
 
   void _performRedo() {
-    Command commandToRedo = _commandHistory[_index];
+    Command commandToRedo = _commandHistory.redoCommand;
     commandToRedo.execute();
-    _index++;
+    _commandHistory.incrementIndex();
     _updateStatusMessageAndNotifyListeners(commandToRedo.executeMessage);
   }
 
-  bool get isRedoPossible => _index < _commandHistory.length;
-
-  bool get isSavingNecessary {
-    return _index != _savedAtIndex;
-  }
-
-  Future<void> save() async {
-    try {
-      await _fileService.save();
-      _savedAtIndex = _index;
-      _updateStatusMessageAndNotifyListeners(saveCompletedMessage);
-    } on OperationCanceledException {
-      _updateStatusMessageAndNotifyListeners(saveCancelledMessage);
-    }
-  }
-
-  Future<void> load() async {
-    try {
-      await _fileService.load();
-      _resetHistoryAndIndexes();
-      _updateStatusMessageAndNotifyListeners(loadCompletedMessage);
-    } on OperationCanceledException {
-      _updateStatusMessageAndNotifyListeners(loadCancelledMessage);
-      throw OperationCanceledException();
-    }
-  }
-
-  void _resetHistoryAndIndexes() {
-    _commandHistory.clear();
-    _index = 0;
-    _savedAtIndex = 0;
-
-  }
+  bool get isRedoPossible => _commandHistory.isRedoPossible;
 }

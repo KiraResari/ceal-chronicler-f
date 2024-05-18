@@ -8,7 +8,7 @@ class ToolBarController extends ProcessorListener {
 
   bool get isRedoPossible => commandProcessor.isRedoPossible;
 
-  bool get isSavingPossible => commandProcessor.isSavingNecessary;
+  bool get isSavingPossible => fileProcessor.isSavingNecessary;
 
   bool get isNavigatingBackPossible => viewProcessor.isNavigatingBackPossible;
 
@@ -19,11 +19,11 @@ class ToolBarController extends ProcessorListener {
 
   void redo() => commandProcessor.redo();
 
-  void save() => commandProcessor.save();
+  Future<void> save() => fileProcessor.save();
 
   Future<void> load() async {
     try {
-      await commandProcessor.load();
+      await fileProcessor.load();
       viewProcessor.reset();
     } on OperationCanceledException {
       //Don't reset viewProcessor if operation was canceled

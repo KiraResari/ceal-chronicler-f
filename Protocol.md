@@ -1043,6 +1043,17 @@
 
 
 
+# 18-May-2024
+
+* Now continuing with this
+* Presently, I'm still in full-on refactoring-mode
+* Next, I wanted to see if I can separate the `FileService` from the `CommandProcessor`
+  * The first question that I have to ask is whether it makes sense
+  * Saving and loading are not commands, which speaks in favor of removing them from the `CommandProcessor`
+  * At the same time, both saving and loading affect the `CommandProcessor`, because saving sets the `savedAtIndex` and loading resets the command queue
+  * The reason why I would like to decouple them is that presently everything that needs the `CommandProcessor` also needs the `FileService`, which in turn needs more stuff, even if saving and loading are not needed
+  * Okay, I *think* I can achieve that by separating the `CommandHistory` form the `CommandController`, making the `FileService` a `FileController` (and thus adding it to the `ProcessorListener`), and having the `FileController` access the `CommandHistory` for the necessary changes
+
 
 
 # TODO

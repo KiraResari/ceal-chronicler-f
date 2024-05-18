@@ -8,12 +8,12 @@ import '../timeline/model/point_in_time.dart';
 import '../timeline/model/point_in_time_repository.dart';
 import 'chronicle.dart';
 
-class RepositoryService {
+class ChronicleCodec {
   final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
   final _incidentRepository = getIt.get<IncidentRepository>();
   final _characterRepository = getIt.get<CharacterRepository>();
 
-  Chronicle assembleChronicle() {
+  Chronicle assembleFromRepositories() {
     List<PointInTime> pointsInTime = _pointInTimeRepository.pointsInTime;
     List<Incident> incidents = _incidentRepository.content;
     List<Character> characters = _characterRepository.content;
@@ -24,7 +24,7 @@ class RepositoryService {
     );
   }
 
-  void distributeChronicle(Chronicle chronicle) {
+  void distributeToRepositories(Chronicle chronicle) {
     _pointInTimeRepository.pointsInTime = chronicle.pointsInTime;
     _pointInTimeRepository.activePointInTime =
         _pointInTimeRepository.pointsInTime.first;

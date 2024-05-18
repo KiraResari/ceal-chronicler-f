@@ -1,9 +1,11 @@
 import 'package:ceal_chronicler_f/characters/model/character.dart';
 import 'package:ceal_chronicler_f/characters/model/character_repository.dart';
+import 'package:ceal_chronicler_f/commands/command_history.dart';
 import 'package:ceal_chronicler_f/commands/command_processor.dart';
 import 'package:ceal_chronicler_f/get_it_context.dart';
 import 'package:ceal_chronicler_f/incidents/model/incident_id.dart';
-import 'package:ceal_chronicler_f/io/file/file_service.dart';
+import 'package:ceal_chronicler_f/io/file/file_processor.dart';
+import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
 import 'package:ceal_chronicler_f/timeline/widgets/time_bar_controller.dart';
@@ -23,7 +25,9 @@ main() {
     characterRepository = CharacterRepository();
     getIt.registerSingleton<PointInTimeRepository>(pointInTimeRepository);
     getIt.registerSingleton<CharacterRepository>(characterRepository);
-    getIt.registerSingleton<FileService>(FileServiceMockLite());
+    getIt.registerSingleton<CommandHistory>(CommandHistory());
+    getIt.registerSingleton<MessageBarState>(MessageBarState());
+    getIt.registerSingleton<FileProcessor>(FileProcessorMockLite());
     getIt.registerSingleton<CommandProcessor>(CommandProcessor());
     getIt.registerSingleton<ViewProcessor>(ViewProcessor());
     controller = TimeBarController();
