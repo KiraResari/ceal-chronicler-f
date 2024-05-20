@@ -16,6 +16,8 @@ class MessageBar extends StatelessWidget {
 
   Widget _buildMessageBar(BuildContext context) {
     String message = context.watch<MessageBarController>().message;
+    String viewControllerHistory =
+        context.watch<MessageBarController>().viewProcessorHistoryState;
     return FittedBox(
       fit: BoxFit.scaleDown,
       child: Column(

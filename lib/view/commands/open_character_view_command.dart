@@ -9,6 +9,6 @@ class OpenCharacterViewCommand extends ChangeMainViewCommand {
 
   @override
   String toString() {
-    return 'OpenCharacterViewCommand{$id}';
+    return 'OpenCharacterViewCommand{Target: $id; Can execute: $isRedoPossible; Can undo: $isUndoPossible}';
   }
 }

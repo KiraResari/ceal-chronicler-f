@@ -1096,10 +1096,30 @@
     * I now fixed that, and in a way that should work generally no matter how many different `MainViewCandidate`s we're gonna have
   * However, we also have that same problem for changing points in time
     * Fortunately, though slightly different, that followed the same general logic, so it was pretty easy to fix
+* Next is the very exciting question about what happens if you undo the creation of character while in that character's view
+  * Presently, the answer to that is "nothing"
+    * That is admittedly better than an error happening, but it doesn't quite seem like the correct behavior either
+    * Instead, what I feel should happen is that the `OverviewView` is opened
+      * Now, I can either do that as an `OpenCharacterViewCommand`, or by manipulating the `ViewRepository` directly
+        * Using a `OpenCharacterViewCommand` would fully leverage the power of the `ViewProcessor`, but it would also mean adding a dependency to the `ViewProcessor` to the `CreateCharacterCommand`
+        * Manipulating the `ViewRepository` directly would skip that extra dependency, but also mean you could not navigate backward to the deleted character if you restored it
+        * Then again, I think it would feel weird to have an extra `ViewCommand` added to the history if you undid the character creation
+        * So let's try with manipulating the `ViewRepository` directly and see how that feels
+          * It feels more ore less okay, but I still can't shake the feeling that something is lurking in the depths here...
+            * Yeah, the view history definitely becomes a bit unhealthy if we do it like this, getting entries that can no longer be reached
+        * Okay, so, by contrast, what if we make the `CreateCharacterCommand` call an `OpenCharacterViewCommand` instead?
+          * Nope, still gets stuck outside and with the "dead" entry in the view history
+        * Right, if both of these result in the same behavior that both times feels basically right, then I suppose the one where we don't have to call a processor from a command is better
+        * And the more I think about it, the more I am convinced that there's no real good solution for this anyway, and it probably won't matter anyway, so let's just leave it at that before we get bogged down here
+        * Good enough, is, in fact, good enough
+* As a last little thing today, I added some functionality to make the `OverviewView` display its contents vertically on mobile
+* And I think that's a good point to call it a day at for today
+
+[Time elapsed so far: 70.5 hours]
 
 # TODO
 
-* Check what happens if you  undo character creation while within that character
+* 
 
 # User Story
 
