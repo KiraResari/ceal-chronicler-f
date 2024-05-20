@@ -9,6 +9,7 @@ import 'package:ceal_chronicler_f/io/chronicle_codec.dart';
 import 'package:ceal_chronicler_f/io/file/file_adapter.dart';
 import 'package:ceal_chronicler_f/io/file/file_processor.dart';
 import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
+import 'package:ceal_chronicler_f/timeline/commands/create_point_in_time_command.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
@@ -235,15 +236,43 @@ main() {
 
   test(
       "Navigating forward should not be possible if only valid commands navigate to currently active view",
-          () {
-        commandProcessor.process(CreateCharacterCommand(PointInTimeId()));
-        CharacterId characterId = characterRepository.content.first.id;
-        viewProcessor.process(OpenCharacterViewCommand(characterId));
-        viewProcessor.process(OpenOverviewViewCommand());
-        viewProcessor.navigateBack();
-        viewProcessor.navigateBack();
-        commandProcessor.undo();
+      () {
+    commandProcessor.process(CreateCharacterCommand(PointInTimeId()));
+    CharacterId characterId = characterRepository.content.first.id;
+    viewProcessor.process(OpenCharacterViewCommand(characterId));
+    viewProcessor.process(OpenOverviewViewCommand());
+    viewProcessor.navigateBack();
+    viewProcessor.navigateBack();
+    commandProcessor.undo();
 
-        expect(viewProcessor.isNavigatingForwardPossible, isFalse);
-      });
+    expect(viewProcessor.isNavigatingForwardPossible, isFalse);
+  });
+
+  test(
+      "Navigating back should not be possible if only valid commands navigate to currently point in time",
+      () {
+    commandProcessor.process(CreatePointInTimeCommand(0));
+    PointInTimeId newPointId = pointInTimeRepository.pointsInTime.first.id;
+    PointInTimeId originalPointId = pointInTimeRepository.pointsInTime.last.id;
+    viewProcessor.process(ActivatePointInTimeCommand(newPointId));
+    viewProcessor.process(ActivatePointInTimeCommand(originalPointId));
+    commandProcessor.undo();
+
+    expect(viewProcessor.isNavigatingBackPossible, isFalse);
+  });
+
+  test(
+      "Navigating forward should not be possible if only valid commands navigate to currently point in time",
+      () {
+    commandProcessor.process(CreatePointInTimeCommand(0));
+    PointInTimeId newPointId = pointInTimeRepository.pointsInTime.first.id;
+    PointInTimeId originalPointId = pointInTimeRepository.pointsInTime.last.id;
+    viewProcessor.process(ActivatePointInTimeCommand(newPointId));
+    viewProcessor.process(ActivatePointInTimeCommand(originalPointId));
+    viewProcessor.navigateBack();
+    viewProcessor.navigateBack();
+    commandProcessor.undo();
+
+    expect(viewProcessor.isNavigatingForwardPossible, isFalse);
+  });
 }

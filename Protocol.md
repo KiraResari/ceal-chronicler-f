@@ -1094,10 +1094,12 @@
     * This is because what happens is that the view changes in either direction are valid "go to the overview view"-changes
     * And that's simply another tricky case that I did not yet cover in the view logic
     * I now fixed that, and in a way that should work generally no matter how many different `MainViewCandidate`s we're gonna have
+  * However, we also have that same problem for changing points in time
+    * Fortunately, though slightly different, that followed the same general logic, so it was pretty easy to fix
 
 # TODO
 
-* 
+* Check what happens if you  undo character creation while within that character
 
 # User Story
 

@@ -19,7 +19,8 @@ class ActivatePointInTimeCommand extends ViewCommand {
   @override
   bool get isUndoPossible {
     if (_previousActivePointInTimeId != null) {
-      return _repository.contains(_previousActivePointInTimeId!);
+      return _repository.contains(_previousActivePointInTimeId!) &&
+          _previousActivePointInTimeId! != _repository.activePointInTime.id;
     }
     return false;
   }
@@ -37,7 +38,8 @@ class ActivatePointInTimeCommand extends ViewCommand {
   }
 
   @override
-  bool get isRedoPossible => _repository.contains(_id);
+  bool get isRedoPossible =>
+      _repository.contains(_id) && _id != _repository.activePointInTime.id;
 
   @override
   void redo() {
