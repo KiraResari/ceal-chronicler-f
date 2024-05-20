@@ -13,7 +13,7 @@ class RenameIncidentButton extends SmallCircularButton {
   final Incident incident;
 
   const RenameIncidentButton(this.incident, {super.key})
-      : super(tooltip: "Rename incident", icon: Icons.edit);
+      : super(icon: Icons.edit);
 
   @override
   void onPressed(BuildContext context) async {
@@ -36,4 +36,7 @@ class RenameIncidentButton extends SmallCircularButton {
       },
     );
   }
+
+  @override
+  String? get tooltip => "Rename incident";
 }

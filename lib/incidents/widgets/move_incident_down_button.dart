@@ -12,7 +12,7 @@ class MoveIncidentDownButton extends SmallCircularButton {
   final Incident incident;
 
   const MoveIncidentDownButton(this.incident, {super.key})
-      : super(tooltip: "Move incident down", icon: Icons.arrow_downward);
+      : super(icon: Icons.arrow_downward);
 
   @override
   void onPressed(BuildContext context) {
@@ -32,4 +32,7 @@ class MoveIncidentDownButton extends SmallCircularButton {
   @override
   String? getDisabledReason(BuildContext context) =>
       "Incident can't be moved down";
+
+  @override
+  String? get tooltip => "Move incident down";
 }

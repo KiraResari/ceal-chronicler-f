@@ -5,11 +5,7 @@ import '../utils/widgets/buttons/medium_square_button.dart';
 import 'tool_bar_controller.dart';
 
 class UndoButton extends MediumSquareButton {
-  const UndoButton({super.key})
-      : super(
-          tooltip: "Undo",
-          icon: Icons.undo,
-        );
+  const UndoButton({super.key}) : super(icon: Icons.undo);
 
   @override
   void onPressed(BuildContext context) {
@@ -23,6 +19,8 @@ class UndoButton extends MediumSquareButton {
   }
 
   @override
-  String? getDisabledReason(BuildContext context) =>
-      "Nothing to undo";
+  String? getDisabledReason(BuildContext context) => "Nothing to undo";
+
+  @override
+  String? get tooltip => "Undo";
 }

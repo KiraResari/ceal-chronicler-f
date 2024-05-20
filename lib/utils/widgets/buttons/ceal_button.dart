@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 
 abstract class CealButton extends StatelessWidget {
-  final String tooltip;
   final double? height;
   final double? width;
 
   const CealButton({
     super.key,
-    required this.tooltip,
     this.height,
     this.width,
   });
@@ -47,4 +45,5 @@ abstract class CealButton extends StatelessWidget {
 
   ShapeBorder? get shape => null;
 
+  String? get tooltip => null;
 }

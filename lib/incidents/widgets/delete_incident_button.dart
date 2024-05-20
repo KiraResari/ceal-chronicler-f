@@ -10,7 +10,7 @@ class DeleteIncidentButton extends SmallCircularButton {
   final Incident incident;
 
   const DeleteIncidentButton(this.incident, {super.key})
-      : super(tooltip: "Delete incident", icon: Icons.delete);
+      : super(icon: Icons.delete);
 
   @override
   void onPressed(BuildContext context) {
@@ -18,4 +18,7 @@ class DeleteIncidentButton extends SmallCircularButton {
     var command = DeleteIncidentCommand(incident);
     commandProcessor.process(command);
   }
+
+  @override
+  String? get tooltip => "Delete incident";
 }

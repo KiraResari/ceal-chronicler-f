@@ -5,11 +5,7 @@ import '../utils/widgets/buttons/medium_square_button.dart';
 import 'tool_bar_controller.dart';
 
 class NavigateForwardButton extends MediumSquareButton {
-  const NavigateForwardButton({super.key})
-      : super(
-          tooltip: "Navigate forward",
-          icon: Icons.navigate_next,
-        );
+  const NavigateForwardButton({super.key}) : super(icon: Icons.navigate_next);
 
   @override
   void onPressed(BuildContext context) {
@@ -25,4 +21,7 @@ class NavigateForwardButton extends MediumSquareButton {
   @override
   String? getDisabledReason(BuildContext context) =>
       "Nothing to navigate forward to";
+
+  @override
+  String? get tooltip => "Navigate forward";
 }

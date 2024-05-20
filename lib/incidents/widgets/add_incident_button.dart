@@ -7,13 +7,11 @@ import '../../get_it_context.dart';
 import '../../timeline/model/point_in_time_repository.dart';
 
 class AddIncidentButton extends SmallCircularButton {
-  final PointInTimeRepository pointInTimeRepository;
-  final CommandProcessor commandProcessor;
+  final PointInTimeRepository pointInTimeRepository =
+      getIt.get<PointInTimeRepository>();
+  final CommandProcessor commandProcessor = getIt.get<CommandProcessor>();
 
-  AddIncidentButton({super.key})
-      : pointInTimeRepository = getIt.get<PointInTimeRepository>(),
-        commandProcessor = getIt.get<CommandProcessor>(),
-        super(tooltip: "Add new incident", icon: Icons.add);
+  AddIncidentButton({super.key}) : super(icon: Icons.add);
 
   @override
   void onPressed(BuildContext context) {
@@ -21,4 +19,7 @@ class AddIncidentButton extends SmallCircularButton {
     var command = CreateIncidentCommand(activePointInTime);
     commandProcessor.process(command);
   }
+
+  @override
+  String? get tooltip => "Add new incident";
 }

@@ -1069,11 +1069,13 @@
     * These two have a lot of duplication, but it's also not all that easy to separate them, since they differ at a low level, namely the `shape` argument of the `FloatingActionButton`
     * I'll try consolidating these two first
     * I now did that, and it looks good
+  * Right, so next, I want to enter the `CharacterButton`  into that abstraction by adding a `CealTextButton`
+    * Note: It's actually really funny how I need to prefix a lot of these buttons with "Ceal" because classes like this already exist, but don't match my requirements
+    * I now did that, and in doing so also reworked the logic of the buttons a little bit again
 
 # TODO
 
 * Prettify `CharacterView`
-* Consolidate Buttons
 
 # User Story
 

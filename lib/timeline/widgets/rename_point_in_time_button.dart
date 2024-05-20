@@ -10,7 +10,7 @@ class RenamePointInTimeButton extends SmallCircularButton {
   final PointInTime point;
 
   const RenamePointInTimeButton({super.key, required this.point})
-      : super(tooltip: "Rename", icon: Icons.edit);
+      : super(icon: Icons.edit);
 
   @override
   Future<void> onPressed(BuildContext context) async {
@@ -32,4 +32,7 @@ class RenamePointInTimeButton extends SmallCircularButton {
 
   bool _nameChangedAndIsNotEmpty(String name) =>
       name.isNotEmpty && name != point.name;
+
+  @override
+  String? get tooltip => "Rename point in time";
 }

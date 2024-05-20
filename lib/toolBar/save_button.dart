@@ -6,11 +6,7 @@ import '../utils/widgets/buttons/medium_square_button.dart';
 import 'tool_bar_controller.dart';
 
 class SaveButton extends MediumSquareButton {
-  const SaveButton({super.key})
-      : super(
-          tooltip: "Save chronicle",
-          icon: Icons.save,
-        );
+  const SaveButton({super.key}) : super(icon: Icons.save);
 
   @override
   void onPressed(BuildContext context) {
@@ -29,4 +25,7 @@ class SaveButton extends MediumSquareButton {
   @override
   String? getDisabledReason(BuildContext context) =>
       kIsWeb ? "Saving in browser is not supported" : "Nothing to save";
+
+  @override
+  String? get tooltip => "Save chronicle";
 }

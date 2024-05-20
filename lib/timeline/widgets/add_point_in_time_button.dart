@@ -8,11 +8,14 @@ class AddPointInTimeButton extends SmallCircularButton {
   final int insertionIndex;
 
   const AddPointInTimeButton({super.key, required this.insertionIndex})
-      : super(tooltip: "Add new point in time", icon: Icons.add);
+      : super(icon: Icons.add);
 
   @override
   void onPressed(BuildContext context) {
     TimeBarController controller = context.read<TimeBarController>();
     controller.addPointInTimeAtIndex(insertionIndex);
   }
+
+  @override
+  String? get tooltip => "Add new point in time";
 }

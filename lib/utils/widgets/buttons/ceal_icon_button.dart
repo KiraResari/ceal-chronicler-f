@@ -7,7 +7,6 @@ abstract class CealIconButton extends CealButton {
 
   const CealIconButton({
     super.key,
-    required super.tooltip,
     required this.icon,
     super.width,
     super.height,

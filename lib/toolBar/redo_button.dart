@@ -5,11 +5,7 @@ import '../utils/widgets/buttons/medium_square_button.dart';
 import 'tool_bar_controller.dart';
 
 class RedoButton extends MediumSquareButton {
-  const RedoButton({super.key})
-      : super(
-          tooltip: "Redo",
-          icon: Icons.redo,
-        );
+  const RedoButton({super.key}) : super(icon: Icons.redo);
 
   @override
   void onPressed(BuildContext context) {
@@ -23,6 +19,8 @@ class RedoButton extends MediumSquareButton {
   }
 
   @override
-  String? getDisabledReason(BuildContext context) =>
-      "Nothing to redo";
+  String? getDisabledReason(BuildContext context) => "Nothing to redo";
+
+  @override
+  String? get tooltip => "Redo";
 }
