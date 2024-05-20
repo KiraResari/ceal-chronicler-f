@@ -1,59 +1,37 @@
-import 'package:ceal_chronicler_f/timeline/widgets/point_in_time_button_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
+import '../../get_it_context.dart';
+import '../../utils/widgets/buttons/ceal_text_button.dart';
+import '../../view/commands/activate_point_in_time_command.dart';
+import '../../view/view_processor.dart';
 import '../model/point_in_time.dart';
+import '../model/point_in_time_repository.dart';
 
-class PointInTimeButton extends StatelessWidget {
-  static const tooltip = "Make this the active point in time";
-  static const disabledTooltip = "This is already the active point in time";
+class PointInTimeButton extends CealTextButton {
+  final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
+  final _viewProcessor = getIt.get<ViewProcessor>();
 
   final PointInTime point;
 
-  const PointInTimeButton({super.key, required this.point});
+  PointInTimeButton({super.key, required this.point}) : super(width: 150);
 
   @override
-  Widget build(BuildContext context) {
-    var controller = PointInTimeButtonController(point);
-    return ChangeNotifierProvider.value(
-      value: controller,
-      builder: (context, child) => _buildPaddedButton(context),
-    );
+  void onPressed(BuildContext context) {
+    var command = ActivatePointInTimeCommand(point.id);
+    _viewProcessor.process(command);
   }
 
-  Widget _buildPaddedButton(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: SizedBox(
-        height: 36,
-        width: 150,
-        child: _buildButton(context),
-      ),
-    );
-  }
+  @override
+  bool isEnabled(BuildContext context) =>
+      _pointInTimeRepository.activePointInTime != point;
 
-  FloatingActionButton _buildButton(BuildContext context) {
-    var controller = context.watch<PointInTimeButtonController>();
-    ThemeData theme = Theme.of(context);
-    Color enabledColor = theme.colorScheme.primaryContainer;
-    Color disabledColor = theme.colorScheme.secondaryContainer;
-    TextStyle textStyle = TextStyle(
-      color: controller.isEnabled
-          ? theme.colorScheme.onPrimaryContainer
-          : theme.colorScheme.onSurfaceVariant,
-    );
-    return FloatingActionButton(
-      backgroundColor: controller.isEnabled ? enabledColor : disabledColor,
-      tooltip: controller.isEnabled ? tooltip : disabledTooltip,
-      onPressed:
-          controller.isEnabled ? () => controller.activatePointInTime() : null,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: Text(
-        controller.point.name,
-        style: textStyle,
-      ),
-    );
-  }
+  @override
+  String get text => point.name;
+
+  @override
+  String? get tooltip => "Make this the active point in time";
+
+  @override
+  String? getDisabledReason(BuildContext context) =>
+      "This is already the active point in time";
 }
