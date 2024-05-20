@@ -17,23 +17,12 @@ abstract class CealButton extends StatelessWidget {
       child: SizedBox(
         height: height,
         width: width,
-        child: _buildButton(context),
+        child: buildButton(context),
       ),
     );
   }
 
-  FloatingActionButton _buildButton(BuildContext context) {
-    ThemeData theme = Theme.of(context);
-    Color enabledColor = theme.colorScheme.primaryContainer;
-    Color disabledColor = theme.colorScheme.secondaryContainer;
-    return FloatingActionButton(
-      backgroundColor: isEnabled(context) ? enabledColor : disabledColor,
-      tooltip: isEnabled(context) ? tooltip : getDisabledReason(context),
-      onPressed: isEnabled(context) ? () => onPressed(context) : null,
-      shape: shape,
-      child: buildChild(context),
-    );
-  }
+  FloatingActionButton buildButton(BuildContext context);
 
   void onPressed(BuildContext context);
 
@@ -41,9 +30,14 @@ abstract class CealButton extends StatelessWidget {
 
   String? getDisabledReason(BuildContext context) => null;
 
-  Widget buildChild(BuildContext context);
-
   ShapeBorder? get shape => null;
 
   String? get tooltip => null;
+
+  Color? getBackgroundColor(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    Color enabledColor = theme.colorScheme.primaryContainer;
+    Color disabledColor = theme.colorScheme.secondaryContainer;
+    return isEnabled(context) ? enabledColor : disabledColor;
+  }
 }

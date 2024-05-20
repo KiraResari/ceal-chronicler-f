@@ -11,8 +11,14 @@ abstract class CealTextButton extends CealButton {
   });
 
   @override
-  Widget buildChild(BuildContext context) {
-    return Text(text);
+  FloatingActionButton buildButton(BuildContext context) {
+    return FloatingActionButton.extended(
+      backgroundColor: getBackgroundColor(context),
+      tooltip: isEnabled(context) ? tooltip : getDisabledReason(context),
+      onPressed: isEnabled(context) ? () => onPressed(context) : null,
+      shape: shape,
+      label: Text(text),
+    );
   }
 
   String get text;

@@ -1072,6 +1072,11 @@
   * Right, so next, I want to enter the `CharacterButton`  into that abstraction by adding a `CealTextButton`
     * Note: It's actually really funny how I need to prefix a lot of these buttons with "Ceal" because classes like this already exist, but don't match my requirements
     * I now did that, and in doing so also reworked the logic of the buttons a little bit again
+  * Now, there's only the question why the text button presently does not scale to the width of the text inside, which is how I would have expected it to behave
+    * It behaved that way even before the consolidation, so that can't have been the cause
+    * Okay, so it seems like that works via the constructor `FloatingActionButton.extended`, which is extremely annoying because it makes this quite tricky, since that's a change at the lowest level, and `FloatingActionButton.extended` also requires a label
+    * But meh, I think I can still whip something up here
+    * Okay, I think I now managed to get that looking alright
 
 # TODO
 

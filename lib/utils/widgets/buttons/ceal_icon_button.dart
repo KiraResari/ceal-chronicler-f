@@ -13,7 +13,17 @@ abstract class CealIconButton extends CealButton {
   });
 
   @override
-  Widget buildChild(BuildContext context) {
+  FloatingActionButton buildButton(BuildContext context) {
+    return FloatingActionButton(
+      backgroundColor: getBackgroundColor(context),
+      tooltip: isEnabled(context) ? tooltip : getDisabledReason(context),
+      onPressed: isEnabled(context) ? () => onPressed(context) : null,
+      shape: shape,
+      child: _buildChild(context),
+    );
+  }
+
+  Widget _buildChild(BuildContext context) {
     ThemeData theme = Theme.of(context);
     Color enabledIconColor = theme.colorScheme.onPrimaryContainer;
     Color disabledIconColor = theme.colorScheme.onSurfaceVariant;
