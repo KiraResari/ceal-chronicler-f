@@ -1078,10 +1078,19 @@
     * But meh, I think I can still whip something up here
     * Okay, I think I now managed to get that looking alright
   * Now, I just realized that the `PointInTimeButton` is actually also a text button that currently has a custom implementation, so might as well consolidate that one too
+    * I now did that, and in doing so I also managed to remove the `PointInTimeButtonController`, which it turns out is no longer needed
+      * This is actually interesting, since I would have assumed that this would have caused changes of the active point in time to no logner do anything, but clearly it still works
+        * My best guess is that this is because the `TimeBar` still features a `TimeBarController`, which gets notified if the active point in time changed, and then triggers a rebuild of the entire `TimeBar` which also updates all `PointInTime` buttons
+* Anyway, that's the refactoring done
+* Next, let's move on to prettifying the `CharacterView`, which presently looks like your average office worker on a Monday morning
+  * The first question is how to get the column widths right
+    * Basically, what I want is a table where the first column (containing the labels) takes up as much space as is needed to print all the labels, while the second column (containing the values) takes up all remaining space
+    * Okay, I now got this to work using `IntrinsicColumnWidth`, which however does not appear to work with hot reload, so at first it appeared not to work at all
+  * So, now the `CharacterView` looks much better already 
 
 # TODO
 
-* Prettify `CharacterView`
+* 
 
 # User Story
 
@@ -1137,7 +1146,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
   - [ ] It is possible to jump back and forth to points in time where a field's value has been edited
 - [ ] Allows complete deletion of existing characters (with warning)
 - [ ] While in the Character View, Points in Time at which the character does not exist should be greyed out in the time bar
-- [ ] The character screen has a back button, which returns back to the main view
+- [x] The character screen has a back button, which returns back to the main view
 
 ### Technical
 

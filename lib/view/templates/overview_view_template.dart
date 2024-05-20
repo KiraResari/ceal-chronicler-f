@@ -1,5 +1,5 @@
 import '../../main_view/main_view_candidate.dart';
-import '../../main_view/overview_view.dart';
+import '../../overview_view/overview_view.dart';
 import 'main_view_template.dart';
 
 class OverviewViewTemplate extends MainViewTemplate {
