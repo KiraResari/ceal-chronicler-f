@@ -1077,6 +1077,7 @@
     * Okay, so it seems like that works via the constructor `FloatingActionButton.extended`, which is extremely annoying because it makes this quite tricky, since that's a change at the lowest level, and `FloatingActionButton.extended` also requires a label
     * But meh, I think I can still whip something up here
     * Okay, I think I now managed to get that looking alright
+  * Now, I just realized that the `PointInTimeButton` is actually also a text button that currently has a custom implementation, so might as well consolidate that one too
 
 # TODO
 

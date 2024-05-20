@@ -7,7 +7,7 @@ abstract class CealTextButton extends CealButton {
   const CealTextButton({
     super.key,
     super.width,
-    super.height,
+    super.height = 32,
   });
 
   @override
