@@ -28,7 +28,7 @@ main() {
   );
 
   test(
-    "isValid should be true if point exists in repository",
+    "Redo should be possible if point exists in repository",
         () {
       var newPoint = PointInTime("test");
       repository.addAtIndex(0, newPoint);
@@ -41,7 +41,7 @@ main() {
   );
 
   test(
-    "isValid should be false if point does not exist in repository",
+    "Redo should not be possible if point does not exist in repository",
         () {
       var command = ActivatePointInTimeCommand(PointInTimeId());
 

@@ -8,4 +8,12 @@ class OverviewViewTemplate extends MainViewTemplate {
 
   @override
   bool get isValid => true;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is OverviewViewTemplate && runtimeType == other.runtimeType;
+
+  @override
+  int get hashCode => 0;
 }

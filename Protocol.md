@@ -1089,6 +1089,11 @@
   * So, now the `CharacterView` looks much better already 
 * Now that I have two `ViewCommand`s that open a view, I can see that there's lots of stuff between them that doesn't change, so let me try to extract a common superclass
   * Yes, I was now able to greatly simplify that
+* Next, I noticed something a very slight bug:
+  * If you create a character, open the character view, then return to the overview view with the button, and then delete the character, it is possible to navigate back and forth one step without that appearing to do anything
+    * This is because what happens is that the view changes in either direction are valid "go to the overview view"-changes
+    * And that's simply another tricky case that I did not yet cover in the view logic
+    * I now fixed that, and in a way that should work generally no matter how many different `MainViewCandidate`s we're gonna have
 
 # TODO
 

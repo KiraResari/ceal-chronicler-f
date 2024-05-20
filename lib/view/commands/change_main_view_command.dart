@@ -3,7 +3,7 @@ import '../templates/main_view_template.dart';
 import '../view_repository.dart';
 import 'view_command.dart';
 
-abstract class ChangeMainViewCommand extends ViewCommand{
+abstract class ChangeMainViewCommand extends ViewCommand {
   final ViewRepository viewRepository = getIt.get<ViewRepository>();
   final MainViewTemplate _template;
   MainViewTemplate? _previousTemplate;
@@ -19,7 +19,8 @@ abstract class ChangeMainViewCommand extends ViewCommand{
   @override
   bool get isUndoPossible {
     if (_previousTemplate != null) {
-      return _previousTemplate!.isValid;
+      return _previousTemplate!.isValid &&
+          _previousTemplate! != viewRepository.mainViewTemplate;
     }
     return false;
   }
@@ -32,7 +33,8 @@ abstract class ChangeMainViewCommand extends ViewCommand{
   }
 
   @override
-  bool get isRedoPossible => _template.isValid;
+  bool get isRedoPossible =>
+      (_template.isValid && _template != viewRepository.mainViewTemplate);
 
   @override
   void redo() {

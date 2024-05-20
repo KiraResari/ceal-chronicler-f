@@ -17,4 +17,14 @@ class CharacterViewTemplate extends MainViewTemplate {
 
   @override
   bool get isValid => characterRepository.contains(id);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CharacterViewTemplate &&
+          runtimeType == other.runtimeType &&
+          id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
 }
