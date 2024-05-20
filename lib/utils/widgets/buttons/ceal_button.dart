@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
-abstract class MediumSquareButton extends StatelessWidget {
+abstract class CealButton extends StatelessWidget {
   final String tooltip;
   final String? disabledTooltip;
-  final IconData icon;
+  final double? height;
+  final double? width;
 
-  const MediumSquareButton({
+  const CealButton({
     super.key,
     required this.tooltip,
-    required this.icon,
     this.disabledTooltip,
+    this.height,
+    this.width,
   });
 
   @override
@@ -17,8 +19,8 @@ abstract class MediumSquareButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
-        height: 36,
-        width: 36,
+        height: height,
+        width: width,
         child: _buildButton(context),
       ),
     );
@@ -28,23 +30,20 @@ abstract class MediumSquareButton extends StatelessWidget {
     ThemeData theme = Theme.of(context);
     Color enabledColor = theme.colorScheme.primaryContainer;
     Color disabledColor = theme.colorScheme.secondaryContainer;
-    Color enabledIconColor = theme.colorScheme.onPrimaryContainer;
-    Color disabledIconColor = theme.colorScheme.onSurfaceVariant;
     return FloatingActionButton(
       backgroundColor: isEnabled(context) ? enabledColor : disabledColor,
       tooltip: isEnabled(context) ? tooltip : disabledTooltip,
       onPressed: isEnabled(context) ? () => onPressed(context) : null,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: Icon(
-        icon,
-        color: isEnabled(context) ? enabledIconColor : disabledIconColor,
-      ),
+      shape: shape,
+      child: buildChild(context),
     );
   }
 
   void onPressed(BuildContext context);
 
   bool isEnabled(BuildContext context) => true;
+
+  Widget buildChild(BuildContext context);
+
+  ShapeBorder? get shape => null;
 }

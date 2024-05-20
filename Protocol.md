@@ -1056,12 +1056,21 @@
   * Also, the status message needs to go somewhere else
   * Well, I now managed to separate
   * I am not really sure if that made things simpler in the end, but at the very least, the responsibilities are now better separated
+* Aaand, thanks to a really nasty headache, this was already as far as I got today
 
+[Time elapsed so far: 65 hours]
 
+# 20-May-2024
+
+* Now continuing with this
+* Before I finally start continuing with the `CharacterView`, I wanted to see if there's a good way to consolidate the various button classesthat I presently have
+  * Specifically, the `CharacterButton`  currently extends `StatelessWidget`, but it basically is just a button with some text, so I'd want to abstract that since I'll probably need that functionality more often
+  * Meanwhile, I also have a `SmallCircularButton` and a `MediumSquareButton`, both of which are pretty much the same, only using icons instead of text
+    * These two have a lot of duplication, but it's also not all that easy to separate them, since they differ at a low level, namely the `shape` argument of the `FloatingActionButton`
+    * I'll try consolidating these two first
 
 # TODO
 
-* Try separating `FileService` from `CommandProcessor`
 * Prettify `CharacterView`
 * Consolidate Buttons
 

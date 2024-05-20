@@ -1,6 +1,6 @@
 import 'package:ceal_chronicler_f/characters/commands/create_character_command.dart';
 import 'package:ceal_chronicler_f/commands/command_processor.dart';
-import 'package:ceal_chronicler_f/utils/widgets/small_circular_button.dart';
+import 'package:ceal_chronicler_f/utils/widgets/buttons/small_circular_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../get_it_context.dart';

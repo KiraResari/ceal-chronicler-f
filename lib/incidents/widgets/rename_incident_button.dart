@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../commands/command_processor.dart';
 import '../../get_it_context.dart';
-import '../../utils/widgets/small_circular_button.dart';
+import '../../utils/widgets/buttons/small_circular_button.dart';
 import '../model/incident.dart';
 
 class RenameIncidentButton extends SmallCircularButton {
