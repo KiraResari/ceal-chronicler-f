@@ -9,7 +9,6 @@ abstract class MediumSquareButton extends CealButton {
     super.key,
     required super.tooltip,
     required this.icon,
-    super.disabledTooltip,
   }) : super(height: 36, width: 36);
 
   @override

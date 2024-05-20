@@ -8,7 +8,6 @@ class NavigateForwardButton extends MediumSquareButton {
   const NavigateForwardButton({super.key})
       : super(
           tooltip: "Navigate forward",
-          disabledTooltip: "Nothing to navigate forward to",
           icon: Icons.navigate_next,
         );
 
@@ -22,4 +21,8 @@ class NavigateForwardButton extends MediumSquareButton {
   bool isEnabled(BuildContext context) {
     return context.watch<ToolBarController>().isNavigatingForwardPossible;
   }
+
+  @override
+  String? getDisabledReason(BuildContext context) =>
+      "Nothing to navigate forward to";
 }

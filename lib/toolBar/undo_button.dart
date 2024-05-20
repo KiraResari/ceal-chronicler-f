@@ -8,7 +8,6 @@ class UndoButton extends MediumSquareButton {
   const UndoButton({super.key})
       : super(
           tooltip: "Undo",
-          disabledTooltip: "Nothing to undo",
           icon: Icons.undo,
         );
 
@@ -22,4 +21,8 @@ class UndoButton extends MediumSquareButton {
   bool isEnabled(BuildContext context) {
     return context.watch<ToolBarController>().isUndoPossible;
   }
+
+  @override
+  String? getDisabledReason(BuildContext context) =>
+      "Nothing to undo";
 }

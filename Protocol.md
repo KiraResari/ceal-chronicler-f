@@ -1068,6 +1068,7 @@
   * Meanwhile, I also have a `SmallCircularButton` and a `MediumSquareButton`, both of which are pretty much the same, only using icons instead of text
     * These two have a lot of duplication, but it's also not all that easy to separate them, since they differ at a low level, namely the `shape` argument of the `FloatingActionButton`
     * I'll try consolidating these two first
+    * I now did that, and it looks good
 
 # TODO
 

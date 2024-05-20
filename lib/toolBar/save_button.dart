@@ -9,8 +9,6 @@ class SaveButton extends MediumSquareButton {
   const SaveButton({super.key})
       : super(
           tooltip: "Save chronicle",
-          disabledTooltip:
-              kIsWeb ? "Saving in browser is not supported" : "Nothing to save",
           icon: Icons.save,
         );
 
@@ -27,4 +25,8 @@ class SaveButton extends MediumSquareButton {
     }
     return context.watch<ToolBarController>().isSavingPossible;
   }
+
+  @override
+  String? getDisabledReason(BuildContext context) =>
+      kIsWeb ? "Saving in browser is not supported" : "Nothing to save";
 }

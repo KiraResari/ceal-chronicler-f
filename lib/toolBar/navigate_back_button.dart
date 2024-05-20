@@ -8,7 +8,6 @@ class NavigateBackButton extends MediumSquareButton {
   const NavigateBackButton({super.key})
       : super(
           tooltip: "Navigate back",
-          disabledTooltip: "Nothing to navigate back to",
           icon: Icons.navigate_before,
         );
 
@@ -22,4 +21,8 @@ class NavigateBackButton extends MediumSquareButton {
   bool isEnabled(BuildContext context) {
     return context.watch<ToolBarController>().isNavigatingBackPossible;
   }
+
+  @override
+  String? getDisabledReason(BuildContext context) =>
+      "Nothing to navigate back to";
 }

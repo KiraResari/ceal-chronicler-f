@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 
 abstract class CealButton extends StatelessWidget {
   final String tooltip;
-  final String? disabledTooltip;
   final double? height;
   final double? width;
 
   const CealButton({
     super.key,
     required this.tooltip,
-    this.disabledTooltip,
     this.height,
     this.width,
   });
@@ -32,7 +30,7 @@ abstract class CealButton extends StatelessWidget {
     Color disabledColor = theme.colorScheme.secondaryContainer;
     return FloatingActionButton(
       backgroundColor: isEnabled(context) ? enabledColor : disabledColor,
-      tooltip: isEnabled(context) ? tooltip : disabledTooltip,
+      tooltip: isEnabled(context) ? tooltip : getDisabledReason(context),
       onPressed: isEnabled(context) ? () => onPressed(context) : null,
       shape: shape,
       child: buildChild(context),
@@ -43,7 +41,10 @@ abstract class CealButton extends StatelessWidget {
 
   bool isEnabled(BuildContext context) => true;
 
+  String? getDisabledReason(BuildContext context) => null;
+
   Widget buildChild(BuildContext context);
 
   ShapeBorder? get shape => null;
+
 }

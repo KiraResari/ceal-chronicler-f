@@ -8,7 +8,6 @@ class RedoButton extends MediumSquareButton {
   const RedoButton({super.key})
       : super(
           tooltip: "Redo",
-          disabledTooltip: "Nothing to redo",
           icon: Icons.redo,
         );
 
@@ -22,4 +21,8 @@ class RedoButton extends MediumSquareButton {
   bool isEnabled(BuildContext context) {
     return context.watch<ToolBarController>().isRedoPossible;
   }
+
+  @override
+  String? getDisabledReason(BuildContext context) =>
+      "Nothing to redo";
 }

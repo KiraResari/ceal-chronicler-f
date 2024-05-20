@@ -9,8 +9,6 @@ class LoadButton extends MediumSquareButton {
   const LoadButton({super.key})
       : super(
           tooltip: "Load chronicle",
-          disabledTooltip:
-              kIsWeb ? "Loading in browser is not supported" : null,
           icon: Icons.folder_rounded,
         );
 
@@ -22,4 +20,9 @@ class LoadButton extends MediumSquareButton {
 
   @override
   bool isEnabled(BuildContext context) => !kIsWeb;
+
+  @override
+  String? getDisabledReason(BuildContext context) {
+    return kIsWeb ? "Loading in browser is not supported" : null;
+  }
 }
