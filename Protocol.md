@@ -1087,6 +1087,8 @@
     * Basically, what I want is a table where the first column (containing the labels) takes up as much space as is needed to print all the labels, while the second column (containing the values) takes up all remaining space
     * Okay, I now got this to work using `IntrinsicColumnWidth`, which however does not appear to work with hot reload, so at first it appeared not to work at all
   * So, now the `CharacterView` looks much better already 
+* Now that I have two `ViewCommand`s that open a view, I can see that there's lots of stuff between them that doesn't change, so let me try to extract a common superclass
+  * Yes, I was now able to greatly simplify that
 
 # TODO
 
