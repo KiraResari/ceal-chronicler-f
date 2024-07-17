@@ -1230,6 +1230,12 @@
     * Yes looks good
     * Now the JSON Serialization seems to work
 
+* This is as far as I'm getting with this today
+
+* The next step will be putting the `KeyValue` into the `Character`, which will also entail reworking the `CharacterView` and  `CharacterViewController`
+
+* [Time elapsed so far: 76.75 hours]
+
 # TODO
 
 * 
