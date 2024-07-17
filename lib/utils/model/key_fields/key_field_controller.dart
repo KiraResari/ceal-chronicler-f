@@ -1,22 +1,23 @@
-import '../../get_it_context.dart';
-import '../../timeline/model/point_in_time.dart';
-import '../../timeline/model/point_in_time_id.dart';
-import '../../timeline/model/point_in_time_repository.dart';
+import '../../../get_it_context.dart';
+import '../../../timeline/model/point_in_time.dart';
+import '../../../timeline/model/point_in_time_id.dart';
+import '../../../timeline/model/point_in_time_repository.dart';
+import 'key_field.dart';
 
-class KeyField<T> {
+class KeyFieldController<T>  {
+
+  final KeyField<T> keyField;
+
   final PointInTimeRepository pointInTimeRepository =
       getIt.get<PointInTimeRepository>();
 
-  final T _initialValue;
-  final Map<PointInTimeId, T> _keys = {};
-
-  KeyField(this._initialValue);
+  KeyFieldController(this.keyField);
 
   T get currentValue {
-    T mostRecentValue = _initialValue;
+    T mostRecentValue = keyField.initialValue;
     for (PointInTime pointInTime
         in pointInTimeRepository.pastAndPresentPointsInTime) {
-      T? valueAtPointInTime = _keys[pointInTime.id];
+      T? valueAtPointInTime = keyField.keys[pointInTime.id];
       if (valueAtPointInTime != null) {
         mostRecentValue = valueAtPointInTime;
       }
@@ -24,17 +25,9 @@ class KeyField<T> {
     return mostRecentValue;
   }
 
-  void addOrUpdateKeyAtTime(T newValue, PointInTimeId pointInTimeId) {
-    _keys[pointInTimeId] = newValue;
-  }
-
-  void deleteKeyAtTime(PointInTimeId pointInTimeId) {
-    _keys.remove(pointInTimeId);
-  }
-
   bool get hasNext {
     for (PointInTime pointInTime in pointInTimeRepository.futurePointsInTime) {
-      if (_keys.containsKey(pointInTime.id)) {
+      if (keyField.keys.containsKey(pointInTime.id)) {
         return true;
       }
     }
@@ -44,7 +37,7 @@ class KeyField<T> {
   bool get hasPrevious {
     for (PointInTime pointInTime
         in pointInTimeRepository.pastAndPresentPointsInTime) {
-      if (_keys.containsKey(pointInTime.id)) {
+      if (keyField.keys.containsKey(pointInTime.id)) {
         return true;
       }
     }
@@ -53,7 +46,7 @@ class KeyField<T> {
 
   PointInTimeId? get nextPointInTimeId {
     for (PointInTime pointInTime in pointInTimeRepository.futurePointsInTime) {
-      if (_keys.containsKey(pointInTime.id)) {
+      if (keyField.keys.containsKey(pointInTime.id)) {
         return pointInTime.id;
       }
     }
@@ -63,7 +56,7 @@ class KeyField<T> {
   PointInTimeId getPreviousPointInTimeId(PointInTimeId earliestId) {
     for (PointInTime pointInTime
         in pointInTimeRepository.pastAndPresentPointsInTime) {
-      if (_keys.containsKey(pointInTime.id)) {
+      if (keyField.keys.containsKey(pointInTime.id)) {
         return pointInTime.id;
       }
     }

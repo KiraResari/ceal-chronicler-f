@@ -1218,6 +1218,18 @@
         * Yes, that sounds like a plan
     * Right, I think I've now got the basic logic of the  `KeyField` down
 
+  * Next, I need to make them JSON Serializable so I can save and load them
+
+    * Come to think of it, that could be interesting, what with the generic type and all...
+    * I think it might be best to make that class abstract after all and create concrete implementations based on the types of `T` that I need, because like that I could just put the serialization logic into the concrete classes
+    * Uggh, JSON serialization is a pain =>,<=
+    * And while I was at it, my earlier decision to make the `KeyField` access the `PointInTimeRepository` lightly nipped my tail, because while writing the tests I now realized that I suddenly needed a `PointInTimeRepository` to test the JSON serialization logic, which is just wrong
+    * So, re-thinking this, I think I put too much logic in the `KeyField`
+    * That logic *probably* belongs in something like a `KeyFieldController`
+    * Let's see if I can extract that
+    * Yes looks good
+    * Now the JSON Serialization seems to work
+
 # TODO
 
 * 
