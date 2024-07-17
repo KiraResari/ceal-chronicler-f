@@ -1210,6 +1210,12 @@
   * Right, with that it feels like I now at least have a good idea for the first approach
 
     * Let's try it out and see how it works out  
+    * Okay, the decision with the initial value is showing some complications
+      * Specifically the question is what `PointInTimeId previousPointInTime` should return if the current point in time is before the first key
+      * And that is a really tricky thing considering that the `KeyField` does not know which object it is part of
+      * However, I think I can make it work by saying that `hasPrevious` also returns true if there are no previous keys but the current value does not match the default value, while simultaneously making it so that `previousPointInTime` returns null in that case, and making the owning object handle that, because the owning object should know its own lifecycle
+      * Or, I could pass the `previousPointInTime` function a parameter with the `PointInTimeId` of the lifecycle start
+        * Yes, that sounds like a plan
 
 # TODO
 

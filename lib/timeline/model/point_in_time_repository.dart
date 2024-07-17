@@ -142,4 +142,14 @@ class PointInTimeRepository {
   }
 
   PointInTime? get(PointInTimeId id) => _pointsInTimeIdMap[id];
+
+  List<PointInTime> get futurePointsInTime {
+    var activePointInTimeIndex = pointsInTime.indexOf(activePointInTime);
+    return pointsInTime.sublist(activePointInTimeIndex + 1);
+  }
+
+  List<PointInTime> get pastAndPresentPointsInTime {
+    var activePointInTimeIndex = pointsInTime.indexOf(activePointInTime);
+    return pointsInTime.sublist(0, activePointInTimeIndex + 1);
+  }
 }

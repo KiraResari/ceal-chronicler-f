@@ -20,7 +20,7 @@ main() {
       var initialValue = "Test";
       var keyField = KeyField<String>(initialValue);
 
-      expect(keyField.currentValue, initialValue);
+      expect(keyField.currentValue, equals(initialValue));
     },
   );
 
@@ -33,7 +33,7 @@ main() {
       var newValue = "Test 2";
       keyField.addOrUpdateKeyAtTime(newValue, currentPointInTime);
 
-      expect(keyField.currentValue, newValue);
+      expect(keyField.currentValue, equals(newValue));
     },
   );
 
@@ -49,7 +49,7 @@ main() {
       keyField.addOrUpdateKeyAtTime(newValue, currentPointInTime);
       repository.activePointInTime = futurePointInTime;
 
-      expect(keyField.currentValue, newValue);
+      expect(keyField.currentValue, equals(newValue));
     },
   );
 
@@ -63,13 +63,13 @@ main() {
 
       keyField.addOrUpdateKeyAtTime("Test 2", futurePointInTime.id);
 
-      expect(keyField.currentValue, initialValue);
+      expect(keyField.currentValue, equals(initialValue));
     },
   );
 
   test(
     "addOrUpdateKeyAtTime should update value of existing key",
-        () {
+    () {
       var keyField = KeyField<String>("Test");
 
       PointInTimeId currentPointInTime = repository.activePointInTime.id;
@@ -77,13 +77,13 @@ main() {
       var updatedValue = "Test 3";
       keyField.addOrUpdateKeyAtTime(updatedValue, currentPointInTime);
 
-      expect(keyField.currentValue, updatedValue);
+      expect(keyField.currentValue, equals(updatedValue));
     },
   );
 
   test(
     "After deleting key, initial value should be returned as currentValue again",
-        () {
+    () {
       var initialValue = "Test";
       var keyField = KeyField<String>(initialValue);
 
@@ -91,7 +91,43 @@ main() {
       keyField.addOrUpdateKeyAtTime("Test 2", currentPointInTime);
       keyField.deleteKeyAtTime(currentPointInTime);
 
-      expect(keyField.currentValue, initialValue);
+      expect(keyField.currentValue, equals(initialValue));
+    },
+  );
+
+  test(
+    "hasNext should return true if key exists after current point in time",
+    () {
+      var keyField = KeyField<String>("Test");
+      var futurePointInTime = PointInTime("Future Point in Time");
+      repository.addAtIndex(1, futurePointInTime);
+
+      keyField.addOrUpdateKeyAtTime("Future Key", futurePointInTime.id);
+
+      expect(keyField.hasNext, isTrue);
+    },
+  );
+
+  test(
+    "hasNext should return false if no key exists after current point in time",
+    () {
+      var keyField = KeyField<String>("Test");
+
+      expect(keyField.hasNext, isFalse);
+    },
+  );
+
+  test(
+    "hasPrevious should return true if a previous key or initial value exists",
+        () {
+      var keyField = KeyField<String>("Test");
+      var pointInTime = PointInTime("Current Point in Time");
+      repository.addAtIndex(1, pointInTime);
+      repository.activePointInTime = pointInTime;
+
+      keyField.addOrUpdateKeyAtTime("Test 2", pointInTime.id);
+
+      expect(keyField.hasPrevious, isTrue);
     },
   );
 }

@@ -12,15 +12,13 @@ class KeyField<T> {
 
   KeyField(this._initialValue);
 
-  get currentValue {
+  T get currentValue {
     T mostRecentValue = _initialValue;
-    for (PointInTime pointInTime in pointInTimeRepository.pointsInTime) {
+    for (PointInTime pointInTime
+        in pointInTimeRepository.pastAndPresentPointsInTime) {
       T? valueAtPointInTime = _keys[pointInTime.id];
       if (valueAtPointInTime != null) {
         mostRecentValue = valueAtPointInTime;
-      }
-      if (pointInTime == pointInTimeRepository.activePointInTime) {
-        break;
       }
     }
     return mostRecentValue;
@@ -32,5 +30,24 @@ class KeyField<T> {
 
   void deleteKeyAtTime(PointInTimeId pointInTimeId) {
     _keys.remove(pointInTimeId);
+  }
+
+  bool get hasNext {
+    for (PointInTime pointInTime in pointInTimeRepository.futurePointsInTime) {
+      if (_keys[pointInTime.id] != null) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  bool get hasPrevious {
+    for (PointInTime pointInTime
+        in pointInTimeRepository.pastAndPresentPointsInTime) {
+      if (_keys.containsKey(pointInTime.id)) {
+        return true;
+      }
+    }
+    return false;
   }
 }
