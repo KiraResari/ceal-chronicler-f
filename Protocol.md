@@ -1216,6 +1216,7 @@
       * However, I think I can make it work by saying that `hasPrevious` also returns true if there are no previous keys but the current value does not match the default value, while simultaneously making it so that `previousPointInTime` returns null in that case, and making the owning object handle that, because the owning object should know its own lifecycle
       * Or, I could pass the `previousPointInTime` function a parameter with the `PointInTimeId` of the lifecycle start
         * Yes, that sounds like a plan
+    * Right, I think I've now got the basic logic of the  `KeyField` down
 
 # TODO
 

@@ -34,7 +34,7 @@ class KeyField<T> {
 
   bool get hasNext {
     for (PointInTime pointInTime in pointInTimeRepository.futurePointsInTime) {
-      if (_keys[pointInTime.id] != null) {
+      if (_keys.containsKey(pointInTime.id)) {
         return true;
       }
     }
@@ -49,5 +49,24 @@ class KeyField<T> {
       }
     }
     return false;
+  }
+
+  PointInTimeId? get nextPointInTimeId {
+    for (PointInTime pointInTime in pointInTimeRepository.futurePointsInTime) {
+      if (_keys.containsKey(pointInTime.id)) {
+        return pointInTime.id;
+      }
+    }
+    return null;
+  }
+
+  PointInTimeId getPreviousPointInTimeId(PointInTimeId earliestId) {
+    for (PointInTime pointInTime
+        in pointInTimeRepository.pastAndPresentPointsInTime) {
+      if (_keys.containsKey(pointInTime.id)) {
+        return pointInTime.id;
+      }
+    }
+    return earliestId;
   }
 }

@@ -119,7 +119,7 @@ main() {
 
   test(
     "hasPrevious should return true if a previous key or initial value exists",
-        () {
+    () {
       var keyField = KeyField<String>("Test");
       var pointInTime = PointInTime("Current Point in Time");
       repository.addAtIndex(1, pointInTime);
@@ -128,6 +128,60 @@ main() {
       keyField.addOrUpdateKeyAtTime("Test 2", pointInTime.id);
 
       expect(keyField.hasPrevious, isTrue);
+    },
+  );
+
+  test(
+    "hasPrevious should return false if no previous key or initial value exists",
+    () {
+      var keyField = KeyField<String>("Test");
+
+      expect(keyField.hasPrevious, isFalse);
+    },
+  );
+
+  test(
+    "nextPointInTimeId should return correct PointInTimeId",
+    () {
+      var keyField = KeyField<String>("Test");
+      var futurePointInTime = PointInTime("Future Point in Time");
+      repository.addAtIndex(1, futurePointInTime);
+
+      keyField.addOrUpdateKeyAtTime("Future Key", futurePointInTime.id);
+
+      expect(keyField.nextPointInTimeId, equals(futurePointInTime.id));
+    },
+  );
+
+  test(
+    "getPreviousPointInTimeId should return correct PointInTimeId if a previous key exists",
+    () {
+      var keyField = KeyField<String>("Test");
+      var firstPointInTime = PointInTime("First Point in Time");
+      var pastPointInTime = PointInTime("Past Point in Time");
+      repository.addAtIndex(0, firstPointInTime);
+      repository.addAtIndex(1, pastPointInTime);
+
+      keyField.addOrUpdateKeyAtTime("Test 2", pastPointInTime.id);
+
+      expect(
+        keyField.getPreviousPointInTimeId(firstPointInTime.id),
+        equals(pastPointInTime.id),
+      );
+    },
+  );
+
+  test(
+    "getPreviousPointInTimeId should return PointInTimeId of earliestId if no previous key exists",
+        () {
+      var keyField = KeyField<String>("Test");
+      var firstPointInTime = PointInTime("First Point in Time");
+      repository.addAtIndex(0, firstPointInTime);
+
+      expect(
+        keyField.getPreviousPointInTimeId(firstPointInTime.id),
+        equals(firstPointInTime.id),
+      );
     },
   );
 }
