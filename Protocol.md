@@ -1117,6 +1117,100 @@
 
 [Time elapsed so far: 70.5 hours]
 
+# 17-Jul-2024
+
+* Now continuing with this
+
+* Last time I added the character view and worked hard on getting the navigation right
+
+* So now I need to finally start on the big thing: The time keys (or whatever I want to call it)
+
+  * Basically, I want to be able to do changes to any data object (for now just characters) at any point in time, and then have the change be present from that point in time onwards, like the keys in video editing software
+
+  * Since I'm gonna be using this logic all over the chronicler, I have to carefully think it through now
+
+    * One question is where the keys are stored
+
+      * Since the keys are always linked to a data object, I figure it makes sense for them to be stored as part of that object
+
+    * As for how they should work, how about I make them something like `KeyField<T>`?
+
+      * That would mean a character would look kinda like this currently:
+
+        * ````dart
+          class Character extends IdHolder<CharacterId> {
+            KeyField<String> name;
+            PointInTimeId firstAppearance;
+          ````
+
+      * The `KeyField<T>` would be a list wrapper that features functions for getting the value of the key at a certain point in time
+
+        * That can be done via a map
+
+        * However, it poses the question of how the `KeyField<T>` is supposed to know which value to return if the point in time is not in the map
+
+        * | Point in Time | Character Name Key | Expected value of name | Value if read from map |
+          | ------------- | ------------------ | ---------------------- | ---------------------- |
+          | 1             | Cyrus              | Cyrus                  | Cyrus                  |
+          | 2             | (no key)           | Cyrus                  | null                   |
+          | 3             | Ozymandias         | Ozymandias             | Ozymandias             |
+
+        * This problem is made even more tricky considering that the points in time are not fixed, and new points can be inserted between any existing ones
+
+        * Logically, what I would do is to navigate back through the keys until I find the last one that is present
+
+        * However, if the keys are a map, than they won't have a reliable order
+
+        * However, what *has* a reliable order is the `PointInTimeRepository`
+
+        * So, hypothetically, I could go back through that and check for each point in time if it is present as a key in the map
+
+        * That may sound a bit tedious, but it's only something that needs to be done once every time a data object like this needs to be displayed
+
+        * The repositories are on the top of my dependency tree, so it'll be alright for my Data Objects to rely on them
+
+          * ...or will it? Aren't the Data Objects actually above the repositories? The `CharacterRepository` definitely has to depend on the `Character`
+          * But I really don't see a better way
+
+        * So let's just try it and see where it gets us
+
+      * Next, let's think about how we want to handle the resolution of the keys
+
+        * It would be easiest if we can just keep using the Character object as it is
+
+        * Theoretically, that should be possible, so long as we hide the `name` field behind a getter that might look like this:
+
+          * ````dart
+            String get name => nameKey.currentValue;
+            ````
+
+        * That might seem like oversimplifying it, but if we allow the `KeyField<T>` to access the `PointInTimeRepository`, then this would work
+
+        * Also, I don't foresee any situation where  we would need the value of a key not at the current point in time
+
+        * What we will need is functions that allow us to see if there's a previous or next key, as well as get the respective `PointInTimeId` of these so we can create `ActivatePointInTimeCommand`s to jump to these
+
+        * So, comprehensively summarized, what I *think* the `KeyField<T>` needs are the following functions:
+
+          * `KeyField<T>(T initialValue)`
+          * `<T> currentValue`
+          * `boolean hasNext`
+          * `boolean hasPrevious`
+          * `PointInTimeId nextPointInTime`
+          * `PointInTimeId previousPointInTime`
+          * `void add(PointInTimeId pointInTimeId, T entry)`
+          * `void delete(PointInTimeId pointInTimeId)`
+
+        * One fundamental question is how to handle the initial value
+
+          * The most straightforward way would be to add it to the key map with the current active point in time as its key, but I can already foresee that making trouble when we want to change the first appearance  of a character
+          * Another option would be to make it so that the initial value is a separate field that is returned if no keys are found matching or before the current point in time
+            * That sounds like it would be more failsafe, so let's try that
+
+  * Right, with that it feels like I now at least have a good idea for the first approach
+
+    * Let's try it out and see how it works out  
+
 # TODO
 
 * 
@@ -1156,7 +1250,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 
 ### Character View
 
-- [ ] There is character screen which displays all the information related to a character at a given time
+- [x] There is character screen which displays all the information related to a character at a given time
 - [ ] The character screen has the following editable fields:
   - [ ] First Appearance
     - [ ] By default contains the point in time at which the character was created
