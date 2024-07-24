@@ -9,12 +9,18 @@ class ToggleKeyButton extends CealIconButton {
   const ToggleKeyButton(this.controller, this.keyExistsAtCurrentPointInTime,
       {super.key})
       : super(
-            icon: keyExistsAtCurrentPointInTime
-                ? Icons.hexagon
-                : Icons.hexagon_outlined,
-            width: 25,
-            height: 25);
+          icon: keyExistsAtCurrentPointInTime
+              ? Icons.hexagon
+              : Icons.hexagon_outlined,
+          width: 25,
+          height: 25,
+        );
 
   @override
   void onPressed(BuildContext context) => controller.toggleKey();
+
+  @override
+  String? get tooltip => keyExistsAtCurrentPointInTime
+      ? "Remove key"
+      : "Create key at this point in time using current value";
 }

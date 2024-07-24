@@ -148,6 +148,11 @@ class PointInTimeRepository {
     return pointsInTime.sublist(activePointInTimeIndex + 1);
   }
 
+  List<PointInTime> get pastPointsInTime {
+    var activePointInTimeIndex = pointsInTime.indexOf(activePointInTime);
+    return pointsInTime.sublist(0, activePointInTimeIndex);
+  }
+
   List<PointInTime> get pastAndPresentPointsInTime {
     var activePointInTimeIndex = pointsInTime.indexOf(activePointInTime);
     return pointsInTime.sublist(0, activePointInTimeIndex + 1);

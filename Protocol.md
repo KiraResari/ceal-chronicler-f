@@ -1276,6 +1276,12 @@
       * But let's see if I can somehow pass it through
       * Or should I just get rid of it?
       * I think it will be cleaner if I do. This whole functionality is for jumping between keys after all, that other thing would just have been confusing
+    * I now managed to add the key navigation buttons to the character name field, and they work _almost_ as advertised
+      * Toggling keys works, as does navigating back and forth between keys
+      * What doesn't work properly yet is the `isEnabled` of the Next and Previous Key navigation buttons
+        * Those are correctly inactive while there are no keys
+        * However, as soon as there is at least one key, they both become permanently active, which of course is not the intended behavior
+        * Okay, I now fixed that. It was due to two things: First a copy-paste error, and secondly a little logic lapse on my side
 
 # TODO
 

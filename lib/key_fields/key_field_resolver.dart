@@ -31,7 +31,7 @@ class KeyFieldResolver {
 
   bool hasPrevious<T>(KeyField<T> keyField) {
     for (PointInTime pointInTime
-        in _pointInTimeRepository.pastAndPresentPointsInTime) {
+        in _pointInTimeRepository.pastPointsInTime) {
       if (keyField.keys.containsKey(pointInTime.id)) {
         return true;
       }

@@ -14,4 +14,10 @@ class PreviousKeyButton extends CealIconButton {
 
   @override
   bool isEnabled(BuildContext context) => enabled;
+
+  @override
+  String? get tooltip => "Go to previous key";
+
+  @override
+  String? getDisabledReason(BuildContext context) => "No previous key to go to";
 }

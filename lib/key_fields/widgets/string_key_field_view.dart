@@ -39,7 +39,7 @@ class StringKeyFieldView extends StatelessWidget {
 
   Widget _buildNextKeyButton(BuildContext context) {
     KeyFieldController controller = context.read<KeyFieldController<String>>();
-    bool enabled = context.watch<KeyFieldController<String>>().hasPrevious;
+    bool enabled = context.watch<KeyFieldController<String>>().hasNext;
     return NextKeyButton(controller, enabled);
   }
 
