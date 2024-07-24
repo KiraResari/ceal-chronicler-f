@@ -1,13 +1,14 @@
-import 'package:ceal_chronicler_f/key_fields/widgets/key_field_controller.dart';
-import 'package:ceal_chronicler_f/utils/widgets/buttons/ceal_icon_button.dart';
 import 'package:flutter/material.dart';
 
-class PreviousKeyButton extends CealIconButton {
+import '../../utils/widgets/buttons/small_circular_button.dart';
+import 'key_field_controller.dart';
+
+class PreviousKeyButton extends SmallCircularButton {
   final KeyFieldController controller;
   final bool enabled;
 
   const PreviousKeyButton(this.controller, this.enabled, {super.key})
-      : super(icon: Icons.arrow_left, width: 25, height: 25);
+      : super(icon: Icons.arrow_left);
 
   @override
   void onPressed(BuildContext context) => controller.goToPrevious();

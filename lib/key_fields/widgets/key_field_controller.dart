@@ -14,7 +14,7 @@ class KeyFieldController<T> extends ProcessorListener {
   final KeyField<T> keyField;
 
   final _keyFieldResolver = getIt.get<KeyFieldResolver>();
-  final PointInTimeRepository _pointInTimeRepository =
+  final PointInTimeRepository pointInTimeRepository =
       getIt.get<PointInTimeRepository>();
 
   KeyFieldController(this.keyField);
@@ -49,7 +49,7 @@ class KeyFieldController<T> extends ProcessorListener {
   void toggleKey() => commandProcessor.process(_toggleCommand);
 
   Command get _toggleCommand {
-    PointInTimeId pointInTimeId = _pointInTimeRepository.activePointInTime.id;
+    PointInTimeId pointInTimeId = pointInTimeRepository.activePointInTime.id;
     if (keyExistsAtCurrentPointInTime) {
       return DeleteKeyCommand(keyField, pointInTimeId);
     }

@@ -1,8 +1,9 @@
-import 'package:ceal_chronicler_f/key_fields/widgets/key_field_controller.dart';
-import 'package:ceal_chronicler_f/utils/widgets/buttons/ceal_icon_button.dart';
 import 'package:flutter/material.dart';
 
-class ToggleKeyButton extends CealIconButton {
+import '../../utils/widgets/buttons/small_circular_button.dart';
+import 'key_field_controller.dart';
+
+class ToggleKeyButton extends SmallCircularButton {
   final KeyFieldController controller;
   final bool keyExistsAtCurrentPointInTime;
 
@@ -12,8 +13,6 @@ class ToggleKeyButton extends CealIconButton {
           icon: keyExistsAtCurrentPointInTime
               ? Icons.hexagon
               : Icons.hexagon_outlined,
-          width: 25,
-          height: 25,
         );
 
   @override
