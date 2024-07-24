@@ -2,6 +2,8 @@ import '../../commands/processor_listener.dart';
 import '../../get_it_context.dart';
 import '../../timeline/model/point_in_time.dart';
 import '../../timeline/model/point_in_time_repository.dart';
+import '../../utils/model/key_fields/key_field_resolver.dart';
+import '../../utils/model/key_fields/string_key_field.dart';
 import '../model/character.dart';
 import '../model/character_id.dart';
 import '../model/character_repository.dart';
@@ -10,6 +12,7 @@ class CharacterViewController extends ProcessorListener {
   final Character? character;
 
   final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
+  final _keyFieldResolver = getIt.get<KeyFieldResolver>();
 
   CharacterViewController(CharacterId id)
       : character = getIt<CharacterRepository>().getContentElementById(id),
@@ -17,7 +20,16 @@ class CharacterViewController extends ProcessorListener {
 
   bool get characterFound => character != null;
 
-  String get name => character != null ? character!.name : "Unknown";
+  StringKeyField get nameField => character != null
+      ? character!.name
+      : StringKeyField("Character not found");
+
+  String get name {
+    if (!characterFound) {
+      return "Character not found";
+    }
+    return _keyFieldResolver.getCurrentValue(character!.name);
+  }
 
   String get firstApperance {
     if (character != null) {

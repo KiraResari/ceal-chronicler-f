@@ -6,6 +6,7 @@ import 'package:ceal_chronicler_f/commands/command_processor.dart';
 import 'package:ceal_chronicler_f/get_it_context.dart';
 import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
+import 'package:ceal_chronicler_f/view/view_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 main() {
@@ -16,6 +17,7 @@ main() {
     getIt.reset();
     repository = CharacterRepository();
     getIt.registerSingleton<CharacterRepository>(repository);
+    getIt.registerSingleton<ViewRepository>(ViewRepository());
     getIt.registerSingleton<CommandHistory>(CommandHistory());
     getIt.registerSingleton<MessageBarState>(MessageBarState());
     processor = CommandProcessor();

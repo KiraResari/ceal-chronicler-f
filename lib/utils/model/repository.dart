@@ -27,7 +27,7 @@ abstract class Repository<T extends ReadableUuid, U extends IdHolder<T>> {
   void _assertExistsInRepository(U contentElement) {
     if (!content.contains(contentElement)) {
       throw InvalidOperationException(
-          "Repository does not contain content element with ${contentElement.identifierDescription} ${contentElement.identifier}");
+          "Repository does not contain content element $contentElement");
     }
   }
 

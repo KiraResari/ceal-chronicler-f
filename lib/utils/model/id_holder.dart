@@ -8,8 +8,4 @@ abstract class IdHolder<T extends ReadableUuid> extends JsonSerializable {
   final T id;
 
   IdHolder(this.id);
-
-  String get identifier;
-
-  String get identifierDescription;
 }

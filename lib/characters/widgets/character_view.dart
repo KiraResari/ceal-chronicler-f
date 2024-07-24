@@ -1,5 +1,7 @@
 import 'package:ceal_chronicler_f/main_view/main_view_candidate.dart';
 import 'package:ceal_chronicler_f/overview_view/return_to_overview_view_button.dart';
+import 'package:ceal_chronicler_f/utils/model/key_fields/string_key_field.dart';
+import 'package:ceal_chronicler_f/utils/model/key_fields/string_key_field_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -57,13 +59,18 @@ class CharacterView extends MainViewCandidate {
   }
 
   Table _buildCharacterTable(BuildContext context) {
+    StringKeyField name = context.watch<CharacterViewController>().nameField;
     return Table(
       columnWidths: const <int, TableColumnWidth>{
         0: IntrinsicColumnWidth(),
         1: IntrinsicColumnWidth(),
       },
       children: [
-        _buildTableRow(context, "Name", _buildNameField(context)),
+        _buildTableRow(
+          context,
+          "Name",
+          StringKeyFieldView(name),
+        ),
         _buildTableRow(
           context,
           "First Appearance",
@@ -87,11 +94,6 @@ class CharacterView extends MainViewCandidate {
       ),
       child,
     ]);
-  }
-
-  Widget _buildNameField(BuildContext context) {
-    String name = context.watch<CharacterViewController>().name;
-    return Text(name);
   }
 
   Widget _buildFirstAppearanceField(BuildContext context) {

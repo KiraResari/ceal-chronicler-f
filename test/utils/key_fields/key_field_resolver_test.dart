@@ -2,7 +2,7 @@ import 'package:ceal_chronicler_f/get_it_context.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
-import 'package:ceal_chronicler_f/utils/model/key_fields/key_field_controller.dart';
+import 'package:ceal_chronicler_f/utils/model/key_fields/key_field_resolver.dart';
 import 'package:ceal_chronicler_f/utils/model/key_fields/string_key_field.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -16,13 +16,13 @@ main() {
   });
 
   test(
-    "currentValue should return initial value at first",
+    "getCurrentValue should return initial value at first",
     () {
       var initialValue = "Test";
       var keyField = StringKeyField(initialValue);
-      var controller = KeyFieldController(keyField);
+      var resolver = KeyFieldResolver();
 
-      expect(controller.currentValue, equals(initialValue));
+      expect(resolver.getCurrentValue(keyField), equals(initialValue));
     },
   );
 
@@ -30,13 +30,13 @@ main() {
     "After adding value at current point in time, currentValue should return that value",
     () {
       var keyField = StringKeyField("Test");
-      var controller = KeyFieldController(keyField);
+      var resolver = KeyFieldResolver();
 
       PointInTimeId currentPointInTime = repository.activePointInTime.id;
       var newValue = "Test 2";
       keyField.addOrUpdateKeyAtTime(newValue, currentPointInTime);
 
-      expect(controller.currentValue, equals(newValue));
+      expect(resolver.getCurrentValue(keyField), equals(newValue));
     },
   );
 
@@ -44,7 +44,7 @@ main() {
     "If no key exists at current point in time, currentValue should return value of last key before that",
     () {
       var keyField = StringKeyField("Test");
-      var controller = KeyFieldController(keyField);
+      var resolver = KeyFieldResolver();
       var futurePointInTime = PointInTime("Future Point in Time");
       repository.addAtIndex(1, futurePointInTime);
 
@@ -53,7 +53,7 @@ main() {
       keyField.addOrUpdateKeyAtTime(newValue, currentPointInTime);
       repository.activePointInTime = futurePointInTime;
 
-      expect(controller.currentValue, equals(newValue));
+      expect(resolver.getCurrentValue(keyField), equals(newValue));
     },
   );
 
@@ -62,13 +62,13 @@ main() {
     () {
       var initialValue = "Test";
       var keyField = StringKeyField(initialValue);
-      var controller = KeyFieldController(keyField);
+      var resolver = KeyFieldResolver();
       var futurePointInTime = PointInTime("Future Point in Time");
       repository.addAtIndex(1, futurePointInTime);
 
       keyField.addOrUpdateKeyAtTime("Test 2", futurePointInTime.id);
 
-      expect(controller.currentValue, equals(initialValue));
+      expect(resolver.getCurrentValue(keyField), equals(initialValue));
     },
   );
 
@@ -76,14 +76,14 @@ main() {
     "addOrUpdateKeyAtTime should update value of existing key",
     () {
       var keyField = StringKeyField("Test");
-      var controller = KeyFieldController(keyField);
+      var resolver = KeyFieldResolver();
 
       PointInTimeId currentPointInTime = repository.activePointInTime.id;
       keyField.addOrUpdateKeyAtTime("Test 2", currentPointInTime);
       var updatedValue = "Test 3";
       keyField.addOrUpdateKeyAtTime(updatedValue, currentPointInTime);
 
-      expect(controller.currentValue, equals(updatedValue));
+      expect(resolver.getCurrentValue(keyField), equals(updatedValue));
     },
   );
 
@@ -92,13 +92,13 @@ main() {
     () {
       var initialValue = "Test";
       var keyField = StringKeyField(initialValue);
-      var controller = KeyFieldController(keyField);
+      var resolver = KeyFieldResolver();
 
       PointInTimeId currentPointInTime = repository.activePointInTime.id;
       keyField.addOrUpdateKeyAtTime("Test 2", currentPointInTime);
       keyField.deleteKeyAtTime(currentPointInTime);
 
-      expect(controller.currentValue, equals(initialValue));
+      expect(resolver.getCurrentValue(keyField), equals(initialValue));
     },
   );
 
@@ -106,13 +106,13 @@ main() {
     "hasNext should return true if key exists after current point in time",
     () {
       var keyField = StringKeyField("Test");
-      var controller = KeyFieldController(keyField);
+      var resolver = KeyFieldResolver();
       var futurePointInTime = PointInTime("Future Point in Time");
       repository.addAtIndex(1, futurePointInTime);
 
       keyField.addOrUpdateKeyAtTime("Future Key", futurePointInTime.id);
 
-      expect(controller.hasNext, isTrue);
+      expect(resolver.hasNext(keyField), isTrue);
     },
   );
 
@@ -120,9 +120,9 @@ main() {
     "hasNext should return false if no key exists after current point in time",
     () {
       var keyField = StringKeyField("Test");
-      var controller = KeyFieldController(keyField);
+      var resolver = KeyFieldResolver();
 
-      expect(controller.hasNext, isFalse);
+      expect(resolver.hasNext(keyField), isFalse);
     },
   );
 
@@ -130,14 +130,14 @@ main() {
     "hasPrevious should return true if a previous key or initial value exists",
     () {
       var keyField = StringKeyField("Test");
-      var controller = KeyFieldController(keyField);
+      var resolver = KeyFieldResolver();
       var pointInTime = PointInTime("Current Point in Time");
       repository.addAtIndex(1, pointInTime);
       repository.activePointInTime = pointInTime;
 
       keyField.addOrUpdateKeyAtTime("Test 2", pointInTime.id);
 
-      expect(controller.hasPrevious, isTrue);
+      expect(resolver.hasPrevious(keyField), isTrue);
     },
   );
 
@@ -145,9 +145,9 @@ main() {
     "hasPrevious should return false if no previous key or initial value exists",
     () {
       var keyField = StringKeyField("Test");
-      var controller = KeyFieldController(keyField);
+      var resolver = KeyFieldResolver();
 
-      expect(controller.hasPrevious, isFalse);
+      expect(resolver.hasPrevious(keyField), isFalse);
     },
   );
 
@@ -155,13 +155,16 @@ main() {
     "nextPointInTimeId should return correct PointInTimeId",
     () {
       var keyField = StringKeyField("Test");
-      var controller = KeyFieldController(keyField);
+      var resolver = KeyFieldResolver();
       var futurePointInTime = PointInTime("Future Point in Time");
       repository.addAtIndex(1, futurePointInTime);
 
       keyField.addOrUpdateKeyAtTime("Future Key", futurePointInTime.id);
 
-      expect(controller.nextPointInTimeId, equals(futurePointInTime.id));
+      expect(
+        resolver.getNextPointInTimeId(keyField),
+        equals(futurePointInTime.id),
+      );
     },
   );
 
@@ -169,7 +172,7 @@ main() {
     "getPreviousPointInTimeId should return correct PointInTimeId if a previous key exists",
     () {
       var keyField = StringKeyField("Test");
-      var controller = KeyFieldController(keyField);
+      var resolver = KeyFieldResolver();
       var firstPointInTime = PointInTime("First Point in Time");
       var pastPointInTime = PointInTime("Past Point in Time");
       repository.addAtIndex(0, firstPointInTime);
@@ -178,7 +181,7 @@ main() {
       keyField.addOrUpdateKeyAtTime("Test 2", pastPointInTime.id);
 
       expect(
-        controller.getPreviousPointInTimeId(firstPointInTime.id),
+        resolver.getPreviousPointInTimeId(keyField, firstPointInTime.id),
         equals(pastPointInTime.id),
       );
     },
@@ -186,14 +189,14 @@ main() {
 
   test(
     "getPreviousPointInTimeId should return PointInTimeId of earliestId if no previous key exists",
-        () {
+    () {
       var keyField = StringKeyField("Test");
-      var controller = KeyFieldController(keyField);
+      var resolver = KeyFieldResolver();
       var firstPointInTime = PointInTime("First Point in Time");
       repository.addAtIndex(0, firstPointInTime);
 
       expect(
-        controller.getPreviousPointInTimeId(firstPointInTime.id),
+        resolver.getPreviousPointInTimeId(keyField, firstPointInTime.id),
         equals(firstPointInTime.id),
       );
     },

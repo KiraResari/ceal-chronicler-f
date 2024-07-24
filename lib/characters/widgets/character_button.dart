@@ -1,3 +1,4 @@
+import 'package:ceal_chronicler_f/utils/model/key_fields/key_field_resolver.dart';
 import 'package:flutter/material.dart';
 
 import '../../get_it_context.dart';
@@ -20,8 +21,15 @@ class CharacterButton extends CealTextButton {
   }
 
   @override
-  String get text => character.name;
+  String get text {
+    var keyFieldResolver = getIt.get<KeyFieldResolver>();
+    return keyFieldResolver.getCurrentValue(character.name);
+  }
 
   @override
-  String? get tooltip => "View/Edit ${character.name}";
+  String? get tooltip {
+    var keyFieldResolver = getIt.get<KeyFieldResolver>();
+    String characterName = keyFieldResolver.getCurrentValue(character.name);
+    return "View/Edit $characterName";
+  }
 }

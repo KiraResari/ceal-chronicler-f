@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import '../../timeline/model/point_in_time_id.dart';
 import '../../utils/model/id_holder.dart';
+import '../../utils/model/key_fields/string_key_field.dart';
 import 'character_id.dart';
 
 class Character extends IdHolder<CharacterId> {
@@ -9,7 +10,7 @@ class Character extends IdHolder<CharacterId> {
   static const String firstApperanceKey = "firstAppearance";
   static const defaultName = "New Character";
 
-  String name = defaultName;
+  StringKeyField name = StringKeyField(defaultName);
   PointInTimeId firstAppearance;
 
   Character(this.firstAppearance) : super(CharacterId());
@@ -18,15 +19,9 @@ class Character extends IdHolder<CharacterId> {
       : this.fromJson(jsonDecode(jsonString));
 
   Character.fromJson(Map<String, dynamic> json)
-      : name = json[nameKey],
+      : name = StringKeyField.fromJson(json[nameKey]),
         firstAppearance = PointInTimeId.fromJson(json[firstApperanceKey]),
         super(CharacterId.fromString(json[IdHolder.idKey]));
-
-  @override
-  String get identifier => name;
-
-  @override
-  String get identifierDescription => nameKey;
 
   @override
   String toString() =>

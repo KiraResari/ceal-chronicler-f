@@ -1,6 +1,7 @@
 import 'package:ceal_chronicler_f/characters/model/character_repository.dart';
 import 'package:ceal_chronicler_f/incidents/model/incident_repository.dart';
 import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
+import 'package:ceal_chronicler_f/utils/model/key_fields/key_field_resolver.dart';
 import 'package:ceal_chronicler_f/view/view_processor.dart';
 import 'package:ceal_chronicler_f/view/view_repository.dart';
 import 'package:get_it/get_it.dart';
@@ -20,6 +21,8 @@ void initializeGetItContext() {
   getIt.registerSingleton<CharacterRepository>(CharacterRepository());
   getIt.registerSingleton<ViewRepository>(ViewRepository());
   getIt.registerSingleton<MessageBarState>(MessageBarState());
+
+  getIt.registerSingleton<KeyFieldResolver>(KeyFieldResolver());
 
   getIt.registerSingleton<ChronicleCodec>(ChronicleCodec());
   getIt.registerSingleton<FileAdapter>(FileAdapter());

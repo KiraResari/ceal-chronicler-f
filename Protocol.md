@@ -1236,6 +1236,26 @@
 
 * [Time elapsed so far: 76.75 hours]
 
+# 24-Jul-2024
+
+* Now continuing with this
+* Today, I'll try making the name of the character into a `StringKeyField`
+  * Okay, getting tricky there, again with the Key Fields
+  * The idea of making it resolvable via a controller is proving to become a cumbersome dead end, so maybe I need a `KeyFieldResolver` utility class that can resolve Key Fields of any kind, and which requires only the `PointInTimeRepository`?
+  * Yes, but I just realize how much annoying bother this all is
+  * Because of all the keying, I suddenly can't access the character name anymore in all the places
+    - What I really want to do, from a programming perspective, is be able to call `character.name.currentValue`
+    - However, in order to do that, the `Character` would have to know about the `PointInTimeRepository`
+    - And yet, if I could do it like that, it would make what I'm doing here SO MUCH easier
+    - Is there another way?
+    - Looking at the `KeyFieldResolver`, I'd say no, at least not without passing along the entire `PointInTimeRepository` at every call
+    - The place where I have the issue right now is in the `CharacterButton`, where I suddenly can't call `character.name` again
+    - If I allowed the `Character` to access the `PointInTimeRepository`, then I'd be able to call that here
+    - Hm, but I suppose any alternate solution that I can think of is more difficult than simply calling the `KeyFieldResolver` at this time
+    - Or is it?
+    - Yes, I suppose it is, because I putting the `KeyFieldResolver` inside the character would just make it indirectly dependent from the `PointInTimeRepository` again
+  * Okay, it took me some time, and it wasn't straightforward, but it looks like this works now
+
 # TODO
 
 * 
