@@ -1255,6 +1255,18 @@
     - Or is it?
     - Yes, I suppose it is, because I putting the `KeyFieldResolver` inside the character would just make it indirectly dependent from the `PointInTimeRepository` again
   * Okay, it took me some time, and it wasn't straightforward, but it looks like this works now
+* Good, so next, let's add functionality to that `StringKeyField`
+  * From a command perspective, I need the following three commands for this:
+    * `CreateOrUpdateCharacterNameKeyCommand`
+    * `DeleteCharacterNameKeyCommand`
+  * Aaand, I'll need the same pair of commands for every other key that I introduce, so let's spend a moment to think about whether we can abstract this
+    * My first thought is no, since these commands represent a specific combination of a data object and the field contained therein
+    * However, they also all operate on the `KeyField<T>`, and the operations they need to perform on it are identical
+    * It might be possible to just give them the  `KeyField` directly, and have them perform operations directly on it
+    * In that case, I'd just need these three commands, and would be able to re-use them all over the place:
+      * `CreateOrUpdateKeyCommand<T>(KeyField<T> keyField, PointInTimeId pointInTime, T value)`
+      * `DeleteKeyCommand<T>(KeyField<T> keyField, PointInTimeId pointInTime)`
+    * That would be useful, but let's see if it works
 
 # TODO
 

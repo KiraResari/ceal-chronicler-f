@@ -1,7 +1,8 @@
-import 'package:ceal_chronicler_f/utils/model/key_fields/key_field_controller.dart';
-import 'package:ceal_chronicler_f/utils/model/key_fields/string_key_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'key_field_controller.dart';
+import 'string_key_field.dart';
 
 class StringKeyFieldView extends StatelessWidget {
   final StringKeyField keyField;

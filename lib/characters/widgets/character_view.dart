@@ -1,10 +1,10 @@
 import 'package:ceal_chronicler_f/main_view/main_view_candidate.dart';
 import 'package:ceal_chronicler_f/overview_view/return_to_overview_view_button.dart';
-import 'package:ceal_chronicler_f/utils/model/key_fields/string_key_field.dart';
-import 'package:ceal_chronicler_f/utils/model/key_fields/string_key_field_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../key_fields/string_key_field.dart';
+import '../../key_fields/string_key_field_view.dart';
 import '../model/character_id.dart';
 import 'character_view_controller.dart';
 

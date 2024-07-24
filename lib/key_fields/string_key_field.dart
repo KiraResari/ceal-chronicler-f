@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
-import 'package:ceal_chronicler_f/utils/model/key_fields/key_field.dart';
+import '../timeline/model/point_in_time_id.dart';
+import 'key_field.dart';
 
 class StringKeyField extends KeyField<String> {
   StringKeyField(super.initialValue);

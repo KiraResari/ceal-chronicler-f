@@ -1,8 +1,8 @@
 import 'dart:convert';
 
+import '../../key_fields/string_key_field.dart';
 import '../../timeline/model/point_in_time_id.dart';
 import '../../utils/model/id_holder.dart';
-import '../../utils/model/key_fields/string_key_field.dart';
 import 'character_id.dart';
 
 class Character extends IdHolder<CharacterId> {

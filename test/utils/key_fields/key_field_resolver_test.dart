@@ -1,9 +1,9 @@
 import 'package:ceal_chronicler_f/get_it_context.dart';
+import 'package:ceal_chronicler_f/key_fields/key_field_resolver.dart';
+import 'package:ceal_chronicler_f/key_fields/string_key_field.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
-import 'package:ceal_chronicler_f/utils/model/key_fields/key_field_resolver.dart';
-import 'package:ceal_chronicler_f/utils/model/key_fields/string_key_field.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 late PointInTimeRepository repository;

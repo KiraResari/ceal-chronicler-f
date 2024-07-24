@@ -1,9 +1,9 @@
 import '../../commands/processor_listener.dart';
 import '../../get_it_context.dart';
+import '../../key_fields/key_field_resolver.dart';
+import '../../key_fields/string_key_field.dart';
 import '../../timeline/model/point_in_time.dart';
 import '../../timeline/model/point_in_time_repository.dart';
-import '../../utils/model/key_fields/key_field_resolver.dart';
-import '../../utils/model/key_fields/string_key_field.dart';
 import '../model/character.dart';
 import '../model/character_id.dart';
 import '../model/character_repository.dart';
