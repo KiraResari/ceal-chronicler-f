@@ -5,13 +5,13 @@ import '../../../timeline/model/point_in_time_repository.dart';
 import 'key_field.dart';
 
 class KeyFieldResolver {
-  final PointInTimeRepository pointInTimeRepository =
+  final PointInTimeRepository _pointInTimeRepository =
       getIt.get<PointInTimeRepository>();
 
   T getCurrentValue<T>(KeyField<T> keyField) {
     T mostRecentValue = keyField.initialValue;
     for (PointInTime pointInTime
-        in pointInTimeRepository.pastAndPresentPointsInTime) {
+        in _pointInTimeRepository.pastAndPresentPointsInTime) {
       T? valueAtPointInTime = keyField.keys[pointInTime.id];
       if (valueAtPointInTime != null) {
         mostRecentValue = valueAtPointInTime;
@@ -21,7 +21,7 @@ class KeyFieldResolver {
   }
 
   bool hasNext<T>(KeyField<T> keyField) {
-    for (PointInTime pointInTime in pointInTimeRepository.futurePointsInTime) {
+    for (PointInTime pointInTime in _pointInTimeRepository.futurePointsInTime) {
       if (keyField.keys.containsKey(pointInTime.id)) {
         return true;
       }
@@ -31,7 +31,7 @@ class KeyFieldResolver {
 
   bool hasPrevious<T>(KeyField<T> keyField) {
     for (PointInTime pointInTime
-        in pointInTimeRepository.pastAndPresentPointsInTime) {
+        in _pointInTimeRepository.pastAndPresentPointsInTime) {
       if (keyField.keys.containsKey(pointInTime.id)) {
         return true;
       }
@@ -39,8 +39,13 @@ class KeyFieldResolver {
     return false;
   }
 
+  bool keyExistsAtCurrentPointInTime(KeyField keyField) {
+    var activePointInTimeId = _pointInTimeRepository.activePointInTime.id;
+    return keyField.keys.containsKey(activePointInTimeId);
+  }
+
   PointInTimeId? getNextPointInTimeId<T>(KeyField<T> keyField) {
-    for (PointInTime pointInTime in pointInTimeRepository.futurePointsInTime) {
+    for (PointInTime pointInTime in _pointInTimeRepository.futurePointsInTime) {
       if (keyField.keys.containsKey(pointInTime.id)) {
         return pointInTime.id;
       }
@@ -48,16 +53,13 @@ class KeyFieldResolver {
     return null;
   }
 
-  PointInTimeId getPreviousPointInTimeId<T>(
-    KeyField<T> keyField,
-    PointInTimeId earliestId,
-  ) {
+  PointInTimeId? getPreviousPointInTimeId<T>(KeyField<T> keyField) {
     for (PointInTime pointInTime
-        in pointInTimeRepository.pastAndPresentPointsInTime) {
+        in _pointInTimeRepository.pastAndPresentPointsInTime) {
       if (keyField.keys.containsKey(pointInTime.id)) {
         return pointInTime.id;
       }
     }
-    return earliestId;
+    return null;
   }
 }

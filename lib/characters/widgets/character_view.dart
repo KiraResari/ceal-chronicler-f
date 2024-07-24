@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../key_fields/string_key_field.dart';
-import '../../key_fields/string_key_field_view.dart';
+import '../../key_fields/widgets/string_key_field_view.dart';
 import '../model/character_id.dart';
 import 'character_view_controller.dart';
 

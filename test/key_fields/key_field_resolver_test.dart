@@ -181,23 +181,8 @@ main() {
       keyField.addOrUpdateKeyAtTime("Test 2", pastPointInTime.id);
 
       expect(
-        resolver.getPreviousPointInTimeId(keyField, firstPointInTime.id),
+        resolver.getPreviousPointInTimeId(keyField),
         equals(pastPointInTime.id),
-      );
-    },
-  );
-
-  test(
-    "getPreviousPointInTimeId should return PointInTimeId of earliestId if no previous key exists",
-    () {
-      var keyField = StringKeyField("Test");
-      var resolver = KeyFieldResolver();
-      var firstPointInTime = PointInTime("First Point in Time");
-      repository.addAtIndex(0, firstPointInTime);
-
-      expect(
-        resolver.getPreviousPointInTimeId(keyField, firstPointInTime.id),
-        equals(firstPointInTime.id),
       );
     },
   );

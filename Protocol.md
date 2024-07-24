@@ -1267,6 +1267,15 @@
       * `CreateOrUpdateKeyCommand<T>(KeyField<T> keyField, PointInTimeId pointInTime, T value)`
       * `DeleteKeyCommand<T>(KeyField<T> keyField, PointInTimeId pointInTime)`
     * That would be useful, but let's see if it works
+    * Well, I laid down the command infrastructure for that now, and that much works
+    * I just really hope it also works in action
+  * Right, so next, I'll finally get down to doing something on the UI again
+    * Again, thanks to the abstractions thus far, I should be able to create a pretty flexible abstract widget for this
+    * Oooh, dear, and it seems the earliest point in time ID is not going to survive this much abstraction
+      * I can only get the previous point in time ID if I pass along the ID of the earliest possible point in time, which I do know if I have a concrete `Character`, but not an abstract thing
+      * But let's see if I can somehow pass it through
+      * Or should I just get rid of it?
+      * I think it will be cleaner if I do. This whole functionality is for jumping between keys after all, that other thing would just have been confusing
 
 # TODO
 
