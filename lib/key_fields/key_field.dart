@@ -2,11 +2,11 @@ import 'package:ceal_chronicler_f/utils/map_utils.dart';
 
 import '../../../io/json_serializable.dart';
 import '../../../timeline/model/point_in_time_id.dart';
+import '../exceptions/invalid_operation_exception.dart';
 
-abstract class KeyField<T> extends JsonSerializable{
+abstract class KeyField<T> extends JsonSerializable {
   static const String initialValueKey = "initialValue";
   static const String keysKey = "keys";
-
 
   final T initialValue;
   final Map<PointInTimeId, T> keys;
@@ -17,9 +17,9 @@ abstract class KeyField<T> extends JsonSerializable{
 
   @override
   Map<String, dynamic> toJson() => {
-    initialValueKey: initialValueToJson(initialValue),
-    keysKey: keysToJson(keys),
-  };
+        initialValueKey: initialValueToJson(initialValue),
+        keysKey: keysToJson(keys),
+      };
 
   String initialValueToJson(T initialValue);
 
@@ -30,16 +30,20 @@ abstract class KeyField<T> extends JsonSerializable{
   }
 
   void deleteKeyAtTime(PointInTimeId pointInTimeId) {
+    if (keys[pointInTimeId] == null) {
+      throw InvalidOperationException(
+          "KeyField does not contain entry for PointInTime $pointInTimeId");
+    }
     keys.remove(pointInTimeId);
   }
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is KeyField &&
-              runtimeType == other.runtimeType &&
-              initialValue == other.initialValue &&
-              MapUtils.areEqual(keys, other.keys);
+      other is KeyField &&
+          runtimeType == other.runtimeType &&
+          initialValue == other.initialValue &&
+          MapUtils.areEqual(keys, other.keys);
 
   @override
   int get hashCode => initialValue.hashCode ^ keys.hashCode;
