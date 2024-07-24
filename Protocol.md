@@ -1234,7 +1234,8 @@
 
 * The next step will be putting the `KeyValue` into the `Character`, which will also entail reworking the `CharacterView` and  `CharacterViewController`
 
-* [Time elapsed so far: 76.75 hours]
+
+[Time elapsed so far: 76.75 hours]
 
 # 24-Jul-2024
 
@@ -1285,11 +1286,16 @@
   * Okay, now the coup de grace will be finally editing the name
     * Wheeee! And it works just like that!
     * BREAKTHROUGH! We won!
-* Whew, this is the culmination of 
+* Right, so far, so good
+* However, I just noticed that it's presently possible to delete a point in time even though it has a key, that shouldn't be the case
+  * I'll have to look into that, but not now
+* This is as far as I'm getting with this today
+
+[Time elapsed so far: 83 hours]
 
 # TODO
 
-* 
+* Make it so that points in time can't be deleted if there's a key at them
 
 # User Story
 
@@ -1339,10 +1345,10 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
     - [ ] Points in time can be selected from a menu (e.g. dropdown)
       - [ ] Only Points in time after which no more changes happen to the character can be selected
     - [ ] Allows jumping to that point in time
-  - [ ] Name 
-- [ ] Editing a field causes the contents to change from that point in time onward, until it is edited again
+  - [x] Name 
+- [x] Editing a field causes the contents to change from that point in time onward, until it is edited again
   - [ ] The exceptions are First and Last Appearance, which are logically always the same within a character 
-  - [ ] It is possible to jump back and forth to points in time where a field's value has been edited
+  - [x] It is possible to jump back and forth to points in time where a field's value has been edited
 - [ ] Allows complete deletion of existing characters (with warning)
 - [ ] While in the Character View, Points in Time at which the character does not exist should be greyed out in the time bar
 - [x] The character screen has a back button, which returns back to the main view
