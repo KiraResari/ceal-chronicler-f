@@ -1293,6 +1293,18 @@
 
 [Time elapsed so far: 83 hours]
 
+# 25-Jul-2024
+
+* Now continuing with this
+* Today, I want to focus on making it so that points in time can't be deleted if a character has a key on them
+  * I have no idea whether this is going to be easy or hard
+  * It's probably good to do this test-driven, starting from the `time_bar_controller_test`, which already has a test case for "Point that is first appearance of character should not be deletable"
+  * Well, it's probably gonna be easy, but it's hard to think of a way that won't require me to add logic there each time I add a new keyed field anywhere
+    * And that's gonna get even harder if I consider how I want to have meaningful reasons why a point in time can't be deleted
+      * For example, I want a message like "Can't delete point in time because the name of Character Ozymandias changed at this point"
+    * The crux is that the keys are inside the Character (and later other) object, and only the objects with the keys know how their keyed fields are called
+  * Okay, I think I now found a solution that works reasonably well
+
 # TODO
 
 * Make it so that points in time can't be deleted if there's a key at them

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:ceal_chronicler_f/key_fields/key_field_info.dart';
+
 import '../../key_fields/string_key_field.dart';
 import '../../timeline/model/point_in_time_id.dart';
 import '../../utils/model/id_holder.dart';
@@ -41,4 +43,13 @@ class Character extends IdHolder<CharacterId> {
 
   @override
   int get hashCode => id.hashCode;
+
+  List<KeyFieldInfo> getKeyInfosAt(PointInTimeId pointId) {
+    List<KeyFieldInfo> keyFieldInfos = [];
+    var nameValue = name.keys[pointId];
+    if (nameValue != null) {
+      keyFieldInfos.add(KeyFieldInfo<String>("name", pointId, nameValue));
+    }
+    return keyFieldInfos;
+  }
 }

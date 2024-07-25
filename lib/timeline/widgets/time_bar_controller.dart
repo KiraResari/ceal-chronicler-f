@@ -1,8 +1,10 @@
 import 'package:ceal_chronicler_f/characters/model/character_repository.dart';
 import 'package:ceal_chronicler_f/commands/processor_listener.dart';
+import 'package:ceal_chronicler_f/key_fields/key_field_info.dart';
 
 import '../../characters/model/character.dart';
 import '../../get_it_context.dart';
+import '../../key_fields/key_field_info_group.dart';
 import '../commands/create_point_in_time_command.dart';
 import '../commands/delete_point_in_time_command.dart';
 import '../commands/rename_point_in_time_command.dart';
@@ -21,14 +23,39 @@ class TimeBarController extends ProcessorListener {
   final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
   final _characterRepository = getIt.get<CharacterRepository>();
 
-  TimeBarController(): super();
+  TimeBarController() : super();
 
   List<PointInTime> get pointsInTime => _pointInTimeRepository.pointsInTime;
 
   bool canPointBeDeleted(PointInTime point) =>
       _pointInTimeRepository.pointsInTime.length > 1 &&
       point.incidentReferences.isEmpty &&
-      _getFirstCharacterApperancesAt(point).isEmpty;
+      _getFirstCharacterApperancesAt(point).isEmpty &&
+      !_keysExistAt(point);
+
+  List<Character> _getFirstCharacterApperancesAt(PointInTime point) {
+    List<Character> charactersWithFirstAppearanceAtPoint = [];
+    for (Character character in _characterRepository.content) {
+      if (character.firstAppearance == point.id) {
+        charactersWithFirstAppearanceAtPoint.add(character);
+      }
+    }
+    return charactersWithFirstAppearanceAtPoint;
+  }
+
+  bool _keysExistAt(PointInTime point) {
+    return _characterKeysExistAt(point);
+  }
+
+  bool _characterKeysExistAt(PointInTime point) {
+    for (Character character in _characterRepository.content) {
+      List<KeyFieldInfo> keyFieldInfos = character.getKeyInfosAt(point.id);
+      if (keyFieldInfos.isNotEmpty) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   void addPointInTimeAtIndex(int index) {
     var command = CreatePointInTimeCommand(index);
@@ -74,17 +101,13 @@ class TimeBarController extends ProcessorListener {
         ),
       );
     }
-    return reasonsWhyPointCantBeDeleted;
-  }
-
-  List<Character> _getFirstCharacterApperancesAt(PointInTime point) {
-    List<Character> charactersWithFirstAppearanceAtPoint = [];
-    for (Character character in _characterRepository.content) {
-      if (character.firstAppearance == point.id) {
-        charactersWithFirstAppearanceAtPoint.add(character);
-      }
+    List<KeyFieldInfoGroup> blockingKeys = _getBlockingKeysAt(point);
+    if (blockingKeys.isNotEmpty) {
+      reasonsWhyPointCantBeDeleted.add(
+        _buildBlockingKeysReason(blockingKeys),
+      );
     }
-    return charactersWithFirstAppearanceAtPoint;
+    return reasonsWhyPointCantBeDeleted;
   }
 
   String _buildFirstAppearanceDeletionForbiddenReason(
@@ -96,6 +119,53 @@ class TimeBarController extends ProcessorListener {
     String reason = "First appearance of the following characters:";
     for (Character character in firstCharacterApperances) {
       reason += "\n ● ${character.name}";
+    }
+    return reason;
+  }
+
+  List<KeyFieldInfoGroup> _getBlockingKeysAt(PointInTime point) {
+    List<KeyFieldInfoGroup> blockingKeys = [];
+    blockingKeys.addAll(_findBlockingKeysInCharactersAt(point));
+    return blockingKeys;
+  }
+
+  List<KeyFieldInfoGroup> _findBlockingKeysInCharactersAt(PointInTime point) {
+    List<KeyFieldInfoGroup> blockingKeys = [];
+    for (Character character in _characterRepository.content) {
+      List<KeyFieldInfo> keyFieldInfos = character.getKeyInfosAt(point.id);
+      if (keyFieldInfos.isNotEmpty) {
+        var characterName =
+            character.name.keys[_pointInTimeRepository.activePointInTime.id];
+        var groupName = "Character '$characterName'";
+        var group = KeyFieldInfoGroup(groupName, keyFieldInfos);
+        blockingKeys.add(group);
+      }
+    }
+    return blockingKeys;
+  }
+
+  String _buildBlockingKeysReason(List<KeyFieldInfoGroup> blockingKeys) {
+    if (blockingKeys.length == 1 && blockingKeys[0].keyFieldInfos.length == 1) {
+      KeyFieldInfoGroup group = blockingKeys[0];
+      KeyFieldInfo info = group.keyFieldInfos[0];
+      return "${group.groupName} has a ${info.fieldName} that changed to ${info.value} at this point in time";
+    }
+    String reason = "";
+    if (blockingKeys.length == 1) {
+      KeyFieldInfoGroup group = blockingKeys[0];
+      reason =
+          "{group.groupName} has the following changes at this point in time:";
+      for (KeyFieldInfo info in group.keyFieldInfos) {
+        reason += "\n ● ${info.fieldName} changed to ${info.value}";
+      }
+      return reason;
+    }
+    reason = "The following entities have changes at this point in time:";
+    for(KeyFieldInfoGroup group in blockingKeys){
+      reason += "\n ● ${group.groupName}";
+      for (KeyFieldInfo info in group.keyFieldInfos) {
+        reason += "\n   ⮡ ${info.fieldName} changed to ${info.value}";
+      }
     }
     return reason;
   }

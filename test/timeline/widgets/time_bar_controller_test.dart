@@ -60,4 +60,14 @@ main() {
 
     expect(controller.canPointBeDeleted(newPoint), isFalse);
   });
+
+  test("Point where character name changed should not be deletable", () {
+    PointInTime originalPoint = pointInTimeRepository.activePointInTime;
+    PointInTime laterPoint = pointInTimeRepository.createNewAtIndex(1);
+    var character = Character(originalPoint.id);
+    character.name.keys[laterPoint.id] = "ChangedName";
+    characterRepository.add(character);
+
+    expect(controller.canPointBeDeleted(laterPoint), isFalse);
+  });
 }
