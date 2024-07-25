@@ -1307,7 +1307,7 @@
 
 # TODO
 
-* Make it so that points in time can't be deleted if there's a key at them
+* 
 
 # User Story
 

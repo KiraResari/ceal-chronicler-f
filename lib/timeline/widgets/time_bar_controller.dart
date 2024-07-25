@@ -1,6 +1,7 @@
 import 'package:ceal_chronicler_f/characters/model/character_repository.dart';
 import 'package:ceal_chronicler_f/commands/processor_listener.dart';
 import 'package:ceal_chronicler_f/key_fields/key_field_info.dart';
+import 'package:ceal_chronicler_f/key_fields/key_field_resolver.dart';
 
 import '../../characters/model/character.dart';
 import '../../get_it_context.dart';
@@ -22,6 +23,7 @@ class TimeBarController extends ProcessorListener {
 
   final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
   final _characterRepository = getIt.get<CharacterRepository>();
+  final _keyFieldResolver = getIt.get<KeyFieldResolver>();
 
   TimeBarController() : super();
 
@@ -114,11 +116,14 @@ class TimeBarController extends ProcessorListener {
     List<Character> firstCharacterApperances,
   ) {
     if (firstCharacterApperances.length == 1) {
-      return "First appearance of ${firstCharacterApperances.first.name}";
+      Character character = firstCharacterApperances[0];
+      String characterName = _keyFieldResolver.getCurrentValue(character.name);
+      return "First appearance of character '$characterName'";
     }
     String reason = "First appearance of the following characters:";
     for (Character character in firstCharacterApperances) {
-      reason += "\n ● ${character.name}";
+      String characterName = _keyFieldResolver.getCurrentValue(character.name);
+      reason += "\n ● $characterName";
     }
     return reason;
   }
@@ -134,9 +139,9 @@ class TimeBarController extends ProcessorListener {
     for (Character character in _characterRepository.content) {
       List<KeyFieldInfo> keyFieldInfos = character.getKeyInfosAt(point.id);
       if (keyFieldInfos.isNotEmpty) {
-        var characterName =
-            character.name.keys[_pointInTimeRepository.activePointInTime.id];
-        var groupName = "Character '$characterName'";
+        String characterName =
+            _keyFieldResolver.getCurrentValue(character.name);
+        String groupName = "Character '$characterName'";
         var group = KeyFieldInfoGroup(groupName, keyFieldInfos);
         blockingKeys.add(group);
       }
@@ -161,7 +166,7 @@ class TimeBarController extends ProcessorListener {
       return reason;
     }
     reason = "The following entities have changes at this point in time:";
-    for(KeyFieldInfoGroup group in blockingKeys){
+    for (KeyFieldInfoGroup group in blockingKeys) {
       reason += "\n ● ${group.groupName}";
       for (KeyFieldInfo info in group.keyFieldInfos) {
         reason += "\n   ⮡ ${info.fieldName} changed to ${info.value}";
