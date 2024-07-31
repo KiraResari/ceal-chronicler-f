@@ -1330,10 +1330,18 @@
   * Right, next I want to make it so that only points in time before which no keys happen are can be set to the first appearance
     * Aaand, I think the design choice to make the `CharacterView` depend on a `CharacterId` instead of a `Character` bit me once too often, so I'll try to change that now
       * I think that worked
+    * And I now did that
 
 # TODO
 
-* 
+* If character first appearance is changed to a point in time that is past the currently selected point in time, that point in time should be selected
+  * e.g.:
+    * February is selected
+    * I'm in a character
+    * I change the character's first appearance to "March"
+    * => The active point in time should change to "March"
+
+* While in a character view, the points in time before the character's first appearance should be greyed out and unselectable in the time bar
 
 # User Story
 
@@ -1374,21 +1382,23 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [ ] The character screen has the following editable fields:
   - [ ] First Appearance
     - [x] By default contains the point in time at which the character was created
-    - [ ] Can be edited to other points in time, but not to a point in time that is later than the Last Appearance (if that is filled)
-      - [ ] Only Points in time before which no more changes happen to the character can be selected
+    - [x] Can be edited to other points in time
+    - [ ] Can't be changed to point in  time past last appearance  (if that is filled)
+    - [x] Only Points in time before which no more changes happen to the character can be selected
     - [x] Allows jumping to that point in time
+    - [ ] Points in time before the character's first appearance become greyed out in the time bar
   - [ ] Last appearance
     - [ ] Is empty by default
     - [ ] Can hold points in time, including the first appearance, but not before that
     - [ ] Points in time can be selected from a menu (e.g. dropdown)
       - [ ] Only Points in time after which no more changes happen to the character can be selected
     - [ ] Allows jumping to that point in time
+    - [ ] Points in time after the character's last appearance become greyed out in the time bar
   - [x] Name 
 - [x] Editing a field causes the contents to change from that point in time onward, until it is edited again
   - [ ] The exceptions are First and Last Appearance, which are logically always the same within a character 
   - [x] It is possible to jump back and forth to points in time where a field's value has been edited
 - [ ] Allows complete deletion of existing characters (with warning)
-- [ ] While in the Character View, Points in Time at which the character does not exist should be greyed out in the time bar
 - [x] The character screen has a back button, which returns back to the main view
 
 ### Technical

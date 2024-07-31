@@ -157,4 +157,9 @@ class PointInTimeRepository {
     var activePointInTimeIndex = pointsInTime.indexOf(activePointInTime);
     return pointsInTime.sublist(0, activePointInTimeIndex + 1);
   }
+
+  List<PointInTime> pointsInTimeBeforeAndIncluding(PointInTime referencePoint) {
+    var referencePointIndex = pointsInTime.indexOf(referencePoint);
+    return pointsInTime.sublist(0, referencePointIndex + 1);
+  }
 }

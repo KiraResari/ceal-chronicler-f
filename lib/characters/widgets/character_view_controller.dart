@@ -40,6 +40,16 @@ class CharacterViewController extends ProcessorListener {
   }
 
   List<PointInTime> get validFirstAppearances {
-    return _pointInTimeRepository.pointsInTime;
+    return _pointInTimeRepository
+        .pointsInTimeBeforeAndIncluding(latestPossibleFirstAppearance);
+  }
+
+  PointInTime get latestPossibleFirstAppearance {
+    for (PointInTime point in _pointInTimeRepository.pointsInTime) {
+      if (nameField.hasKeyAt(point.id)) {
+        return point;
+      }
+    }
+    return _pointInTimeRepository.last;
   }
 }

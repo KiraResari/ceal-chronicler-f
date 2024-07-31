@@ -37,6 +37,8 @@ abstract class KeyField<T> extends JsonSerializable {
     keys.remove(pointInTimeId);
   }
 
+  bool hasKeyAt(PointInTimeId id) => keys.containsKey(id);
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
