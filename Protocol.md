@@ -1320,7 +1320,12 @@
   * But one thing after the other
   * For starters, I'll focus on having a dropdown field for the First Appearance from where you can select a point in time
   * Fortunately, this is not gonna be a KeyValue, so at least that's gonna be easier
-  * 
+  * This looks like a good place to start:
+    * https://api.flutter.dev/flutter/material/DropdownMenu-class.html
+    * Oh dear, this looks complicated
+    * Okay, but it turns out it was actually not all that complicated
+  * Next, to enable jumping to that point in time
+    * That was a bit tricky, but I now managed to do that
 
 # TODO
 
@@ -1364,7 +1369,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [x] There is character screen which displays all the information related to a character at a given time
 - [ ] The character screen has the following editable fields:
   - [ ] First Appearance
-    - [ ] By default contains the point in time at which the character was created
+    - [x] By default contains the point in time at which the character was created
     - [ ] Can be edited to other points in time, but not to a point in time that is later than the Last Appearance (if that is filled)
       - [ ] Only Points in time before which no more changes happen to the character can be selected
     - [ ] Allows jumping to that point in time

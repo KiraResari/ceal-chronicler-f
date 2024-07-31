@@ -1,3 +1,5 @@
+import 'package:ceal_chronicler_f/characters/commands/update_first_appearance_command.dart';
+
 import '../../commands/processor_listener.dart';
 import '../../get_it_context.dart';
 import '../../key_fields/key_field_resolver.dart';
@@ -31,14 +33,28 @@ class CharacterViewController extends ProcessorListener {
     return _keyFieldResolver.getCurrentValue(character!.name);
   }
 
-  String get firstApperance {
+  PointInTime? get firstAppearance {
     if (character != null) {
       PointInTime? point =
           _pointInTimeRepository.get(character!.firstAppearance);
       if (point != null) {
-        return point.name;
+        return point;
       }
     }
-    return "Unknown";
+    return null;
+  }
+
+  void updateFirstAppearance(PointInTime? newFirstAppearance) {
+    if (character != null &&
+        newFirstAppearance != null &&
+        newFirstAppearance.id != character!.firstAppearance) {
+      var command =
+          UpdateFirstAppearanceCommand(character!, newFirstAppearance.id);
+      commandProcessor.process(command);
+    }
+  }
+
+  List<PointInTime> get validFirstAppearances {
+    return _pointInTimeRepository.pointsInTime;
   }
 }
