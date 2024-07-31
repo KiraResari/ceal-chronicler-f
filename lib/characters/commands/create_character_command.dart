@@ -1,3 +1,5 @@
+import 'package:ceal_chronicler_f/key_fields/key_field_resolver.dart';
+
 import '../../commands/command.dart';
 import '../../get_it_context.dart';
 import '../../timeline/model/point_in_time_id.dart';
@@ -11,6 +13,7 @@ import '../model/character_repository.dart';
 class CreateCharacterCommand extends Command {
   final _characterRepository = getIt.get<CharacterRepository>();
   final _viewRepository = getIt.get<ViewRepository>();
+  final _keyFieldResolver = getIt.get<KeyFieldResolver>();
   final PointInTimeId _pointId;
   Character? _createdCharacter;
 
@@ -23,7 +26,7 @@ class CreateCharacterCommand extends Command {
   }
 
   @override
-  String get executeMessage => "Created new Character $_characterNameOrNothing";
+  String get executeMessage => "Created new Character";
 
   @override
   void undo() {
@@ -36,7 +39,7 @@ class CreateCharacterCommand extends Command {
   void _returnToOverviewViewIfCharacterViewWasOpen() {
     MainViewTemplate mainViewTemplate = _viewRepository.mainViewTemplate;
     if (mainViewTemplate is CharacterViewTemplate &&
-        mainViewTemplate.character == _createdCharacter!.id) {
+        mainViewTemplate.character == _createdCharacter!) {
       _viewRepository.mainViewTemplate = OverviewViewTemplate();
     }
   }
@@ -47,7 +50,8 @@ class CreateCharacterCommand extends Command {
 
   String get _characterNameOrNothing {
     if (_createdCharacter != null) {
-      return "'${_createdCharacter!.name}'";
+      String name = _keyFieldResolver.getCurrentValue(_createdCharacter!.name);
+      return "'$name'";
     }
     return "";
   }
