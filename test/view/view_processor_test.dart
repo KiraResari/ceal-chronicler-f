@@ -1,5 +1,5 @@
 import 'package:ceal_chronicler_f/characters/commands/create_character_command.dart';
-import 'package:ceal_chronicler_f/characters/model/character_id.dart';
+import 'package:ceal_chronicler_f/characters/model/character.dart';
 import 'package:ceal_chronicler_f/characters/model/character_repository.dart';
 import 'package:ceal_chronicler_f/commands/command_history.dart';
 import 'package:ceal_chronicler_f/commands/command_processor.dart';
@@ -226,8 +226,8 @@ main() {
       "Navigating back should not be possible if only valid commands navigate to currently active view",
       () {
     commandProcessor.process(CreateCharacterCommand(PointInTimeId()));
-    CharacterId characterId = characterRepository.content.first.id;
-    viewProcessor.process(OpenCharacterViewCommand(characterId));
+    Character character = characterRepository.content.first;
+    viewProcessor.process(OpenCharacterViewCommand(character));
     viewProcessor.process(OpenOverviewViewCommand());
     commandProcessor.undo();
 
@@ -238,8 +238,8 @@ main() {
       "Navigating forward should not be possible if only valid commands navigate to currently active view",
       () {
     commandProcessor.process(CreateCharacterCommand(PointInTimeId()));
-    CharacterId characterId = characterRepository.content.first.id;
-    viewProcessor.process(OpenCharacterViewCommand(characterId));
+    Character character = characterRepository.content.first;
+    viewProcessor.process(OpenCharacterViewCommand(character));
     viewProcessor.process(OpenOverviewViewCommand());
     viewProcessor.navigateBack();
     viewProcessor.navigateBack();

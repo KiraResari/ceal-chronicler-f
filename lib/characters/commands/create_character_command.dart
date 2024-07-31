@@ -36,7 +36,7 @@ class CreateCharacterCommand extends Command {
   void _returnToOverviewViewIfCharacterViewWasOpen() {
     MainViewTemplate mainViewTemplate = _viewRepository.mainViewTemplate;
     if (mainViewTemplate is CharacterViewTemplate &&
-        mainViewTemplate.id == _createdCharacter!.id) {
+        mainViewTemplate.character == _createdCharacter!.id) {
       _viewRepository.mainViewTemplate = OverviewViewTemplate();
     }
   }

@@ -7,18 +7,18 @@ import 'package:provider/provider.dart';
 import '../../key_fields/string_key_field.dart';
 import '../../key_fields/widgets/string_key_field_view.dart';
 import '../../timeline/model/point_in_time.dart';
-import '../model/character_id.dart';
+import '../model/character.dart';
 import 'character_view_controller.dart';
 
 class CharacterView extends MainViewCandidate {
-  final CharacterId id;
+  final Character character;
 
-  const CharacterView({super.key, required this.id});
+  const CharacterView({super.key, required this.character});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => CharacterViewController(id),
+      create: (context) => CharacterViewController(character),
       builder: (context, child) => _buildPaddedContent(context),
     );
   }
@@ -31,20 +31,14 @@ class CharacterView extends MainViewCandidate {
   }
 
   Widget _buildContent(BuildContext context) {
-    bool characterFound =
-        context.watch<CharacterViewController>().characterFound;
-    if (characterFound) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildTitle(context),
-          _buildCharacterTable(context),
-          ReturnToOverviewViewButton(),
-        ],
-      );
-    } else {
-      return Text("Character with ID ${id.readableString} was not found");
-    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildTitle(context),
+        _buildCharacterTable(context),
+        ReturnToOverviewViewButton(),
+      ],
+    );
   }
 
   _buildTitle(BuildContext context) {

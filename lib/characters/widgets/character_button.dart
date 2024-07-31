@@ -16,7 +16,7 @@ class CharacterButton extends CealTextButton {
 
   @override
   void onPressed(BuildContext context) {
-    var command = OpenCharacterViewCommand(character.id);
+    var command = OpenCharacterViewCommand(character);
     viewProcessor.process(command);
   }
 

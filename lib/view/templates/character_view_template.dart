@@ -1,4 +1,4 @@
-import '../../characters/model/character_id.dart';
+import '../../characters/model/character.dart';
 import '../../characters/model/character_repository.dart';
 import '../../characters/widgets/character_view.dart';
 import '../../get_it_context.dart';
@@ -8,23 +8,23 @@ import 'main_view_template.dart';
 class CharacterViewTemplate extends MainViewTemplate {
   final CharacterRepository characterRepository = getIt<CharacterRepository>();
 
-  final CharacterId id;
+  final Character character;
 
-  CharacterViewTemplate(this.id);
-
-  @override
-  MainViewCandidate get associatedView => CharacterView(id: id);
+  CharacterViewTemplate(this.character);
 
   @override
-  bool get isValid => characterRepository.contains(id);
+  MainViewCandidate get associatedView => CharacterView(character: character);
+
+  @override
+  bool get isValid => characterRepository.contains(character.id);
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is CharacterViewTemplate &&
           runtimeType == other.runtimeType &&
-          id == other.id;
+          character == other.character;
 
   @override
-  int get hashCode => id.hashCode;
+  int get hashCode => character.hashCode;
 }

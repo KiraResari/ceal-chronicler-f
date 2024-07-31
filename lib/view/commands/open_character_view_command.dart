@@ -1,14 +1,15 @@
-import '../../characters/model/character_id.dart';
+import '../../characters/model/character.dart';
 import '../templates/character_view_template.dart';
 import 'change_main_view_command.dart';
 
 class OpenCharacterViewCommand extends ChangeMainViewCommand {
-  CharacterId id;
+  Character character;
 
-  OpenCharacterViewCommand(this.id) : super(CharacterViewTemplate(id));
+  OpenCharacterViewCommand(this.character)
+      : super(CharacterViewTemplate(character));
 
   @override
   String toString() {
-    return 'OpenCharacterViewCommand{Target: $id; Can execute: $isRedoPossible; Can undo: $isUndoPossible}';
+    return 'OpenCharacterViewCommand{Target: $character; Can execute: $isRedoPossible; Can undo: $isUndoPossible}';
   }
 }

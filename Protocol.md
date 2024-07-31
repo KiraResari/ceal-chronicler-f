@@ -1326,6 +1326,10 @@
     * Okay, but it turns out it was actually not all that complicated
   * Next, to enable jumping to that point in time
     * That was a bit tricky, but I now managed to do that
+    * I think I really messed up with the buttons there =>,<=
+  * Right, next I want to make it so that only points in time before which no keys happen are can be set to the first appearance
+    * Aaand, I think the design choice to make the `CharacterView` depend on a `CharacterId` instead of a `Character` bit me once too often, so I'll try to change that now
+      * I think that worked
 
 # TODO
 
@@ -1372,7 +1376,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
     - [x] By default contains the point in time at which the character was created
     - [ ] Can be edited to other points in time, but not to a point in time that is later than the Last Appearance (if that is filled)
       - [ ] Only Points in time before which no more changes happen to the character can be selected
-    - [ ] Allows jumping to that point in time
+    - [x] Allows jumping to that point in time
   - [ ] Last appearance
     - [ ] Is empty by default
     - [ ] Can hold points in time, including the first appearance, but not before that
