@@ -1304,6 +1304,23 @@
       * For example, I want a message like "Can't delete point in time because the name of Character Ozymandias changed at this point"
     * The crux is that the keys are inside the Character (and later other) object, and only the objects with the keys know how their keyed fields are called
   * Okay, I think I now found a solution that works reasonably well
+* This is as far as I'm getting with this today
+
+[Time elapsed so far: 84.75 hours]
+
+# 31-Jul-2024
+
+* Now continuing with this
+* Next, I want to make the First Appearance of a character editable
+  * That should be a dropdown list
+  * There's gonna be a lot of tail to both this and the last appearance, such as:
+    * The first appearance can't be after the last appearance
+    * While a character view is opened, only the points in time where that character is active should be selectable
+    * How to deal with keys regarding which points in time are selectable
+  * But one thing after the other
+  * For starters, I'll focus on having a dropdown field for the First Appearance from where you can select a point in time
+  * Fortunately, this is not gonna be a KeyValue, so at least that's gonna be easier
+  * 
 
 # TODO
 

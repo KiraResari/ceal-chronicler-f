@@ -33,7 +33,7 @@ class TimeBarController extends ProcessorListener {
       _pointInTimeRepository.pointsInTime.length > 1 &&
       point.incidentReferences.isEmpty &&
       _getFirstCharacterApperancesAt(point).isEmpty &&
-      !_keysExistAt(point);
+      _getBlockingKeysAt(point).isEmpty;
 
   List<Character> _getFirstCharacterApperancesAt(PointInTime point) {
     List<Character> charactersWithFirstAppearanceAtPoint = [];
@@ -45,18 +45,25 @@ class TimeBarController extends ProcessorListener {
     return charactersWithFirstAppearanceAtPoint;
   }
 
-  bool _keysExistAt(PointInTime point) {
-    return _characterKeysExistAt(point);
+  List<KeyFieldInfoGroup> _getBlockingKeysAt(PointInTime point) {
+    List<KeyFieldInfoGroup> blockingKeys = [];
+    blockingKeys.addAll(_findBlockingKeysInCharactersAt(point));
+    return blockingKeys;
   }
 
-  bool _characterKeysExistAt(PointInTime point) {
+  List<KeyFieldInfoGroup> _findBlockingKeysInCharactersAt(PointInTime point) {
+    List<KeyFieldInfoGroup> blockingKeys = [];
     for (Character character in _characterRepository.content) {
       List<KeyFieldInfo> keyFieldInfos = character.getKeyInfosAt(point.id);
       if (keyFieldInfos.isNotEmpty) {
-        return true;
+        String characterName =
+        _keyFieldResolver.getCurrentValue(character.name);
+        String groupName = "Character '$characterName'";
+        var group = KeyFieldInfoGroup(groupName, keyFieldInfos);
+        blockingKeys.add(group);
       }
     }
-    return false;
+    return blockingKeys;
   }
 
   void addPointInTimeAtIndex(int index) {
@@ -126,27 +133,6 @@ class TimeBarController extends ProcessorListener {
       reason += "\n ● $characterName";
     }
     return reason;
-  }
-
-  List<KeyFieldInfoGroup> _getBlockingKeysAt(PointInTime point) {
-    List<KeyFieldInfoGroup> blockingKeys = [];
-    blockingKeys.addAll(_findBlockingKeysInCharactersAt(point));
-    return blockingKeys;
-  }
-
-  List<KeyFieldInfoGroup> _findBlockingKeysInCharactersAt(PointInTime point) {
-    List<KeyFieldInfoGroup> blockingKeys = [];
-    for (Character character in _characterRepository.content) {
-      List<KeyFieldInfo> keyFieldInfos = character.getKeyInfosAt(point.id);
-      if (keyFieldInfos.isNotEmpty) {
-        String characterName =
-            _keyFieldResolver.getCurrentValue(character.name);
-        String groupName = "Character '$characterName'";
-        var group = KeyFieldInfoGroup(groupName, keyFieldInfos);
-        blockingKeys.add(group);
-      }
-    }
-    return blockingKeys;
   }
 
   String _buildBlockingKeysReason(List<KeyFieldInfoGroup> blockingKeys) {
