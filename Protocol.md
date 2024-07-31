@@ -1331,6 +1331,8 @@
     * Aaand, I think the design choice to make the `CharacterView` depend on a `CharacterId` instead of a `Character` bit me once too often, so I'll try to change that now
       * I think that worked
     * And I now did that
+  * Next, I want to make it so that if the first appearance is changed to a point in time that is past the currently selected point in time that new first appearance is selected
+    * I now managed to do that
 
 # TODO
 

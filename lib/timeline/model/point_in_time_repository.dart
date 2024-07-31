@@ -162,4 +162,10 @@ class PointInTimeRepository {
     var referencePointIndex = pointsInTime.indexOf(referencePoint);
     return pointsInTime.sublist(0, referencePointIndex + 1);
   }
+
+  bool pointIsInTheFuture(PointInTime referencePoint) {
+    var activePointInTimeIndex = pointsInTime.indexOf(activePointInTime);
+    var referencePointIndex = pointsInTime.indexOf(referencePoint);
+    return referencePointIndex > activePointInTimeIndex;
+  }
 }

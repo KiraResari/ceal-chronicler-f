@@ -1,4 +1,5 @@
 import 'package:ceal_chronicler_f/characters/commands/update_first_appearance_command.dart';
+import 'package:ceal_chronicler_f/view/commands/activate_point_in_time_command.dart';
 
 import '../../commands/processor_listener.dart';
 import '../../get_it_context.dart';
@@ -36,6 +37,10 @@ class CharacterViewController extends ProcessorListener {
       var command =
           UpdateFirstAppearanceCommand(character, newFirstAppearance.id);
       commandProcessor.process(command);
+      if (_pointInTimeRepository.pointIsInTheFuture(newFirstAppearance)) {
+        var viewCommand = ActivatePointInTimeCommand(newFirstAppearance.id);
+        viewProcessor.process(viewCommand);
+      }
     }
   }
 
