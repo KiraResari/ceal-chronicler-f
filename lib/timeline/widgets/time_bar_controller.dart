@@ -2,10 +2,12 @@ import 'package:ceal_chronicler_f/characters/model/character_repository.dart';
 import 'package:ceal_chronicler_f/commands/processor_listener.dart';
 import 'package:ceal_chronicler_f/key_fields/key_field_info.dart';
 import 'package:ceal_chronicler_f/key_fields/key_field_resolver.dart';
+import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
 
 import '../../characters/model/character.dart';
 import '../../get_it_context.dart';
 import '../../key_fields/key_field_info_group.dart';
+import '../../view/commands/activate_point_in_time_command.dart';
 import '../commands/create_point_in_time_command.dart';
 import '../commands/delete_point_in_time_command.dart';
 import '../commands/rename_point_in_time_command.dart';
@@ -169,5 +171,14 @@ class TimeBarController extends ProcessorListener {
       reasons += "\n● $reason";
     }
     return reasons;
+  }
+
+  void activatePointInTime(PointInTimeId pointInTimeId) {
+    var command = ActivatePointInTimeCommand(pointInTimeId);
+    viewProcessor.process(command);
+  }
+
+  bool isButtonEnabled(PointInTime pointInTime) {
+    return _pointInTimeRepository.activePointInTime != pointInTime;
   }
 }

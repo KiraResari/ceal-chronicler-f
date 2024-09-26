@@ -1,29 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../../get_it_context.dart';
 import '../../utils/widgets/buttons/ceal_text_button.dart';
-import '../../view/commands/activate_point_in_time_command.dart';
-import '../../view/view_processor.dart';
 import '../model/point_in_time.dart';
-import '../model/point_in_time_repository.dart';
+import 'time_bar_controller.dart';
 
 class PointInTimeButton extends CealTextButton {
-  final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
-  final _viewProcessor = getIt.get<ViewProcessor>();
 
   final PointInTime point;
 
-  PointInTimeButton({super.key, required this.point}) : super(width: 150);
+  const PointInTimeButton({super.key, required this.point}) : super(width: 150);
 
   @override
   void onPressed(BuildContext context) {
-    var command = ActivatePointInTimeCommand(point.id);
-    _viewProcessor.process(command);
+    var controller = context.read<TimeBarController>();
+    controller.activatePointInTime(point.id);
   }
 
   @override
-  bool isEnabled(BuildContext context) =>
-      _pointInTimeRepository.activePointInTime != point;
+  bool isEnabled(BuildContext context) {
+    var controller = context.watch<TimeBarController>();
+    return controller.isButtonEnabled(point);
+  }
 
   @override
   String get text => point.name;

@@ -1,10 +1,10 @@
-import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
-import 'package:ceal_chronicler_f/timeline/widgets/point_in_time_button.dart';
-import 'package:ceal_chronicler_f/timeline/widgets/rename_point_in_time_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/string_key.dart';
+import '../model/point_in_time.dart';
 import 'delete_point_in_time_button.dart';
+import 'point_in_time_button.dart';
+import 'rename_point_in_time_button.dart';
 
 class TimeBarPanel extends StatelessWidget {
   static const String pointInTimeButtonKeyBase = "pointInTimeButton";
