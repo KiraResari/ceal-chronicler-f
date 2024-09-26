@@ -2,9 +2,14 @@ import 'package:ceal_chronicler_f/get_it_context.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
 import 'package:ceal_chronicler_f/view/commands/view_command.dart';
+import 'package:ceal_chronicler_f/view/templates/main_view_template.dart';
+import 'package:ceal_chronicler_f/view/templates/temporally_limited_template.dart';
+import 'package:ceal_chronicler_f/view/view_repository.dart';
 
 class ActivatePointInTimeCommand extends ViewCommand {
-  final PointInTimeRepository _repository = getIt.get<PointInTimeRepository>();
+  final PointInTimeRepository _pointInTimeRepository =
+      getIt.get<PointInTimeRepository>();
+  final ViewRepository _viewRepository = getIt.get<ViewRepository>();
   final PointInTimeId _id;
   PointInTimeId? _previousActivePointInTimeId;
 
@@ -12,23 +17,40 @@ class ActivatePointInTimeCommand extends ViewCommand {
 
   @override
   void execute() {
-    _previousActivePointInTimeId = _repository.activePointInTime.id;
+    _previousActivePointInTimeId = _pointInTimeRepository.activePointInTime.id;
     redo();
   }
 
   @override
   bool get isUndoPossible {
     if (_previousActivePointInTimeId != null) {
-      return _repository.contains(_previousActivePointInTimeId!) &&
-          _previousActivePointInTimeId! != _repository.activePointInTime.id;
+      return _pointIsContainedInRepository &&
+          _pointIsNotActiveAlready &&
+          _pointIsWithinTemporalBounds;
     }
     return false;
+  }
+
+  bool get _pointIsContainedInRepository =>
+      _pointInTimeRepository.contains(_previousActivePointInTimeId!);
+
+  bool get _pointIsNotActiveAlready =>
+      _previousActivePointInTimeId! !=
+      _pointInTimeRepository.activePointInTime.id;
+
+  bool get _pointIsWithinTemporalBounds {
+    MainViewTemplate mainViewTemplate = _viewRepository.mainViewTemplate;
+    if (mainViewTemplate is TemporallyLimitedTemplate) {
+      return (mainViewTemplate as TemporallyLimitedTemplate)
+          .existsAt(_previousActivePointInTimeId!);
+    }
+    return true;
   }
 
   @override
   void undo() {
     if (_previousActivePointInTimeId != null) {
-      _repository.activatePointInTime(_previousActivePointInTimeId!);
+      _pointInTimeRepository.activatePointInTime(_previousActivePointInTimeId!);
     }
   }
 
@@ -39,10 +61,11 @@ class ActivatePointInTimeCommand extends ViewCommand {
 
   @override
   bool get isRedoPossible =>
-      _repository.contains(_id) && _id != _repository.activePointInTime.id;
+      _pointInTimeRepository.contains(_id) &&
+      _id != _pointInTimeRepository.activePointInTime.id;
 
   @override
   void redo() {
-    _repository.activatePointInTime(_id);
+    _pointInTimeRepository.activatePointInTime(_id);
   }
 }

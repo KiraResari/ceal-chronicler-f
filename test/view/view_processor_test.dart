@@ -1,4 +1,5 @@
 import 'package:ceal_chronicler_f/characters/commands/create_character_command.dart';
+import 'package:ceal_chronicler_f/characters/commands/update_first_appearance_command.dart';
 import 'package:ceal_chronicler_f/characters/model/character.dart';
 import 'package:ceal_chronicler_f/characters/model/character_repository.dart';
 import 'package:ceal_chronicler_f/commands/command_history.dart';
@@ -277,4 +278,22 @@ main() {
 
     expect(viewProcessor.isNavigatingForwardPossible, isFalse);
   });
+
+  test(
+    "If a character's first appearance was forwarded, then navigating back should not navigate back to the old point in time",
+    () {
+      commandProcessor.process(
+          CreateCharacterCommand(pointInTimeRepository.activePointInTime.id));
+      Character character = characterRepository.content.first;
+      viewProcessor.process(OpenCharacterViewCommand(character));
+      commandProcessor.process(CreatePointInTimeCommand(1));
+      PointInTime secondPoint = pointInTimeRepository.pointsInTime.last;
+      viewProcessor.process(ActivatePointInTimeCommand(secondPoint.id));
+      commandProcessor
+          .process(UpdateFirstAppearanceCommand(character, secondPoint.id));
+      viewProcessor.navigateBack();
+
+      expect(pointInTimeRepository.activePointInTime, equals(secondPoint));
+    },
+  );
 }

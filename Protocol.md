@@ -1361,10 +1361,19 @@
     * I now did that
 * Now I have the interesting "problem" that I can no longer discern which point in time is currently active, because the button for the active point in time looks the same as all other inactive buttons
   * I now managed to fix that by playing around with various effects
+* Next issue...
+* After changing the first appearance of a character to a point in the future (which causes the active point in time to be set to that point), it should not be possible to navigate back to the previous point in time
+  * If I'm lucky, then the work above has already paved the way to fix this with relative ease
+  * I think that needs to be done in the `ActivatePointInTimeCommand`
+  * But before that, I can definitely first write a test for this
+  * Okay, and building on that, I was actually able to get this working with relative ease
+* And that's already as far as I'm getting today, but at least I managed to sort out all the open ends from July
+
+[Time elapsed so far: 93.5 hours]
 
 # TODO
 
-* After changing the first appearance of a character to a point in the future (which causes the active point in time to be set to that point), it should not be possible to navigate back to the previous point in time
+* 
 
 # User Story
 
