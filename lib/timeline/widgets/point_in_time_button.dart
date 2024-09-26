@@ -30,6 +30,8 @@ class PointInTimeButton extends CealTextButton {
   String? get tooltip => "Make this the active point in time";
 
   @override
-  String? getDisabledReason(BuildContext context) =>
-      "This is already the active point in time";
+  String? getDisabledReason(BuildContext context) {
+    var controller = context.watch<TimeBarController>();
+    return controller.getPointInTimeButtonDisabledReason(point);
+  }
 }

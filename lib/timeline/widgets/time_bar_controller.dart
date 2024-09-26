@@ -36,9 +36,9 @@ class TimeBarController extends ProcessorListener {
 
   bool canPointBeDeleted(PointInTime point) =>
       _pointInTimeRepository.pointsInTime.length > 1 &&
-      point.incidentReferences.isEmpty &&
-      _getFirstCharacterApperancesAt(point).isEmpty &&
-      _getBlockingKeysAt(point).isEmpty;
+          point.incidentReferences.isEmpty &&
+          _getFirstCharacterApperancesAt(point).isEmpty &&
+          _getBlockingKeysAt(point).isEmpty;
 
   List<Character> _getFirstCharacterApperancesAt(PointInTime point) {
     List<Character> charactersWithFirstAppearanceAtPoint = [];
@@ -62,7 +62,7 @@ class TimeBarController extends ProcessorListener {
       List<KeyFieldInfo> keyFieldInfos = character.getKeyInfosAt(point.id);
       if (keyFieldInfos.isNotEmpty) {
         String characterName =
-            _keyFieldResolver.getCurrentValue(character.name);
+        _keyFieldResolver.getCurrentValue(character.name);
         String groupName = "Character '$characterName'";
         var group = KeyFieldInfoGroup(groupName, keyFieldInfos);
         blockingKeys.add(group);
@@ -88,7 +88,7 @@ class TimeBarController extends ProcessorListener {
 
   String getPointDeleteButtonDisabledReason(PointInTime point) {
     List<String> reasonsWhyPointCantBeDeleted =
-        _getReasonsWhyPointCantBeDeleted(point);
+    _getReasonsWhyPointCantBeDeleted(point);
     if (reasonsWhyPointCantBeDeleted.isEmpty) {
       return unknownDeletionForbiddenReason;
     } else {
@@ -107,7 +107,7 @@ class TimeBarController extends ProcessorListener {
       reasonsWhyPointCantBeDeleted.add(incidentsPresentDeletionForbiddenReason);
     }
     List<Character> firstCharacterApperances =
-        _getFirstCharacterApperancesAt(point);
+    _getFirstCharacterApperancesAt(point);
     if (firstCharacterApperances.isNotEmpty) {
       reasonsWhyPointCantBeDeleted.add(
         _buildFirstAppearanceDeletionForbiddenReason(
@@ -125,8 +125,7 @@ class TimeBarController extends ProcessorListener {
   }
 
   String _buildFirstAppearanceDeletionForbiddenReason(
-    List<Character> firstCharacterApperances,
-  ) {
+      List<Character> firstCharacterApperances,) {
     if (firstCharacterApperances.length == 1) {
       Character character = firstCharacterApperances[0];
       String characterName = _keyFieldResolver.getCurrentValue(character.name);
@@ -144,13 +143,14 @@ class TimeBarController extends ProcessorListener {
     if (blockingKeys.length == 1 && blockingKeys[0].keyFieldInfos.length == 1) {
       KeyFieldInfoGroup group = blockingKeys[0];
       KeyFieldInfo info = group.keyFieldInfos[0];
-      return "${group.groupName} has a ${info.fieldName} that changed to ${info.value} at this point in time";
+      return "${group.groupName} has a ${info.fieldName} that changed to ${info
+          .value} at this point in time";
     }
     String reason = "";
     if (blockingKeys.length == 1) {
       KeyFieldInfoGroup group = blockingKeys[0];
       reason =
-          "{group.groupName} has the following changes at this point in time:";
+      "{group.groupName} has the following changes at this point in time:";
       for (KeyFieldInfo info in group.keyFieldInfos) {
         reason += "\n ● ${info.fieldName} changed to ${info.value}";
       }
@@ -194,5 +194,21 @@ class TimeBarController extends ProcessorListener {
           .existsAt(pointInTime.id);
     }
     return true;
+  }
+
+  String getPointInTimeButtonDisabledReason(PointInTime pointInTime) {
+    if (_pointInTimeRepository.activePointInTime == pointInTime) {
+      return "This is already the active point in time";
+    }
+    if (!_isInsideTemporalLimits(pointInTime)) {
+      final mainViewTemplate = _viewRepository.mainViewTemplate;
+      if (mainViewTemplate is TemporallyLimitedTemplate) {
+        return (mainViewTemplate as TemporallyLimitedTemplate)
+            .getTemporalInvalidityReason(pointInTime.id);
+      } else {
+        return "Point in time is outside temporal limits, but somehow the mainViewTemplate is not a TemporallyLimitedTemplate. This might be a bug.";
+      }
+    }
+    return "Point in time should actually be active. This might be a bug.";
   }
 }

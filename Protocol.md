@@ -1356,6 +1356,10 @@
     * Ah, okay, I think I understand the problem, even though I don't really understand why it behaves like that
       * Apparently, the `PointInTimeButton` for the second point in time addresses the `TimeBarPanelController` from the first `PointInTimeButton`, which is really, really horrible behavior! =>,<=
       * Okay, I now solved this by putting the functionality into the `TimeBarController`, passing along the relevant Point in Time as a parameter, which is not ideal but at least it works
+  * Okay, now that I have that in the `TimeBarController`, I can finally write a unit test for this
+  * Annd, I basically got it to work, only the tooltip if the button is inactive still statically displays "This is already the active point in time"
+    * I now did that
+* Now I have the interesting "problem" that I can no longer discern which point in time is currently active, because the button for the active point in time looks the same as all other inactive buttons
 
 # TODO
 
