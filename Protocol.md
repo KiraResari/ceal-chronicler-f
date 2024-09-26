@@ -1360,11 +1360,11 @@
   * Annd, I basically got it to work, only the tooltip if the button is inactive still statically displays "This is already the active point in time"
     * I now did that
 * Now I have the interesting "problem" that I can no longer discern which point in time is currently active, because the button for the active point in time looks the same as all other inactive buttons
+  * I now managed to fix that by playing around with various effects
 
 # TODO
 
 * After changing the first appearance of a character to a point in the future (which causes the active point in time to be set to that point), it should not be possible to navigate back to the previous point in time
-* 
 
 # User Story
 

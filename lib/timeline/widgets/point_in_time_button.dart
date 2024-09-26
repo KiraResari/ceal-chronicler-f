@@ -24,6 +24,12 @@ class PointInTimeButton extends CealTextButton {
   }
 
   @override
+  bool isHighlighted(BuildContext context){
+    var controller = context.watch<TimeBarController>();
+    return controller.isActive(point);
+  }
+
+  @override
   String get text => point.name;
 
   @override

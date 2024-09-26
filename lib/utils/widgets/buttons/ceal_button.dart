@@ -17,16 +17,43 @@ abstract class CealButton extends StatelessWidget {
       child: SizedBox(
         height: height,
         width: width,
-        child: buildButton(context),
+        child: _buildButtonWithOptionalScaling(context),
       ),
     );
   }
 
-  FloatingActionButton buildButton(BuildContext context);
+  Widget _buildButtonWithOptionalScaling(BuildContext context) {
+    return Transform.scale(
+      scale: isHighlighted(context) ? 1.1 : 1.0,
+      child: _buildButtonWithOptionalHighlight(context),
+    );
+  }
+
+  Widget _buildButtonWithOptionalHighlight(BuildContext context) {
+    return Container(
+      decoration: isHighlighted(context)
+          ? const BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.amber,
+                  spreadRadius: 3,
+                  blurRadius: 10,
+                  offset: Offset(0, 0),
+                ),
+              ],
+            )
+          : null,
+      child: buildButton(context),
+    );
+  }
+
+  Widget buildButton(BuildContext context);
 
   void onPressed(BuildContext context);
 
   bool isEnabled(BuildContext context) => true;
+
+  bool isHighlighted(BuildContext context) => false;
 
   String? getDisabledReason(BuildContext context) => null;
 
