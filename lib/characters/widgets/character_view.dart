@@ -1,16 +1,16 @@
-import 'package:ceal_chronicler_f/characters/widgets/goto_point_in_time_button.dart';
-import 'package:ceal_chronicler_f/main_view/main_view_candidate.dart';
-import 'package:ceal_chronicler_f/overview_view/return_to_overview_view_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../key_fields/string_key_field.dart';
 import '../../key_fields/widgets/string_key_field_view.dart';
+import '../../main_view/main_view_candidate.dart';
+import '../../overview_view/return_to_overview_view_button.dart';
 import '../../timeline/model/point_in_time.dart';
 import '../model/character.dart';
 import 'character_view_controller.dart';
+import 'goto_point_in_time_button.dart';
 
-class CharacterView extends MainViewCandidate {
+class CharacterView extends MainViewCandidate{
   final Character character;
 
   const CharacterView({super.key, required this.character});

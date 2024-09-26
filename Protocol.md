@@ -1333,17 +1333,28 @@
     * And I now did that
   * Next, I want to make it so that if the first appearance is changed to a point in time that is past the currently selected point in time that new first appearance is selected
     * I now managed to do that
+    * However, via "Go Back" it is still possible to go back to the previous view, and I don't really see a good way to get around that with the current logic since that will require the view commands to know about a lot more
+    * But then again, I may need to rework that anyway to enable the requirement that points in time become unavailable based on which character is selected and what that character's first and last appearance is
+* Anyway, this is more complicated, so I won't get it done today
+* This is as far as I'm getting with this today
+
+[Time elapsed so far: 88.75 hours]
+
+# 26-Sep-2024
+
+* Now continuing with this
+* I'll now deal with some issues related to the characters and when they are active
+* While in a character view, the points in time before the character's first appearance should be greyed out and unselectable in the time bar
+  * That is actually kinda tricky
+  * The issue is that this requirement suddenly means that the `PointInTimeButton` needs to know something about the state of the program that goes beyond the points in time
+  * But I think it can work, because the `ViewRepository` is on a very base level, and I should be able to get the necessary information out of there
+  * I could check if the `mainViewTemplate` is a `CharacterViewTemplate` and then  check against that, but I think I can also abstract that a bit
+  * 
 
 # TODO
 
-* If character first appearance is changed to a point in time that is past the currently selected point in time, that point in time should be selected
-  * e.g.:
-    * February is selected
-    * I'm in a character
-    * I change the character's first appearance to "March"
-    * => The active point in time should change to "March"
-
-* While in a character view, the points in time before the character's first appearance should be greyed out and unselectable in the time bar
+* After changing the first appearance of a character to a point in the future (which causes the active point in time to be set to that point), it should not be possible to navigate back to the previous point in time
+* 
 
 # User Story
 

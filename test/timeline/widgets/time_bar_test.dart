@@ -3,6 +3,7 @@ import 'package:ceal_chronicler_f/commands/command_history.dart';
 import 'package:ceal_chronicler_f/commands/command_processor.dart';
 import 'package:ceal_chronicler_f/get_it_context.dart';
 import 'package:ceal_chronicler_f/io/file/file_processor.dart';
+import 'package:ceal_chronicler_f/key_fields/key_field_resolver.dart';
 import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
 import 'package:ceal_chronicler_f/timeline/widgets/time_bar.dart';
@@ -24,6 +25,7 @@ void main() {
     getIt.registerSingleton<CommandProcessor>(CommandProcessor());
     getIt.registerSingleton<ViewProcessor>(ViewProcessor());
     getIt.registerSingleton<FileProcessor>(FileProcessorMockLite());
+    getIt.registerSingleton<KeyFieldResolver>(KeyFieldResolver());
   });
 
   testWidgets(

@@ -5,6 +5,7 @@ import 'package:ceal_chronicler_f/commands/command_processor.dart';
 import 'package:ceal_chronicler_f/get_it_context.dart';
 import 'package:ceal_chronicler_f/incidents/model/incident_id.dart';
 import 'package:ceal_chronicler_f/io/file/file_processor.dart';
+import 'package:ceal_chronicler_f/key_fields/key_field_resolver.dart';
 import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
@@ -30,6 +31,7 @@ main() {
     getIt.registerSingleton<FileProcessor>(FileProcessorMockLite());
     getIt.registerSingleton<CommandProcessor>(CommandProcessor());
     getIt.registerSingleton<ViewProcessor>(ViewProcessor());
+    getIt.registerSingleton<KeyFieldResolver>(KeyFieldResolver());
     controller = TimeBarController();
   });
 

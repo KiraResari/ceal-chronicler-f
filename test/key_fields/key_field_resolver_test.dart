@@ -9,10 +9,13 @@ import 'package:flutter_test/flutter_test.dart';
 late PointInTimeRepository repository;
 
 main() {
+  late KeyFieldResolver resolver;
+
   setUp(() {
     getIt.reset();
     repository = PointInTimeRepository();
     getIt.registerSingleton<PointInTimeRepository>(repository);
+    resolver = KeyFieldResolver();
   });
 
   test(
@@ -20,7 +23,6 @@ main() {
     () {
       var initialValue = "Test";
       var keyField = StringKeyField(initialValue);
-      var resolver = KeyFieldResolver();
 
       expect(resolver.getCurrentValue(keyField), equals(initialValue));
     },
@@ -30,7 +32,6 @@ main() {
     "After adding value at current point in time, currentValue should return that value",
     () {
       var keyField = StringKeyField("Test");
-      var resolver = KeyFieldResolver();
 
       PointInTimeId currentPointInTime = repository.activePointInTime.id;
       var newValue = "Test 2";
@@ -44,7 +45,6 @@ main() {
     "If no key exists at current point in time, currentValue should return value of last key before that",
     () {
       var keyField = StringKeyField("Test");
-      var resolver = KeyFieldResolver();
       var futurePointInTime = PointInTime("Future Point in Time");
       repository.addAtIndex(1, futurePointInTime);
 
@@ -62,7 +62,6 @@ main() {
     () {
       var initialValue = "Test";
       var keyField = StringKeyField(initialValue);
-      var resolver = KeyFieldResolver();
       var futurePointInTime = PointInTime("Future Point in Time");
       repository.addAtIndex(1, futurePointInTime);
 
@@ -76,7 +75,6 @@ main() {
     "addOrUpdateKeyAtTime should update value of existing key",
     () {
       var keyField = StringKeyField("Test");
-      var resolver = KeyFieldResolver();
 
       PointInTimeId currentPointInTime = repository.activePointInTime.id;
       keyField.addOrUpdateKeyAtTime("Test 2", currentPointInTime);
@@ -92,7 +90,6 @@ main() {
     () {
       var initialValue = "Test";
       var keyField = StringKeyField(initialValue);
-      var resolver = KeyFieldResolver();
 
       PointInTimeId currentPointInTime = repository.activePointInTime.id;
       keyField.addOrUpdateKeyAtTime("Test 2", currentPointInTime);
@@ -106,7 +103,6 @@ main() {
     "hasNext should return true if key exists after current point in time",
     () {
       var keyField = StringKeyField("Test");
-      var resolver = KeyFieldResolver();
       var futurePointInTime = PointInTime("Future Point in Time");
       repository.addAtIndex(1, futurePointInTime);
 
@@ -120,32 +116,30 @@ main() {
     "hasNext should return false if no key exists after current point in time",
     () {
       var keyField = StringKeyField("Test");
-      var resolver = KeyFieldResolver();
 
       expect(resolver.hasNext(keyField), isFalse);
     },
   );
 
   test(
-    "hasPrevious should return true if a previous key or initial value exists",
+    "hasPrevious should return true if a previous key exists",
     () {
+      PointInTime firstPointInTime = repository.activePointInTime;
+      var secondPointInTime = PointInTime("Second Point in Time");
+      repository.addAtIndex(1, secondPointInTime);
+      repository.activePointInTime = secondPointInTime;
       var keyField = StringKeyField("Test");
-      var resolver = KeyFieldResolver();
-      var pointInTime = PointInTime("Current Point in Time");
-      repository.addAtIndex(1, pointInTime);
-      repository.activePointInTime = pointInTime;
-
-      keyField.addOrUpdateKeyAtTime("Test 2", pointInTime.id);
+      keyField.addOrUpdateKeyAtTime("First Key Value", firstPointInTime.id);
+      keyField.addOrUpdateKeyAtTime("Second Key Value", secondPointInTime.id);
 
       expect(resolver.hasPrevious(keyField), isTrue);
     },
   );
 
   test(
-    "hasPrevious should return false if no previous key or initial value exists",
+    "hasPrevious should return false if no previous key exists",
     () {
       var keyField = StringKeyField("Test");
-      var resolver = KeyFieldResolver();
 
       expect(resolver.hasPrevious(keyField), isFalse);
     },
@@ -155,7 +149,6 @@ main() {
     "nextPointInTimeId should return correct PointInTimeId",
     () {
       var keyField = StringKeyField("Test");
-      var resolver = KeyFieldResolver();
       var futurePointInTime = PointInTime("Future Point in Time");
       repository.addAtIndex(1, futurePointInTime);
 
@@ -172,7 +165,6 @@ main() {
     "getPreviousPointInTimeId should return correct PointInTimeId if a previous key exists",
     () {
       var keyField = StringKeyField("Test");
-      var resolver = KeyFieldResolver();
       var firstPointInTime = PointInTime("First Point in Time");
       var pastPointInTime = PointInTime("Past Point in Time");
       repository.addAtIndex(0, firstPointInTime);
