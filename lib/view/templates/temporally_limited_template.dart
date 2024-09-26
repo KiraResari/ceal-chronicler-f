@@ -2,7 +2,6 @@ import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
 
 import '../../exceptions/point_in_time_not_found_exception.dart';
 import '../../get_it_context.dart';
-import '../../timeline/model/point_in_time.dart';
 import '../../timeline/model/point_in_time_repository.dart';
 
 abstract class TemporallyLimitedTemplate {
@@ -34,15 +33,16 @@ abstract class TemporallyLimitedTemplate {
   }
 
   bool _leftIsBeforeRight(PointInTimeId left, PointInTimeId right) {
-    for (PointInTime point in _pointInTimeRepository.pointsInTime) {
-      if (point.id == left) {
-        return true;
-      }
-      if (point.id == right) {
-        return false;
-      }
+    final pointsInTime = _pointInTimeRepository.pointsInTime;
+
+    final leftIndex = pointsInTime.indexWhere((point) => point.id == left);
+    final rightIndex = pointsInTime.indexWhere((point) => point.id == right);
+
+    if (leftIndex == -1 || rightIndex == -1) {
+      throw PointInTimeNotFoundException();
     }
-    throw PointInTimeNotFoundException();
+
+    return leftIndex < rightIndex;
   }
 
   String getTemporalInvalidityReason(PointInTimeId referencePointId) {

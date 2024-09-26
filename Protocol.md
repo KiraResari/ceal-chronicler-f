@@ -1351,7 +1351,7 @@
   * I could check if the `mainViewTemplate` is a `CharacterViewTemplate` and then  check against that, but I think I can also abstract that a bit
   * Okay, so far, so good, but now I am stuck at trying to create a `TimeBarPanelController` that the `PointInTimeButton` can use, but for some strange reason now the test 'Deleting first point in time should make remaining point in time active' fails, and I can also observe that strange behavior live
     * It would seem that for some strange reason, the `isButtonEnabled` method is not called for the remaining button, even though that should happen
-    * `TimeBarPanelController` extends `ProcessorListener`, so the watched method should trigger when an update in the proecessors happenes
+    * `TimeBarPanelController` extends `ProcessorListener`, so the watched method should trigger when an update in the proecessors happens
     * But strangely, that only happens for the `TimeBarPanelController` of the disposed old `PointInTimeButton`
     * Ah, okay, I think I understand the problem, even though I don't really understand why it behaves like that
       * Apparently, the `PointInTimeButton` for the second point in time addresses the `TimeBarPanelController` from the first `PointInTimeButton`, which is really, really horrible behavior! =>,<=

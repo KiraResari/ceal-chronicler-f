@@ -10,7 +10,9 @@ import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
 import 'package:ceal_chronicler_f/timeline/widgets/time_bar_controller.dart';
+import 'package:ceal_chronicler_f/view/templates/character_view_template.dart';
 import 'package:ceal_chronicler_f/view/view_processor.dart';
+import 'package:ceal_chronicler_f/view/view_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../mocks/file_service_mock_lite.dart';
@@ -18,14 +20,17 @@ import '../../mocks/file_service_mock_lite.dart';
 main() {
   late PointInTimeRepository pointInTimeRepository;
   late CharacterRepository characterRepository;
+  late ViewRepository viewRepository;
   late TimeBarController controller;
 
   setUp(() {
     getIt.reset();
     pointInTimeRepository = PointInTimeRepository();
     characterRepository = CharacterRepository();
+    viewRepository = ViewRepository();
     getIt.registerSingleton<PointInTimeRepository>(pointInTimeRepository);
     getIt.registerSingleton<CharacterRepository>(characterRepository);
+    getIt.registerSingleton<ViewRepository>(viewRepository);
     getIt.registerSingleton<CommandHistory>(CommandHistory());
     getIt.registerSingleton<MessageBarState>(MessageBarState());
     getIt.registerSingleton<FileProcessor>(FileProcessorMockLite());
@@ -72,4 +77,29 @@ main() {
 
     expect(controller.canPointBeDeleted(laterPoint), isFalse);
   });
+
+  test(
+    "When character view is open, point before character's first appearance should not be selectable",
+    () {
+      PointInTime secondPoint = pointInTimeRepository.createNewAtIndex(1);
+      PointInTime thirdPoint = pointInTimeRepository.createNewAtIndex(2);
+      var character = Character(thirdPoint.id);
+      var characterViewTemplate = CharacterViewTemplate(character);
+      viewRepository.mainViewTemplate = characterViewTemplate;
+
+      expect(controller.isButtonEnabled(secondPoint), isFalse);
+    },
+  );
+
+  test(
+    "When character view is open, point of character's first appearance should be selectable",
+        () {
+      PointInTime secondPoint = pointInTimeRepository.createNewAtIndex(1);
+      var character = Character(secondPoint.id);
+      var characterViewTemplate = CharacterViewTemplate(character);
+      viewRepository.mainViewTemplate = characterViewTemplate;
+
+      expect(controller.isButtonEnabled(secondPoint), isTrue);
+    },
+  );
 }

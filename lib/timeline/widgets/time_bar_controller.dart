@@ -1,17 +1,19 @@
-import 'package:ceal_chronicler_f/characters/model/character_repository.dart';
-import 'package:ceal_chronicler_f/commands/processor_listener.dart';
-import 'package:ceal_chronicler_f/key_fields/key_field_info.dart';
-import 'package:ceal_chronicler_f/key_fields/key_field_resolver.dart';
-import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
+import 'package:ceal_chronicler_f/view/templates/temporally_limited_template.dart';
 
 import '../../characters/model/character.dart';
+import '../../characters/model/character_repository.dart';
+import '../../commands/processor_listener.dart';
 import '../../get_it_context.dart';
+import '../../key_fields/key_field_info.dart';
 import '../../key_fields/key_field_info_group.dart';
+import '../../key_fields/key_field_resolver.dart';
 import '../../view/commands/activate_point_in_time_command.dart';
+import '../../view/view_repository.dart';
 import '../commands/create_point_in_time_command.dart';
 import '../commands/delete_point_in_time_command.dart';
 import '../commands/rename_point_in_time_command.dart';
 import '../model/point_in_time.dart';
+import '../model/point_in_time_id.dart';
 import '../model/point_in_time_repository.dart';
 
 class TimeBarController extends ProcessorListener {
@@ -25,6 +27,7 @@ class TimeBarController extends ProcessorListener {
 
   final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
   final _characterRepository = getIt.get<CharacterRepository>();
+  final _viewRepository = getIt.get<ViewRepository>();
   final _keyFieldResolver = getIt.get<KeyFieldResolver>();
 
   TimeBarController() : super();
@@ -59,7 +62,7 @@ class TimeBarController extends ProcessorListener {
       List<KeyFieldInfo> keyFieldInfos = character.getKeyInfosAt(point.id);
       if (keyFieldInfos.isNotEmpty) {
         String characterName =
-        _keyFieldResolver.getCurrentValue(character.name);
+            _keyFieldResolver.getCurrentValue(character.name);
         String groupName = "Character '$characterName'";
         var group = KeyFieldInfoGroup(groupName, keyFieldInfos);
         blockingKeys.add(group);
@@ -178,7 +181,18 @@ class TimeBarController extends ProcessorListener {
     viewProcessor.process(command);
   }
 
-  bool isButtonEnabled(PointInTime pointInTime) {
-    return _pointInTimeRepository.activePointInTime != pointInTime;
+  bool isButtonEnabled(PointInTime pointInTime) =>
+      _isNotActive(pointInTime) && _isInsideTemporalLimits(pointInTime);
+
+  bool _isNotActive(PointInTime pointInTime) =>
+      _pointInTimeRepository.activePointInTime != pointInTime;
+
+  bool _isInsideTemporalLimits(PointInTime pointInTime) {
+    final mainViewTemplate = _viewRepository.mainViewTemplate;
+    if (mainViewTemplate is TemporallyLimitedTemplate) {
+      return (mainViewTemplate as TemporallyLimitedTemplate)
+          .existsAt(pointInTime.id);
+    }
+    return true;
   }
 }
