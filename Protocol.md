@@ -1371,6 +1371,13 @@
 
 [Time elapsed so far: 93.5 hours]
 
+# 28-Sep-2024
+
+* Now continuing with this
+* Next, I want to add a "Last Appearance" field to the Character
+  * That one is very similar to the First Appearance, so hopefully that'll be easier to do
+  * The main difference is that this one can also be empty
+
 # TODO
 
 * 

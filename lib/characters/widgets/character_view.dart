@@ -6,11 +6,12 @@ import '../../key_fields/widgets/string_key_field_view.dart';
 import '../../main_view/main_view_candidate.dart';
 import '../../overview_view/return_to_overview_view_button.dart';
 import '../../timeline/model/point_in_time.dart';
+import '../../timeline/model/point_in_time_id.dart';
 import '../model/character.dart';
 import 'character_view_controller.dart';
 import 'goto_point_in_time_button.dart';
 
-class CharacterView extends MainViewCandidate{
+class CharacterView extends MainViewCandidate {
   final Character character;
 
   const CharacterView({super.key, required this.character});
@@ -72,6 +73,11 @@ class CharacterView extends MainViewCandidate{
           "First Appearance",
           _buildFirstAppearanceBlock(context),
         ),
+        _buildTableRow(
+          context,
+          "Last Appearance",
+          _buildLastAppearanceBlock(context),
+        ),
       ],
     );
   }
@@ -107,18 +113,51 @@ class CharacterView extends MainViewCandidate{
         context.watch<CharacterViewController>().firstAppearance;
     List<PointInTime> validFirstAppearances =
         context.watch<CharacterViewController>().validFirstAppearances;
-    List<DropdownMenuEntry<PointInTime>> entries = validFirstAppearances
+    List<DropdownMenuEntry<PointInTime>> entries =
+        _buildPointInTimeDropdownMenuEntryList(validFirstAppearances);
+    return DropdownMenu<PointInTime>(
+      initialSelection: firstAppearance,
+      dropdownMenuEntries: entries,
+      onSelected: (PointInTime? point) {
+        controller.updateFirstAppearance(point);
+      },
+    );
+  }
+
+  List<DropdownMenuEntry<PointInTime>> _buildPointInTimeDropdownMenuEntryList(
+    List<PointInTime> pointInTimeList,
+  ) {
+    return pointInTimeList
         .map<DropdownMenuEntry<PointInTime>>((PointInTime point) {
       return DropdownMenuEntry<PointInTime>(
         value: point,
         label: point.name,
       );
     }).toList();
+  }
+
+  Widget _buildLastAppearanceBlock(BuildContext context) {
+    return Row(
+      children: [
+        _buildLastAppearanceDropdown(context),
+        _buildGotoLastAppearanceButton(context),
+      ],
+    );
+  }
+
+  Widget _buildLastAppearanceDropdown(BuildContext context) {
+    var controller = context.read<CharacterViewController>();
+    PointInTime? lastAppearance =
+        context.watch<CharacterViewController>().lastAppearance;
+    List<PointInTime> validLastAppearances =
+        context.watch<CharacterViewController>().validLastAppearances;
+    List<DropdownMenuEntry<PointInTime>> entries =
+        _buildPointInTimeDropdownMenuEntryList(validLastAppearances);
     return DropdownMenu<PointInTime>(
-      initialSelection: firstAppearance,
+      initialSelection: lastAppearance,
       dropdownMenuEntries: entries,
       onSelected: (PointInTime? point) {
-        controller.updateFirstAppearance(point);
+        controller.updateLastAppearance(point);
       },
     );
   }
@@ -133,7 +172,18 @@ class CharacterView extends MainViewCandidate{
       icon: Icons.arrow_left,
       pointInTimeId: firstAppearance.id,
       tooltip: "Go to first appearance",
-      disabledReason: "Already at first appearance",
+      referenceName: "first appearance",
+    );
+  }
+
+  Widget _buildGotoLastAppearanceButton(BuildContext context) {
+    PointInTimeId? lastAppearance =
+        context.watch<CharacterViewController>().character.lastAppearance;
+    return GotoPointInTimeButton(
+      icon: Icons.arrow_right,
+      pointInTimeId: lastAppearance,
+      tooltip: "Go to last appearance",
+      referenceName: "last appearance",
     );
   }
 }

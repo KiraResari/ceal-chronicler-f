@@ -27,6 +27,6 @@ class UpdateFirstAppearanceCommand extends Command {
 
   @override
   String get undoMessage =>
-      "Undid updating of first apperance of character";
+      "Undid updating of first appearance of character";
 
 }

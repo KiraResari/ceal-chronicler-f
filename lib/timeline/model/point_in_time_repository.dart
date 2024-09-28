@@ -163,9 +163,26 @@ class PointInTimeRepository {
     return pointsInTime.sublist(0, referencePointIndex + 1);
   }
 
+  List<PointInTime> pointsInTimeIncludingAndAfter(
+    PointInTimeId referencePointId,
+  ) {
+    PointInTime? referencePoint = get(referencePointId);
+    if(referencePoint != null) {
+      var referencePointIndex = pointsInTime.indexOf(referencePoint);
+      return pointsInTime.sublist(referencePointIndex);
+    }
+    throw PointInTimeNotFoundException();
+  }
+
   bool pointIsInTheFuture(PointInTime referencePoint) {
     var activePointInTimeIndex = pointsInTime.indexOf(activePointInTime);
     var referencePointIndex = pointsInTime.indexOf(referencePoint);
     return referencePointIndex > activePointInTimeIndex;
+  }
+
+  bool pointIsInThePast(PointInTime referencePoint) {
+    var activePointInTimeIndex = pointsInTime.indexOf(activePointInTime);
+    var referencePointIndex = pointsInTime.indexOf(referencePoint);
+    return referencePointIndex < activePointInTimeIndex;
   }
 }

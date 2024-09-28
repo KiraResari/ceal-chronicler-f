@@ -53,4 +53,26 @@ main() {
       expect(validFirstAppearances, isNot(contains(thirdPointInTime)));
     },
   );
+
+  test(
+    "validLastAppearances should not return points in time before any keys",
+        () {
+      PointInTime firstPointInTime = pointInTimeRepository.activePointInTime;
+      var secondPointInTime = PointInTime("Second Point In Time");
+      var thirdPointInTime = PointInTime("Third Point In Time");
+      pointInTimeRepository.addAtIndex(1, secondPointInTime);
+      pointInTimeRepository.addAtIndex(2, thirdPointInTime);
+      var character = Character(secondPointInTime.id);
+      characterRepository.add(character);
+      character.name.addOrUpdateKeyAtTime("New Name", secondPointInTime.id);
+      var controller = CharacterViewController(character);
+
+      List<PointInTime> validLastAppearances =
+          controller.validLastAppearances;
+
+      expect(validLastAppearances,
+          containsAll([secondPointInTime, thirdPointInTime]));
+      expect(validLastAppearances, isNot(contains(firstPointInTime)));
+    },
+  );
 }

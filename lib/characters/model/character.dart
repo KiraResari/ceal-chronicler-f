@@ -10,10 +10,12 @@ import 'character_id.dart';
 class Character extends IdHolder<CharacterId> {
   static const String nameKey = "name";
   static const String firstApperanceKey = "firstAppearance";
+  static const String lastApperanceKey = "lastAppearance";
   static const defaultName = "New Character";
 
   StringKeyField name = StringKeyField(defaultName);
   PointInTimeId firstAppearance;
+  PointInTimeId? lastAppearance;
 
   Character(this.firstAppearance) : super(CharacterId());
 
@@ -23,17 +25,27 @@ class Character extends IdHolder<CharacterId> {
   Character.fromJson(Map<String, dynamic> json)
       : name = StringKeyField.fromJson(json[nameKey]),
         firstAppearance = PointInTimeId.fromJson(json[firstApperanceKey]),
+        lastAppearance = _determineLastAppearanceFromJson(json),
         super(CharacterId.fromString(json[IdHolder.idKey]));
+
+  static PointInTimeId? _determineLastAppearanceFromJson(
+      Map<String, dynamic> json) {
+    if (json[lastApperanceKey] == null) {
+      return null;
+    }
+    return PointInTimeId.fromJson(json[lastApperanceKey]);
+  }
 
   @override
   String toString() =>
-      'Character{id: $id, name: $name, firstAppearance: $firstAppearance}';
+      'Character{id: $id, name: $name, firstAppearance: $firstAppearance, lastAppearance: $lastAppearance}';
 
   @override
   Map<String, dynamic> toJson() => {
         IdHolder.idKey: id.uuid,
         nameKey: name,
         firstApperanceKey: firstAppearance,
+        lastApperanceKey: lastAppearance,
       };
 
   @override

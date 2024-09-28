@@ -14,4 +14,53 @@ main() {
       expect(decoded, equals(original));
     },
   );
+
+  test(
+    "Parsing Character to JSON and back should preserve first appearance",
+        () {
+      var original = Character(PointInTimeId());
+
+      String jsonString = original.toJsonString();
+      var decoded = Character.fromJsonString(jsonString);
+
+      expect(decoded.firstAppearance, equals(original.firstAppearance));
+    },
+  );
+
+  test(
+    "Parsing Character to JSON and back should preserve name",
+        () {
+      var original = Character(PointInTimeId());
+
+      String jsonString = original.toJsonString();
+      var decoded = Character.fromJsonString(jsonString);
+
+      expect(decoded.name, equals(original.name));
+    },
+  );
+
+  test(
+    "Parsing Character to JSON and back should preserve last appearance if not set",
+        () {
+      var original = Character(PointInTimeId());
+
+      String jsonString = original.toJsonString();
+      var decoded = Character.fromJsonString(jsonString);
+
+      expect(decoded.lastAppearance, equals(original.lastAppearance));
+    },
+  );
+
+  test(
+    "Parsing Character to JSON and back should preserve last appearance if set",
+        () {
+      var original = Character(PointInTimeId());
+      original.lastAppearance = PointInTimeId();
+
+      String jsonString = original.toJsonString();
+      var decoded = Character.fromJsonString(jsonString);
+
+      expect(decoded.lastAppearance, equals(original.lastAppearance));
+    },
+  );
 }

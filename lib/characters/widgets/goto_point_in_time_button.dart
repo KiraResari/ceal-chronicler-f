@@ -10,29 +10,40 @@ import '../../view/view_processor.dart';
 class GotoPointInTimeButton extends SmallCircularButton {
   final viewProcessor = getIt.get<ViewProcessor>();
   final pointInTimeRepository = getIt.get<PointInTimeRepository>();
-  final PointInTimeId pointInTimeId;
+  final PointInTimeId? pointInTimeId;
   @override
   final String? tooltip;
-  final String? disabledReason;
+  final String referenceName;
 
   GotoPointInTimeButton({
     super.key,
     required super.icon,
     required this.pointInTimeId,
+    required this.referenceName,
     this.tooltip,
-    this.disabledReason,
   });
 
   @override
   void onPressed(BuildContext context) {
-    var command = ActivatePointInTimeCommand(pointInTimeId);
-    viewProcessor.process(command);
+    if (pointInTimeId != null) {
+      var command = ActivatePointInTimeCommand(pointInTimeId!);
+      viewProcessor.process(command);
+    }
   }
 
   @override
   bool isEnabled(BuildContext context) =>
+      pointInTimeId != null &&
       pointInTimeRepository.activePointInTime.id != pointInTimeId;
 
   @override
-  String? getDisabledReason(BuildContext context) => disabledReason;
+  String? getDisabledReason(BuildContext context) {
+    if (pointInTimeId == null) {
+      return "No $referenceName to go to";
+    }
+    if (pointInTimeRepository.activePointInTime.id == pointInTimeId){
+      return "This is already the $referenceName";
+    }
+    return "Button should be active; this might be a bug";
+  }
 }
