@@ -1377,6 +1377,10 @@
 * Next, I want to add a "Last Appearance" field to the Character
   * That one is very similar to the First Appearance, so hopefully that'll be easier to do
   * The main difference is that this one can also be empty
+  * Right, I got the basic functionality down now, but there's still a few things I need to implement:
+    * Points in time past the last appearance should be unselectable, similar to first appearance
+      * Thanks to the groundwork I laid down last time, that was very easy to implement
+    * Currently it's still possible to select a point in time as first appearance that is after the last appearance 
 
 # TODO
 

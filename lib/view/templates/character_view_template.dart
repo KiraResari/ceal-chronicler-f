@@ -27,7 +27,7 @@ class CharacterViewTemplate extends TemporallyLimitedTemplate
   PointInTimeId? get firstAppearance => character.firstAppearance;
 
   @override
-  PointInTimeId? get lastAppearance => null;
+  PointInTimeId? get lastAppearance => character.lastAppearance;
 
   @override
   String get identifier{
