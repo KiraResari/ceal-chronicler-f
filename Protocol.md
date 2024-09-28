@@ -1385,6 +1385,11 @@
     * Removal of the last appearance is currently not yet implemented
       * I now implemented this via a button (because it didn't want to fit a "null" option into the dropdown)
       * However, that has still the little cosmetic bug that while removing the last appearance works for all logical purposes, it still stays in the dropdown box
+        * I tried working around that, but it seems in order to fix that I'd need to do some major rework about that whole logic there, which is really not justifiable at this point, so I'll just leave it at this 
+* This is as far as I'm getting with this today
+* Now all that's left for V1-0 is implementing the deletion of characters
+
+[Time elapsed so far: 96.75 hours]
 
 # TODO
 
@@ -1426,24 +1431,24 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 ### Character View
 
 - [x] There is character screen which displays all the information related to a character at a given time
-- [ ] The character screen has the following editable fields:
-  - [ ] First Appearance
+- [x] The character screen has the following editable fields:
+  - [x] First Appearance
     - [x] By default contains the point in time at which the character was created
     - [x] Can be edited to other points in time
-    - [ ] Can't be changed to point in  time past last appearance  (if that is filled)
+    - [x] Can't be changed to point in  time past last appearance  (if that is filled)
     - [x] Only Points in time before which no more changes happen to the character can be selected
     - [x] Allows jumping to that point in time
-    - [ ] Points in time before the character's first appearance become greyed out in the time bar
-  - [ ] Last appearance
-    - [ ] Is empty by default
-    - [ ] Can hold points in time, including the first appearance, but not before that
-    - [ ] Points in time can be selected from a menu (e.g. dropdown)
-      - [ ] Only Points in time after which no more changes happen to the character can be selected
-    - [ ] Allows jumping to that point in time
-    - [ ] Points in time after the character's last appearance become greyed out in the time bar
+    - [x] Points in time before the character's first appearance become greyed out in the time bar
+  - [x] Last appearance
+    - [x] Is empty by default
+    - [x] Can hold points in time, including the first appearance, but not before that
+    - [x] Points in time can be selected from a menu (e.g. dropdown)
+      - [x] Only Points in time after which no more changes happen to the character can be selected
+    - [x] Allows jumping to that point in time
+    - [x] Points in time after the character's last appearance become greyed out in the time bar
   - [x] Name 
 - [x] Editing a field causes the contents to change from that point in time onward, until it is edited again
-  - [ ] The exceptions are First and Last Appearance, which are logically always the same within a character 
+  - [x] The exceptions are First and Last Appearance, which are logically always the same within a character 
   - [x] It is possible to jump back and forth to points in time where a field's value has been edited
 - [ ] Allows complete deletion of existing characters (with warning)
 - [x] The character screen has a back button, which returns back to the main view
@@ -1456,3 +1461,11 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [x] Actions can be re-done
 - [x] You can navigate back to the last visited view
 - [x] You can navigate forward, which undoes navigating backwards
+
+# Known Issues
+
+* (minor impact, difficult to solve) When a last appearance is deleted, the value in the "Last Appearance" dropdown does not get removed
+  * That is because there's no way to directly change the selected value of a `DropdownMenu` from the outside, only the `initialSelection`
+* (minor impact, very difficult to solve) Undoing and redoing moving of first and last appearances can sometimes end up with the active point of time being a point at which the character does not exist
+  * This is because the active point of time changes as necessary if it the moving of a first or last appearance puts it out of bounds
+    * That moving is done in the `CharacterViewController` and not the `UpdateFirstAppearanceCommand` or `UpdateLastAppearanceCommand` because commands should not contain other commands, so this is a logical conundrom

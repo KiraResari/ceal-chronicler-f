@@ -87,17 +87,17 @@ class CharacterViewController extends ProcessorListener {
 
   List<PointInTime> get validLastAppearances {
     return _pointInTimeRepository
-        .pointsInTimeIncludingAndAfter(_earliestPossibleLastApperance);
+        .pointsInTimeIncludingAndAfter(_earliestPossibleLastAppearance);
   }
 
-  PointInTimeId get _earliestPossibleLastApperance {
-    PointInTimeId earliestPossibleLastApperance = character.firstAppearance;
+  PointInTimeId get _earliestPossibleLastAppearance {
+    PointInTimeId earliestPossibleLastAppearance = character.firstAppearance;
     for (PointInTime point in _pointInTimeRepository.pointsInTime) {
       if (nameField.hasKeyAt(point.id)) {
-        earliestPossibleLastApperance = point.id;
+        earliestPossibleLastAppearance = point.id;
       }
     }
-    return earliestPossibleLastApperance;
+    return earliestPossibleLastAppearance;
   }
 
   void deleteLastAppearance(Character character) {
