@@ -1381,6 +1381,8 @@
     * Points in time past the last appearance should be unselectable, similar to first appearance
       * Thanks to the groundwork I laid down last time, that was very easy to implement
     * Currently it's still possible to select a point in time as first appearance that is after the last appearance 
+      * I was able to get that to work too now
+    * Removal of the last appearance is currently not yet implemented
 
 # TODO
 

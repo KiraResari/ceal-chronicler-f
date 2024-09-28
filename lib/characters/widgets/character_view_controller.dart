@@ -92,7 +92,8 @@ class CharacterViewController extends ProcessorListener {
 
   PointInTime get _latestPossibleFirstAppearance {
     for (PointInTime point in _pointInTimeRepository.pointsInTime) {
-      if (nameField.hasKeyAt(point.id)) {
+      if (nameField.hasKeyAt(point.id) ||
+          point.id == character.lastAppearance) {
         return point;
       }
     }
