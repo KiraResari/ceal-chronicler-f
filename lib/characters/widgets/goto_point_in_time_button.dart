@@ -11,8 +11,6 @@ class GotoPointInTimeButton extends SmallCircularButton {
   final viewProcessor = getIt.get<ViewProcessor>();
   final pointInTimeRepository = getIt.get<PointInTimeRepository>();
   final PointInTimeId? pointInTimeId;
-  @override
-  final String? tooltip;
   final String referenceName;
 
   GotoPointInTimeButton({
@@ -20,7 +18,6 @@ class GotoPointInTimeButton extends SmallCircularButton {
     required super.icon,
     required this.pointInTimeId,
     required this.referenceName,
-    this.tooltip,
   });
 
   @override
@@ -46,4 +43,7 @@ class GotoPointInTimeButton extends SmallCircularButton {
     }
     return "Button should be active; this might be a bug";
   }
+
+  @override
+  String? get tooltip => "Go to $referenceName";
 }

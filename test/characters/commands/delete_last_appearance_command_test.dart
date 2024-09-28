@@ -1,4 +1,4 @@
-import 'package:ceal_chronicler_f/characters/commands/update_last_appearance_command.dart';
+import 'package:ceal_chronicler_f/characters/commands/delete_last_appearance_command.dart';
 import 'package:ceal_chronicler_f/characters/model/character.dart';
 import 'package:ceal_chronicler_f/commands/command_history.dart';
 import 'package:ceal_chronicler_f/commands/command_processor.dart';
@@ -12,7 +12,6 @@ main() {
   late CommandProcessor processor;
 
   var oldLastAppearance = PointInTimeId();
-  var newLastAppearance = PointInTimeId();
 
   setUp(() {
     getIt.reset();
@@ -23,15 +22,15 @@ main() {
   });
 
   test(
-    "Processing command should change last appearance",
+    "Processing command should delete last appearance",
     () {
       var character = Character(PointInTimeId());
       character.lastAppearance = oldLastAppearance;
-      var command = UpdateLastAppearanceCommand(character, newLastAppearance);
+      var command = DeleteLastAppearanceCommand(character);
 
       processor.process(command);
 
-      expect(character.lastAppearance, equals(newLastAppearance));
+      expect(character.lastAppearance, isNull);
     },
   );
 
@@ -40,7 +39,7 @@ main() {
     () {
       var character = Character(PointInTimeId());
       character.lastAppearance = oldLastAppearance;
-      var command = UpdateLastAppearanceCommand(character, newLastAppearance);
+      var command = DeleteLastAppearanceCommand(character);
 
       processor.process(command);
       processor.undo();
@@ -54,55 +53,13 @@ main() {
     () {
       var character = Character(PointInTimeId());
       character.lastAppearance = oldLastAppearance;
-      var command = UpdateLastAppearanceCommand(character, newLastAppearance);
+      var command = DeleteLastAppearanceCommand(character);
 
       processor.process(command);
       processor.undo();
       processor.redo();
-
-      expect(character.lastAppearance, equals(newLastAppearance));
-    },
-  );
-
-  test(
-    "Assigning last appearance should work",
-    () {
-      var character = Character(PointInTimeId());
-      character.lastAppearance = null;
-      var command = UpdateLastAppearanceCommand(character, newLastAppearance);
-
-      processor.process(command);
-
-      expect(character.lastAppearance, newLastAppearance);
-    },
-  );
-
-  test(
-    "Undoing assignment of last appearance should work",
-        () {
-      var character = Character(PointInTimeId());
-      character.lastAppearance = null;
-      var command = UpdateLastAppearanceCommand(character, newLastAppearance);
-
-      processor.process(command);
-      processor.undo();
 
       expect(character.lastAppearance, isNull);
-    },
-  );
-
-  test(
-    "Redoing assignment of last appearance should work",
-        () {
-      var character = Character(PointInTimeId());
-      character.lastAppearance = null;
-      var command = UpdateLastAppearanceCommand(character, newLastAppearance);
-
-      processor.process(command);
-      processor.undo();
-      processor.redo();
-
-      expect(character.lastAppearance, newLastAppearance);
     },
   );
 }

@@ -1383,6 +1383,8 @@
     * Currently it's still possible to select a point in time as first appearance that is after the last appearance 
       * I was able to get that to work too now
     * Removal of the last appearance is currently not yet implemented
+      * I now implemented this via a button (because it didn't want to fit a "null" option into the dropdown)
+      * However, that has still the little cosmetic bug that while removing the last appearance works for all logical purposes, it still stays in the dropdown box
 
 # TODO
 

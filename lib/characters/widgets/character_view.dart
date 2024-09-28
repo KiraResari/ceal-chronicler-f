@@ -9,6 +9,7 @@ import '../../timeline/model/point_in_time.dart';
 import '../../timeline/model/point_in_time_id.dart';
 import '../model/character.dart';
 import 'character_view_controller.dart';
+import 'delete_last_appearance_button.dart';
 import 'goto_point_in_time_button.dart';
 
 class CharacterView extends MainViewCandidate {
@@ -136,12 +137,27 @@ class CharacterView extends MainViewCandidate {
     }).toList();
   }
 
+  Widget _buildGotoFirstAppearanceButton(BuildContext context) {
+    PointInTimeId firstAppearance =
+        context.watch<CharacterViewController>().character.firstAppearance;
+    return GotoPointInTimeButton(
+      icon: Icons.arrow_left,
+      pointInTimeId: firstAppearance,
+      referenceName: "first appearance",
+    );
+  }
+
   Widget _buildLastAppearanceBlock(BuildContext context) {
+    List<Widget> lastAppearanceBlockElements = [
+      _buildLastAppearanceDropdown(context),
+      _buildGotoLastAppearanceButton(context),
+    ];
+    if (character.lastAppearance != null) {
+      lastAppearanceBlockElements
+          .add(DeleteLastAppearanceButton(character: character));
+    }
     return Row(
-      children: [
-        _buildLastAppearanceDropdown(context),
-        _buildGotoLastAppearanceButton(context),
-      ],
+      children: lastAppearanceBlockElements,
     );
   }
 
@@ -153,27 +169,15 @@ class CharacterView extends MainViewCandidate {
         context.watch<CharacterViewController>().validLastAppearances;
     List<DropdownMenuEntry<PointInTime>> entries =
         _buildPointInTimeDropdownMenuEntryList(validLastAppearances);
-    return DropdownMenu<PointInTime>(
+    var dropdownMenu = DropdownMenu<PointInTime>(
       initialSelection: lastAppearance,
       dropdownMenuEntries: entries,
       onSelected: (PointInTime? point) {
         controller.updateLastAppearance(point);
       },
     );
-  }
 
-  Widget _buildGotoFirstAppearanceButton(BuildContext context) {
-    PointInTime? firstAppearance =
-        context.watch<CharacterViewController>().firstAppearance;
-    if (firstAppearance == null) {
-      return Text("No first apperance to go to");
-    }
-    return GotoPointInTimeButton(
-      icon: Icons.arrow_left,
-      pointInTimeId: firstAppearance.id,
-      tooltip: "Go to first appearance",
-      referenceName: "first appearance",
-    );
+    return dropdownMenu;
   }
 
   Widget _buildGotoLastAppearanceButton(BuildContext context) {
@@ -182,7 +186,6 @@ class CharacterView extends MainViewCandidate {
     return GotoPointInTimeButton(
       icon: Icons.arrow_right,
       pointInTimeId: lastAppearance,
-      tooltip: "Go to last appearance",
       referenceName: "last appearance",
     );
   }

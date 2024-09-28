@@ -1,3 +1,4 @@
+import '../commands/delete_last_appearance_command.dart';
 import '../commands/update_first_appearance_command.dart';
 import '../../view/commands/activate_point_in_time_command.dart';
 import '../../commands/processor_listener.dart';
@@ -57,32 +58,16 @@ class CharacterViewController extends ProcessorListener {
   }
 
   void updateLastAppearance(PointInTime? newLastAppearance) {
-    if (_lastAppearanceChanged(newLastAppearance)) {
-      UpdateLastAppearanceCommand command =
-          _prepareUpdateLastAppearanceCommand(newLastAppearance);
+    if (newLastAppearance != null &&
+        newLastAppearance.id != character.lastAppearance) {
+      var command =
+          UpdateLastAppearanceCommand(character, newLastAppearance.id);
       commandProcessor.process(command);
-      if (newLastAppearance != null &&
-          _pointInTimeRepository.pointIsInThePast(newLastAppearance)) {
+      if (_pointInTimeRepository.pointIsInThePast(newLastAppearance)) {
         var viewCommand = ActivatePointInTimeCommand(newLastAppearance.id);
         viewProcessor.process(viewCommand);
       }
     }
-  }
-
-  bool _lastAppearanceChanged(PointInTime? newLastAppearance) {
-    if (newLastAppearance == null) {
-      return character.lastAppearance != null;
-    }
-    return newLastAppearance.id != character.lastAppearance;
-  }
-
-  UpdateLastAppearanceCommand _prepareUpdateLastAppearanceCommand(
-    PointInTime? newLastAppearance,
-  ) {
-    if (newLastAppearance == null) {
-      return UpdateLastAppearanceCommand.remove(character);
-    }
-    return UpdateLastAppearanceCommand(character, newLastAppearance.id);
   }
 
   List<PointInTime> get validFirstAppearances {
@@ -113,5 +98,10 @@ class CharacterViewController extends ProcessorListener {
       }
     }
     return earliestPossibleLastApperance;
+  }
+
+  void deleteLastAppearance(Character character) {
+    var command = DeleteLastAppearanceCommand(character);
+    commandProcessor.process(command);
   }
 }
