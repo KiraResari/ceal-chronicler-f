@@ -168,27 +168,15 @@ class PointInTimeRepository {
     throw PointInTimeNotFoundException();
   }
 
-  bool pointIsInTheFuture(PointInTime referencePoint) {
-    var activePointInTimeIndex = pointsInTime.indexOf(activePointInTime);
-    var referencePointIndex = pointsInTime.indexOf(referencePoint);
+  bool pointIsInTheFuture(PointInTimeId id) {
+    int activePointInTimeIndex = pointsInTime.indexOf(activePointInTime);
+    int referencePointIndex = _getPointIndexById(id);
     return referencePointIndex > activePointInTimeIndex;
   }
 
-  bool pointIsInThePast(PointInTime referencePoint) {
-    var activePointInTimeIndex = pointsInTime.indexOf(activePointInTime);
-    var referencePointIndex = pointsInTime.indexOf(referencePoint);
+  bool pointIsInThePast(PointInTimeId id) {
+    int activePointInTimeIndex = pointsInTime.indexOf(activePointInTime);
+    int referencePointIndex = _getPointIndexById(id);
     return referencePointIndex < activePointInTimeIndex;
-  }
-
-  bool activePointInTimeIsNotBefore(PointInTimeId id) {
-    int activePointIndex = getPointIndex(activePointInTime);
-    int comparisonPointIndex = _getPointIndexById(id);
-    return activePointIndex >= comparisonPointIndex;
-  }
-
-  bool activePointInTimeIsNotAfter(PointInTimeId id) {
-    int activePointIndex = getPointIndex(activePointInTime);
-    int comparisonPointIndex = _getPointIndexById(id);
-    return activePointIndex <= comparisonPointIndex;
   }
 }

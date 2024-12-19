@@ -117,45 +117,12 @@ main() {
   );
 
   test(
-    "activePointInTimeIsNotBefore should return false if checked against later point",
-    () {
-      PointInTime laterPoint = repository.createNewAtIndex(1);
-
-      bool result = repository.activePointInTimeIsNotBefore(laterPoint.id);
-
-      expect(result, isFalse);
-    },
-  );
-
-  test(
-    "activePointInTimeIsNotBefore should return true if checked against earlier point",
-    () {
-      PointInTime earlierPoint = repository.createNewAtIndex(0);
-
-      bool result = repository.activePointInTimeIsNotBefore(earlierPoint.id);
-
-      expect(result, isTrue);
-    },
-  );
-
-  test(
-    "activePointInTimeIsNotBefore should return true if checked against active point",
-    () {
-      PointInTime activePoint = repository.activePointInTime;
-
-      bool result = repository.activePointInTimeIsNotBefore(activePoint.id);
-
-      expect(result, isTrue);
-    },
-  );
-
-  test(
     "pointIsInTheFuture should return true if reference point is in the future",
     () {
       PointInTime referencePoint = PointInTime("Test");
       repository.addAtIndex(1, referencePoint);
 
-      bool result = repository.pointIsInTheFuture(referencePoint);
+      bool result = repository.pointIsInTheFuture(referencePoint.id);
 
       expect(result, isTrue);
     },
@@ -167,7 +134,7 @@ main() {
       PointInTime referencePoint = PointInTime("Test");
       repository.addAtIndex(0, referencePoint);
 
-      bool result = repository.pointIsInTheFuture(referencePoint);
+      bool result = repository.pointIsInTheFuture(referencePoint.id);
 
       expect(result, isFalse);
     },
@@ -178,7 +145,7 @@ main() {
     () {
       PointInTime referencePoint = repository.activePointInTime;
 
-      bool result = repository.pointIsInTheFuture(referencePoint);
+      bool result = repository.pointIsInTheFuture(referencePoint.id);
 
       expect(result, isFalse);
     },
@@ -190,7 +157,7 @@ main() {
       PointInTime referencePoint = PointInTime("Test");
       repository.addAtIndex(1, referencePoint);
 
-      bool result = repository.pointIsInThePast(referencePoint);
+      bool result = repository.pointIsInThePast(referencePoint.id);
 
       expect(result, isFalse);
     },
@@ -202,7 +169,7 @@ main() {
       PointInTime referencePoint = PointInTime("Test");
       repository.addAtIndex(0, referencePoint);
 
-      bool result = repository.pointIsInThePast(referencePoint);
+      bool result = repository.pointIsInThePast(referencePoint.id);
 
       expect(result, isTrue);
     },
@@ -213,7 +180,7 @@ main() {
         () {
       PointInTime referencePoint = repository.activePointInTime;
 
-      bool result = repository.pointIsInThePast(referencePoint);
+      bool result = repository.pointIsInThePast(referencePoint.id);
 
       expect(result, isFalse);
     },

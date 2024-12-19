@@ -50,7 +50,7 @@ class CharacterViewController extends ProcessorListener {
       var command =
           UpdateFirstAppearanceCommand(character, newFirstAppearance.id);
       commandProcessor.process(command);
-      if (_pointInTimeRepository.pointIsInTheFuture(newFirstAppearance)) {
+      if (_pointInTimeRepository.pointIsInTheFuture(newFirstAppearance.id)) {
         var viewCommand = ActivatePointInTimeCommand(newFirstAppearance.id);
         viewProcessor.process(viewCommand);
       }
@@ -63,7 +63,7 @@ class CharacterViewController extends ProcessorListener {
       var command =
           UpdateLastAppearanceCommand(character, newLastAppearance.id);
       commandProcessor.process(command);
-      if (_pointInTimeRepository.pointIsInThePast(newLastAppearance)) {
+      if (_pointInTimeRepository.pointIsInThePast(newLastAppearance.id)) {
         var viewCommand = ActivatePointInTimeCommand(newLastAppearance.id);
         viewProcessor.process(viewCommand);
       }
