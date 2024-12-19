@@ -1416,6 +1416,15 @@
 * Next, I'll start adding the UI elements for this, beginning with the Location Overview
   * Hmm, this is very similar to both the `CharacterOverview` and the `IncidentOverview`, so let's see if we can unify the common elements from them
     * Yes, and using Chatty to do so was really time-efficient too! 
+  * Okay, so, the `LocationOverview` first needs the following components to be ready:
+    * `LocationOverviewController`
+    * `LocationButton`
+    * `AddLocationButton`
+    * Again, that's a lot of repetition from what I already have for the characters and incidents, so let's see what I can simplify
+    * The `CharacterOverviewController` and the `IncidentOverviewController` are actually quite different, since you can re-order incidents, and incidents are not temporal entities
+      * However, since locations *are* temporal entities, I should be able to create something like an `TemporalEntityOverviewController` that I can use as base for both `CharacterOverviewController` and `LocationOverviewController`
+        * I now managed to do this again with relative ease through use of Chatty, but also uncovered a bug in the process that was already in but unnoticed before:
+          * Characters still get displayed in the overview at points in time beyond their last appearance 
 
 # TODO
 

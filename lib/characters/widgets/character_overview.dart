@@ -23,7 +23,7 @@ class CharacterOverview
 
   @override
   List<Character> getItems(CharacterOverviewController controller) {
-    return controller.charactersAtActivePointInTime;
+    return controller.entitiesAtActivePointInTime;
   }
 
   @override
