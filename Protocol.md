@@ -1391,9 +1391,27 @@
 
 [Time elapsed so far: 96.75 hours]
 
+# 19-Dec-2024
+
+* Now continuing with this
+* The current status is that we have characters and incidents done
+* Next, I want to work on adding locations
+* What does a location need?
+  * ID
+  * Name
+  * First and last appearance
+  * Connections to other locations
+    * Adjacent locations (with directions)
+    * Locations within a location
+* In addition, characters need to be able to be at locations, and move between locations
+* Looks like locations actually have a lot in common with characters, and I can foresee other types also sharing these similarities, so let's see if we can extract an abstract base class out of these
+  * The likenesses are some sort of ID, name, first appearance and last appearance, which as of now are all the fields that a character has
+  * Ugggh, easier said than done, because I need to figure out how to abstract garbage like    `CharacterId.fromString(json[IdHolder.idKey])`, because I can't just write `T.fromString(json[IdHolder.idKey])` =>,<=
+  * Well, I got it to work now
+
 # TODO
 
-* 
+* Messages when deleting keys use the ID of the point in time instead of the name
 
 # User Story
 
@@ -1414,7 +1432,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
   - [x] If there is only a single point in time, that point in time can't be deleted
 - [x] Points in time can't be re-ordered
 
-## Incidents
+### Incidents
 
 - [x] Incidents can be created at points in time
 - [x] Incidents can be renamed
@@ -1452,6 +1470,17 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
   - [x] It is possible to jump back and forth to points in time where a field's value has been edited
 - [ ] Allows complete deletion of existing characters (with warning)
 - [x] The character screen has a back button, which returns back to the main view
+- [ ] Characters can be assigned to locations
+- [ ] Characters can be unassigned from locations
+
+### Locations
+
+- [ ] have a name
+- [ ] have a first appearance
+- [ ] have a last appearance
+- [ ] can be connected to other locations
+  - [ ] adjacent locations
+  - [ ] locations within other locations
 
 ### Technical
 
