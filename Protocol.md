@@ -1442,6 +1442,10 @@
         * Yes, that should put me into a stable float
   * Okay, I now managed to add the `LocationOverview`, and it looks like that much works nicely, including saving and loading
 * Now, time for some cleanup
+  * I finished some cleanup now, but there's still more to do
+* This is as far as I'm getting with this for today
+
+[Time elapsed so far: 102.25 hours]
 
 # TODO
 
