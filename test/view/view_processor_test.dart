@@ -10,6 +10,7 @@ import 'package:ceal_chronicler_f/io/chronicle_codec.dart';
 import 'package:ceal_chronicler_f/io/file/file_adapter.dart';
 import 'package:ceal_chronicler_f/io/file/file_processor.dart';
 import 'package:ceal_chronicler_f/key_fields/key_field_resolver.dart';
+import 'package:ceal_chronicler_f/locations/model/location_repository.dart';
 import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
 import 'package:ceal_chronicler_f/timeline/commands/create_point_in_time_command.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
@@ -39,6 +40,7 @@ main() {
     getIt.registerSingleton<IncidentRepository>(IncidentRepository());
     characterRepository = CharacterRepository();
     getIt.registerSingleton<CharacterRepository>(characterRepository);
+    getIt.registerSingleton<LocationRepository>(LocationRepository());
     getIt.registerSingleton<ViewRepository>(ViewRepository());
     getIt.registerSingleton<ChronicleCodec>(ChronicleCodec());
     viewProcessor = ViewProcessor();

@@ -1411,6 +1411,8 @@
 * Right, now with that groundwork done, I hope adding locations in their simplest form should be pretty easy
   * Alright, so having locations in their most basic form works now
   * That means, they exist as data objects analogous to the Characters in the code now, and JSON parsing works, but I'm not doing anything with them yet
+* Next will be saving and loading the locations, along with everything else
+  * Right, that works now too
 
 # TODO
 

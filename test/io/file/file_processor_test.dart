@@ -8,6 +8,8 @@ import 'package:ceal_chronicler_f/incidents/model/incident_repository.dart';
 import 'package:ceal_chronicler_f/io/file/file_adapter.dart';
 import 'package:ceal_chronicler_f/io/file/file_processor.dart';
 import 'package:ceal_chronicler_f/io/chronicle_codec.dart';
+import 'package:ceal_chronicler_f/locations/model/location.dart';
+import 'package:ceal_chronicler_f/locations/model/location_repository.dart';
 import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
 import 'package:ceal_chronicler_f/timeline/commands/create_point_in_time_command.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
@@ -21,6 +23,7 @@ main() {
   late PointInTimeRepository pointInTimeRepository;
   late IncidentRepository incidentRepository;
   late CharacterRepository characterRepository;
+  late LocationRepository locationRepository;
   late FileProcessor fileProcessor;
   late CommandProcessor commandProcessor;
 
@@ -29,9 +32,11 @@ main() {
     pointInTimeRepository = PointInTimeRepository();
     incidentRepository = IncidentRepository();
     characterRepository = CharacterRepository();
+    locationRepository = LocationRepository();
     getIt.registerSingleton<PointInTimeRepository>(pointInTimeRepository);
     getIt.registerSingleton<IncidentRepository>(incidentRepository);
     getIt.registerSingleton<CharacterRepository>(characterRepository);
+    getIt.registerSingleton<LocationRepository>(locationRepository);
     getIt.registerSingleton<ChronicleCodec>(ChronicleCodec());
     getIt.registerSingleton<FileAdapter>(FileAdapterMock());
     getIt.registerSingleton<MessageBarState>(MessageBarState());
@@ -78,6 +83,20 @@ main() {
       await fileProcessor.load();
 
       expect(characterRepository.content, contains(character));
+    },
+  );
+
+  test(
+    "Saving and loading should preserve locations",
+        () async {
+      var location = Location(PointInTimeId());
+      locationRepository.add(location);
+
+      await fileProcessor.save();
+      locationRepository.remove(location);
+      await fileProcessor.load();
+
+      expect(locationRepository.content, contains(location));
     },
   );
 

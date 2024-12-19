@@ -1,3 +1,4 @@
+import 'package:ceal_chronicler_f/locations/model/location_repository.dart';
 import 'package:get_it/get_it.dart';
 
 import 'characters/model/character_repository.dart';
@@ -19,6 +20,7 @@ void initializeGetItContext() {
   getIt.registerSingleton<PointInTimeRepository>(PointInTimeRepository());
   getIt.registerSingleton<IncidentRepository>(IncidentRepository());
   getIt.registerSingleton<CharacterRepository>(CharacterRepository());
+  getIt.registerSingleton<LocationRepository>(LocationRepository());
   getIt.registerSingleton<ViewRepository>(ViewRepository());
   getIt.registerSingleton<MessageBarState>(MessageBarState());
 
