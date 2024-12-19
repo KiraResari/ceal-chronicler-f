@@ -29,46 +29,20 @@ class Chronicle extends JsonSerializable {
       : this.fromJson(jsonDecode(jsonString));
 
   Chronicle.fromJson(Map<String, dynamic> json)
-      : pointsInTime = _buildPointsInTimeFromJson(json),
-        incidents = _buildIncidentsFromJson(json),
-        characters = _buildCharactersFromJson(json),
-        locations = _buildLocationsFromJson(json);
+      : pointsInTime =
+            _extractList(json, pointsInTimeKey, (e) => PointInTime.fromJson(e)),
+        incidents =
+            _extractList(json, incidentsKey, (e) => Incident.fromJson(e)),
+        characters =
+            _extractList(json, charactersKey, (e) => Character.fromJson(e)),
+        locations =
+            _extractList(json, locationsKey, (e) => Location.fromJson(e));
 
-  static List<PointInTime> _buildPointsInTimeFromJson(
-      Map<String, dynamic> json) {
-    if (json.containsKey(pointsInTimeKey)) {
-      List<dynamic> jsonEntries = json[pointsInTimeKey];
-      return jsonEntries.map((e) => PointInTime.fromJson(e)).toList();
-    } else {
-      return [];
-    }
-  }
-
-  static List<Incident> _buildIncidentsFromJson(Map<String, dynamic> json) {
-    if (json.containsKey(incidentsKey)) {
-      List<dynamic> jsonEntries = json[incidentsKey];
-      return jsonEntries.map((e) => Incident.fromJson(e)).toList();
-    } else {
-      return [];
-    }
-  }
-
-  static List<Character> _buildCharactersFromJson(Map<String, dynamic> json) {
-    if (json.containsKey(charactersKey)) {
-      List<dynamic> jsonEntries = json[charactersKey];
-      return jsonEntries.map((e) => Character.fromJson(e)).toList();
-    } else {
-      return [];
-    }
-  }
-
-  static List<Location> _buildLocationsFromJson(Map<String, dynamic> json) {
-    if (json.containsKey(locationsKey)) {
-      List<dynamic> jsonEntries = json[locationsKey];
-      return jsonEntries.map((e) => Location.fromJson(e)).toList();
-    } else {
-      return [];
-    }
+  static List<T> _extractList<T>(
+      Map<String, dynamic> json, String key, T Function(dynamic) fromJson) {
+    return json.containsKey(key)
+        ? (json[key] as List).map(fromJson).toList().cast<T>()
+        : [];
   }
 
   @override
