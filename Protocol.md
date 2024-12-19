@@ -1408,6 +1408,9 @@
   * The likenesses are some sort of ID, name, first appearance and last appearance, which as of now are all the fields that a character has
   * Ugggh, easier said than done, because I need to figure out how to abstract garbage like    `CharacterId.fromString(json[IdHolder.idKey])`, because I can't just write `T.fromString(json[IdHolder.idKey])` =>,<=
   * Well, I got it to work now
+* Right, now with that groundwork done, I hope adding locations in their simplest form should be pretty easy
+  * Alright, so having locations in their most basic form works now
+  * That means, they exist as data objects analogous to the Characters in the code now, and JSON parsing works, but I'm not doing anything with them yet
 
 # TODO
 
@@ -1475,12 +1478,13 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 
 ### Locations
 
-- [ ] have a name
-- [ ] have a first appearance
-- [ ] have a last appearance
+- [x] have a name
+- [x] have a first appearance
+- [x] have a last appearance
 - [ ] can be connected to other locations
   - [ ] adjacent locations
   - [ ] locations within other locations
+- [ ] can be saved and loaded
 
 ### Technical
 
