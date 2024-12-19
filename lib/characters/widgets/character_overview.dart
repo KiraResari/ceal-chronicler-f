@@ -1,56 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../utils/widgets/title_medium.dart';
+import '../../utils/widgets/overview.dart';
 import '../model/character.dart';
-import 'character_overview_controller.dart';
-import 'character_button.dart';
 import 'add_character_button.dart';
+import 'character_button.dart';
+import 'character_overview_controller.dart';
 
-class CharacterOverview extends StatelessWidget {
+class CharacterOverview
+    extends Overview<Character, CharacterOverviewController> {
   const CharacterOverview({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => CharacterOverviewController(),
-      builder: (context, child) => _buildContent(context),
-    );
+  CharacterOverviewController createController() {
+    return CharacterOverviewController();
   }
 
-  Widget _buildContent(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.green,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: _buildCharacterOverview(context),
-      ),
-    );
+  @override
+  Color get backgroundColor => Colors.green;
+
+  @override
+  String get title => "Characters";
+
+  @override
+  List<Character> getItems(CharacterOverviewController controller) {
+    return controller.charactersAtActivePointInTime;
   }
 
-  Widget _buildCharacterOverview(BuildContext context) {
-    return Column(
-      children: _buildContentElements(context),
-    );
+  @override
+  Widget buildItem(Character character) {
+    return CharacterButton(character);
   }
 
-  List<Widget> _buildContentElements(BuildContext context) {
-    List<Widget> contentElements = [];
-    contentElements.add(const TitleMedium(title: "Characters"));
-    contentElements.addAll(_buildCharacterPanels(context));
-    contentElements.add(AddCharacterButton());
-    return contentElements;
-  }
-
-  List<Widget> _buildCharacterPanels(BuildContext context) {
-    var controller = context.watch<CharacterOverviewController>();
-    List<Widget> incidentTiles = [];
-    for (Character character in controller.charactersAtActivePointInTime) {
-      incidentTiles.add(CharacterButton(character));
-    }
-    return incidentTiles;
+  @override
+  Widget buildAddButton() {
+    return AddCharacterButton();
   }
 }

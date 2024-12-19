@@ -1413,6 +1413,9 @@
   * That means, they exist as data objects analogous to the Characters in the code now, and JSON parsing works, but I'm not doing anything with them yet
 * Next will be saving and loading the locations, along with everything else
   * Right, that works now too
+* Next, I'll start adding the UI elements for this, beginning with the Location Overview
+  * Hmm, this is very similar to both the `CharacterOverview` and the `IncidentOverview`, so let's see if we can unify the common elements from them
+    * Yes, and using Chatty to do so was really time-efficient too! 
 
 # TODO
 
