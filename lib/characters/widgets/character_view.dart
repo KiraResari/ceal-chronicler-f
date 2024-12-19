@@ -9,7 +9,7 @@ import '../../timeline/model/point_in_time.dart';
 import '../../timeline/model/point_in_time_id.dart';
 import '../model/character.dart';
 import 'character_view_controller.dart';
-import 'delete_last_appearance_button.dart';
+import 'delete_button.dart';
 import 'goto_point_in_time_button.dart';
 
 class CharacterView extends MainViewCandidate {
@@ -153,12 +153,17 @@ class CharacterView extends MainViewCandidate {
       _buildGotoLastAppearanceButton(context),
     ];
     if (character.lastAppearance != null) {
-      lastAppearanceBlockElements
-          .add(DeleteLastAppearanceButton(character: character));
+      lastAppearanceBlockElements.add(DeleteButton(
+          onPressedFunction: () => _onDeleteLastAppearanceButtonPressed));
     }
     return Row(
       children: lastAppearanceBlockElements,
     );
+  }
+
+  void _onDeleteLastAppearanceButtonPressed(BuildContext context) {
+    var controller = context.read<CharacterViewController>();
+    controller.deleteLastAppearance(character);
   }
 
   Widget _buildLastAppearanceDropdown(BuildContext context) {

@@ -1,10 +1,11 @@
 import 'dart:io';
 
-import 'package:ceal_chronicler_f/main_view/main_view_candidate.dart';
 import 'package:flutter/material.dart';
 
 import '../characters/widgets/character_overview.dart';
 import '../incidents/widgets/incident_overview.dart';
+import '../locations/widgets/location_overview.dart';
+import '../main_view/main_view_candidate.dart';
 
 class OverviewView extends MainViewCandidate {
   const OverviewView({super.key});
@@ -26,6 +27,8 @@ class OverviewView extends MainViewCandidate {
       const IncidentOverview(),
       const SizedBox(width: 50, height: 10,),
       const CharacterOverview(),
+      const SizedBox(width: 50, height: 10,),
+      const LocationOverview(),
     ];
   }
 }

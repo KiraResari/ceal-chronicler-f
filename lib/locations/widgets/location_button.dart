@@ -1,34 +1,32 @@
+import 'package:ceal_chronicler_f/locations/model/location.dart';
 import 'package:flutter/material.dart';
 
 import '../../get_it_context.dart';
 import '../../key_fields/key_field_resolver.dart';
 import '../../utils/widgets/buttons/ceal_text_button.dart';
-import '../../view/commands/open_character_view_command.dart';
 import '../../view/view_processor.dart';
-import '../model/character.dart';
 
-class CharacterButton extends CealTextButton {
+class LocationButton extends CealTextButton {
   final viewProcessor = getIt.get<ViewProcessor>();
   final keyFieldResolver = getIt.get<KeyFieldResolver>();
 
-  final Character character;
+  final Location location;
 
-  CharacterButton(this.character, {super.key});
+  LocationButton(this.location, {super.key});
 
   @override
   void onPressed(BuildContext context) {
-    var command = OpenCharacterViewCommand(character);
-    viewProcessor.process(command);
+    //TODO: Implement
   }
 
   @override
   String get text {
-    return keyFieldResolver.getCurrentValue(character.name);
+    return keyFieldResolver.getCurrentValue(location.name);
   }
 
   @override
   String? get tooltip {
-    String characterName = keyFieldResolver.getCurrentValue(character.name);
+    String characterName = keyFieldResolver.getCurrentValue(location.name);
     return "View/Edit $characterName";
   }
 }

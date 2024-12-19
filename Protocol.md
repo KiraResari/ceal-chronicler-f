@@ -1425,11 +1425,33 @@
       * However, since locations *are* temporal entities, I should be able to create something like an `TemporalEntityOverviewController` that I can use as base for both `CharacterOverviewController` and `LocationOverviewController`
         * I now managed to do this again with relative ease through use of Chatty, but also uncovered a bug in the process that was already in but unnoticed before:
           * Characters still get displayed in the overview at points in time beyond their last appearance
-            * I now fixed this 
+            * I now fixed this
+    * Right, now that I'm done getting sidetracked, the next thing is the `LocationButton`
+      * And for that, I need the `OpenLocationViewCommand`
+        * ...at least if I want to simplify it with the `CharacterButton` right away, which is something that I think I will pass upon for now in favor of simplicity
+        * But I'll probably do it later
+    * And finally, the `AddLocationButton`
+      * That one definitely needs the `CreateLocationCommand`
+        * Let's see if I can also just simplify this from the very similar `CreateCharacterCommand`
+        * Aand, that one needs an `LocationViewTemplate` in turn 
+          * And that one in turn needs the `LocationView` =>,<=
+            * And that one in turn needs a `LocationViewController`
+              * Alright, let's just copy all of that for now, and then worry about consolidating it in the next step, because I've just made the experience that Chatty is really good in consolidating if you feed it two cloned classes
+      * Okay, no, wait, this is clearly getting too much, I need to pull an emergency break here somewhere
+        * How about at the `LocationView`? I can probably just make that into a `Placeholder` for now
+        * Yes, that should put me into a stable float
+  * Okay, I now managed to add the `LocationOverview`, and it looks like that much works nicely, including saving and loading
 
 # TODO
 
-* Messages when deleting keys use the ID of the point in time instead of the name
+* Consolidate `CharacterButton` and `LocationButton`
+* Consolidate `CharacterViewTemplate` and `LocationViewTemplate`
+* Consolidate `AddLocationButton` and `AddCharacterButton`
+* Move to a more neutral position:
+  * `GotoPointInTimeButton`
+  * `DeleteButton`
+
+* Issue: Messages when deleting keys use the ID of the point in time instead of the name
 
 # User Story
 
@@ -1496,10 +1518,11 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [x] have a name
 - [x] have a first appearance
 - [x] have a last appearance
+- [x] can be added
 - [ ] can be connected to other locations
   - [ ] adjacent locations
   - [ ] locations within other locations
-- [ ] can be saved and loaded
+- [x] can be saved and loaded
 
 ### Technical
 
