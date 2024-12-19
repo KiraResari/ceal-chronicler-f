@@ -26,8 +26,13 @@ abstract class TemporalOverviewController<T extends TemporalEntity<U>,
 
   bool _entityExistsAtCurrentPointInTime(T entity) {
     try {
-      return _pointInTimeRepository
+      var firstAppearanceHasHappened = _pointInTimeRepository
           .activePointInTimeIsNotBefore(entity.firstAppearance);
+      var lastAppearanceHasNotHappened = entity.lastAppearance == null
+          ? true
+          : _pointInTimeRepository
+              .activePointInTimeIsNotAfter(entity.lastAppearance!);
+      return firstAppearanceHasHappened && lastAppearanceHasNotHappened;
     } on PointInTimeNotFoundException catch (_) {
       return false;
     }

@@ -1424,7 +1424,8 @@
     * The `CharacterOverviewController` and the `IncidentOverviewController` are actually quite different, since you can re-order incidents, and incidents are not temporal entities
       * However, since locations *are* temporal entities, I should be able to create something like an `TemporalEntityOverviewController` that I can use as base for both `CharacterOverviewController` and `LocationOverviewController`
         * I now managed to do this again with relative ease through use of Chatty, but also uncovered a bug in the process that was already in but unnoticed before:
-          * Characters still get displayed in the overview at points in time beyond their last appearance 
+          * Characters still get displayed in the overview at points in time beyond their last appearance
+            * I now fixed this 
 
 # TODO
 

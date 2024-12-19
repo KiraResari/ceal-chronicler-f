@@ -114,12 +114,6 @@ class PointInTimeRepository {
 
   int getPointIndex(PointInTime point) => pointsInTime.indexOf(point);
 
-  bool activePointInTimeIsNotBefore(PointInTimeId id) {
-    int activePointIndex = getPointIndex(activePointInTime);
-    int comparisonPointIndex = _getPointIndexById(id);
-    return activePointIndex >= comparisonPointIndex;
-  }
-
   int _getPointIndexById(PointInTimeId id) {
     PointInTime? pointInTime = _pointsInTimeIdMap[id];
     if (pointInTime != null) {
@@ -184,5 +178,17 @@ class PointInTimeRepository {
     var activePointInTimeIndex = pointsInTime.indexOf(activePointInTime);
     var referencePointIndex = pointsInTime.indexOf(referencePoint);
     return referencePointIndex < activePointInTimeIndex;
+  }
+
+  bool activePointInTimeIsNotBefore(PointInTimeId id) {
+    int activePointIndex = getPointIndex(activePointInTime);
+    int comparisonPointIndex = _getPointIndexById(id);
+    return activePointIndex >= comparisonPointIndex;
+  }
+
+  bool activePointInTimeIsNotAfter(PointInTimeId id) {
+    int activePointIndex = getPointIndex(activePointInTime);
+    int comparisonPointIndex = _getPointIndexById(id);
+    return activePointIndex <= comparisonPointIndex;
   }
 }
