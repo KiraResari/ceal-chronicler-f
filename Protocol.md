@@ -1441,16 +1441,13 @@
         * How about at the `LocationView`? I can probably just make that into a `Placeholder` for now
         * Yes, that should put me into a stable float
   * Okay, I now managed to add the `LocationOverview`, and it looks like that much works nicely, including saving and loading
+* Now, time for some cleanup
 
 # TODO
 
 * Consolidate `CharacterButton` and `LocationButton`
 * Consolidate `CharacterViewTemplate` and `LocationViewTemplate`
 * Consolidate `AddLocationButton` and `AddCharacterButton`
-* Move to a more neutral position:
-  * `GotoPointInTimeButton`
-  * `DeleteButton`
-
 * Issue: Messages when deleting keys use the ID of the point in time instead of the name
 
 # User Story

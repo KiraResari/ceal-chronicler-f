@@ -2,10 +2,10 @@ import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
 import 'package:ceal_chronicler_f/view/commands/activate_point_in_time_command.dart';
 import 'package:flutter/material.dart';
 
-import '../../get_it_context.dart';
-import '../../timeline/model/point_in_time_id.dart';
-import '../../utils/widgets/buttons/small_circular_button.dart';
-import '../../view/view_processor.dart';
+import '../../../get_it_context.dart';
+import '../../../timeline/model/point_in_time_id.dart';
+import 'small_circular_button.dart';
+import '../../../view/view_processor.dart';
 
 class GotoPointInTimeButton extends SmallCircularButton {
   final viewProcessor = getIt.get<ViewProcessor>();

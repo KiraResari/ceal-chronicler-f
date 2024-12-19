@@ -9,8 +9,8 @@ import '../../timeline/model/point_in_time.dart';
 import '../../timeline/model/point_in_time_id.dart';
 import '../model/character.dart';
 import 'character_view_controller.dart';
-import 'delete_button.dart';
-import 'goto_point_in_time_button.dart';
+import '../../utils/widgets/buttons/delete_button.dart';
+import '../../utils/widgets/buttons/goto_point_in_time_button.dart';
 
 class CharacterView extends MainViewCandidate {
   final Character character;
@@ -154,7 +154,8 @@ class CharacterView extends MainViewCandidate {
     ];
     if (character.lastAppearance != null) {
       lastAppearanceBlockElements.add(DeleteButton(
-          onPressedFunction: () => _onDeleteLastAppearanceButtonPressed));
+          onPressedFunction: () =>
+              _onDeleteLastAppearanceButtonPressed(context)));
     }
     return Row(
       children: lastAppearanceBlockElements,

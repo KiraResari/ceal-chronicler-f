@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../utils/widgets/buttons/small_circular_button.dart';
+import 'small_circular_button.dart';
 
 class DeleteButton extends SmallCircularButton {
   final VoidCallback? onPressedFunction;
@@ -11,7 +11,7 @@ class DeleteButton extends SmallCircularButton {
 
   @override
   void onPressed(BuildContext context) {
-    onPressedFunction;
+    onPressedFunction?.call();
   }
 
   @override
