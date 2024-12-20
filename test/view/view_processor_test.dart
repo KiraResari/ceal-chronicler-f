@@ -1,5 +1,4 @@
 import 'package:ceal_chronicler_f/characters/commands/create_character_command.dart';
-import 'package:ceal_chronicler_f/characters/commands/update_first_appearance_command.dart';
 import 'package:ceal_chronicler_f/characters/model/character.dart';
 import 'package:ceal_chronicler_f/characters/model/character_repository.dart';
 import 'package:ceal_chronicler_f/commands/command_history.dart';
@@ -17,6 +16,7 @@ import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
 import 'package:ceal_chronicler_f/toolBar/tool_bar_controller.dart';
+import 'package:ceal_chronicler_f/utils/commands/update_first_appearance_command.dart';
 import 'package:ceal_chronicler_f/view/commands/activate_point_in_time_command.dart';
 import 'package:ceal_chronicler_f/view/commands/open_character_view_command.dart';
 import 'package:ceal_chronicler_f/view/commands/open_overview_view_command.dart';

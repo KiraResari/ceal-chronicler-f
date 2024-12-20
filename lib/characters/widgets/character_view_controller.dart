@@ -1,5 +1,5 @@
-import '../commands/delete_last_appearance_command.dart';
-import '../commands/update_first_appearance_command.dart';
+import '../../utils/commands/delete_last_appearance_command.dart';
+import '../../utils/commands/update_first_appearance_command.dart';
 import '../../view/commands/activate_point_in_time_command.dart';
 import '../../commands/processor_listener.dart';
 import '../../get_it_context.dart';
@@ -8,7 +8,7 @@ import '../../key_fields/string_key_field.dart';
 import '../../timeline/model/point_in_time.dart';
 import '../../timeline/model/point_in_time_id.dart';
 import '../../timeline/model/point_in_time_repository.dart';
-import '../commands/update_last_appearance_command.dart';
+import '../../utils/commands/update_last_appearance_command.dart';
 import '../model/character.dart';
 
 class CharacterViewController extends ProcessorListener {

@@ -1,4 +1,4 @@
-import 'package:ceal_chronicler_f/characters/commands/delete_last_appearance_command.dart';
+import 'package:ceal_chronicler_f/utils/commands/delete_last_appearance_command.dart';
 import 'package:ceal_chronicler_f/characters/model/character.dart';
 import 'package:ceal_chronicler_f/commands/command_history.dart';
 import 'package:ceal_chronicler_f/commands/command_processor.dart';

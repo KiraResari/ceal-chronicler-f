@@ -1,10 +1,10 @@
-import 'package:ceal_chronicler_f/characters/commands/update_first_appearance_command.dart';
 import 'package:ceal_chronicler_f/characters/model/character.dart';
 import 'package:ceal_chronicler_f/commands/command_history.dart';
 import 'package:ceal_chronicler_f/commands/command_processor.dart';
 import 'package:ceal_chronicler_f/get_it_context.dart';
 import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
+import 'package:ceal_chronicler_f/utils/commands/update_first_appearance_command.dart';
 import 'package:ceal_chronicler_f/view/view_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 

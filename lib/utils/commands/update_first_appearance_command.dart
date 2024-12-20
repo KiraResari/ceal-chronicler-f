@@ -1,10 +1,10 @@
 import '../../commands/command.dart';
 import '../../timeline/model/point_in_time_id.dart';
-import '../model/character.dart';
+import '../../utils/model/temporal_entity.dart';
 
 class UpdateFirstAppearanceCommand extends Command {
   final PointInTimeId _newFirstAppearance;
-  final Character _character;
+  final TemporalEntity _character;
   PointInTimeId? _oldFirstAppearance;
 
   UpdateFirstAppearanceCommand(this._character, this._newFirstAppearance);
@@ -16,7 +16,7 @@ class UpdateFirstAppearanceCommand extends Command {
   }
 
   @override
-  String get executeMessage => "Updated first appearance of character";
+  String get executeMessage => "Updated first appearance";
 
   @override
   void undo() {
@@ -26,7 +26,5 @@ class UpdateFirstAppearanceCommand extends Command {
   }
 
   @override
-  String get undoMessage =>
-      "Undid updating of first appearance of character";
-
+  String get undoMessage => "Undid updating of first appearance";
 }
