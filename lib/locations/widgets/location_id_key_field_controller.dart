@@ -1,3 +1,4 @@
+import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
 import 'package:flutter/material.dart';
 
 import '../../get_it_context.dart';
@@ -30,9 +31,18 @@ class LocationIdKeyFieldController extends KeyFieldController<LocationId?> {
 
   List<Location> get _validLocations {
     return _locationRepository.content
-        .where((location) =>
-            !pointInTimeRepository.pointIsInTheFuture(location.firstAppearance))
+        .where((location) => _isValidLocation(location))
         .toList();
+  }
+
+  bool _isValidLocation(Location location) {
+    bool firstAppearanceHasHappened =
+        !pointInTimeRepository.pointIsInTheFuture(location.firstAppearance);
+    PointInTimeId? lastAppearance = location.lastAppearance;
+    bool lastAppearanceHasntHappened = lastAppearance == null
+        ? true
+        : !pointInTimeRepository.pointIsInThePast(lastAppearance);
+    return firstAppearanceHasHappened && lastAppearanceHasntHappened;
   }
 
   DropdownMenuEntry<LocationId> _mapLocationToDropdownMenuEntry(

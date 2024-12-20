@@ -1540,6 +1540,11 @@
     * One I already fixed
     * Another is that trying the remove a null key causes an exception
       * Right, now I managed to fix that too
+* Finally, I also noticed that I didn't implement it yet that locations that already had their last appearance can't be assigned 
+  * Right, now that works too
+* This is as far as I'm getting with this today
+
+[Time elapsed so far: 111 hours] (nice! =^,^= )
 
 # TODO
 
@@ -1606,7 +1611,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
   - [x] Basic functionality
   - [x] If a character is not presently assigned to a location, it should be displayed as "unknown"
   - [x] Keying behavior (add, remove, forward, backward)
-  - [ ] Characters can't be assigned to locations that do not presently exist
+  - [x] Characters can't be assigned to locations that do not presently exist
   - [ ] If a location that a character is assigned to becomes unavailable later, the location should be displayed as "unknown" from that point onwards
 
 - [x] Characters can be unassigned from locations

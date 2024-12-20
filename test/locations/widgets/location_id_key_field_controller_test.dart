@@ -83,6 +83,26 @@ main() {
   );
 
   test(
+    "validLocationEntries should not return locations with a lastAppearance before the current point in time",
+        () {
+      PointInTimeId presentPointId = pointInTimeRepository.activePointInTime.id;
+      var pastPoint = PointInTime("Past Point In Time");
+      pointInTimeRepository.addAtIndex(0, pastPoint);
+      var character = Character(presentPointId);
+      var location = Location(pastPoint.id);
+      location.lastAppearance = pastPoint.id;
+      locationRepository.add(location);
+      var controller = LocationIdKeyFieldController(character.presentLocation);
+
+      List<DropdownMenuEntry<LocationId>> locationEntries =
+          controller.validLocationEntries;
+
+      expect(
+          locationEntries.any((entry) => entry.value == location.id), isFalse);
+    },
+  );
+
+  test(
     "updatePresentLocation should correctly update character's present location",
         () {
       PointInTimeId presentPointId = pointInTimeRepository.activePointInTime.id;
