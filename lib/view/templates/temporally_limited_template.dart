@@ -1,15 +1,24 @@
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
+import 'package:ceal_chronicler_f/utils/model/temporal_entity.dart';
 
 import '../../exceptions/point_in_time_not_found_exception.dart';
 import '../../get_it_context.dart';
+import '../../key_fields/key_field_resolver.dart';
 import '../../timeline/model/point_in_time_repository.dart';
 
-abstract class TemporallyLimitedTemplate {
+abstract class TemporallyLimitedTemplate<T extends TemporalEntity> {
   final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
+  final _keyFieldResolver = getIt.get<KeyFieldResolver>();
 
-  PointInTimeId? get firstAppearance;
+  final T entity;
 
-  PointInTimeId? get lastAppearance;
+  TemporallyLimitedTemplate(this.entity);
+
+  PointInTimeId? get firstAppearance => entity.firstAppearance;
+
+  PointInTimeId? get lastAppearance => entity.lastAppearance;
+
+  String get currentName => _keyFieldResolver.getCurrentValue(entity.name);
 
   bool existsAt(PointInTimeId referencePointId) {
     return !(_isBeforeFirstAppearance(referencePointId) ||
@@ -56,4 +65,14 @@ abstract class TemporallyLimitedTemplate {
   }
 
   String get identifier;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is TemporallyLimitedTemplate &&
+              runtimeType == other.runtimeType &&
+              entity == other.entity;
+
+  @override
+  int get hashCode => entity.hashCode;
 }

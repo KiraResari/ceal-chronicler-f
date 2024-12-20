@@ -1447,6 +1447,11 @@
 
 [Time elapsed so far: 102.25 hours]
 
+# 20-Dec-2024
+
+* Now continuing with this
+* First, I want to start with some leftover refactoring, consolidating classes that are very much alike
+
 # TODO
 
 * Consolidate `CharacterButton` and `LocationButton`
