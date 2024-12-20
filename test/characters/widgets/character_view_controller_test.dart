@@ -119,4 +119,36 @@ main() {
           isTrue);
     },
   );
+
+  test(
+    "updatePresentLocation should correctly update character's present location",
+    () {
+      PointInTimeId presentPointId = pointInTimeRepository.activePointInTime.id;
+      var character = Character(presentPointId);
+      var controller = CharacterViewController(character);
+      var newLocationId = LocationId();
+
+      controller.updatePresentLocation(newLocationId);
+
+      LocationId presentLocationId = controller.presentLocation;
+      expect(presentLocationId, equals(newLocationId));
+    },
+  );
+
+  test(
+    "updatePresentLocation with unknownLocationId should remove character's present location",
+    () {
+      PointInTimeId presentPointId = pointInTimeRepository.activePointInTime.id;
+      var character = Character(presentPointId);
+      var locationId = LocationId();
+      character.presentLocation
+          .addOrUpdateKeyAtTime(locationId, presentPointId);
+      var controller = CharacterViewController(character);
+
+      controller
+          .updatePresentLocation(CharacterViewController.unknownLocationId);
+
+      expect(character.presentLocation.keys, isEmpty);
+    },
+  );
 }

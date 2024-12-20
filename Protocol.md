@@ -1491,6 +1491,11 @@
       * And have I recently mentioned just how much I hate how the `DropdownMenu` is implemented in Flutter?
     * Okay, so the first step is done, I managed to put the dropdown in place, it gets populated with all locations right now and doesn't save anything on selection, but it is displayed and displays the right locations, plus an extra "unknown" location that is hard-coded into the controller (not super happy with that, but given how the `DropdownMenu` is implemented in Flutter, this might very well be the best way)
     * Good, next let's implement the functionality, which will involve a new command
+      * Or wait, can I just use the `AddOrUpdateKeyCommand` for that?
+        * Yes! Very convenient!
+        * Looks like past me saved me a ton of work here
+      * Now this works
+    * Right, that is the very basic functionality of assigning locations to characters down
 
 # TODO
 
@@ -1554,12 +1559,12 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [ ] Allows complete deletion of existing characters (with warning)
 - [x] The character screen has a back button, which returns back to the main view
 - [ ] Characters can be assigned to locations
-  - [ ] Basic functionality
-  - [ ] If a character is not presently assigned to a location, it should be displayed as "unknown"
+  - [x] Basic functionality
+  - [x] If a character is not presently assigned to a location, it should be displayed as "unknown"
   - [ ] Characters can't be assigned to locations that do not presently exist
   - [ ] If a location that a character is assigned to becomes unavailable later, the location should be displayed as "unknown" from that point onwards
 
-- [ ] Characters can be unassigned from locations
+- [x] Characters can be unassigned from locations
 
 ### Locations
 

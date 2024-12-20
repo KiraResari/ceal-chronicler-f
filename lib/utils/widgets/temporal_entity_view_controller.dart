@@ -15,7 +15,7 @@ abstract class TemporalEntityViewController<T extends TemporalEntity>
     extends ProcessorListener {
   final T entity;
 
-  final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
+  final pointInTimeRepository = getIt.get<PointInTimeRepository>();
   final keyFieldResolver = getIt.get<KeyFieldResolver>();
 
   TemporalEntityViewController(this.entity) : super();
@@ -27,7 +27,7 @@ abstract class TemporalEntityViewController<T extends TemporalEntity>
   }
 
   PointInTime? get firstAppearance {
-    PointInTime? point = _pointInTimeRepository.get(entity.firstAppearance);
+    PointInTime? point = pointInTimeRepository.get(entity.firstAppearance);
     if (point != null) {
       return point;
     }
@@ -37,7 +37,7 @@ abstract class TemporalEntityViewController<T extends TemporalEntity>
   PointInTime? get lastAppearance {
     PointInTimeId? lastAppearance = entity.lastAppearance;
     if (lastAppearance != null) {
-      PointInTime? point = _pointInTimeRepository.get(lastAppearance);
+      PointInTime? point = pointInTimeRepository.get(lastAppearance);
       if (point != null) {
         return point;
       }
@@ -50,7 +50,7 @@ abstract class TemporalEntityViewController<T extends TemporalEntity>
         newFirstAppearance.id != entity.firstAppearance) {
       var command = UpdateFirstAppearanceCommand(entity, newFirstAppearance.id);
       commandProcessor.process(command);
-      if (_pointInTimeRepository.pointIsInTheFuture(newFirstAppearance.id)) {
+      if (pointInTimeRepository.pointIsInTheFuture(newFirstAppearance.id)) {
         var viewCommand = ActivatePointInTimeCommand(newFirstAppearance.id);
         viewProcessor.process(viewCommand);
       }
@@ -62,7 +62,7 @@ abstract class TemporalEntityViewController<T extends TemporalEntity>
         newLastAppearance.id != entity.lastAppearance) {
       var command = UpdateLastAppearanceCommand(entity, newLastAppearance.id);
       commandProcessor.process(command);
-      if (_pointInTimeRepository.pointIsInThePast(newLastAppearance.id)) {
+      if (pointInTimeRepository.pointIsInThePast(newLastAppearance.id)) {
         var viewCommand = ActivatePointInTimeCommand(newLastAppearance.id);
         viewProcessor.process(viewCommand);
       }
@@ -70,27 +70,27 @@ abstract class TemporalEntityViewController<T extends TemporalEntity>
   }
 
   List<PointInTime> get validFirstAppearances {
-    return _pointInTimeRepository
+    return pointInTimeRepository
         .pointsInTimeBeforeAndIncluding(_latestPossibleFirstAppearance);
   }
 
   PointInTime get _latestPossibleFirstAppearance {
-    for (PointInTime point in _pointInTimeRepository.pointsInTime) {
+    for (PointInTime point in pointInTimeRepository.pointsInTime) {
       if (nameField.hasKeyAt(point.id) || point.id == entity.lastAppearance) {
         return point;
       }
     }
-    return _pointInTimeRepository.last;
+    return pointInTimeRepository.last;
   }
 
   List<PointInTime> get validLastAppearances {
-    return _pointInTimeRepository
+    return pointInTimeRepository
         .pointsInTimeIncludingAndAfter(_earliestPossibleLastAppearance);
   }
 
   PointInTimeId get _earliestPossibleLastAppearance {
     PointInTimeId earliestPossibleLastAppearance = entity.firstAppearance;
-    for (PointInTime point in _pointInTimeRepository.pointsInTime) {
+    for (PointInTime point in pointInTimeRepository.pointsInTime) {
       if (nameField.hasKeyAt(point.id)) {
         earliestPossibleLastAppearance = point.id;
       }
