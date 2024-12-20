@@ -5,11 +5,11 @@ import '../../utils/model/id_holder.dart';
 import '../readable_uuid.dart';
 
 abstract class TemporalEntity<T extends ReadableUuid> extends IdHolder<T> {
-  static const String nameKey = "name";
-  static const String firstApperanceKey = "firstAppearance";
-  static const String lastApperanceKey = "lastAppearance";
+  static const String _nameKey = "name";
+  static const String _firstApperanceKey = "firstAppearance";
+  static const String _lastApperanceKey = "lastAppearance";
 
-  StringKeyField name;
+  final StringKeyField name;
   PointInTimeId firstAppearance;
   PointInTimeId? lastAppearance;
 
@@ -18,25 +18,25 @@ abstract class TemporalEntity<T extends ReadableUuid> extends IdHolder<T> {
         super(id);
 
   TemporalEntity.fromJson(Map<String, dynamic> json, T id)
-      : name = StringKeyField.fromJson(json[nameKey]),
-        firstAppearance = PointInTimeId.fromJson(json[firstApperanceKey]),
+      : name = StringKeyField.fromJson(json[_nameKey]),
+        firstAppearance = PointInTimeId.fromJson(json[_firstApperanceKey]),
         lastAppearance = _determineLastAppearanceFromJson(json),
         super(id);
 
   static PointInTimeId? _determineLastAppearanceFromJson(
       Map<String, dynamic> json) {
-    if (json[lastApperanceKey] == null) {
+    if (json[_lastApperanceKey] == null) {
       return null;
     }
-    return PointInTimeId.fromJson(json[lastApperanceKey]);
+    return PointInTimeId.fromJson(json[_lastApperanceKey]);
   }
 
   @override
   Map<String, dynamic> toJson() => {
         IdHolder.idKey: id.uuid,
-        nameKey: name,
-        firstApperanceKey: firstAppearance,
-        lastApperanceKey: lastAppearance,
+        _nameKey: name,
+        _firstApperanceKey: firstAppearance,
+        _lastApperanceKey: lastAppearance,
       };
 
   @override
@@ -53,7 +53,7 @@ abstract class TemporalEntity<T extends ReadableUuid> extends IdHolder<T> {
     List<KeyFieldInfo> keyFieldInfos = [];
     var nameValue = name.keys[pointId];
     if (nameValue != null) {
-      keyFieldInfos.add(KeyFieldInfo<String>(nameKey, pointId, nameValue));
+      keyFieldInfos.add(KeyFieldInfo<String>(_nameKey, pointId, nameValue));
     }
     return keyFieldInfos;
   }

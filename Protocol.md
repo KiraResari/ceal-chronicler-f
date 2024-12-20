@@ -1473,6 +1473,12 @@
       * The problem is the Json serialization and deserialization which requires concrete types, but let's see...
       * Aaand, making that nullable cascades so hard =>,<=
       * But I think I now got it to work
+  * Right, now let's try adding that to the Character
+    * Now it's getting tricky biting through all the layers of abstraction that I introduced earlier
+    * And JSON parsing, which is SO ugly and takes SO much time
+      * I really miss Java, where there are well-tested frameworks for that
+      * Here, I have to painfully hand-craft this every time, running into many amazing errors along the way
+    * Okay, but I think I got this to work now, at least on a model level
 
 # TODO
 

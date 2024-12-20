@@ -11,15 +11,18 @@ abstract class KeyField<T> extends JsonSerializable {
   final T? initialValue;
   final Map<PointInTimeId, T> keys;
 
-  KeyField(this.initialValue) : keys = {};
+  KeyField({this.initialValue}) : keys = {};
 
   KeyField.fromDecodedJson(this.initialValue, this.keys);
 
   @override
-  Map<String, dynamic> toJson() => {
-        initialValueKey: initialValueToJson(initialValue),
-        keysKey: keysToJson(keys),
-      };
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> jsonMap = {keysKey: keysToJson(keys)};
+    if (initialValue != null) {
+      jsonMap[initialValueKey] = initialValueToJson(initialValue);
+    }
+    return jsonMap;
+  }
 
   String initialValueToJson(T? initialValue);
 

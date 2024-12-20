@@ -4,7 +4,7 @@ import '../timeline/model/point_in_time_id.dart';
 import 'key_field.dart';
 
 class StringKeyField extends KeyField<String> {
-  StringKeyField(super.initialValue);
+  StringKeyField(String initialValue) : super(initialValue: initialValue);
 
   StringKeyField.fromJsonString(String jsonString)
       : this.fromJson(jsonDecode(jsonString));
