@@ -23,12 +23,11 @@ class CharacterButton extends CealTextButton {
 
   @override
   String get text {
-    return keyFieldResolver.getCurrentValue(character.name);
+    return keyFieldResolver.getCurrentValue(character.name) ?? "";
   }
 
   @override
   String? get tooltip {
-    String characterName = keyFieldResolver.getCurrentValue(character.name);
-    return "View/Edit $characterName";
+    return "View/Edit $text";
   }
 }

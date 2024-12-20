@@ -8,8 +8,8 @@ class KeyFieldResolver {
   final PointInTimeRepository _pointInTimeRepository =
       getIt.get<PointInTimeRepository>();
 
-  T getCurrentValue<T>(KeyField<T> keyField) {
-    T mostRecentValue = keyField.initialValue;
+  T? getCurrentValue<T>(KeyField<T> keyField) {
+    T? mostRecentValue = keyField.initialValue;
     for (PointInTime pointInTime
         in _pointInTimeRepository.pastAndPresentPointsInTime) {
       T? valueAtPointInTime = keyField.keys[pointInTime.id];

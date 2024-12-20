@@ -21,7 +21,7 @@ class StringKeyField extends KeyField<String> {
   }
 
   @override
-  String initialValueToJson(String initialValue) => initialValue;
+  String initialValueToJson(String? initialValue) => initialValue ?? "";
 
   @override
   Map<String, dynamic> keysToJson(Map<PointInTimeId, String> keys) {

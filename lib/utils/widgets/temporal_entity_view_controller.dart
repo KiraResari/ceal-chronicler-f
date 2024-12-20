@@ -23,7 +23,7 @@ abstract class TemporalEntityViewController<T extends TemporalEntity>
   StringKeyField get nameField => entity.name;
 
   String get name {
-    return _keyFieldResolver.getCurrentValue(entity.name);
+    return _keyFieldResolver.getCurrentValue(entity.name) ?? "";
   }
 
   PointInTime? get firstAppearance {

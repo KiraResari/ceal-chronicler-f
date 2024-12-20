@@ -1462,6 +1462,17 @@
     * I already got all that for the character, so is it possible to re-use them somehow?
       * Yes, looks like they work just as well with `TemporalEntity` instead of `Character`
   * Aaand, now it looks good
+* Right, next I want to make it so that characters can be at locations
+  * For that, I can either add a field to the location with the list of characters there, or add a field to the character with the location he is at
+    * I think the latter makes more sense, since a single value is always easier to handle than a list, and that also implicitly results in the character not being able to be in two locations at the same time
+    * Also, it makes keying easier
+  * So, how did these Key Fields work again?
+    * I think first of all, I need a new type of Key Field here, since thus far all I have is `StringKeyField`
+    * And I need to slightly rework the `KeyField`, since the initial value of the location that a character is at can be null, if the character has not been assigned to a location yet
+      * Aaaand, once again, that's not so easy
+      * The problem is the Json serialization and deserialization which requires concrete types, but let's see...
+      * Aaand, making that nullable cascades so hard =>,<=
+      * But I think I now got it to work
 
 # TODO
 

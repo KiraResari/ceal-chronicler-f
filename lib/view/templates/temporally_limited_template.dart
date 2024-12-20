@@ -8,8 +8,8 @@ import '../../utils/model/temporal_entity.dart';
 import '../../utils/readable_uuid.dart';
 import 'main_view_template.dart';
 
-abstract class TemporallyLimitedTemplate<T extends TemporalEntity<I>, I extends ReadableUuid>
-    implements MainViewTemplate {
+abstract class TemporallyLimitedTemplate<T extends TemporalEntity<I>,
+    I extends ReadableUuid> implements MainViewTemplate {
   final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
   final _keyFieldResolver = getIt.get<KeyFieldResolver>();
 
@@ -22,7 +22,8 @@ abstract class TemporallyLimitedTemplate<T extends TemporalEntity<I>, I extends 
 
   PointInTimeId? get lastAppearance => entity.lastAppearance;
 
-  String get currentName => _keyFieldResolver.getCurrentValue(entity.name);
+  String get currentName =>
+      _keyFieldResolver.getCurrentValue(entity.name) ?? "";
 
   bool existsAt(PointInTimeId referencePointId) {
     return !(_isBeforeFirstAppearance(referencePointId) ||

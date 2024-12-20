@@ -19,7 +19,7 @@ class KeyFieldController<T> extends ProcessorListener {
 
   KeyFieldController(this.keyField);
 
-  T get currentValue => _keyFieldResolver.getCurrentValue(keyField);
+  T? get currentValue => _keyFieldResolver.getCurrentValue(keyField);
 
   bool get hasNext => _keyFieldResolver.hasNext(keyField);
 

@@ -61,8 +61,7 @@ class TimeBarController extends ProcessorListener {
     for (Character character in _characterRepository.content) {
       List<KeyFieldInfo> keyFieldInfos = character.getKeyInfosAt(point.id);
       if (keyFieldInfos.isNotEmpty) {
-        String characterName =
-            _keyFieldResolver.getCurrentValue(character.name);
+        String characterName = _getCharacterNameOrNothing(character);
         String groupName = "Character '$characterName'";
         var group = KeyFieldInfoGroup(groupName, keyFieldInfos);
         blockingKeys.add(group);
@@ -70,6 +69,9 @@ class TimeBarController extends ProcessorListener {
     }
     return blockingKeys;
   }
+
+  String _getCharacterNameOrNothing(Character character) =>
+      _keyFieldResolver.getCurrentValue(character.name) ?? "";
 
   void addPointInTimeAtIndex(int index) {
     var command = CreatePointInTimeCommand(index);
@@ -129,12 +131,12 @@ class TimeBarController extends ProcessorListener {
   ) {
     if (firstCharacterApperances.length == 1) {
       Character character = firstCharacterApperances[0];
-      String characterName = _keyFieldResolver.getCurrentValue(character.name);
+      String characterName = _getCharacterNameOrNothing(character);
       return "First appearance of character '$characterName'";
     }
     String reason = "First appearance of the following characters:";
     for (Character character in firstCharacterApperances) {
-      String characterName = _keyFieldResolver.getCurrentValue(character.name);
+      String characterName = _getCharacterNameOrNothing(character);
       reason += "\n ● $characterName";
     }
     return reason;

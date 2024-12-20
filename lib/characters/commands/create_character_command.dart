@@ -50,8 +50,8 @@ class CreateCharacterCommand extends Command {
 
   String get _characterNameOrNothing {
     if (_createdCharacter != null) {
-      String name = _keyFieldResolver.getCurrentValue(_createdCharacter!.name);
-      return "'$name'";
+      String? name = _keyFieldResolver.getCurrentValue(_createdCharacter!.name);
+      return name != null ? "'$name'" : "";
     }
     return "";
   }

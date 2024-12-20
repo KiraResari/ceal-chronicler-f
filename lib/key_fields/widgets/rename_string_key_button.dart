@@ -23,7 +23,7 @@ class RenameStringKeyButton extends SmallCircularButton {
       context: context,
       builder: (BuildContext context) {
         return RenameDialog(
-          originalName: controller.currentValue,
+          originalName: controller.currentValue ?? "",
           labelText: labelText,
         );
       },

@@ -50,8 +50,8 @@ class CreateLocationCommand extends Command {
 
   String get _locationNameOrNothing {
     if (_createdLocation != null) {
-      String name = _keyFieldResolver.getCurrentValue(_createdLocation!.name);
-      return "'$name'";
+      String? name = _keyFieldResolver.getCurrentValue(_createdLocation!.name);
+      return name != null ? "'$name'" : "";
     }
     return "";
   }

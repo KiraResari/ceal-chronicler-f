@@ -23,12 +23,11 @@ class LocationButton extends CealTextButton {
 
   @override
   String get text {
-    return keyFieldResolver.getCurrentValue(location.name);
+    return keyFieldResolver.getCurrentValue(location.name) ?? "";
   }
 
   @override
   String? get tooltip {
-    String locationName = keyFieldResolver.getCurrentValue(location.name);
-    return "View/Edit $locationName";
+    return "View/Edit $text";
   }
 }

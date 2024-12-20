@@ -54,7 +54,7 @@ class StringKeyFieldView extends StatelessWidget {
   }
 
   Widget _buildCurrentValueText(BuildContext context) {
-    String value = context.watch<StringKeyFieldController>().currentValue;
+    String value = context.watch<StringKeyFieldController>().currentValue ?? "";
     return Text(value);
   }
 
