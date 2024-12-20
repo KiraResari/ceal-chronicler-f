@@ -33,7 +33,7 @@ abstract class KeyField<T> extends JsonSerializable {
   }
 
   void deleteKeyAtTime(PointInTimeId pointInTimeId) {
-    if (keys[pointInTimeId] == null) {
+    if (!keys.containsKey(pointInTimeId)) {
       throw InvalidOperationException(
           "KeyField does not contain entry for PointInTime $pointInTimeId");
     }

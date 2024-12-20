@@ -13,24 +13,24 @@ import '../key_field_resolver.dart';
 class KeyFieldController<T> extends ProcessorListener {
   final KeyField<T> keyField;
 
-  final _keyFieldResolver = getIt.get<KeyFieldResolver>();
+  final keyFieldResolver = getIt.get<KeyFieldResolver>();
   final PointInTimeRepository pointInTimeRepository =
       getIt.get<PointInTimeRepository>();
 
   KeyFieldController(this.keyField);
 
-  T? get currentValue => _keyFieldResolver.getCurrentValue(keyField);
+  T? get currentValue => keyFieldResolver.getCurrentValue(keyField);
 
-  bool get hasNext => _keyFieldResolver.hasNext(keyField);
+  bool get hasNext => keyFieldResolver.hasNext(keyField);
 
-  bool get hasPrevious => _keyFieldResolver.hasPrevious(keyField);
+  bool get hasPrevious => keyFieldResolver.hasPrevious(keyField);
 
   bool get keyExistsAtCurrentPointInTime =>
-      _keyFieldResolver.keyExistsAtCurrentPointInTime(keyField);
+      keyFieldResolver.keyExistsAtCurrentPointInTime(keyField);
 
   void goToPrevious() {
     PointInTimeId? pointInTimeId =
-        _keyFieldResolver.getPreviousPointInTimeId(keyField);
+        keyFieldResolver.getPreviousPointInTimeId(keyField);
     if (pointInTimeId != null) {
       var command = ActivatePointInTimeCommand(pointInTimeId);
       viewProcessor.process(command);
@@ -39,7 +39,7 @@ class KeyFieldController<T> extends ProcessorListener {
 
   void goToNext() {
     PointInTimeId? pointInTimeId =
-        _keyFieldResolver.getNextPointInTimeId(keyField);
+        keyFieldResolver.getNextPointInTimeId(keyField);
     if (pointInTimeId != null) {
       var command = ActivatePointInTimeCommand(pointInTimeId);
       viewProcessor.process(command);
@@ -54,5 +54,11 @@ class KeyFieldController<T> extends ProcessorListener {
       return DeleteKeyCommand(keyField, pointInTimeId);
     }
     return AddOrUpdateKeyCommand(keyField, pointInTimeId, currentValue);
+  }
+
+  void updateKey(T? newValue) {
+    PointInTimeId pointInTimeId = pointInTimeRepository.activePointInTime.id;
+    var command = AddOrUpdateKeyCommand(keyField, pointInTimeId, newValue);
+    commandProcessor.process(command);
   }
 }

@@ -1530,6 +1530,16 @@
             * Neat! I don't have a test case for that yet!
           * Okay, I now fixed that, and wrote a test for it while I was at it too
       * Right, now that much seems to work...
+* Okay, so next I want to add proper keying behavior to the locations, which most notably means the three buttons that the name key fields already have
+  * The name fields are `StringKeyFieldView`s with their own `StringKeyFieldController`s, which is great, only now I have a dropdown of course instead of a string field, which makes everything so much more complicated again =>,<=
+  * For the name fields, this works pretty great, since apart from the field, they have no dependencies, but unfortunately, the dropdown brings so many dependencies with it...
+  * But let's see what I can do
+  * I now did that, and I am genuinely impressed that it was actually really easy to implement and seems to work without a hitch
+    * This worries me
+  * Ah, okay, I found some bugs
+    * One I already fixed
+    * Another is that trying the remove a null key causes an exception
+      * Right, now I managed to fix that too
 
 # TODO
 
@@ -1595,7 +1605,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [ ] Characters can be assigned to locations
   - [x] Basic functionality
   - [x] If a character is not presently assigned to a location, it should be displayed as "unknown"
-  - [ ] Keying behavior (add, remove, forward, backward)
+  - [x] Keying behavior (add, remove, forward, backward)
   - [ ] Characters can't be assigned to locations that do not presently exist
   - [ ] If a location that a character is assigned to becomes unavailable later, the location should be displayed as "unknown" from that point onwards
 

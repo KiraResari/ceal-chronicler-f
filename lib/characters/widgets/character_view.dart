@@ -1,7 +1,8 @@
-import 'package:ceal_chronicler_f/locations/model/location_id.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../key_fields/location_id_key_field.dart';
+import '../../locations/widgets/location_id_key_field_view.dart';
 import '../../utils/widgets/temporal_entity_view.dart';
 import '../model/character.dart';
 import 'character_view_controller.dart';
@@ -18,25 +19,11 @@ class CharacterView
 
   @override
   List<TableRow> buildAdditionalEntityTableChildren(BuildContext context) {
+    LocationIdKeyField locationIdKeyField =
+        context.watch<CharacterViewController>().locationIdKeyField;
     return [
-      buildTableRow(
-          context, "Present Location", _buildPresentLocationDropdown(context))
+      buildTableRow(context, "Present Location",
+          LocationIdKeyFieldView(locationIdKeyField))
     ];
-  }
-
-  Widget _buildPresentLocationDropdown(BuildContext context) {
-    var controller = context.read<CharacterViewController>();
-    LocationId presentLocation =
-        context.watch<CharacterViewController>().presentLocation;
-    List<DropdownMenuEntry<LocationId>> entries =
-        context.watch<CharacterViewController>().validLocationEntries;
-
-    return DropdownMenu<LocationId>(
-      initialSelection: presentLocation,
-      dropdownMenuEntries: entries,
-      onSelected: (LocationId? locationId) {
-        controller.updatePresentLocation(locationId);
-      },
-    );
   }
 }

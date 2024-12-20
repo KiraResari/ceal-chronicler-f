@@ -14,7 +14,7 @@ class RenameStringKeyButton extends SmallCircularButton {
   void onPressed(BuildContext context) async {
     String? newName = await _showRenamingDialog(context);
     if (newName != null) {
-      controller.renameKey(newName);
+      controller.updateKey(newName);
     }
   }
 
