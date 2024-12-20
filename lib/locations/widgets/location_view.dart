@@ -1,15 +1,14 @@
-import 'package:flutter/material.dart';
-
-import '../../main_view/main_view_candidate.dart';
+import '../../utils/widgets/temporal_entity_view.dart';
 import '../model/location.dart';
+import 'location_view_controller.dart';
 
-class LocationView extends MainViewCandidate {
-  final Location location;
-
-  const LocationView({super.key, required this.location});
+class LocationView
+    extends TemporalEntityView<Location, LocationViewController> {
+  const LocationView({super.key, required Location location})
+      : super(entity: location);
 
   @override
-  Widget build(BuildContext context) {
-    return Placeholder();
+  LocationViewController createController() {
+    return LocationViewController(entity);
   }
 }

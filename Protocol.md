@@ -1461,6 +1461,7 @@
   * That requires a whole bunch of commands first for updating the last and first appearances of the location
     * I already got all that for the character, so is it possible to re-use them somehow?
       * Yes, looks like they work just as well with `TemporalEntity` instead of `Character`
+  * Aaand, now it looks good
 
 # TODO
 
