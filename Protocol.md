@@ -1496,6 +1496,40 @@
         * Looks like past me saved me a ton of work here
       * Now this works
     * Right, that is the very basic functionality of assigning locations to characters down
+  * Alright, next up is the whole batch of temporal edge cases
+    * Starting with "Characters can't be assigned to locations that do not presently exist"
+      * I got that to work now, but also observed the following unintended behavior:
+        * Repro:
+          1. Create a location
+          2. Create a second point in time
+          3. Create a character
+          4. Open the character view for that character
+          5. Assign the character to the location at the first point in time
+          6. Move to the second point in time while in the character view
+          7. Try to make the character's location "unknown" for that point in time
+        * Expected behavior:
+          * The character's location is now "unknown"
+        * Actual behavior:
+          * The character's location remains unchanged
+      * Fortunately, I know why this happens, I just did not fully think they keying behavior here through
+        * So let's fix that now
+        * Hm, okay, so this is apparently more complicated
+        * The problem seems to be with adding null keys to a `KeyField`, which makes this troubling
+        * I now got that to pass, but the changes I needed to do for that broke some other tests
+          * Let's see if I can fix them
+          * Okay, looks like what broke are some equality checks, let's see...
+          * Okay, looks like my `MapUtils.areEqual` returns `false` because of a discrepancy with the `runtimeType`, let's see if I can figure out where that comes from
+            * As expected, it fails because `_Map<PointInTimeId, String> != _Map<PointInTimeId, String?>`
+            * But where does the first come from? I thought it should all be the second now...
+            * Right, so for some strange reason, the decoded map runtime type is `_Map<PointInTimeId, String>`, even though according to the IDE, it should be `_Map<PointInTimeId, String?>`
+            * Okay, I now found the two places where I needed to add extra `?` to get this to work, it was in the `decodeKeys` functions of the `LocationIdKeyField` and `StringKeyField` respectively
+              * °sigh° this is getting uncomfortably rusty
+          * Anyway, now all the tests pass again
+        * And what about the functionality?
+          * Most of it works, but loading a chronicle with a null key for locations causes an exception
+            * Neat! I don't have a test case for that yet!
+          * Okay, I now fixed that, and wrote a test for it while I was at it too
+      * Right, now that much seems to work...
 
 # TODO
 
@@ -1561,6 +1595,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [ ] Characters can be assigned to locations
   - [x] Basic functionality
   - [x] If a character is not presently assigned to a location, it should be displayed as "unknown"
+  - [ ] Keying behavior (add, remove, forward, backward)
   - [ ] Characters can't be assigned to locations that do not presently exist
   - [ ] If a location that a character is assigned to becomes unavailable later, the location should be displayed as "unknown" from that point onwards
 

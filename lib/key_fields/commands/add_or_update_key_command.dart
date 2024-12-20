@@ -3,9 +3,9 @@ import '../key_field.dart';
 import '../../timeline/model/point_in_time_id.dart';
 
 class AddOrUpdateKeyCommand<T> extends Command {
-  final KeyField<T> keyField;
+  final KeyField<T?> keyField;
   final PointInTimeId pointInTimeId;
-  final T value;
+  final T? value;
   T? previousValue;
 
   AddOrUpdateKeyCommand(this.keyField, this.pointInTimeId, this.value);

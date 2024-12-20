@@ -15,7 +15,7 @@ class StringKeyField extends KeyField<String> {
           decodeKeys(json[KeyField.keysKey]),
         );
 
-  static Map<PointInTimeId, String> decodeKeys(Map<String, dynamic> jsonMap) {
+  static Map<PointInTimeId, String?> decodeKeys(Map<String, dynamic> jsonMap) {
     return jsonMap
         .map((key, value) => MapEntry(PointInTimeId.fromString(key), value));
   }
@@ -24,7 +24,7 @@ class StringKeyField extends KeyField<String> {
   String initialValueToJson(String? initialValue) => initialValue ?? "";
 
   @override
-  Map<String, dynamic> keysToJson(Map<PointInTimeId, String> keys) {
+  Map<String, dynamic> keysToJson(Map<PointInTimeId, String?> keys) {
     return keys.map((key, value) => MapEntry(key.uuid, value));
   }
 }

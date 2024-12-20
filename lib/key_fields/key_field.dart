@@ -9,7 +9,7 @@ abstract class KeyField<T> extends JsonSerializable {
   static const String keysKey = "keys";
 
   final T? initialValue;
-  final Map<PointInTimeId, T> keys;
+  final Map<PointInTimeId, T?> keys;
 
   KeyField({this.initialValue}) : keys = {};
 
@@ -26,9 +26,9 @@ abstract class KeyField<T> extends JsonSerializable {
 
   String initialValueToJson(T? initialValue);
 
-  Map<String, dynamic> keysToJson(Map<PointInTimeId, T> keys);
+  Map<String, dynamic> keysToJson(Map<PointInTimeId, T?> keys);
 
-  void addOrUpdateKeyAtTime(T newValue, PointInTimeId pointInTimeId) {
+  void addOrUpdateKeyAtTime(T? newValue, PointInTimeId pointInTimeId) {
     keys[pointInTimeId] = newValue;
   }
 

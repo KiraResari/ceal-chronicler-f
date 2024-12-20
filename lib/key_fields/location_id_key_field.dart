@@ -23,11 +23,11 @@ class LocationIdKeyField extends KeyField<LocationId> {
         : null;
   }
 
-  static Map<PointInTimeId, LocationId> decodeKeys(
+  static Map<PointInTimeId, LocationId?> decodeKeys(
       Map<String, dynamic> jsonMap) {
     return jsonMap.map((key, value) => MapEntry(
           PointInTimeId.fromString(key),
-          LocationId.fromString(value),
+          value == null ? null : LocationId.fromString(value),
         ));
   }
 
@@ -36,7 +36,9 @@ class LocationIdKeyField extends KeyField<LocationId> {
       initialValue != null ? initialValue.uuid : "";
 
   @override
-  Map<String, dynamic> keysToJson(Map<PointInTimeId, LocationId> keys) {
-    return keys.map((key, value) => MapEntry(key.uuid, value.uuid));
+  Map<String, dynamic> keysToJson(Map<PointInTimeId, LocationId?> keys) {
+    return keys.map((key, value) {
+      return MapEntry(key.uuid, value?.uuid);
+    });
   }
 }

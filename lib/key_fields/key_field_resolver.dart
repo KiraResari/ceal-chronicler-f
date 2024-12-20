@@ -12,9 +12,9 @@ class KeyFieldResolver {
     T? mostRecentValue = keyField.initialValue;
     for (PointInTime pointInTime
         in _pointInTimeRepository.pastAndPresentPointsInTime) {
-      T? valueAtPointInTime = keyField.keys[pointInTime.id];
-      if (valueAtPointInTime != null) {
-        mostRecentValue = valueAtPointInTime;
+      keyField.keys.containsKey(pointInTime.id);
+      if (keyField.keys.containsKey(pointInTime.id)) {
+        mostRecentValue = keyField.keys[pointInTime.id];
       }
     }
     return mostRecentValue;

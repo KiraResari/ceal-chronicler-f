@@ -23,6 +23,7 @@ main() {
   late PointInTimeRepository pointInTimeRepository;
   late CharacterRepository characterRepository;
   late LocationRepository locationRepository;
+  late KeyFieldResolver keyFieldResolver;
 
   setUp(() {
     getIt.reset();
@@ -38,6 +39,7 @@ main() {
     locationRepository = LocationRepository();
     getIt.registerSingleton<CharacterRepository>(characterRepository);
     getIt.registerSingleton<LocationRepository>(locationRepository);
+    keyFieldResolver = KeyFieldResolver();
   });
 
   test(
@@ -100,7 +102,7 @@ main() {
   );
 
   test(
-    "validLocationEntries should return all existing locations plus unknown",
+    "validLocationEntries should return all valid locations plus unknown",
     () {
       PointInTimeId presentPointId = pointInTimeRepository.activePointInTime.id;
       var character = Character(presentPointId);
@@ -117,6 +119,25 @@ main() {
           locationEntries
               .any((entry) => entry == CharacterViewController.unknownEntry),
           isTrue);
+    },
+  );
+
+  test(
+    "validLocationEntries should not return locations with a firstAppearance after the current point in time",
+    () {
+      PointInTimeId presentPointId = pointInTimeRepository.activePointInTime.id;
+      var futurePoint = PointInTime("Future Point In Time");
+      pointInTimeRepository.addAtIndex(1, futurePoint);
+      var character = Character(presentPointId);
+      var location = Location(futurePoint.id);
+      locationRepository.add(location);
+      var controller = CharacterViewController(character);
+
+      List<DropdownMenuEntry<LocationId>> locationEntries =
+          controller.validLocationEntries;
+
+      expect(
+          locationEntries.any((entry) => entry.value == location.id), isFalse);
     },
   );
 
@@ -148,7 +169,28 @@ main() {
       controller
           .updatePresentLocation(CharacterViewController.unknownLocationId);
 
-      expect(character.presentLocation.keys, isEmpty);
+      LocationId? presentLocationId =
+          keyFieldResolver.getCurrentValue(character.presentLocation);
+      expect(presentLocationId, isNull);
+    },
+  );
+
+  test(
+    "updatePresentLocation with unknownLocationId should set character's present location to unknown, even if a previous key exists",
+    () {
+      var pastPoint = PointInTime("Past Point In Time");
+      pointInTimeRepository.addAtIndex(0, pastPoint);
+      var character = Character(pastPoint.id);
+      var locationId = LocationId();
+      character.presentLocation.addOrUpdateKeyAtTime(locationId, pastPoint.id);
+      var controller = CharacterViewController(character);
+
+      controller
+          .updatePresentLocation(CharacterViewController.unknownLocationId);
+
+      LocationId? presentLocationId =
+          keyFieldResolver.getCurrentValue(character.presentLocation);
+      expect(presentLocationId, isNull);
     },
   );
 }
