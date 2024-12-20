@@ -11,7 +11,7 @@ class CharacterViewController extends TemporalEntityViewController<Character> {
   CharacterViewController(Character character) : super(character);
 
   static final _unknownLocationId = LocationId();
-  static final DropdownMenuEntry<LocationId> _unknownEntry =
+  static final DropdownMenuEntry<LocationId> unknownEntry =
       DropdownMenuEntry<LocationId>(
           value: _unknownLocationId, label: "unknown");
   final _locationRepository = getIt.get<LocationRepository>();
@@ -21,12 +21,12 @@ class CharacterViewController extends TemporalEntityViewController<Character> {
         _unknownLocationId;
   }
 
-  List<DropdownMenuEntry<LocationId>> get getValidLocationEntries {
+  List<DropdownMenuEntry<LocationId>> get validLocationEntries {
     List<Location> allLocations = _locationRepository.content;
     List<DropdownMenuEntry<LocationId>> locationEntries = allLocations
         .map((location) => _mapLocationToDropdownMenuEntry(location))
         .toList();
-    locationEntries.add(_unknownEntry);
+    locationEntries.add(unknownEntry);
     return locationEntries;
   }
 

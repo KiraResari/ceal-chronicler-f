@@ -29,7 +29,7 @@ class CharacterView
     LocationId presentLocation =
         context.watch<CharacterViewController>().presentLocation;
     List<DropdownMenuEntry<LocationId>> entries =
-        context.watch<CharacterViewController>().getValidLocationEntries;
+        context.watch<CharacterViewController>().validLocationEntries;
 
     return DropdownMenu<LocationId>(
       initialSelection: presentLocation,

@@ -1490,6 +1490,7 @@
       * Except it's of course different again, because the last appearance was not a `KeyField`, and the fact that the location's name is a `KeyField` falls on my tail at the very last moment =>,<=
       * And have I recently mentioned just how much I hate how the `DropdownMenu` is implemented in Flutter?
     * Okay, so the first step is done, I managed to put the dropdown in place, it gets populated with all locations right now and doesn't save anything on selection, but it is displayed and displays the right locations, plus an extra "unknown" location that is hard-coded into the controller (not super happy with that, but given how the `DropdownMenu` is implemented in Flutter, this might very well be the best way)
+    * Good, next let's implement the functionality, which will involve a new command
 
 # TODO
 
