@@ -1,18 +1,22 @@
-import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
-import 'package:ceal_chronicler_f/utils/model/temporal_entity.dart';
-
 import '../../exceptions/point_in_time_not_found_exception.dart';
 import '../../get_it_context.dart';
 import '../../key_fields/key_field_resolver.dart';
+import '../../timeline/model/point_in_time_id.dart';
 import '../../timeline/model/point_in_time_repository.dart';
+import '../../utils/model/repository.dart';
+import '../../utils/model/temporal_entity.dart';
+import '../../utils/readable_uuid.dart';
+import 'main_view_template.dart';
 
-abstract class TemporallyLimitedTemplate<T extends TemporalEntity> {
+abstract class TemporallyLimitedTemplate<T extends TemporalEntity<I>, I extends ReadableUuid>
+    implements MainViewTemplate {
   final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
   final _keyFieldResolver = getIt.get<KeyFieldResolver>();
 
   final T entity;
+  final Repository<I, T> repository;
 
-  TemporallyLimitedTemplate(this.entity);
+  TemporallyLimitedTemplate(this.entity, this.repository);
 
   PointInTimeId? get firstAppearance => entity.firstAppearance;
 
@@ -69,10 +73,13 @@ abstract class TemporallyLimitedTemplate<T extends TemporalEntity> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is TemporallyLimitedTemplate &&
-              runtimeType == other.runtimeType &&
-              entity == other.entity;
+      other is TemporallyLimitedTemplate &&
+          runtimeType == other.runtimeType &&
+          entity == other.entity;
 
   @override
   int get hashCode => entity.hashCode;
+
+  @override
+  bool get isValid => repository.contains(entity.id);
 }

@@ -39,7 +39,7 @@ class CreateLocationCommand extends Command {
   void _returnToOverviewViewIfLocationViewWasOpen() {
     MainViewTemplate mainViewTemplate = _viewRepository.mainViewTemplate;
     if (mainViewTemplate is LocationViewTemplate &&
-        mainViewTemplate.location == _createdLocation!) {
+        mainViewTemplate.entity == _createdLocation!) {
       _viewRepository.mainViewTemplate = OverviewViewTemplate();
     }
   }

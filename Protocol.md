@@ -1451,6 +1451,8 @@
 
 * Now continuing with this
 * First, I want to start with some leftover refactoring, consolidating classes that are very much alike
+  * Aaand, I got caught up right away in an issue that I already had with the repositories, and for which I now created a help request:
+    * https://stackoverflow.com/questions/79296839/dart-how-to-condense-connected-nested-generics
 
 # TODO
 
