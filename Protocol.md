@@ -1457,6 +1457,10 @@
   * And I think that's enough refactoring for now
 * Next, to try and get the location view to work
   * This works now with a placeholder view
+  * Now to flesh it out
+  * That requires a whole bunch of commands first for updating the last and first appearances of the location
+    * I already got all that for the character, so is it possible to re-use them somehow?
+      * Yes, looks like they work just as well with `TemporalEntity` instead of `Character`
 
 # TODO
 

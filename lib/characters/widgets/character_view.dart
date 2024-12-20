@@ -139,7 +139,7 @@ class CharacterView extends MainViewCandidate {
 
   Widget _buildGotoFirstAppearanceButton(BuildContext context) {
     PointInTimeId firstAppearance =
-        context.watch<CharacterViewController>().character.firstAppearance;
+        context.watch<CharacterViewController>().entity.firstAppearance;
     return GotoPointInTimeButton(
       icon: Icons.arrow_left,
       pointInTimeId: firstAppearance,
@@ -164,7 +164,7 @@ class CharacterView extends MainViewCandidate {
 
   void _onDeleteLastAppearanceButtonPressed(BuildContext context) {
     var controller = context.read<CharacterViewController>();
-    controller.deleteLastAppearance(character);
+    controller.deleteLastAppearance();
   }
 
   Widget _buildLastAppearanceDropdown(BuildContext context) {
@@ -188,7 +188,7 @@ class CharacterView extends MainViewCandidate {
 
   Widget _buildGotoLastAppearanceButton(BuildContext context) {
     PointInTimeId? lastAppearance =
-        context.watch<CharacterViewController>().character.lastAppearance;
+        context.watch<CharacterViewController>().entity.lastAppearance;
     return GotoPointInTimeButton(
       icon: Icons.arrow_right,
       pointInTimeId: lastAppearance,
