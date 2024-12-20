@@ -1453,12 +1453,13 @@
 * First, I want to start with some leftover refactoring, consolidating classes that are very much alike
   * Aaand, I got caught up right away in an issue that I already had with the repositories, and for which I now created a help request:
     * https://stackoverflow.com/questions/79296839/dart-how-to-condense-connected-nested-generics
+  * Anyway, I now managed to consolidate the `CharacterViewTemplate` and `LocationViewTemplate`
+  * And I think that's enough refactoring for now
+* Next, to try and get the location view to work
+  * This works now with a placeholder view
 
 # TODO
 
-* Consolidate `CharacterButton` and `LocationButton`
-* Consolidate `CharacterViewTemplate` and `LocationViewTemplate`
-* Consolidate `AddLocationButton` and `AddCharacterButton`
 * Issue: Messages when deleting keys use the ID of the point in time instead of the name
 
 # User Story

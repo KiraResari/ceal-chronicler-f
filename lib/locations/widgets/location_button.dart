@@ -1,3 +1,4 @@
+import 'package:ceal_chronicler_f/view/commands/open_location_view_command.dart';
 import 'package:flutter/material.dart';
 
 import '../../get_it_context.dart';
@@ -16,7 +17,8 @@ class LocationButton extends CealTextButton {
 
   @override
   void onPressed(BuildContext context) {
-    //TODO: Implement
+    var command = OpenLocationViewCommand(location);
+    viewProcessor.process(command);
   }
 
   @override
@@ -26,7 +28,7 @@ class LocationButton extends CealTextButton {
 
   @override
   String? get tooltip {
-    String characterName = keyFieldResolver.getCurrentValue(location.name);
-    return "View/Edit $characterName";
+    String locationName = keyFieldResolver.getCurrentValue(location.name);
+    return "View/Edit $locationName";
   }
 }
