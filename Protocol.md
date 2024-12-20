@@ -1479,6 +1479,17 @@
       * I really miss Java, where there are well-tested frameworks for that
       * Here, I have to painfully hand-craft this every time, running into many amazing errors along the way
     * Okay, but I think I got this to work now, at least on a model level
+  * Next, let's try adding that as a field to the `CharacterView`
+    * Unfortunately, that has a number of time-related edge cases
+      * For starters, only locations that exist at that point in time should be available
+        * ...which immediately brings the problem of "what if a location becomes unavailable later" with it
+      * At the same time, of course that also means that I need to work it into the checks for available first and last appearances of locations
+      * Oh Dragon =>,<=
+      * I'd better write some acceptance criteria for all that and then work on them one at a time
+    * However, in a nutshell, the location functions a lot like the last appearance (which also means we'll probably get that known issue with dropdowns again, just great =>,<=)
+      * Except it's of course different again, because the last appearance was not a `KeyField`, and the fact that the location's name is a `KeyField` falls on my tail at the very last moment =>,<=
+      * And have I recently mentioned just how much I hate how the `DropdownMenu` is implemented in Flutter?
+    * Okay, so the first step is done, I managed to put the dropdown in place, it gets populated with all locations right now and doesn't save anything on selection, but it is displayed and displays the right locations, plus an extra "unknown" location that is hard-coded into the controller (not super happy with that, but given how the `DropdownMenu` is implemented in Flutter, this might very well be the best way)
 
 # TODO
 
@@ -1542,13 +1553,22 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [ ] Allows complete deletion of existing characters (with warning)
 - [x] The character screen has a back button, which returns back to the main view
 - [ ] Characters can be assigned to locations
+  - [ ] Basic functionality
+  - [ ] If a character is not presently assigned to a location, it should be displayed as "unknown"
+  - [ ] Characters can't be assigned to locations that do not presently exist
+  - [ ] If a location that a character is assigned to becomes unavailable later, the location should be displayed as "unknown" from that point onwards
+
 - [ ] Characters can be unassigned from locations
 
 ### Locations
 
 - [x] have a name
 - [x] have a first appearance
+  - [ ] if one or more characters are assigned to a location, the first appearance can't be after a character is assigned to it
+
 - [x] have a last appearance
+  - [ ] if one or more characters are assigned to a location, the first appearance can't be before all characters are unassigned from it
+
 - [x] can be added
 - [ ] can be connected to other locations
   - [ ] adjacent locations

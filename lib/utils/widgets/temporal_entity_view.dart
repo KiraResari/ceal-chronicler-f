@@ -63,17 +63,26 @@ abstract class TemporalEntityView<T extends TemporalEntity,
         0: IntrinsicColumnWidth(),
         1: IntrinsicColumnWidth(),
       },
-      children: [
-        _buildTableRow(context, "Name", StringKeyFieldView(nameField)),
-        _buildTableRow(
-            context, "First Appearance", _buildFirstAppearanceBlock(context)),
-        _buildTableRow(
-            context, "Last Appearance", _buildLastAppearanceBlock(context)),
-      ],
+      children: _buildEntityTableChildren(context, nameField),
     );
   }
 
-  TableRow _buildTableRow(BuildContext context, String label, Widget child) {
+  List<TableRow> _buildEntityTableChildren(
+      BuildContext context, StringKeyField nameField) {
+    var children = [
+      buildTableRow(context, "Name", StringKeyFieldView(nameField)),
+      buildTableRow(
+          context, "First Appearance", _buildFirstAppearanceBlock(context)),
+      buildTableRow(
+          context, "Last Appearance", _buildLastAppearanceBlock(context)),
+    ];
+    children.addAll(buildAdditionalEntityTableChildren(context));
+    return children;
+  }
+
+  List<TableRow> buildAdditionalEntityTableChildren(BuildContext context) => [];
+
+  TableRow buildTableRow(BuildContext context, String label, Widget child) {
     ThemeData theme = Theme.of(context);
     TextStyle style = theme.textTheme.labelMedium!;
     return TableRow(

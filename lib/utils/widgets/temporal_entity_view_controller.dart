@@ -16,14 +16,14 @@ abstract class TemporalEntityViewController<T extends TemporalEntity>
   final T entity;
 
   final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
-  final _keyFieldResolver = getIt.get<KeyFieldResolver>();
+  final keyFieldResolver = getIt.get<KeyFieldResolver>();
 
   TemporalEntityViewController(this.entity) : super();
 
   StringKeyField get nameField => entity.name;
 
   String get name {
-    return _keyFieldResolver.getCurrentValue(entity.name) ?? "";
+    return keyFieldResolver.getCurrentValue(entity.name) ?? "";
   }
 
   PointInTime? get firstAppearance {
