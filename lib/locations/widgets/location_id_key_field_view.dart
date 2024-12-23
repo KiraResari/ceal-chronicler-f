@@ -27,10 +27,10 @@ class LocationIdKeyFieldView extends StatelessWidget {
   Widget _buildView(BuildContext context) {
     return Row(
       children: [
-        _buildPresentLocationButton(context),
         _buildPreviousKeyButton(context),
         _buildAddOrRemoveKeyButton(context),
         _buildNextKeyButton(context),
+        _buildPresentLocationButton(context),
         _buildEditButton(context),
       ],
     );
