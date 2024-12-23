@@ -1635,6 +1635,10 @@
 
 * And I think with that, I finally got the whole "assigning locations to characters" down
 
+* This is as far as I'm getting with this today
+
+[Time elapsed so far: 114.25 hours]
+
 # TODO
 
 * Bug:  Trying to load a chronicle while a location is opened causes an `PointInTimeNotFoundException`
