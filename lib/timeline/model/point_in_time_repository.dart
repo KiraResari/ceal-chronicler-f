@@ -1,5 +1,6 @@
 import '../../exceptions/invalid_operation_exception.dart';
 import '../../exceptions/point_in_time_not_found_exception.dart';
+import '../../utils/model/temporal_entity.dart';
 import 'point_in_time.dart';
 import 'point_in_time_id.dart';
 
@@ -161,7 +162,7 @@ class PointInTimeRepository {
     PointInTimeId referencePointId,
   ) {
     PointInTime? referencePoint = get(referencePointId);
-    if(referencePoint != null) {
+    if (referencePoint != null) {
       var referencePointIndex = pointsInTime.indexOf(referencePoint);
       return pointsInTime.sublist(referencePointIndex);
     }
@@ -178,5 +179,14 @@ class PointInTimeRepository {
     int activePointInTimeIndex = pointsInTime.indexOf(activePointInTime);
     int referencePointIndex = _getPointIndexById(id);
     return referencePointIndex < activePointInTimeIndex;
+  }
+
+  bool entityIsPresentlyActive(TemporalEntity entity) {
+    bool firstAppearanceHasHappened =
+        !pointIsInTheFuture(entity.firstAppearance);
+    PointInTimeId? lastAppearance = entity.lastAppearance;
+    bool lastAppearanceHasntHappened =
+        lastAppearance == null ? true : !pointIsInThePast(lastAppearance);
+    return firstAppearanceHasHappened && lastAppearanceHasntHappened;
   }
 }

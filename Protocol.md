@@ -1631,7 +1631,9 @@
 
           * I *think* the issue might have been that it didn't like me access the controller inside the `onPressed` method of the `TextButton`, but I'm not sure
 
-*  
+      * Right, it took some effort, but I now managed to make the location appear as a clickable button in the character view 
+
+* And I think with that, I finally got the whole "assigning locations to characters" down
 
 # TODO
 
@@ -1695,26 +1697,23 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
   - [x] It is possible to jump back and forth to points in time where a field's value has been edited
 - [ ] Allows complete deletion of existing characters (with warning)
 - [x] The character screen has a back button, which returns back to the main view
-- [ ] Characters can be assigned to locations
+- [x] Characters can be assigned to locations
   - [x] Basic functionality
   - [x] If a character is not presently assigned to a location, it should be displayed as "unknown"
   - [x] Keying behavior (add, remove, forward, backward)
   - [x] Characters can't be assigned to locations that do not presently exist
-  - [ ] If a location that a character is assigned to becomes unavailable later, the location should be displayed as "unknown" from that point onwards
-
 - [x] Characters can be unassigned from locations
+- [x] You can jump to the location from the character
+  - [x] If a location does not exist at the current point, it is displayed as a greyed-out button
 
-- [ ] You can jump to the location from the character
 
 ### Locations
 
 - [x] have a name
 - [x] have a first appearance
-  - [ ] if one or more characters are assigned to a location, the first appearance can't be after a character is assigned to it
-
+  
 - [x] have a last appearance
-  - [ ] if one or more characters are assigned to a location, the first appearance can't be before all characters are unassigned from it
-
+  
 - [x] can be added
 - [ ] can be connected to other locations
   - [ ] adjacent locations

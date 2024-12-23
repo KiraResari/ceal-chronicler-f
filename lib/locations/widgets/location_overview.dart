@@ -27,8 +27,8 @@ class LocationOverview
   }
 
   @override
-  Widget buildItem(Location character) {
-    return LocationButton(character);
+  Widget buildItem(Location item) {
+    return LocationButton(item);
   }
 
   @override

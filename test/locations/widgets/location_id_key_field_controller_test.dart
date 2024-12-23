@@ -108,12 +108,13 @@ main() {
       PointInTimeId presentPointId = pointInTimeRepository.activePointInTime.id;
       var character = Character(presentPointId);
       var controller = LocationIdKeyFieldController(character.presentLocation);
-      var newLocationId = LocationId();
+      var newLocation = Location(presentPointId);
+      locationRepository.add(newLocation);
 
-      controller.updatePresentLocation(newLocationId);
+      controller.updatePresentLocation(newLocation.id);
 
-      LocationId presentLocationId = controller.presentLocation;
-      expect(presentLocationId, equals(newLocationId));
+      Location? presentLocation = controller.presentLocation;
+      expect(presentLocation, equals(newLocation));
     },
   );
 

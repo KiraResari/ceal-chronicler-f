@@ -12,8 +12,9 @@ class LocationButton extends CealTextButton {
   final keyFieldResolver = getIt.get<KeyFieldResolver>();
 
   final Location location;
+  final bool isActive;
 
-  LocationButton(this.location, {super.key});
+  LocationButton(this.location, {super.key, this.isActive = true});
 
   @override
   void onPressed(BuildContext context) {
@@ -29,5 +30,16 @@ class LocationButton extends CealTextButton {
   @override
   String? get tooltip {
     return "View/Edit $text";
+  }
+
+  @override
+  bool isEnabled(BuildContext context) {
+    return isActive;
+  }
+
+  @override
+  String? getDisabledReason(BuildContext context) {
+    String name = keyFieldResolver.getCurrentValue(location.name) ?? "unknown";
+    return "Location '$name' does not exist at this point in time";
   }
 }

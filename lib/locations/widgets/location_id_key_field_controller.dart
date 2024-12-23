@@ -1,4 +1,3 @@
-import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
 import 'package:flutter/material.dart';
 
 import '../../get_it_context.dart';
@@ -15,8 +14,11 @@ class LocationIdKeyFieldController extends KeyFieldController<LocationId?> {
       DropdownMenuEntry<LocationId>(value: unknownLocationId, label: "unknown");
   final _locationRepository = getIt.get<LocationRepository>();
 
-  LocationId get presentLocation {
-    return currentValue ?? unknownLocationId;
+  Location? get presentLocation {
+    if (currentValue != null) {
+      return _locationRepository.getContentElementById(currentValue!);
+    }
+    return null;
   }
 
   List<DropdownMenuEntry<LocationId>> get validLocationEntries {
@@ -31,18 +33,16 @@ class LocationIdKeyFieldController extends KeyFieldController<LocationId?> {
 
   List<Location> get _validLocations {
     return _locationRepository.content
-        .where((location) => _isValidLocation(location))
+        .where((location) =>
+            pointInTimeRepository.entityIsPresentlyActive(location))
         .toList();
   }
 
-  bool _isValidLocation(Location location) {
-    bool firstAppearanceHasHappened =
-        !pointInTimeRepository.pointIsInTheFuture(location.firstAppearance);
-    PointInTimeId? lastAppearance = location.lastAppearance;
-    bool lastAppearanceHasntHappened = lastAppearance == null
-        ? true
-        : !pointInTimeRepository.pointIsInThePast(lastAppearance);
-    return firstAppearanceHasHappened && lastAppearanceHasntHappened;
+  bool get presentLocationIsActive {
+    if (presentLocation != null) {
+      return pointInTimeRepository.entityIsPresentlyActive(presentLocation!);
+    }
+    return false;
   }
 
   DropdownMenuEntry<LocationId> _mapLocationToDropdownMenuEntry(

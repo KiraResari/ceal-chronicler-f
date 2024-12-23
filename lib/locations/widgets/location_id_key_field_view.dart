@@ -1,12 +1,13 @@
-import 'package:ceal_chronicler_f/key_fields/widgets/select_key_button.dart';
-import 'package:ceal_chronicler_f/utils/widgets/dialogs/select_key_dropdown_dialog.dart';
+import 'package:ceal_chronicler_f/locations/widgets/location_button.dart';
 import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
 
 import '../../key_fields/location_id_key_field.dart';
 import '../../key_fields/widgets/next_key_button.dart';
 import '../../key_fields/widgets/previous_key_button.dart';
+import '../../key_fields/widgets/select_key_button.dart';
 import '../../key_fields/widgets/toggle_key_button.dart';
+import '../model/location.dart';
 import '../model/location_id.dart';
 import 'location_id_key_field_controller.dart';
 
@@ -26,7 +27,7 @@ class LocationIdKeyFieldView extends StatelessWidget {
   Widget _buildView(BuildContext context) {
     return Row(
       children: [
-        _buildPresentLocationDropdown(context),
+        _buildPresentLocationButton(context),
         _buildPreviousKeyButton(context),
         _buildAddOrRemoveKeyButton(context),
         _buildNextKeyButton(context),
@@ -55,20 +56,15 @@ class LocationIdKeyFieldView extends StatelessWidget {
     return ToggleKeyButton(controller, keyExistsAtCurrentPointInTime);
   }
 
-  Widget _buildPresentLocationDropdown(BuildContext context) {
-    var controller = context.read<LocationIdKeyFieldController>();
-    LocationId presentLocation =
+  Widget _buildPresentLocationButton(BuildContext context) {
+    Location? presentLocation =
         context.watch<LocationIdKeyFieldController>().presentLocation;
-    List<DropdownMenuEntry<LocationId>> entries =
-        context.watch<LocationIdKeyFieldController>().validLocationEntries;
-
-    return DropdownMenu<LocationId>(
-      initialSelection: presentLocation,
-      dropdownMenuEntries: entries,
-      onSelected: (LocationId? locationId) {
-        controller.updatePresentLocation(locationId);
-      },
-    );
+    if (presentLocation != null) {
+      bool locationIsActive =
+          context.watch<LocationIdKeyFieldController>().presentLocationIsActive;
+      return LocationButton(presentLocation, isActive: locationIsActive);
+    }
+    return const Text("Unknown");
   }
 
   Widget _buildEditButton(BuildContext context) {
