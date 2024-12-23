@@ -1,6 +1,6 @@
 import 'package:ceal_chronicler_f/utils/validation/invalid_result.dart';
 import 'package:ceal_chronicler_f/utils/validation/validation_result.dart';
-import 'package:ceal_chronicler_f/utils/widgets/rename_dialog_controller.dart';
+import 'package:ceal_chronicler_f/utils/widgets/dialogs/rename_dialog_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

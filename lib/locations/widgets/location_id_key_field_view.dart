@@ -1,3 +1,5 @@
+import 'package:ceal_chronicler_f/key_fields/widgets/select_key_button.dart';
+import 'package:ceal_chronicler_f/utils/widgets/dialogs/select_key_dropdown_dialog.dart';
 import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
 
@@ -28,6 +30,7 @@ class LocationIdKeyFieldView extends StatelessWidget {
         _buildPreviousKeyButton(context),
         _buildAddOrRemoveKeyButton(context),
         _buildNextKeyButton(context),
+        _buildEditButton(context),
       ],
     );
   }
@@ -65,6 +68,16 @@ class LocationIdKeyFieldView extends StatelessWidget {
       onSelected: (LocationId? locationId) {
         controller.updatePresentLocation(locationId);
       },
+    );
+  }
+
+  Widget _buildEditButton(BuildContext context) {
+    List<DropdownMenuEntry<LocationId>> entries =
+        context.watch<LocationIdKeyFieldController>().validLocationEntries;
+    return SelectKeyButton(
+      keyField: keyField,
+      entries: entries,
+      labelText: "Assign character to location",
     );
   }
 }

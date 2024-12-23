@@ -1546,8 +1546,96 @@
 
 [Time elapsed so far: 111 hours] (nice! =^,^= )
 
+# 23-Dec-2024
+
+* Now continuing with this
+
+* Right now, I need to take care of some temporal edge cases that come with the relation between characters and locations
+
+  * Really though, I don't know if it's good to constrain things too much there
+  * Maybe it's better to let the user manipulate character and location first and last appearances individually, and make a general behavior for when a location and/or character are not available
+  * Let us think about the cases
+  * Basically, the only situation that I have now is that a character can exist at a time when the location does not
+    * In that case, the location should be displayed as "unknown"
+
+* Let me take a step back here
+
+* First, I should make it so you can jump between locations and characters
+
+  * And for that, I need to change how the location is displayed in characters
+
+    * Right now, it is a dropdown
+    * But what I really want is for there to be a button that you can click on and jump to the location, if it exists
+    * And you only need the dropdown while editing it
+    * So really, the location field is much closer to the name field, except it contains a clickable button
+
+  * Right, so since the editing functionality is kinda crucial to verify all this, maybe I should start with that
+
+    * Basically, I want an edit button, and if that one becomes activated, I want a popup where you can select the location from the dropdown
+
+    * So, I need a `DropdownDialog` that functions analogously to the `RenameDialog`
+
+    * That's actually not so easy because of how all the things are interconnected...
+
+    * It starts at the `LocationIdKeyFieldView`, where I need to put it
+
+      * At this point, I have the `LocationIdKeyField`, and I already have functionality in place to get all valid locations from the controller there
+
+      * That is specific functionality, since what is valid will be dependent on each use case
+
+      * However, in the `DropdownDialogController`, I need two things:
+
+        * The key field, which I can pass on no problem
+        * A list of valid entries, including their display names, which is  a bit more complicated
+          * This is because the key field is a `LocationIdKeyField`, which is a `KeyField<LocationId>`
+          * So, if I make the `DropdownDialog` and it's controller extend something with the generic `LocationId`, then I won't be able to read the name from it there
+          * I think the best solution for the time being will be to just make use of the  existing `List<DropdownMenuEntry<LocationId>> get validLocationEntries` in the `LocationIdKeyFieldController` and pass that along
+        * At least that makes a sort of sense: By doing that I tell the `DropdownDialogController` what field should be modified, and also what entries should be in the dropdown and how to display them
+
+      * And now I get fun errors when trying to hit the confirm button:
+
+        * ````
+          Tried to listen to a value exposed with provider, from outside of the widget tree.
+          
+          This is likely caused by an event handler (like a button's onPressed) that called
+          Provider.of without passing `listen: false`.
+          
+          To fix, write:
+          Provider.of<SelectKeyDropdownDialogController<dynamic>>(context, listen: false);
+          
+          It is unsupported because may pointlessly rebuild the widget associated to the
+          event handler, when the widget tree doesn't care about the value.
+          
+          The context used was: Builder(dependencies: [_InheritedProviderScope<SelectKeyDropdownDialogController<LocationId>?>])
+          'package:provider/src/provider.dart':
+          Failed assertion: line 274 pos 7: 'context.owner!.debugBuilding ||
+                    listen == false ||
+                    debugIsInInheritedProviderUpdate'
+          ````
+
+        * I won't claim to in-depth understand what's going on here, nor will I try to, because I am already reasonably sure that the issue here is that I naively assumed that firing a command inside the popup would maybe just work =>,<=
+
+        * But never mind, I can also just have the popup return the value that I need and fire the command on that, even if that means introducing yet another controller level =>,<=
+
+        * Hmm, nope
+
+        * Weird
+
+        * And somehow the popup doesn't close either
+
+        * It closes when I click the "X" though
+
+        * Weird
+
+        * Okay, I think I got it to work now
+
+          * I *think* the issue might have been that it didn't like me access the controller inside the `onPressed` method of the `TextButton`, but I'm not sure
+
+*  
+
 # TODO
 
+* Bug:  Trying to load a chronicle while a location is opened causes an `PointInTimeNotFoundException`
 * Issue: Messages when deleting keys use the ID of the point in time instead of the name
 
 # User Story
@@ -1616,6 +1704,8 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 
 - [x] Characters can be unassigned from locations
 
+- [ ] You can jump to the location from the character
+
 ### Locations
 
 - [x] have a name
@@ -1630,6 +1720,9 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
   - [ ] adjacent locations
   - [ ] locations within other locations
 - [x] can be saved and loaded
+- [ ] Characters at a location at a time are displayed
+  - [ ] You can jump to these characters
+
 
 ### Technical
 

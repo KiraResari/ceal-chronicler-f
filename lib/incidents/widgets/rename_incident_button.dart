@@ -1,5 +1,5 @@
 import 'package:ceal_chronicler_f/incidents/commands/rename_incident_command.dart';
-import 'package:ceal_chronicler_f/utils/widgets/rename_dialog.dart';
+import 'package:ceal_chronicler_f/utils/widgets/dialogs/rename_dialog.dart';
 import 'package:flutter/material.dart';
 
 import '../../commands/command_processor.dart';

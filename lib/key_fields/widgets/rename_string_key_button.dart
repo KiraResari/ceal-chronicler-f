@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../utils/widgets/buttons/small_circular_button.dart';
-import '../../utils/widgets/rename_dialog.dart';
+import '../../utils/widgets/dialogs/rename_dialog.dart';
 import 'string_key_field_controller.dart';
 
 class RenameStringKeyButton extends SmallCircularButton {
