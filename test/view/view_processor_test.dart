@@ -35,6 +35,7 @@ main() {
 
   setUp(() {
     getIt.reset();
+    getIt.registerSingleton<MessageBarState>(MessageBarState());
     pointInTimeRepository = PointInTimeRepository();
     getIt.registerSingleton<PointInTimeRepository>(pointInTimeRepository);
     getIt.registerSingleton<IncidentRepository>(IncidentRepository());
@@ -46,7 +47,6 @@ main() {
     viewProcessor = ViewProcessor();
     getIt.registerSingleton<ViewProcessor>(viewProcessor);
     getIt.registerSingleton<CommandHistory>(CommandHistory());
-    getIt.registerSingleton<MessageBarState>(MessageBarState());
     commandProcessor = CommandProcessor();
     getIt.registerSingleton<CommandProcessor>(commandProcessor);
     getIt.registerSingleton<FileAdapter>(FileAdapterMock());
