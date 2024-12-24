@@ -1646,6 +1646,9 @@
   * Trying to load a chronicle while a location is opened causes an `PointInTimeNotFoundException`
   * I could go into detail in analyzing this, but I'm fairly certain that the issue here (and it would probably also happen in the character view) is that loading a chronicle while inside a view presently does not return to the overview view, which naturally causes trouble if the loaded chronicle has different points in times, characters and locations
   * Yes, that was an easy fix!
+* Okay, so, next I want a location to display the characters that are present at it and allow navigation to it
+  * This is going to be similar to how the current location is displayed in the character view, only editable
+  * Yesh! This was pretty straightforward to accomplish!
 
 # TODO
 
@@ -1730,8 +1733,8 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
   - [ ] adjacent locations
   - [ ] locations within other locations
 - [x] can be saved and loaded
-- [ ] Characters at a location at a time are displayed
-  - [ ] You can jump to these characters
+- [x] Characters at a location at a time are displayed
+  - [x] You can jump to these characters
 
 
 ### Technical
