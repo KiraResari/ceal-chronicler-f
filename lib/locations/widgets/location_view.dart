@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../characters/model/character.dart';
 import '../../characters/widgets/character_button.dart';
+import '../../utils/string_key.dart';
 import '../../utils/widgets/temporal_entity_view.dart';
 import '../model/location.dart';
 import 'edit_parent_location_button.dart';
@@ -11,8 +12,8 @@ import 'location_view_controller.dart';
 
 class LocationView
     extends TemporalEntityView<Location, LocationViewController> {
-  const LocationView({super.key, required Location location})
-      : super(entity: location);
+  LocationView({required Location location})
+      : super(entity: location, key: StringKey(location.toString()));
 
   @override
   LocationViewController createController() {

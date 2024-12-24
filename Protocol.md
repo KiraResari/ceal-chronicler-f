@@ -1662,6 +1662,24 @@
     * That is actually really weird
     * Stupid view logic, why did I ever get it into my head to try and program something like this myself? =>,<=
     * I now added additional logging, and according to the logging, the location _should_ be opened
+    * And I added even more logging, confirming that the internal program state says that the correct location view should be displayed
+    * And yet it doesn't
+    * How come?
+    * Here's what I observe:
+      * ✔️ Click `Child Location` in `Overview View` > `Child Location` "Opened Child Location"
+      * ❌ Click `Parent Location` in `Child Location` > `Child Location` "Opened Parent Location"
+      * ✔️ Click `Overview View` in `Child Location` > `Overview View` "Opened Overview View"
+      * ✔️ Navigate back > `Parent Location` "Opened Parent Location"
+      * ❌ Navigate back > `Parent Location` "Opened Child Location"
+      * ✔️ Navigate back > `Overview View` "Opened Overview View"
+    * So, from what I can tell, whatever the root cause is, it seems that the internal program structure is correct, and the issue is with the view not updating
+    * Okay, turns out that this was because the `LocationView`s didn't have unique keys
+      * I now fixed that by giving it the identifiers of the locations
+    * Well, glad that fixed that, but still, that was an unnecessary waste of time for something that turned out so trivial
+    * So I now also fixed that for the CharacterView, so I won't run into that there later
+* This is as far as I'm getting with this today
+
+[Time elapsed so far: 119 hours]
 
 # TODO
 
@@ -1738,18 +1756,16 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 
 - [x] have a name
 - [x] have a first appearance
-  
 - [x] have a last appearance
-  
 - [x] can be added
 - [ ] can be connected to other locations
   - [ ] adjacent locations
-  - [ ] locations within other locations
-  - [ ] by clicking on linked locations, you can jump to them
-  - [x] parent location is being displayed
-  - [x] parent location can be edited
-  - [ ] parent location can be removed
-  - [ ] child locations are being displayed
+  - [x] by clicking on linked locations, you can jump to them
+  - [ ] parent and child locations
+    - [x] parent location is being displayed
+    - [x] parent location can be edited
+    - [ ] parent location can be removed
+    - [ ] child locations are being displayed
 - [x] can be saved and loaded
 - [x] Characters at a location at a time are displayed
   - [x] You can jump to these characters
