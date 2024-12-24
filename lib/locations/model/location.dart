@@ -7,6 +7,9 @@ import 'location_id.dart';
 
 class Location extends TemporalEntity<LocationId> {
   static const defaultName = "New Location";
+  static const String _parentLocationKey = "parentLocation";
+
+  LocationId? parentLocation;
 
   Location(PointInTimeId firstAppearance)
       : super(defaultName, LocationId(), firstAppearance);
@@ -15,9 +18,23 @@ class Location extends TemporalEntity<LocationId> {
       : this.fromJson(jsonDecode(jsonString));
 
   Location.fromJson(Map<String, dynamic> json)
-      : super.fromJson(json, LocationId.fromString(json[IdHolder.idKey]));
+      : parentLocation = _buildLocationId(json),
+        super.fromJson(json, LocationId.fromString(json[IdHolder.idKey]));
+
+  static LocationId? _buildLocationId(Map<String, dynamic> json) {
+    var parentLocationMap = json[_parentLocationKey];
+    return parentLocationMap == null
+        ? null
+        : LocationId.fromJson(parentLocationMap);
+  }
 
   @override
-  String toString() =>
-      'Location{id: $id, name: $name, firstAppearance: $firstAppearance, lastAppearance: $lastAppearance}';
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> jsonMap = super.toJson();
+    jsonMap[_parentLocationKey] = parentLocation;
+    return jsonMap;
+  }
+
+  @override
+  String toString() => 'Location{id: $id}';
 }

@@ -16,13 +16,6 @@ class Character extends TemporalEntity<CharacterId> {
       : presentLocation = LocationIdKeyField(),
         super(defaultName, CharacterId(), firstAppearance);
 
-  @override
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> jsonMap = super.toJson();
-    jsonMap[_presentLocationKey] = presentLocation;
-    return jsonMap;
-  }
-
   Character.fromJsonString(String jsonString)
       : this.fromJson(jsonDecode(jsonString));
 
@@ -32,6 +25,12 @@ class Character extends TemporalEntity<CharacterId> {
         super.fromJson(json, CharacterId.fromString(json[IdHolder.idKey]));
 
   @override
-  String toString() =>
-      'Character{id: $id, name: $name, firstAppearance: $firstAppearance, lastAppearance: $lastAppearance}';
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> jsonMap = super.toJson();
+    jsonMap[_presentLocationKey] = presentLocation;
+    return jsonMap;
+  }
+
+  @override
+  String toString() => 'Character{id: $id}';
 }

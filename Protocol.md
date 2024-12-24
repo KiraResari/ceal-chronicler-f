@@ -1649,6 +1649,10 @@
 * Okay, so, next I want a location to display the characters that are present at it and allow navigation to it
   * This is going to be similar to how the current location is displayed in the character view, only editable
   * Yesh! This was pretty straightforward to accomplish!
+* Next, I want to tackle relations between locations
+  * Parent-child relations are going to be the easiest, so it'll make sense to start with those
+  * So, I definitely want these to be non-temporal, because temporality always causes pain, and I see no reason why relationships should be temporal that is important enough to justify this pain
+  * I also definitely want to make it analogous to the way I linked characters and locations right now, so that you can click on the location to jump to it 
 
 # TODO
 
@@ -1732,6 +1736,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [ ] can be connected to other locations
   - [ ] adjacent locations
   - [ ] locations within other locations
+  - [ ] by clicking on linked locations, you can jump to them
 - [x] can be saved and loaded
 - [x] Characters at a location at a time are displayed
   - [x] You can jump to these characters
