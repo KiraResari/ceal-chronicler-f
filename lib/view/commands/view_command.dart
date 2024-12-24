@@ -8,4 +8,8 @@ abstract class ViewCommand {
   bool get isUndoPossible;
 
   bool get isRedoPossible;
+
+  String get executeMessage;
+
+  String get undoMessage;
 }

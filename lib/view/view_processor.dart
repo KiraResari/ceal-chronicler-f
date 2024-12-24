@@ -1,7 +1,12 @@
 import 'package:ceal_chronicler_f/view/commands/view_command.dart';
 import 'package:flutter/material.dart';
 
+import '../get_it_context.dart';
+import '../message_bar/message_bar_state.dart';
+
 class ViewProcessor extends ChangeNotifier {
+  final _messageBarState = getIt.get<MessageBarState>();
+
   late final List<ViewCommand> _commandHistory = [];
   int _index = 0;
 
@@ -11,8 +16,13 @@ class ViewProcessor extends ChangeNotifier {
       command.execute();
       _commandHistory.add(command);
       _index++;
-      notifyListeners();
+      _updateStatusMessageAndNotifyListeners(command.executeMessage);
     }
+  }
+
+  void _updateStatusMessageAndNotifyListeners(String message) {
+    _messageBarState.statusMessage = message;
+    notifyListeners();
   }
 
   void _clearHistoryPastCurrentIndex() {
@@ -36,9 +46,10 @@ class ViewProcessor extends ChangeNotifier {
   void navigateBack() {
     int? targetIndex = _previousValidIndex;
     if (targetIndex != null) {
-      _commandHistory[targetIndex].undo();
+      var command = _commandHistory[targetIndex];
+      command.undo();
       _index = targetIndex;
-      notifyListeners();
+      _updateStatusMessageAndNotifyListeners(command.undoMessage);
     }
   }
 
@@ -66,9 +77,10 @@ class ViewProcessor extends ChangeNotifier {
   void navigateForward() {
     int? targetIndex = _nextValidIndex;
     if (targetIndex != null) {
-      _commandHistory[targetIndex].redo();
+      ViewCommand command = _commandHistory[targetIndex];
+      command.redo();
       _index = targetIndex + 1;
-      notifyListeners();
+      _updateStatusMessageAndNotifyListeners(command.executeMessage);
     }
   }
 

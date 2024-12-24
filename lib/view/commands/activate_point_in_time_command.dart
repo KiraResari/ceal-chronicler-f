@@ -1,15 +1,15 @@
-import 'package:ceal_chronicler_f/get_it_context.dart';
-import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
-import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
-import 'package:ceal_chronicler_f/view/commands/view_command.dart';
-import 'package:ceal_chronicler_f/view/templates/main_view_template.dart';
-import 'package:ceal_chronicler_f/view/templates/temporally_limited_template.dart';
-import 'package:ceal_chronicler_f/view/view_repository.dart';
+import '../../get_it_context.dart';
+import '../../timeline/model/point_in_time.dart';
+import '../../timeline/model/point_in_time_id.dart';
+import '../../timeline/model/point_in_time_repository.dart';
+import '../templates/main_view_template.dart';
+import '../templates/temporally_limited_template.dart';
+import '../view_repository.dart';
+import 'view_command.dart';
 
 class ActivatePointInTimeCommand extends ViewCommand {
-  final PointInTimeRepository _pointInTimeRepository =
-      getIt.get<PointInTimeRepository>();
-  final ViewRepository _viewRepository = getIt.get<ViewRepository>();
+  final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
+  final _viewRepository = getIt.get<ViewRepository>();
   final PointInTimeId _id;
   PointInTimeId? _previousActivePointInTimeId;
 
@@ -67,5 +67,21 @@ class ActivatePointInTimeCommand extends ViewCommand {
   @override
   void redo() {
     _pointInTimeRepository.activatePointInTime(_id);
+  }
+
+  @override
+  String get executeMessage =>
+      "Activated point in time '${getPointInTimeNameOrUnknown(_id)}'";
+
+  @override
+  String get undoMessage =>
+      "Activated point in time '${getPointInTimeNameOrUnknown(_previousActivePointInTimeId)}'";
+
+  String getPointInTimeNameOrUnknown(PointInTimeId? id) {
+    if (id == null) {
+      return "unknown";
+    }
+    PointInTime? point = _pointInTimeRepository.get(id);
+    return point == null ? "unknown" : point.name;
   }
 }

@@ -69,8 +69,6 @@ abstract class TemporallyLimitedTemplate<T extends TemporalEntity<I>,
     return "$identifier exists at this point in time, so this should be selectable. If you see this, then this might be a bug.";
   }
 
-  String get identifier;
-
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||

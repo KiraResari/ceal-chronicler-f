@@ -16,4 +16,7 @@ class OverviewViewTemplate extends MainViewTemplate {
 
   @override
   int get hashCode => 0;
+
+  @override
+  String get identifier => "Overview View";
 }

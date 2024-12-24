@@ -1,7 +1,9 @@
 import '../../main_view/main_view_candidate.dart';
 
-abstract class MainViewTemplate{
+abstract class MainViewTemplate {
   MainViewCandidate get associatedView;
 
   bool get isValid;
+
+  String get identifier;
 }

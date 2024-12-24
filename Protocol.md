@@ -1659,6 +1659,9 @@
     * So yeah, let's leave the control at an absolute minimum level here for now
   * Okay, the basic functionality works now
   * However, for some strange reason, jumping to the location by clicking its button does not work yet
+    * That is actually really weird
+    * Stupid view logic, why did I ever get it into my head to try and program something like this myself? =>,<=
+    * I now added additional logging, and according to the logging, the location _should_ be opened
 
 # TODO
 

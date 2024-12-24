@@ -40,4 +40,14 @@ abstract class ChangeMainViewCommand extends ViewCommand {
   void redo() {
     viewRepository.mainViewTemplate = _template;
   }
+
+  @override
+  String get executeMessage => "Opened ${_template.identifier}";
+
+  @override
+  String get undoMessage {
+    return _previousTemplate == null
+        ? "Undo of ChangeMainViewCommand should not be possible because _previousTemplate is null"
+        : "Opened ${_previousTemplate!.identifier}";
+  }
 }
