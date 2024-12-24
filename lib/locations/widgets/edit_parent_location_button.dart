@@ -7,17 +7,21 @@ import '../model/location_id.dart';
 import 'edit_parent_location_button_controller.dart';
 
 class EditParentLocationButton extends SmallCircularButton {
+  final Location locationBeingEdited;
   final Location? parentLocation;
   final EditParentLocationButtonController controller =
       EditParentLocationButtonController();
 
-  EditParentLocationButton(this.parentLocation, {super.key})
-      : super(icon: Icons.edit);
+  EditParentLocationButton(
+    this.locationBeingEdited,
+    this.parentLocation, {
+    super.key,
+  }) : super(icon: Icons.edit);
 
   @override
   void onPressed(BuildContext context) async {
     LocationId? selectedValue = await _showSelectionDialog(context);
-    controller.updateParentLocation(selectedValue);
+    controller.updateParentLocation(locationBeingEdited, selectedValue);
   }
 
   Future<LocationId?> _showSelectionDialog(BuildContext context) {

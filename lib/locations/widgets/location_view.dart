@@ -1,12 +1,12 @@
-import 'package:ceal_chronicler_f/characters/widgets/character_button.dart';
-import 'package:ceal_chronicler_f/locations/widgets/location_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../characters/model/character.dart';
+import '../../characters/widgets/character_button.dart';
 import '../../utils/widgets/temporal_entity_view.dart';
 import '../model/location.dart';
 import 'edit_parent_location_button.dart';
+import 'location_button.dart';
 import 'location_view_controller.dart';
 
 class LocationView
@@ -49,7 +49,7 @@ class LocationView
         parentLocation == null
             ? const Text("none")
             : LocationButton(parentLocation),
-        EditParentLocationButton(parentLocation),
+        EditParentLocationButton(entity, parentLocation),
       ],
     );
   }

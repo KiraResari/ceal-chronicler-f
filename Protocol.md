@@ -1657,6 +1657,8 @@
     * For example, should I implement logic to prevent for locations to be their own parent? or the parent of their parent?
     * I think the answer is no, because while it makes no sense within a world, as soon as you enter Minayero, strange things like that suddenly become possible
     * So yeah, let's leave the control at an absolute minimum level here for now
+  * Okay, the basic functionality works now
+  * However, for some strange reason, jumping to the location by clicking its button does not work yet
 
 # TODO
 
@@ -1741,6 +1743,10 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
   - [ ] adjacent locations
   - [ ] locations within other locations
   - [ ] by clicking on linked locations, you can jump to them
+  - [x] parent location is being displayed
+  - [x] parent location can be edited
+  - [ ] parent location can be removed
+  - [ ] child locations are being displayed
 - [x] can be saved and loaded
 - [x] Characters at a location at a time are displayed
   - [x] You can jump to these characters
