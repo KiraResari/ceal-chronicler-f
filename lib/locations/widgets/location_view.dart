@@ -28,6 +28,9 @@ class LocationView
   Widget _buildCharactersPresent(BuildContext context) {
     List<Character> charactersPresent =
         context.watch<LocationViewController>().charactersPresentAtLocation;
+    if(charactersPresent.isEmpty){
+      return const Text("none");
+    }
     return Column(
       children: charactersPresent
           .map((character) => CharacterButton(character))
