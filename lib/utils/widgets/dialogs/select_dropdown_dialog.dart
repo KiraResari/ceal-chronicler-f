@@ -3,14 +3,14 @@ import 'package:provider/provider.dart';
 
 import '../../validation/invalid_result.dart';
 import '../../validation/validation_result.dart';
-import 'select_key_dropdown_dialog_controller.dart';
+import 'select_dropdown_dialog_controller.dart';
 
-class SelectKeyDropdownDialog<T> extends StatelessWidget {
+class SelectDropdownDialog<T> extends StatelessWidget {
   final T? initialSelection;
   final List<DropdownMenuEntry<T>> entries;
   final String? labelText;
 
-  const SelectKeyDropdownDialog({
+  const SelectDropdownDialog({
     super.key,
     required this.initialSelection,
     required this.entries,
@@ -21,7 +21,7 @@ class SelectKeyDropdownDialog<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) =>
-          SelectKeyDropdownDialogController<T>(initialSelection),
+          SelectDropdownDialogController<T>(initialSelection),
       builder: (context, child) => buildAlertDialog(context),
     );
   }
@@ -66,15 +66,15 @@ class SelectKeyDropdownDialog<T> extends StatelessWidget {
 
   Widget _buildConfirmButton(BuildContext context) {
     T? currentSelection =
-        context.watch<SelectKeyDropdownDialogController<T>>().currentSelection;
+        context.watch<SelectDropdownDialogController<T>>().currentSelection;
     return TextButton(
       onPressed: () => Navigator.of(context).pop(currentSelection),
       child: const Text("✔️"),
     );
   }
 
-  SelectKeyDropdownDialogController<T> _watchController(BuildContext context) {
-    return context.watch<SelectKeyDropdownDialogController<T>>();
+  SelectDropdownDialogController<T> _watchController(BuildContext context) {
+    return context.watch<SelectDropdownDialogController<T>>();
   }
 
   TextButton _buildCancelButton(BuildContext context) {

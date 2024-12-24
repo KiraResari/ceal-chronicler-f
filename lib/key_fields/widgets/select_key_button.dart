@@ -1,9 +1,9 @@
-import 'package:ceal_chronicler_f/key_fields/widgets/select_key_button_controller.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/widgets/buttons/small_circular_button.dart';
-import '../../utils/widgets/dialogs/select_key_dropdown_dialog.dart';
+import '../../utils/widgets/dialogs/select_dropdown_dialog.dart';
 import '../key_field.dart';
+import 'select_key_button_controller.dart';
 
 class SelectKeyButton<T> extends SmallCircularButton {
   final KeyField<T> keyField;
@@ -29,7 +29,7 @@ class SelectKeyButton<T> extends SmallCircularButton {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
-        return SelectKeyDropdownDialog<T>(
+        return SelectDropdownDialog<T>(
           initialSelection: controller.currentValue,
           entries: entries,
           labelText: labelText,

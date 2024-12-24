@@ -1653,6 +1653,10 @@
   * Parent-child relations are going to be the easiest, so it'll make sense to start with those
   * So, I definitely want these to be non-temporal, because temporality always causes pain, and I see no reason why relationships should be temporal that is important enough to justify this pain
   * I also definitely want to make it analogous to the way I linked characters and locations right now, so that you can click on the location to jump to it 
+  * One question here is how nazi I should be about guarding against logical garbage here
+    * For example, should I implement logic to prevent for locations to be their own parent? or the parent of their parent?
+    * I think the answer is no, because while it makes no sense within a world, as soon as you enter Minayero, strange things like that suddenly become possible
+    * So yeah, let's leave the control at an absolute minimum level here for now
 
 # TODO
 
