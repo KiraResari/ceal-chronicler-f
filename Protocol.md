@@ -1639,9 +1639,16 @@
 
 [Time elapsed so far: 114.25 hours]
 
+# 24-Dec-2024
+
+* Now continuing with this
+* First of all, I want to fix a bug that I came across while testing:
+  * Trying to load a chronicle while a location is opened causes an `PointInTimeNotFoundException`
+  * I could go into detail in analyzing this, but I'm fairly certain that the issue here (and it would probably also happen in the character view) is that loading a chronicle while inside a view presently does not return to the overview view, which naturally causes trouble if the loaded chronicle has different points in times, characters and locations
+  * Yes, that was an easy fix!
+
 # TODO
 
-* Bug:  Trying to load a chronicle while a location is opened causes an `PointInTimeNotFoundException`
 * Issue: Messages when deleting keys use the ID of the point in time instead of the name
 
 # User Story

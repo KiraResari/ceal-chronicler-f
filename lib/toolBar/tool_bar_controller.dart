@@ -1,5 +1,6 @@
 import '../commands/processor_listener.dart';
 import '../exceptions/operation_canceled_exception.dart';
+import '../view/commands/open_overview_view_command.dart';
 
 class ToolBarController extends ProcessorListener {
   ToolBarController() : super();
@@ -24,6 +25,7 @@ class ToolBarController extends ProcessorListener {
   Future<void> load() async {
     try {
       await fileProcessor.load();
+      viewProcessor.process(OpenOverviewViewCommand());
       viewProcessor.reset();
     } on OperationCanceledException {
       //Don't reset viewProcessor if operation was canceled
