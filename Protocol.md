@@ -1681,6 +1681,12 @@
 
 [Time elapsed so far: 119 hours]
 
+# 26-Dec-2024
+
+* Now continuing with this
+* Next, I want to add the equivalent "Child Locations" field to the other locations
+  * Well, that went really nine and quick and easy
+
 # TODO
 
 * Issue: Messages when deleting keys use the ID of the point in time instead of the name
@@ -1765,7 +1771,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
     - [x] parent location is being displayed
     - [x] parent location can be edited
     - [ ] parent location can be removed
-    - [ ] child locations are being displayed
+    - [x] child locations are being displayed
 - [x] can be saved and loaded
 - [x] Characters at a location at a time are displayed
   - [x] You can jump to these characters

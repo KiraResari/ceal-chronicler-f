@@ -26,6 +26,7 @@ class LocationView
       buildTableRow(
           context, "Characters present", _buildCharactersPresent(context)),
       buildTableRow(context, "Parent location", _buildParentLocation(context)),
+      buildTableRow(context, "Child Locations", _buildChildLocations(context)),
     ];
   }
 
@@ -52,6 +53,15 @@ class LocationView
             : LocationButton(parentLocation),
         EditParentLocationButton(entity, parentLocation),
       ],
+    );
+  }
+
+  Widget _buildChildLocations(BuildContext context) {
+    List<Location> childLocations =
+        context.watch<LocationViewController>().childLocations;
+    return Column(
+      children:
+          childLocations.map((location) => LocationButton(location)).toList(),
     );
   }
 }

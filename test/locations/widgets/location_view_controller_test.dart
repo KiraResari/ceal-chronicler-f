@@ -133,4 +133,24 @@ main() {
       expect(charactersAtLocation, isNot(contains(character)));
     },
   );
+
+  test(
+    "get childLocations should return all child locations",
+    () {
+      var parentLocation = Location(PointInTimeId());
+      var firstChildLocation = Location(PointInTimeId());
+      var secondChildLocation = Location(PointInTimeId());
+      locationRepository.add(parentLocation);
+      locationRepository.add(firstChildLocation);
+      locationRepository.add(secondChildLocation);
+      firstChildLocation.parentLocation = parentLocation.id;
+      secondChildLocation.parentLocation = parentLocation.id;
+      var controller = LocationViewController(parentLocation);
+
+      List<Location> childLocations = controller.childLocations;
+
+      expect(childLocations,
+          containsAll([firstChildLocation, secondChildLocation]));
+    },
+  );
 }

@@ -35,4 +35,11 @@ class LocationViewController extends TemporalEntityViewController<Location> {
         pointInTimeRepository.entityIsPresentlyActive(character);
     return characterIsAtLocation && characterIsActive;
   }
+
+  List<Location> get childLocations {
+    List<Location> allLocations = _locationRepository.content;
+    return allLocations
+        .where((location) => location.parentLocation == entity.id)
+        .toList();
+  }
 }
