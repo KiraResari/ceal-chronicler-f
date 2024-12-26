@@ -1,4 +1,5 @@
 import 'package:ceal_chronicler_f/locations/commands/update_location_level_command.dart';
+import 'package:ceal_chronicler_f/locations/model/location_id.dart';
 import 'package:flutter/material.dart';
 
 import '../../commands/command_processor.dart';
@@ -31,7 +32,11 @@ class EditLocationLevelButtonController {
         return false;
       }
     }
-    return true;
+    LocationLevel? parentLocationLevel = _parentLocationLevel;
+    if (parentLocationLevel == null) {
+      return true;
+    }
+    return locationLevel.isBelow(parentLocationLevel);
   }
 
   List<Location> get _childLocations {
@@ -39,6 +44,16 @@ class EditLocationLevelButtonController {
     return allLocations
         .where((location) => location.parentLocation == presentLocation.id)
         .toList();
+  }
+
+  LocationLevel? get _parentLocationLevel {
+    LocationId? parentLocationId = presentLocation.parentLocation;
+    if (parentLocationId == null) {
+      return null;
+    }
+    Location? parentLocation =
+        _locationRepository.getContentElementById(parentLocationId);
+    return parentLocation?.locationLevel;
   }
 
   DropdownMenuEntry<LocationLevel> _mapToDropdownMenuEntry(

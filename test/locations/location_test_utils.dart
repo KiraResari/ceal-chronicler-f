@@ -10,12 +10,14 @@ class LocationTestUtils {
   var locationRepository = getIt.get<LocationRepository>();
 
   Location createLocationAndAddToRepository({
-    required LocationLevel locationLevel,
+    LocationLevel? locationLevel,
     PointInTimeId? pointInTimeId,
   }) {
     var location =
         Location(pointInTimeId ?? pointInTimeRepository.activePointInTime.id);
-    location.locationLevel = locationLevel;
+    if (locationLevel != null) {
+      location.locationLevel = locationLevel;
+    }
     locationRepository.add(location);
     return location;
   }

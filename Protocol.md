@@ -1695,8 +1695,13 @@
 * Next, before I continue with connected locations, I think I really want to add a location level, since even with only a few locations for testing presently, things are starting to get a bit messy
   * I'm not sure how much a location level will help there, but it'll definitely be better than not having one
   * I now did a considerable amount of work there that went so fluidly that I didn't pause to write about it here, and it's starting to look really good
-  * Next, I want to add that you can't lower the location level below that of your children
+  * Next, I want to add that you can't lower the location level to that of your children or below
     * That now works
+  * And the inverse would be making it so that the level can't be equal or higher than that of its parents
+    * And that works now too
+* This is as far as I'm getting with this today
+
+[Time elapsed so far: 125 hours]
 
 # TODO
 
@@ -1792,7 +1797,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [x] should have an editable location level
   - [x] can only have parents of a higher level
   - [ ] can only be connected to locations of the same level
-  - [ ] level editing should be restricted by connected, parent and child locations
+  - [x] level editing should be restricted by connected, parent and child locations
 
 
 

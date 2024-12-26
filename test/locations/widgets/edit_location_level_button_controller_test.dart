@@ -34,8 +34,7 @@ main() {
   test(
     "validEntries should return valid location levels",
     () {
-      Location thisLocation = utils.createLocationAndAddToRepository(
-          locationLevel: LocationLevel.notSet);
+      Location thisLocation = utils.createLocationAndAddToRepository();
       var controller = EditLocationLevelButtonController(thisLocation);
 
       List<DropdownMenuEntry<LocationLevel>> validEntries =
@@ -51,8 +50,7 @@ main() {
   test(
     "validEntries should only return location levels higher than those of children",
     () {
-      Location thisLocation = utils.createLocationAndAddToRepository(
-          locationLevel: LocationLevel.universe);
+      Location thisLocation = utils.createLocationAndAddToRepository();
       Location childLocation = utils.createLocationAndAddToRepository(
           locationLevel: LocationLevel.continent);
       childLocation.parentLocation = thisLocation.id;
@@ -67,6 +65,30 @@ main() {
           LocationLevel.minayero,
           LocationLevel.universe,
           LocationLevel.world,
+          LocationLevel.notSet,
+        ]),
+      );
+    },
+  );
+
+  test(
+    "validEntries should only return location levels lower than those of parents",
+        () {
+      Location thisLocation = utils.createLocationAndAddToRepository();
+      Location parentLocation = utils.createLocationAndAddToRepository(
+          locationLevel: LocationLevel.continent);
+      thisLocation.parentLocation = parentLocation.id;
+      var controller = EditLocationLevelButtonController(thisLocation);
+
+      List<DropdownMenuEntry<LocationLevel>> validEntries =
+          controller.validEntries;
+
+      expect(
+        validEntries.map((entry) => entry.value).toList(),
+        unorderedEquals([
+          LocationLevel.region,
+          LocationLevel.district,
+          LocationLevel.locale,
           LocationLevel.notSet,
         ]),
       );
