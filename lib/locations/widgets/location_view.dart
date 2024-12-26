@@ -37,6 +37,7 @@ class LocationView
       return const Text("none");
     }
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: charactersPresent
           .map((character) => CharacterButton(character))
           .toList(),
@@ -59,7 +60,11 @@ class LocationView
   Widget _buildChildLocations(BuildContext context) {
     List<Location> childLocations =
         context.watch<LocationViewController>().childLocations;
+    if (childLocations.isEmpty) {
+      return const Text("none");
+    }
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children:
           childLocations.map((location) => LocationButton(location)).toList(),
     );
