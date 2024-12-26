@@ -1,5 +1,6 @@
 import 'package:ceal_chronicler_f/locations/model/location.dart';
 import 'package:ceal_chronicler_f/locations/model/location_id.dart';
+import 'package:ceal_chronicler_f/locations/model/location_level.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -75,6 +76,19 @@ main() {
       var decoded = Location.fromJsonString(jsonString);
 
       expect(decoded.parentLocation, equals(original.parentLocation));
+    },
+  );
+
+  test(
+    "Parsing Location to JSON and back should preserve location level if set",
+        () {
+      var original = Location(PointInTimeId());
+      original.locationLevel = LocationLevel.district;
+
+      String jsonString = original.toJsonString();
+      var decoded = Location.fromJsonString(jsonString);
+
+      expect(decoded.locationLevel, equals(original.locationLevel));
     },
   );
 }

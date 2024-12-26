@@ -135,11 +135,13 @@ main() {
   );
 
   test(
-    "get childLocations should return all child locations",
+    "get childLocations should return all child locations if they are active",
     () {
-      var parentLocation = Location(PointInTimeId());
-      var firstChildLocation = Location(PointInTimeId());
-      var secondChildLocation = Location(PointInTimeId());
+      var parentLocation = Location(pointInTimeRepository.activePointInTime.id);
+      var firstChildLocation =
+          Location(pointInTimeRepository.activePointInTime.id);
+      var secondChildLocation =
+          Location(pointInTimeRepository.activePointInTime.id);
       locationRepository.add(parentLocation);
       locationRepository.add(firstChildLocation);
       locationRepository.add(secondChildLocation);
@@ -151,6 +153,43 @@ main() {
 
       expect(childLocations,
           containsAll([firstChildLocation, secondChildLocation]));
+    },
+  );
+
+  test(
+    "get childLocations should not return future child locations",
+    () {
+      var parentLocation = Location(pointInTimeRepository.activePointInTime.id);
+      var futurePoint = PointInTime("Future Point In Time");
+      pointInTimeRepository.addAtIndex(1, futurePoint);
+      var childLocation = Location(futurePoint.id);
+      locationRepository.add(parentLocation);
+      locationRepository.add(childLocation);
+      childLocation.parentLocation = parentLocation.id;
+      var controller = LocationViewController(parentLocation);
+
+      List<Location> childLocations = controller.childLocations;
+
+      expect(childLocations, isEmpty);
+    },
+  );
+
+  test(
+    "get childLocations should not return past child locations",
+    () {
+      var parentLocation = Location(pointInTimeRepository.activePointInTime.id);
+      var pastPoint = PointInTime("Past Point in Time");
+      pointInTimeRepository.addAtIndex(0, pastPoint);
+      var childLocation = Location(pastPoint.id);
+      childLocation.lastAppearance = pastPoint.id;
+      locationRepository.add(parentLocation);
+      locationRepository.add(childLocation);
+      childLocation.parentLocation = parentLocation.id;
+      var controller = LocationViewController(parentLocation);
+
+      List<Location> childLocations = controller.childLocations;
+
+      expect(childLocations, isEmpty);
     },
   );
 }

@@ -11,5 +11,12 @@ class LocationButton extends TemporalEntityButton<Location> {
   }
 
   @override
+  String get text {
+    var locationIcon = entity.locationLevel.icon;
+    var locationName = (keyFieldResolver.getCurrentValue(entity.name) ?? "");
+    return locationIcon + locationName;
+  }
+
+  @override
   String get entityTypeName => "Location";
 }

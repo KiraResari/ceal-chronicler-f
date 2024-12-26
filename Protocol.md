@@ -1692,6 +1692,8 @@
   * However, I noted that this has the issue that if an entity from the future is displayed, it is always displayed as "New Location" or "New character", because the name only changes via key once it appears
   * Maybe it's better not to display them at all after all
     * I now did that, and I think it looks better that way
+* Next, before I continue with connected locations, I think I really want to add a location level, since even with only a few locations for testing presently, things are starting to get a bit messy
+  * I'm not sure how much a location level will help there, but it'll definitely be better than not having one
 
 # TODO
 
@@ -1782,6 +1784,11 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [x] can be saved and loaded
 - [x] Characters at a location at a time are displayed
   - [x] You can jump to these characters
+- [ ] should have an level editable
+  - [ ] can only have parents of a higher level
+  - [ ] can only be connected to locations of the same level
+  - [ ] level editing should be restricted by connected, parent and child locations
+
 
 
 ### Technical
