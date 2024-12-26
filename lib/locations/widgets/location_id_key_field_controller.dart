@@ -38,13 +38,6 @@ class LocationIdKeyFieldController extends KeyFieldController<LocationId?> {
         .toList();
   }
 
-  bool get presentLocationIsActive {
-    if (presentLocation != null) {
-      return pointInTimeRepository.entityIsPresentlyActive(presentLocation!);
-    }
-    return false;
-  }
-
   DropdownMenuEntry<LocationId> _mapLocationToDropdownMenuEntry(
     Location location,
   ) {

@@ -1686,6 +1686,8 @@
 * Now continuing with this
 * Next, I want to add the equivalent "Child Locations" field to the other locations
   * Well, that went really nine and quick and easy
+* Next, I want to make buttons of locations that do not presently exist are clicked-out and unclickable
+  * Since that is something that affects all temporal entities, let's see if I can find an universal solution for that 
 
 # TODO
 
@@ -1767,6 +1769,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [ ] can be connected to other locations
   - [ ] adjacent locations
   - [x] by clicking on linked locations, you can jump to them
+    - [x] Buttons of locations that do not presently exist are clicked-out and unclickable
   - [ ] parent and child locations
     - [x] parent location is being displayed
     - [x] parent location can be edited

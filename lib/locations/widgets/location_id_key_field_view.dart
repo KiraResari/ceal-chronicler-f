@@ -60,9 +60,7 @@ class LocationIdKeyFieldView extends StatelessWidget {
     Location? presentLocation =
         context.watch<LocationIdKeyFieldController>().presentLocation;
     if (presentLocation != null) {
-      bool locationIsActive =
-          context.watch<LocationIdKeyFieldController>().presentLocationIsActive;
-      return LocationButton(presentLocation, isActive: locationIsActive);
+      return LocationButton(presentLocation);
     }
     return const Text("Unknown");
   }
