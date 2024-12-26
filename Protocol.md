@@ -1787,7 +1787,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [x] Characters at a location at a time are displayed
   - [x] You can jump to these characters
 - [x] should have an editable level
-  - [ ] can only have parents of a higher level
+  - [x] can only have parents of a higher level
   - [ ] can only be connected to locations of the same level
   - [ ] level editing should be restricted by connected, parent and child locations
 

@@ -42,7 +42,9 @@ class LocationIdKeyFieldController extends KeyFieldController<LocationId?> {
     Location location,
   ) {
     String name = keyFieldResolver.getCurrentValue(location.name) ?? "";
-    return DropdownMenuEntry<LocationId>(value: location.id, label: name);
+    String icon = location.locationLevel.icon;
+    return DropdownMenuEntry<LocationId>(
+        value: location.id, label: icon + name);
   }
 
   void updatePresentLocation(LocationId? locationId) {

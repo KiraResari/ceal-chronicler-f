@@ -45,6 +45,10 @@ class SelectDropdownDialog<T> extends StatelessWidget {
   Widget _buildDropdown(BuildContext context) {
     var controller = _watchController(context);
 
+    if(entries.isEmpty){
+      return const Text("There are no valid entries");
+    }
+
     return DropdownMenu<T>(
       initialSelection: controller.initialSelection,
       dropdownMenuEntries: entries,

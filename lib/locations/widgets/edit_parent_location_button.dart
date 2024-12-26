@@ -8,11 +8,11 @@ import 'edit_parent_location_button_controller.dart';
 
 class EditParentLocationButton extends SmallCircularButton {
   final Location locationBeingEdited;
-  final EditParentLocationButtonController controller =
-      EditParentLocationButtonController();
+  final EditParentLocationButtonController controller;
 
   EditParentLocationButton(this.locationBeingEdited, {super.key})
-      : super(icon: Icons.edit);
+      : controller = EditParentLocationButtonController(locationBeingEdited),
+        super(icon: Icons.edit);
 
   @override
   void onPressed(BuildContext context) async {
