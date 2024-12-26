@@ -1,11 +1,10 @@
-import 'package:ceal_chronicler_f/characters/model/character_repository.dart';
-import 'package:ceal_chronicler_f/get_it_context.dart';
-import 'package:ceal_chronicler_f/locations/model/location_repository.dart';
-
 import '../../characters/model/character.dart';
+import '../../characters/model/character_repository.dart';
+import '../../get_it_context.dart';
 import '../../utils/widgets/temporal_entity_view_controller.dart';
 import '../model/location.dart';
 import '../model/location_id.dart';
+import '../model/location_repository.dart';
 
 class LocationViewController extends TemporalEntityViewController<Location> {
   LocationViewController(Location location) : super(location);
@@ -39,7 +38,14 @@ class LocationViewController extends TemporalEntityViewController<Location> {
   List<Location> get childLocations {
     List<Location> allLocations = _locationRepository.content;
     return allLocations
-        .where((location) => location.parentLocation == entity.id)
+        .where((location) => _locationIsChildAndActive(location))
         .toList();
+  }
+
+  bool _locationIsChildAndActive(Location location) {
+    bool locationIsChild = location.parentLocation == entity.id;
+    bool locationIsActive =
+        pointInTimeRepository.entityIsPresentlyActive(location);
+    return locationIsChild && locationIsActive;
   }
 }

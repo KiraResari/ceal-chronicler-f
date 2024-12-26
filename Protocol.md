@@ -1688,6 +1688,10 @@
   * Well, that went really nine and quick and easy
 * Next, I want to make buttons of locations that do not presently exist are clicked-out and unclickable
   * Since that is something that affects all temporal entities, let's see if I can find an universal solution for that 
+  * I now managed to do that
+  * However, I noted that this has the issue that if an entity from the future is displayed, it is always displayed as "New Location" or "New character", because the name only changes via key once it appears
+  * Maybe it's better not to display them at all after all
+    * I now did that, and I think it looks better that way
 
 # TODO
 
@@ -1769,7 +1773,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [ ] can be connected to other locations
   - [ ] adjacent locations
   - [x] by clicking on linked locations, you can jump to them
-    - [x] Buttons of locations that do not presently exist are clicked-out and unclickable
+    - [x] Buttons of locations that do not presently exist should not be displayed
   - [ ] parent and child locations
     - [x] parent location is being displayed
     - [x] parent location can be edited
