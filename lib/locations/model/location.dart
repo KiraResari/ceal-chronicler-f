@@ -42,7 +42,7 @@ class Location extends TemporalEntity<LocationId> {
   Map<String, dynamic> toJson() {
     Map<String, dynamic> jsonMap = super.toJson();
     jsonMap[_parentLocationKey] = parentLocation?.toJson();
-    jsonMap[_locationLevelKey] = locationLevel.toJson();
+    jsonMap[_locationLevelKey] = locationLevel.name;
     return jsonMap;
   }
 

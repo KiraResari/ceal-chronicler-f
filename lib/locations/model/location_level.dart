@@ -1,37 +1,19 @@
 enum LocationLevel {
-  notSet('❔'),
-  minayero('🫧'),
-  universe('🌌'),
-  world('🪐'),
-  continent('🗺️'),
-  region('🗾'),
-  district('🏞️'),
-  locale('📍');
+  notSet('❔', "Not Set"),
+  minayero('🫧', "Minayero"),
+  universe('🌌', "Universe"),
+  world('🪐', "World"),
+  continent('🗺️', "Continent"),
+  region('🗾', "Region"),
+  district('🏞️', "District"),
+  locale('📍', "Locale");
 
   final String icon;
+  final String name;
 
-  const LocationLevel(this.icon);
+  const LocationLevel(this.icon, this.name);
 
-  String toJson() {
-    switch (this) {
-      case LocationLevel.notSet:
-        return "Not Set";
-      case LocationLevel.minayero:
-        return "Minayero";
-      case LocationLevel.universe:
-        return "Universe";
-      case LocationLevel.world:
-        return "World";
-      case LocationLevel.continent:
-        return "Continent";
-      case LocationLevel.region:
-        return "Region";
-      case LocationLevel.district:
-        return "District";
-      case LocationLevel.locale:
-        return "Locale";
-    }
-  }
+  String get iconAndName => icon + name;
 
   static LocationLevel fromJson(String? value) {
     switch (value) {

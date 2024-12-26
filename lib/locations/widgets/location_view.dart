@@ -6,6 +6,7 @@ import '../../characters/widgets/character_button.dart';
 import '../../utils/string_key.dart';
 import '../../utils/widgets/temporal_entity_view.dart';
 import '../model/location.dart';
+import '../model/location_level.dart';
 import 'edit_parent_location_button.dart';
 import 'location_button.dart';
 import 'location_view_controller.dart';
@@ -25,6 +26,7 @@ class LocationView
     return [
       buildTableRow(
           context, "Characters present", _buildCharactersPresent(context)),
+      buildTableRow(context, "Location level", _buildLocationLevel(context)),
       buildTableRow(context, "Parent location", _buildParentLocation(context)),
       buildTableRow(context, "Child Locations", _buildChildLocations(context)),
     ];
@@ -42,6 +44,12 @@ class LocationView
           .map((character) => CharacterButton(character))
           .toList(),
     );
+  }
+
+  Widget _buildLocationLevel(BuildContext context) {
+    LocationLevel locationLevel =
+        context.watch<LocationViewController>().locationLevel;
+    return Text(locationLevel.iconAndName);
   }
 
   Widget _buildParentLocation(BuildContext context) {

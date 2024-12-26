@@ -1,3 +1,5 @@
+import 'package:ceal_chronicler_f/locations/model/location_level.dart';
+
 import '../../characters/model/character.dart';
 import '../../characters/model/character_repository.dart';
 import '../../get_it_context.dart';
@@ -48,4 +50,6 @@ class LocationViewController extends TemporalEntityViewController<Location> {
         pointInTimeRepository.entityIsPresentlyActive(location);
     return locationIsChild && locationIsActive;
   }
+
+  LocationLevel get locationLevel => entity.locationLevel;
 }

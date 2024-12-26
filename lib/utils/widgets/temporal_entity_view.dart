@@ -57,18 +57,17 @@ abstract class TemporalEntityView<T extends TemporalEntity,
   }
 
   Table _buildEntityTable(BuildContext context) {
-    StringKeyField nameField = context.watch<C>().nameField;
     return Table(
       columnWidths: const <int, TableColumnWidth>{
         0: IntrinsicColumnWidth(),
         1: IntrinsicColumnWidth(),
       },
-      children: _buildEntityTableChildren(context, nameField),
+      children: _buildEntityTableChildren(context),
     );
   }
 
-  List<TableRow> _buildEntityTableChildren(
-      BuildContext context, StringKeyField nameField) {
+  List<TableRow> _buildEntityTableChildren(BuildContext context) {
+    StringKeyField nameField = context.watch<C>().nameField;
     var children = [
       buildTableRow(context, "Name", StringKeyFieldView(nameField)),
       buildTableRow(
