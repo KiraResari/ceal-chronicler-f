@@ -1,3 +1,4 @@
+import 'package:ceal_chronicler_f/locations/widgets/edit_location_level_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -49,7 +50,12 @@ class LocationView
   Widget _buildLocationLevel(BuildContext context) {
     LocationLevel locationLevel =
         context.watch<LocationViewController>().locationLevel;
-    return Text(locationLevel.iconAndName);
+    return Row(
+      children: [
+        Text(locationLevel.iconAndName),
+        EditLocationLevelButton(entity),
+      ],
+    );
   }
 
   Widget _buildParentLocation(BuildContext context) {
@@ -60,7 +66,7 @@ class LocationView
         parentLocation == null
             ? const Text("none")
             : LocationButton(parentLocation),
-        EditParentLocationButton(entity, parentLocation),
+        EditParentLocationButton(entity),
       ],
     );
   }

@@ -24,7 +24,11 @@ class EditParentLocationButtonController {
     Location location,
   ) {
     String name = _keyFieldResolver.getCurrentValue(location.name) ?? "";
-    return DropdownMenuEntry<LocationId>(value: location.id, label: name);
+    String icon = location.locationLevel.icon;
+    return DropdownMenuEntry<LocationId>(
+      value: location.id,
+      label: icon + name,
+    );
   }
 
   void updateParentLocation(

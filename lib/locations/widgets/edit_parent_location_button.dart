@@ -8,15 +8,11 @@ import 'edit_parent_location_button_controller.dart';
 
 class EditParentLocationButton extends SmallCircularButton {
   final Location locationBeingEdited;
-  final Location? parentLocation;
   final EditParentLocationButtonController controller =
       EditParentLocationButtonController();
 
-  EditParentLocationButton(
-    this.locationBeingEdited,
-    this.parentLocation, {
-    super.key,
-  }) : super(icon: Icons.edit);
+  EditParentLocationButton(this.locationBeingEdited, {super.key})
+      : super(icon: Icons.edit);
 
   @override
   void onPressed(BuildContext context) async {
@@ -31,7 +27,7 @@ class EditParentLocationButton extends SmallCircularButton {
       context: context,
       builder: (BuildContext context) {
         return SelectDropdownDialog<LocationId>(
-          initialSelection: parentLocation?.id,
+          initialSelection: locationBeingEdited.parentLocation,
           entries: validLocations,
           labelText: "Select parent location",
         );

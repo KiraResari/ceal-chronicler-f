@@ -1697,6 +1697,7 @@
 
 # TODO
 
+* Split `LocationView` into two columns
 * Issue: Messages when deleting keys use the ID of the point in time instead of the name
 
 # User Story

@@ -1,6 +1,6 @@
 enum LocationLevel {
   notSet('❔', "Not Set"),
-  minayero('🫧', "Minayero"),
+  minayero('✨', "Minayero"),
   universe('🌌', "Universe"),
   world('🪐', "World"),
   continent('🗺️', "Continent"),
