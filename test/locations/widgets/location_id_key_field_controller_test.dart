@@ -29,7 +29,8 @@ main() {
     getIt.reset();
     pointInTimeRepository = PointInTimeRepository();
     getIt.registerSingleton<PointInTimeRepository>(pointInTimeRepository);
-    getIt.registerSingleton<KeyFieldResolver>(KeyFieldResolver());
+    keyFieldResolver = KeyFieldResolver();
+    getIt.registerSingleton<KeyFieldResolver>(keyFieldResolver);
     getIt.registerSingleton<CommandHistory>(CommandHistory());
     getIt.registerSingleton<MessageBarState>(MessageBarState());
     getIt.registerSingleton<FileProcessor>(FileProcessorMockLite());
@@ -39,7 +40,6 @@ main() {
     locationRepository = LocationRepository();
     getIt.registerSingleton<CharacterRepository>(characterRepository);
     getIt.registerSingleton<LocationRepository>(locationRepository);
-    keyFieldResolver = KeyFieldResolver();
   });
 
   test(
