@@ -1,3 +1,4 @@
+import 'package:ceal_chronicler_f/locations/commands/update_location_level_command.dart';
 import 'package:flutter/material.dart';
 
 import '../../commands/command_processor.dart';
@@ -16,7 +17,7 @@ class EditLocationLevelButtonController {
   }
 
   DropdownMenuEntry<LocationLevel> _mapToDropdownMenuEntry(
-      LocationLevel level,
+    LocationLevel level,
   ) {
     return DropdownMenuEntry<LocationLevel>(
       value: level,
@@ -25,9 +26,10 @@ class EditLocationLevelButtonController {
   }
 
   void updateLocationLevel(
-    Location locationBeingEdited,
-      LocationLevel? newLocationLevel
-  ) {
-    //TODO: Add command here
+      Location locationBeingEdited, LocationLevel? newLocationLevel) {
+    if (newLocationLevel != null) {
+      _commandProcessor.process(
+          UpdateLocationLevelCommand(locationBeingEdited, newLocationLevel));
+    }
   }
 }
