@@ -1,28 +1,24 @@
-import 'package:flutter/material.dart';
-
-import '../../commands/command_processor.dart';
 import '../../get_it_context.dart';
+import '../../utils/widgets/buttons/edit_button_controller.dart';
 import '../commands/update_location_level_command.dart';
 import '../model/location.dart';
 import '../model/location_id.dart';
 import '../model/location_level.dart';
 import '../model/location_repository.dart';
 
-class EditLocationLevelButtonController {
-  final _commandProcessor = getIt.get<CommandProcessor>();
+class EditLocationLevelButtonController
+    extends EditButtonController<LocationLevel> {
   final _locationRepository = getIt.get<LocationRepository>();
 
   final Location presentLocation;
 
   EditLocationLevelButtonController(this.presentLocation);
 
-  List<DropdownMenuEntry<LocationLevel>> get validEntries {
+  @override
+  List<LocationLevel> get validEntries {
     List<LocationLevel> allLocationLevels = LocationLevel.values;
-    List<LocationLevel> validLocationLevels = allLocationLevels
+    return allLocationLevels
         .where((locationLevel) => _isValid(locationLevel))
-        .toList();
-    return validLocationLevels
-        .map((level) => _mapToDropdownMenuEntry(level))
         .toList();
   }
 
@@ -56,19 +52,10 @@ class EditLocationLevelButtonController {
     return parentLocation?.locationLevel;
   }
 
-  DropdownMenuEntry<LocationLevel> _mapToDropdownMenuEntry(
-    LocationLevel level,
-  ) {
-    return DropdownMenuEntry<LocationLevel>(
-      value: level,
-      label: level.iconAndName,
-    );
-  }
+  @override
+  String getLabel(LocationLevel entry) => entry.iconAndName;
 
-  void updateLocationLevel(LocationLevel? newLocationLevel) {
-    if (newLocationLevel != null) {
-      _commandProcessor.process(
-          UpdateLocationLevelCommand(presentLocation, newLocationLevel));
-    }
-  }
+  @override
+  UpdateLocationLevelCommand buildCommand(LocationLevel newValue) =>
+      UpdateLocationLevelCommand(presentLocation, newValue);
 }

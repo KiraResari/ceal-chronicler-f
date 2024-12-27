@@ -1703,9 +1703,14 @@
 
 [Time elapsed so far: 125 hours]
 
+# 27-Dec-2024
+
+* Now continuing with this
+* Today, I'll start with some cleanup related to the locations
+* First, I want to try merging `EditParentLocationButton` and `EditLocationLevelButton`, since they are quite similar, and I can imagine needing more buttons like that in the future
+
 # TODO
 
-* Try merging `EditParentLocationButton` and `EditLocationLevelButton`
 * Split `LocationView` into two columns
 * Issue: Messages when deleting keys use the ID of the point in time instead of the name
 

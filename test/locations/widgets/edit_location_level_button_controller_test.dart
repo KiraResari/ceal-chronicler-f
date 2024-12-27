@@ -32,13 +32,13 @@ main() {
   });
 
   test(
-    "validEntries should return valid location levels",
+    "validMenuEntries should return valid location levels",
     () {
       Location thisLocation = utils.createLocationAndAddToRepository();
       var controller = EditLocationLevelButtonController(thisLocation);
 
       List<DropdownMenuEntry<LocationLevel>> validEntries =
-          controller.validEntries;
+          controller.validMenuEntries;
 
       expect(
         validEntries.map((entry) => entry.value).toList(),
@@ -48,7 +48,7 @@ main() {
   );
 
   test(
-    "validEntries should only return location levels higher than those of children",
+    "validMenuEntries should only return location levels higher than those of children",
     () {
       Location thisLocation = utils.createLocationAndAddToRepository();
       Location childLocation = utils.createLocationAndAddToRepository(
@@ -57,7 +57,7 @@ main() {
       var controller = EditLocationLevelButtonController(thisLocation);
 
       List<DropdownMenuEntry<LocationLevel>> validEntries =
-          controller.validEntries;
+          controller.validMenuEntries;
 
       expect(
         validEntries.map((entry) => entry.value).toList(),
@@ -72,7 +72,7 @@ main() {
   );
 
   test(
-    "validEntries should only return location levels lower than those of parents",
+    "validMenuEntries should only return location levels lower than those of parents",
         () {
       Location thisLocation = utils.createLocationAndAddToRepository();
       Location parentLocation = utils.createLocationAndAddToRepository(
@@ -81,7 +81,7 @@ main() {
       var controller = EditLocationLevelButtonController(thisLocation);
 
       List<DropdownMenuEntry<LocationLevel>> validEntries =
-          controller.validEntries;
+          controller.validMenuEntries;
 
       expect(
         validEntries.map((entry) => entry.value).toList(),

@@ -17,12 +17,12 @@ class EditLocationLevelButton extends SmallCircularButton {
   @override
   void onPressed(BuildContext context) async {
     LocationLevel? selectedValue = await _showSelectionDialog(context);
-    controller.updateLocationLevel(selectedValue);
+    controller.update(selectedValue);
   }
 
   Future<LocationLevel?> _showSelectionDialog(BuildContext context) {
     List<DropdownMenuEntry<LocationLevel>> validEntries =
-        controller.validEntries;
+        controller.validMenuEntries;
     return showDialog(
       context: context,
       builder: (BuildContext context) {
