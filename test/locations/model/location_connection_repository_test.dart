@@ -20,6 +20,7 @@ main() {
       LocationConnectionDirection.northwest,
       LocationId(),
     );
+
     repository.add(connection);
 
     expect(repository.content.length, equals(1));

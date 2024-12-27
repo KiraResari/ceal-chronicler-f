@@ -1,3 +1,4 @@
+import 'package:ceal_chronicler_f/locations/model/location_connection_direction.dart';
 import 'package:ceal_chronicler_f/locations/widgets/buttons/edit_location_level_button.dart';
 import 'package:ceal_chronicler_f/utils/widgets/buttons/delete_button.dart';
 import 'package:flutter/material.dart';
@@ -51,21 +52,26 @@ class LocationView
   }
 
   Widget _buildLinkedLocationsColumn(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    TextStyle style = theme.textTheme.titleSmall!;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildLevelParentAndChildLocationBlock(context),
+        Text("Adjacent Locations", style: style),
+        _buildAdjacentLocationsBlock(context),
+      ],
+    );
+  }
+
+  Widget _buildLevelParentAndChildLocationBlock(BuildContext context) {
     List<TableRow> children = [
       buildTableRow(context, "Location level", _buildLocationLevel(context)),
       buildTableRow(
           context, "Parent location", _buildParentLocationPanel(context)),
       buildTableRow(context, "Child Locations", _buildChildLocations(context)),
     ];
-    ThemeData theme = Theme.of(context);
-    TextStyle style = theme.textTheme.titleSmall!;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text("Linked Locations", style: style),
-        buildEntityTable(context, children),
-      ],
-    );
+    return buildEntityTable(context, children);
   }
 
   Widget _buildLocationLevel(BuildContext context) {
@@ -114,6 +120,42 @@ class LocationView
       crossAxisAlignment: CrossAxisAlignment.start,
       children:
           childLocations.map((location) => LocationButton(location)).toList(),
+    );
+  }
+
+  Widget _buildAdjacentLocationsBlock(BuildContext context) {
+    String name = context.watch<LocationViewController>().name;
+    return Table(
+      columnWidths: const <int, TableColumnWidth>{
+        0: IntrinsicColumnWidth(),
+        1: IntrinsicColumnWidth(),
+        2: IntrinsicColumnWidth(),
+      },
+      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+      children: [
+        TableRow(children: [
+          _buildAdjacentLocationBlock(LocationConnectionDirection.northwest),
+          _buildAdjacentLocationBlock(LocationConnectionDirection.north),
+          _buildAdjacentLocationBlock(LocationConnectionDirection.northeast),
+        ]),
+        TableRow(children: [
+          _buildAdjacentLocationBlock(LocationConnectionDirection.west),
+          Text(name),
+          _buildAdjacentLocationBlock(LocationConnectionDirection.east),
+        ]),
+        TableRow(children: [
+          _buildAdjacentLocationBlock(LocationConnectionDirection.southwest),
+          _buildAdjacentLocationBlock(LocationConnectionDirection.south),
+          _buildAdjacentLocationBlock(LocationConnectionDirection.southeast),
+        ]),
+      ],
+    );
+  }
+
+  Widget _buildAdjacentLocationBlock(LocationConnectionDirection direction) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text(direction.name),
     );
   }
 }
