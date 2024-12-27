@@ -1736,6 +1736,9 @@
   * And sorting by name was a bit more complicated due to key fields, but ultimately still worked out
 * It would be great to be able to implement location sorting everywhere, but before that I must address the lack of scrolling behavior, and the resulting overflows, especially when considering that adding many locations is a thing that will very likely happen
   * Alright, that works now too!
+* This is as far as I'm getting with this today
+
+[Time elapsed so far: 133.25 hours]
 
 # TODO
 
