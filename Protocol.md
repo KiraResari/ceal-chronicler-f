@@ -1728,11 +1728,12 @@
 * However, I have still found some minor issues
 * For one, it should now also not be possible to select a location level that is different from the adjacent locations (or not set)
   * I now fixed that
+* Next, there's the issue that inactive adjacent locations should not be displayed 
+  * Okay, that works now too!
+* With that, the locations should all be good for now!
 
 # TODO
 
-* Inactive adjacent locations should not be displayed 
-* Selectable Location Level should be constricted by adjacent locations
 * Issue: Messages when deleting keys use the ID of the point in time instead of the name
 
 # User Story

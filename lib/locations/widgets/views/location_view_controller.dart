@@ -67,12 +67,11 @@ class LocationViewController extends TemporalEntityViewController<Location> {
   List<ConnectedLocationPanelTemplate> getConnectedLocationsForDirection(
     LocationConnectionDirection direction,
   ) {
-    List<LocationConnection> allConnectionsForDirection =
-        _locationConnectionRepository.content
-            .where((connection) => connection.direction == direction)
-            .toList();
-    List<LocationConnection> allConnectionsForOppositeDirection =
-    _locationConnectionRepository.content
+    var allConnections = _locationConnectionRepository.content;
+    List<LocationConnection> allConnectionsForDirection = allConnections
+        .where((connection) => connection.direction == direction)
+        .toList();
+    List<LocationConnection> allConnectionsForOppositeDirection = allConnections
         .where((connection) => connection.direction == direction.opposite)
         .toList();
     return [
@@ -112,8 +111,10 @@ class LocationViewController extends TemporalEntityViewController<Location> {
     LocationConnection connection,
   ) {
     Location? location = _locationRepository.getContentElementById(locationId);
-    return location != null
-        ? ConnectedLocationPanelTemplate(location, connection)
-        : null;
+    if (location != null &&
+        pointInTimeRepository.entityIsPresentlyActive(location)) {
+      return ConnectedLocationPanelTemplate(location, connection);
+    }
+    return null;
   }
 }

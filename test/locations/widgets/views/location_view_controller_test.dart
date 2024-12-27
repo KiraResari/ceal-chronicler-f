@@ -202,7 +202,7 @@ main() {
   );
 
   test(
-    "get getConnectedLocationsForDirection should return connection where this is start",
+    "getConnectedLocationsForDirection should return connection where this is start",
     () {
       var thisLocation = Location(pointInTimeRepository.activePointInTime.id);
       var otherLocation = Location(pointInTimeRepository.activePointInTime.id);
@@ -224,7 +224,7 @@ main() {
   );
 
   test(
-    "get getConnectedLocationsForDirection should not return connection for other direction",
+    "getConnectedLocationsForDirection should not return connection for other direction",
     () {
       var thisLocation = Location(pointInTimeRepository.activePointInTime.id);
       var otherLocation = Location(pointInTimeRepository.activePointInTime.id);
@@ -242,7 +242,7 @@ main() {
   );
 
   test(
-    "get getConnectedLocationsForDirection should return connection where this is end",
+    "getConnectedLocationsForDirection should return connection where this is end",
     () {
       var thisLocation = Location(pointInTimeRepository.activePointInTime.id);
       var otherLocation = Location(pointInTimeRepository.activePointInTime.id);
@@ -260,6 +260,27 @@ main() {
         connections.map((connection) => connection.location),
         contains(otherLocation),
       );
+    },
+  );
+
+  test(
+    "get getConnectedLocationsForDirection should not return connection to point in time that is not currently active",
+    () {
+      var thisLocation = Location(pointInTimeRepository.activePointInTime.id);
+      var futurePoint = PointInTime("Future Point In Time");
+      pointInTimeRepository.addAtIndex(1, futurePoint);
+      var otherLocation = Location(futurePoint.id);
+      locationRepository.add(thisLocation);
+      locationRepository.add(otherLocation);
+      var direction = LocationConnectionDirection.southwest;
+      locationConnectionRepository.add(
+          LocationConnection(otherLocation.id, direction, thisLocation.id));
+      var controller = LocationViewController(thisLocation);
+
+      List<ConnectedLocationPanelTemplate> connections =
+          controller.getConnectedLocationsForDirection(direction.opposite);
+
+      expect(connections, isEmpty);
     },
   );
 }
