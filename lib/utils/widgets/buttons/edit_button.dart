@@ -6,7 +6,7 @@ import 'small_circular_button.dart';
 
 abstract class EditButton<T> extends SmallCircularButton {
   final EditButtonController<T> controller;
-  final T initialSelection;
+  final T? initialSelection;
   final String labelText;
 
   const EditButton({
