@@ -1734,9 +1734,12 @@
 * As a bonus, let's see if I can get the locations sorted by level and alphabet in the `LocationOverview`
   * Well, sorting them by level works already
   * And sorting by name was a bit more complicated due to key fields, but ultimately still worked out
+* It would be great to be able to implement location sorting everywhere, but before that I must address the lack of scrolling behavior, and the resulting overflows, especially when considering that adding many locations is a thing that will very likely happen
+  * Alright, that works now too!
 
 # TODO
 
+* Implement location sorting everywhere
 * Issue: Messages when deleting keys use the ID of the point in time instead of the name
 
 # User Story

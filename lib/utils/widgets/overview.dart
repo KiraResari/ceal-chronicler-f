@@ -6,9 +6,13 @@ abstract class Overview<T, C extends ChangeNotifier> extends StatelessWidget {
   const Overview({super.key});
 
   Color get backgroundColor;
+
   String get title;
+
   List<T> getItems(C controller);
+
   Widget buildItem(T item);
+
   Widget buildAddButton();
 
   @override
@@ -30,18 +34,28 @@ abstract class Overview<T, C extends ChangeNotifier> extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          children: _buildContentElements(context),
+          children: [
+            TitleMedium(title: title),
+            _buildScrollList(context),
+          ],
         ),
       ),
     );
   }
 
-  List<Widget> _buildContentElements(BuildContext context) {
-    List<Widget> contentElements = [];
-    contentElements.add(TitleMedium(title: title));
-    contentElements.addAll(_buildPanels(context));
-    contentElements.add(buildAddButton());
-    return contentElements;
+  Widget _buildScrollList(BuildContext context) {
+    return ConstrainedBox(
+      constraints:
+          BoxConstraints(maxHeight: MediaQuery.of(context).size.height - 225),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            ..._buildPanels(context),
+            buildAddButton(),
+          ],
+        ),
+      ),
+    );
   }
 
   List<Widget> _buildPanels(BuildContext context) {
