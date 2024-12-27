@@ -14,4 +14,15 @@ enum LocationConnectionDirection {
       orElse: () => LocationConnectionDirection.north,
     );
   }
+
+  LocationConnectionDirection get opposite => switch (this) {
+        north => south,
+        northeast => southwest,
+        east => west,
+        southeast => northwest,
+        south => north,
+        southwest => northeast,
+        west => east,
+        northwest => southeast,
+      };
 }

@@ -1717,6 +1717,10 @@
   * Right, that now works too
 * With that, I think I am now ready to proceed to sibling locations
   * This one is probably gonna require a new data object and a repository for connections, since clearly I can't save the sibling in just one of the two
+  * I now managed to create the data structure for this
+  * And I now managed to set up the layout for this as well
+  * And the commands are working too
+  * Next, I need to bring it all together in a nice way
 
 # TODO
 

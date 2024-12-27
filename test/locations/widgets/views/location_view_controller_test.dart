@@ -6,7 +6,11 @@ import 'package:ceal_chronicler_f/get_it_context.dart';
 import 'package:ceal_chronicler_f/io/file/file_processor.dart';
 import 'package:ceal_chronicler_f/key_fields/key_field_resolver.dart';
 import 'package:ceal_chronicler_f/locations/model/location.dart';
+import 'package:ceal_chronicler_f/locations/model/location_connection.dart';
+import 'package:ceal_chronicler_f/locations/model/location_connection_direction.dart';
+import 'package:ceal_chronicler_f/locations/model/location_connection_repository.dart';
 import 'package:ceal_chronicler_f/locations/model/location_repository.dart';
+import 'package:ceal_chronicler_f/locations/widgets/panels/connected_location_panel_template.dart';
 import 'package:ceal_chronicler_f/locations/widgets/views/location_view_controller.dart';
 import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
@@ -20,6 +24,7 @@ import '../../../mocks/file_service_mock_lite.dart';
 main() {
   late PointInTimeRepository pointInTimeRepository;
   late LocationRepository locationRepository;
+  late LocationConnectionRepository locationConnectionRepository;
   late CharacterRepository characterRepository;
 
   setUp(() {
@@ -33,8 +38,11 @@ main() {
     getIt.registerSingleton<CommandProcessor>(CommandProcessor());
     getIt.registerSingleton<ViewProcessor>(ViewProcessor());
     locationRepository = LocationRepository();
+    locationConnectionRepository = LocationConnectionRepository();
     characterRepository = CharacterRepository();
     getIt.registerSingleton<LocationRepository>(locationRepository);
+    getIt.registerSingleton<LocationConnectionRepository>(
+        locationConnectionRepository);
     getIt.registerSingleton<CharacterRepository>(characterRepository);
   });
 
@@ -190,6 +198,68 @@ main() {
       List<Location> childLocations = controller.childLocations;
 
       expect(childLocations, isEmpty);
+    },
+  );
+
+  test(
+    "get getConnectedLocationsForDirection should return connection where this is start",
+    () {
+      var thisLocation = Location(pointInTimeRepository.activePointInTime.id);
+      var otherLocation = Location(pointInTimeRepository.activePointInTime.id);
+      locationRepository.add(thisLocation);
+      locationRepository.add(otherLocation);
+      var direction = LocationConnectionDirection.southwest;
+      locationConnectionRepository.add(
+          LocationConnection(thisLocation.id, direction, otherLocation.id));
+      var controller = LocationViewController(thisLocation);
+
+      List<ConnectedLocationPanelTemplate> connections =
+          controller.getConnectedLocationsForDirection(direction);
+
+      expect(
+        connections.map((connection) => connection.location),
+        contains(otherLocation),
+      );
+    },
+  );
+
+  test(
+    "get getConnectedLocationsForDirection should not return connection for other direction",
+    () {
+      var thisLocation = Location(pointInTimeRepository.activePointInTime.id);
+      var otherLocation = Location(pointInTimeRepository.activePointInTime.id);
+      locationRepository.add(thisLocation);
+      locationRepository.add(otherLocation);
+      locationConnectionRepository.add(LocationConnection(
+          thisLocation.id, LocationConnectionDirection.east, otherLocation.id));
+      var controller = LocationViewController(thisLocation);
+
+      List<ConnectedLocationPanelTemplate> connections = controller
+          .getConnectedLocationsForDirection(LocationConnectionDirection.north);
+
+      expect(connections, isEmpty);
+    },
+  );
+
+  test(
+    "get getConnectedLocationsForDirection should return connection where this is end",
+    () {
+      var thisLocation = Location(pointInTimeRepository.activePointInTime.id);
+      var otherLocation = Location(pointInTimeRepository.activePointInTime.id);
+      locationRepository.add(thisLocation);
+      locationRepository.add(otherLocation);
+      var direction = LocationConnectionDirection.southwest;
+      locationConnectionRepository.add(
+          LocationConnection(otherLocation.id, direction, thisLocation.id));
+      var controller = LocationViewController(thisLocation);
+
+      List<ConnectedLocationPanelTemplate> connections =
+          controller.getConnectedLocationsForDirection(direction.opposite);
+
+      expect(
+        connections.map((connection) => connection.location),
+        contains(otherLocation),
+      );
     },
   );
 }

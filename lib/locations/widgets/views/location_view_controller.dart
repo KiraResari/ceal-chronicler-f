@@ -1,4 +1,5 @@
-import 'package:ceal_chronicler_f/locations/model/location_level.dart';
+import 'package:ceal_chronicler_f/locations/model/location_connection.dart';
+import 'package:ceal_chronicler_f/locations/model/location_connection_id.dart';
 
 import '../../../characters/model/character.dart';
 import '../../../characters/model/character_repository.dart';
@@ -6,14 +7,20 @@ import '../../../get_it_context.dart';
 import '../../../utils/widgets/temporal_entity_view_controller.dart';
 import '../../commands/delete_parent_location_command.dart';
 import '../../model/location.dart';
+import '../../model/location_connection_direction.dart';
+import '../../model/location_connection_repository.dart';
 import '../../model/location_id.dart';
+import '../../model/location_level.dart';
 import '../../model/location_repository.dart';
+import '../panels/connected_location_panel_template.dart';
 
 class LocationViewController extends TemporalEntityViewController<Location> {
   LocationViewController(Location location) : super(location);
 
   final _characterRepository = getIt.get<CharacterRepository>();
   final _locationRepository = getIt.get<LocationRepository>();
+  final _locationConnectionRepository =
+      getIt.get<LocationConnectionRepository>();
 
   List<Character> get charactersPresentAtLocation {
     return _characterRepository.content
@@ -54,8 +61,61 @@ class LocationViewController extends TemporalEntityViewController<Location> {
 
   LocationLevel get locationLevel => entity.locationLevel;
 
-  void deleteParentLocation(){
+  void deleteParentLocation() {
     var command = DeleteParentLocationCommand(entity);
     commandProcessor.process(command);
+  }
+
+  List<ConnectedLocationPanelTemplate> getConnectedLocationsForDirection(
+    LocationConnectionDirection direction,
+  ) {
+    List<LocationConnection> allConnectionsForDirection =
+        _locationConnectionRepository.content
+            .where((connection) => connection.direction == direction)
+            .toList();
+    List<LocationConnection> allConnectionsForOppositeDirection =
+    _locationConnectionRepository.content
+        .where((connection) => connection.direction == direction.opposite)
+        .toList();
+    return [
+      ..._getTemplatesWhereThisIsStart(allConnectionsForDirection),
+      ..._getTemplatesWhereThisIsEnd(allConnectionsForOppositeDirection),
+    ];
+  }
+
+  List<ConnectedLocationPanelTemplate> _getTemplatesWhereThisIsStart(
+    List<LocationConnection> allConnections,
+  ) {
+    List<LocationConnection> connectionsWhereThisIsStart = allConnections
+        .where((connection) => connection.startLocation == entity.id)
+        .toList();
+    return connectionsWhereThisIsStart
+        .map((connection) => _buildConnectedLocationPanelTemplate(
+            connection.endLocation, connection.id))
+        .whereType<ConnectedLocationPanelTemplate>()
+        .toList();
+  }
+
+  List<ConnectedLocationPanelTemplate> _getTemplatesWhereThisIsEnd(
+    List<LocationConnection> allConnections,
+  ) {
+    List<LocationConnection> connectionsWhereThisIsEnd = allConnections
+        .where((connection) => connection.endLocation == entity.id)
+        .toList();
+    return connectionsWhereThisIsEnd
+        .map((connection) => _buildConnectedLocationPanelTemplate(
+            connection.startLocation, connection.id))
+        .whereType<ConnectedLocationPanelTemplate>()
+        .toList();
+  }
+
+  ConnectedLocationPanelTemplate? _buildConnectedLocationPanelTemplate(
+    LocationId locationId,
+    LocationConnectionId id,
+  ) {
+    Location? location = _locationRepository.getContentElementById(locationId);
+    return location != null
+        ? ConnectedLocationPanelTemplate(location, id)
+        : null;
   }
 }
