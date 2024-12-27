@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../utils/widgets/overview.dart';
-import '../model/location.dart';
-import 'add_location_button.dart';
-import 'location_button.dart';
+import '../../../utils/widgets/overview.dart';
+import '../../model/location.dart';
+import '../buttons/add_location_button.dart';
+import '../buttons/location_button.dart';
 import 'location_overview_controller.dart';
 
 class LocationOverview

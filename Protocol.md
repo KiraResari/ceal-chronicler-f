@@ -1710,10 +1710,11 @@
 * First, I want to try merging `EditParentLocationButton` and `EditLocationLevelButton`, since they are quite similar, and I can imagine needing more buttons like that in the future
   * That took some skill, and Chatty only produced suboptimal results when processing that, so I had to do it manually
   * However, the result is well worth it, because it works great and looks B E A utiful! =^,^=
+* Next, I want to split the `LocationView` into two columns because it is already getting full with all the connected locations that I have, and it's only gonna get more
+* 
 
 # TODO
 
-* Split `LocationView` into two columns
 * Issue: Messages when deleting keys use the ID of the point in time instead of the name
 
 # User Story

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../key_fields/location_id_key_field.dart';
-import '../../locations/widgets/location_id_key_field_view.dart';
+import '../../locations/widgets/panels/location_id_key_field_panel.dart';
 import '../../utils/string_key.dart';
 import '../../utils/widgets/temporal_entity_view.dart';
 import '../model/character.dart';
@@ -24,7 +24,7 @@ class CharacterView
         context.watch<CharacterViewController>().locationIdKeyField;
     return [
       buildTableRow(context, "Present Location",
-          LocationIdKeyFieldView(locationIdKeyField))
+          LocationIdKeyFieldPanel(locationIdKeyField))
     ];
   }
 }

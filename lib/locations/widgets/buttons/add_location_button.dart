@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../commands/command_processor.dart';
-import '../../get_it_context.dart';
-import '../../timeline/model/point_in_time_repository.dart';
-import '../../utils/widgets/buttons/small_circular_button.dart';
-import '../commands/create_location_command.dart';
+import '../../../commands/command_processor.dart';
+import '../../../get_it_context.dart';
+import '../../../timeline/model/point_in_time_repository.dart';
+import '../../../utils/widgets/buttons/small_circular_button.dart';
+import '../../commands/create_location_command.dart';
 
 class AddLocationButton extends SmallCircularButton {
   final PointInTimeRepository pointInTimeRepository =

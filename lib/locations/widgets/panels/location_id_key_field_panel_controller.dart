@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../../get_it_context.dart';
-import '../../key_fields/widgets/key_field_controller.dart';
-import '../model/location.dart';
-import '../model/location_id.dart';
-import '../model/location_repository.dart';
+import '../../../get_it_context.dart';
+import '../../../key_fields/widgets/key_field_controller.dart';
+import '../../model/location.dart';
+import '../../model/location_id.dart';
+import '../../model/location_repository.dart';
 
-class LocationIdKeyFieldController extends KeyFieldController<LocationId?> {
-  LocationIdKeyFieldController(super.keyField);
+class LocationIdKeyFieldPanelController extends KeyFieldController<LocationId?> {
+  LocationIdKeyFieldPanelController(super.keyField);
 
   static final unknownLocationId = LocationId();
   static final DropdownMenuEntry<LocationId> unknownEntry =

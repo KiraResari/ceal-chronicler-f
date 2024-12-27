@@ -1,15 +1,15 @@
-import 'package:ceal_chronicler_f/locations/widgets/edit_location_level_button.dart';
+import 'package:ceal_chronicler_f/locations/widgets/buttons/edit_location_level_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../characters/model/character.dart';
-import '../../characters/widgets/character_button.dart';
-import '../../utils/string_key.dart';
-import '../../utils/widgets/temporal_entity_view.dart';
-import '../model/location.dart';
-import '../model/location_level.dart';
-import 'edit_parent_location_button.dart';
-import 'location_button.dart';
+import '../../../characters/model/character.dart';
+import '../../../characters/widgets/character_button.dart';
+import '../../../utils/string_key.dart';
+import '../../../utils/widgets/temporal_entity_view.dart';
+import '../../model/location.dart';
+import '../../model/location_level.dart';
+import '../buttons/edit_parent_location_button.dart';
+import '../buttons/location_button.dart';
 import 'location_view_controller.dart';
 
 class LocationView

@@ -1,6 +1,6 @@
-import '../../utils/widgets/temporal_entity_button.dart';
-import '../../view/commands/open_location_view_command.dart';
-import '../model/location.dart';
+import '../../../utils/widgets/temporal_entity_button.dart';
+import '../../../view/commands/open_location_view_command.dart';
+import '../../model/location.dart';
 
 class LocationButton extends TemporalEntityButton<Location> {
   LocationButton(Location location, {super.key}) : super(location);

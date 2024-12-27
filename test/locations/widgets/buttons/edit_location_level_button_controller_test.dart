@@ -5,13 +5,13 @@ import 'package:ceal_chronicler_f/key_fields/key_field_resolver.dart';
 import 'package:ceal_chronicler_f/locations/model/location.dart';
 import 'package:ceal_chronicler_f/locations/model/location_level.dart';
 import 'package:ceal_chronicler_f/locations/model/location_repository.dart';
-import 'package:ceal_chronicler_f/locations/widgets/edit_location_level_button_controller.dart';
+import 'package:ceal_chronicler_f/locations/widgets/buttons/edit_location_level_button_controller.dart';
 import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
 import 'package:flutter/src/material/dropdown_menu.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../location_test_utils.dart';
+import '../../location_test_utils.dart';
 
 main() {
   late PointInTimeRepository pointInTimeRepository;

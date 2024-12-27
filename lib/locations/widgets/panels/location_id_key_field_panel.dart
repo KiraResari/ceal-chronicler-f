@@ -1,25 +1,25 @@
-import 'package:ceal_chronicler_f/locations/widgets/location_button.dart';
+import 'package:ceal_chronicler_f/locations/widgets/buttons/location_button.dart';
 import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
 
-import '../../key_fields/location_id_key_field.dart';
-import '../../key_fields/widgets/next_key_button.dart';
-import '../../key_fields/widgets/previous_key_button.dart';
-import '../../key_fields/widgets/select_key_button.dart';
-import '../../key_fields/widgets/toggle_key_button.dart';
-import '../model/location.dart';
-import '../model/location_id.dart';
-import 'location_id_key_field_controller.dart';
+import '../../../key_fields/location_id_key_field.dart';
+import '../../../key_fields/widgets/next_key_button.dart';
+import '../../../key_fields/widgets/previous_key_button.dart';
+import '../../../key_fields/widgets/select_key_button.dart';
+import '../../../key_fields/widgets/toggle_key_button.dart';
+import '../../model/location.dart';
+import '../../model/location_id.dart';
+import 'location_id_key_field_panel_controller.dart';
 
-class LocationIdKeyFieldView extends StatelessWidget {
+class LocationIdKeyFieldPanel extends StatelessWidget {
   final LocationIdKeyField keyField;
 
-  const LocationIdKeyFieldView(this.keyField, {super.key});
+  const LocationIdKeyFieldPanel(this.keyField, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => LocationIdKeyFieldController(keyField),
+      create: (context) => LocationIdKeyFieldPanelController(keyField),
       builder: (context, child) => _buildView(context),
     );
   }
@@ -37,28 +37,28 @@ class LocationIdKeyFieldView extends StatelessWidget {
   }
 
   Widget _buildPreviousKeyButton(BuildContext context) {
-    var controller = context.read<LocationIdKeyFieldController>();
-    bool enabled = context.watch<LocationIdKeyFieldController>().hasPrevious;
+    var controller = context.read<LocationIdKeyFieldPanelController>();
+    bool enabled = context.watch<LocationIdKeyFieldPanelController>().hasPrevious;
     return PreviousKeyButton(controller, enabled);
   }
 
   Widget _buildNextKeyButton(BuildContext context) {
-    var controller = context.read<LocationIdKeyFieldController>();
-    bool enabled = context.watch<LocationIdKeyFieldController>().hasNext;
+    var controller = context.read<LocationIdKeyFieldPanelController>();
+    bool enabled = context.watch<LocationIdKeyFieldPanelController>().hasNext;
     return NextKeyButton(controller, enabled);
   }
 
   Widget _buildAddOrRemoveKeyButton(BuildContext context) {
-    var controller = context.read<LocationIdKeyFieldController>();
+    var controller = context.read<LocationIdKeyFieldPanelController>();
     bool keyExistsAtCurrentPointInTime = context
-        .watch<LocationIdKeyFieldController>()
+        .watch<LocationIdKeyFieldPanelController>()
         .keyExistsAtCurrentPointInTime;
     return ToggleKeyButton(controller, keyExistsAtCurrentPointInTime);
   }
 
   Widget _buildPresentLocationButton(BuildContext context) {
     Location? presentLocation =
-        context.watch<LocationIdKeyFieldController>().presentLocation;
+        context.watch<LocationIdKeyFieldPanelController>().presentLocation;
     if (presentLocation != null) {
       return LocationButton(presentLocation);
     }
@@ -67,7 +67,7 @@ class LocationIdKeyFieldView extends StatelessWidget {
 
   Widget _buildEditButton(BuildContext context) {
     List<DropdownMenuEntry<LocationId>> entries =
-        context.watch<LocationIdKeyFieldController>().validLocationEntries;
+        context.watch<LocationIdKeyFieldPanelController>().validLocationEntries;
     return SelectKeyButton(
       keyField: keyField,
       entries: entries,

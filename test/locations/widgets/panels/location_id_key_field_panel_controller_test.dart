@@ -8,7 +8,7 @@ import 'package:ceal_chronicler_f/key_fields/key_field_resolver.dart';
 import 'package:ceal_chronicler_f/locations/model/location.dart';
 import 'package:ceal_chronicler_f/locations/model/location_id.dart';
 import 'package:ceal_chronicler_f/locations/model/location_repository.dart';
-import 'package:ceal_chronicler_f/locations/widgets/location_id_key_field_controller.dart';
+import 'package:ceal_chronicler_f/locations/widgets/panels/location_id_key_field_panel_controller.dart';
 import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
@@ -17,7 +17,7 @@ import 'package:ceal_chronicler_f/view/view_processor.dart';
 import 'package:flutter/src/material/dropdown_menu.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../mocks/file_service_mock_lite.dart';
+import '../../../mocks/file_service_mock_lite.dart';
 
 main() {
   late PointInTimeRepository pointInTimeRepository;
@@ -49,7 +49,7 @@ main() {
       var character = Character(presentPointId);
       var location = Location(presentPointId);
       locationRepository.add(location);
-      var controller = LocationIdKeyFieldController(character.presentLocation);
+      var controller = LocationIdKeyFieldPanelController(character.presentLocation);
 
       List<DropdownMenuEntry<LocationId>> locationEntries =
           controller.validLocationEntries;
@@ -58,7 +58,7 @@ main() {
           locationEntries.any((entry) => entry.value == location.id), isTrue);
       expect(
           locationEntries
-              .any((entry) => entry == LocationIdKeyFieldController.unknownEntry),
+              .any((entry) => entry == LocationIdKeyFieldPanelController.unknownEntry),
           isTrue);
     },
   );
@@ -72,7 +72,7 @@ main() {
       var character = Character(presentPointId);
       var location = Location(futurePoint.id);
       locationRepository.add(location);
-      var controller = LocationIdKeyFieldController(character.presentLocation);
+      var controller = LocationIdKeyFieldPanelController(character.presentLocation);
 
       List<DropdownMenuEntry<LocationId>> locationEntries =
           controller.validLocationEntries;
@@ -92,7 +92,7 @@ main() {
       var location = Location(pastPoint.id);
       location.lastAppearance = pastPoint.id;
       locationRepository.add(location);
-      var controller = LocationIdKeyFieldController(character.presentLocation);
+      var controller = LocationIdKeyFieldPanelController(character.presentLocation);
 
       List<DropdownMenuEntry<LocationId>> locationEntries =
           controller.validLocationEntries;
@@ -107,7 +107,7 @@ main() {
         () {
       PointInTimeId presentPointId = pointInTimeRepository.activePointInTime.id;
       var character = Character(presentPointId);
-      var controller = LocationIdKeyFieldController(character.presentLocation);
+      var controller = LocationIdKeyFieldPanelController(character.presentLocation);
       var newLocation = Location(presentPointId);
       locationRepository.add(newLocation);
 
@@ -126,10 +126,10 @@ main() {
       var locationId = LocationId();
       character.presentLocation
           .addOrUpdateKeyAtTime(locationId, presentPointId);
-      var controller = LocationIdKeyFieldController(character.presentLocation);
+      var controller = LocationIdKeyFieldPanelController(character.presentLocation);
 
       controller
-          .updatePresentLocation(LocationIdKeyFieldController.unknownLocationId);
+          .updatePresentLocation(LocationIdKeyFieldPanelController.unknownLocationId);
 
       LocationId? presentLocationId =
       keyFieldResolver.getCurrentValue(character.presentLocation);
@@ -145,10 +145,10 @@ main() {
       var character = Character(pastPoint.id);
       var locationId = LocationId();
       character.presentLocation.addOrUpdateKeyAtTime(locationId, pastPoint.id);
-      var controller = LocationIdKeyFieldController(character.presentLocation);
+      var controller = LocationIdKeyFieldPanelController(character.presentLocation);
 
       controller
-          .updatePresentLocation(LocationIdKeyFieldController.unknownLocationId);
+          .updatePresentLocation(LocationIdKeyFieldPanelController.unknownLocationId);
 
       LocationId? presentLocationId =
       keyFieldResolver.getCurrentValue(character.presentLocation);

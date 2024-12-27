@@ -8,14 +8,14 @@ import 'package:ceal_chronicler_f/io/file/file_adapter.dart';
 import 'package:ceal_chronicler_f/io/file/file_processor.dart';
 import 'package:ceal_chronicler_f/locations/model/location.dart';
 import 'package:ceal_chronicler_f/locations/model/location_repository.dart';
-import 'package:ceal_chronicler_f/locations/widgets/location_overview_controller.dart';
+import 'package:ceal_chronicler_f/locations/widgets/views/location_overview_controller.dart';
 import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
 import 'package:ceal_chronicler_f/view/view_processor.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../mocks/file_adapter_mock.dart';
+import '../../../mocks/file_adapter_mock.dart';
 
 main() {
   late PointInTimeRepository pointInTimeRepository;
