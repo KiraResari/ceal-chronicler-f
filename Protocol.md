@@ -1713,6 +1713,7 @@
 * Next, I want to split the `LocationView` into two columns because it is already getting full with all the connected locations that I have, and it's only gonna get more
   * That will require modifying the `TemporalEntityView` in some way, but it can definitely be done
   * I now managed to do that
+* Next, I still have to add that the parent location can be removed
 
 # TODO
 

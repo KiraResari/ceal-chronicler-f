@@ -1,7 +1,7 @@
 import '../../../get_it_context.dart';
 import '../../../key_fields/key_field_resolver.dart';
 import '../../../timeline/model/point_in_time_repository.dart';
-import '../../../utils/widgets/buttons/edit_button_controller.dart';
+import '../../../utils/widgets/buttons/edit_dropdown_button_controller.dart';
 import '../../commands/update_parent_location_command.dart';
 import '../../model/location.dart';
 import '../../model/location_id.dart';
@@ -9,7 +9,7 @@ import '../../model/location_level.dart';
 import '../../model/location_repository.dart';
 
 class EditParentLocationButtonController
-    extends EditButtonController<LocationId> {
+    extends EditDropdownButtonController<LocationId> {
   final _locationRepository = getIt.get<LocationRepository>();
   final _keyFieldResolver = getIt.get<KeyFieldResolver>();
   final _pointInTimeRepository = getIt.get<PointInTimeRepository>();

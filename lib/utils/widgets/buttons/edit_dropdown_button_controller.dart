@@ -4,7 +4,7 @@ import '../../../commands/command.dart';
 import '../../../commands/command_processor.dart';
 import '../../../get_it_context.dart';
 
-abstract class EditButtonController<T> {
+abstract class EditDropdownButtonController<T> {
   final _commandProcessor = getIt.get<CommandProcessor>();
 
   List<DropdownMenuEntry<T>> get validMenuEntries {

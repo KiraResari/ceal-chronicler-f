@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 import '../dialogs/select_dropdown_dialog.dart';
-import 'edit_button_controller.dart';
+import 'edit_dropdown_button_controller.dart';
 import 'small_circular_button.dart';
 
-abstract class EditButton<T> extends SmallCircularButton {
-  final EditButtonController<T> controller;
+abstract class EditDropdownButton<T> extends SmallCircularButton {
+  final EditDropdownButtonController<T> controller;
   final T? initialSelection;
   final String labelText;
 
-  const EditButton({
+  const EditDropdownButton({
     required this.controller,
     required this.initialSelection,
     required this.labelText,
