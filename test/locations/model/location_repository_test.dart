@@ -23,10 +23,10 @@ main() {
   test("Removing location should work", () {
     var location = Location(PointInTimeId());
     repository.add(location);
-    var characterToBeRemoved = repository.content.first;
+    var itemToBeRemoved = repository.content.first;
 
-    repository.remove(characterToBeRemoved);
+    repository.remove(itemToBeRemoved);
 
-    expect(repository.content, isNot(contains(characterToBeRemoved)));
+    expect(repository.content, isNot(contains(itemToBeRemoved)));
   });
 }
