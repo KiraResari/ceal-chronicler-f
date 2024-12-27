@@ -1,4 +1,3 @@
-import 'package:ceal_chronicler_f/locations/model/location_repository.dart';
 import 'package:get_it/get_it.dart';
 
 import 'characters/model/character_repository.dart';
@@ -9,6 +8,8 @@ import 'io/chronicle_codec.dart';
 import 'io/file/file_adapter.dart';
 import 'io/file/file_processor.dart';
 import 'key_fields/key_field_resolver.dart';
+import 'locations/model/location_connection_repository.dart';
+import 'locations/model/location_repository.dart';
 import 'message_bar/message_bar_state.dart';
 import 'timeline/model/point_in_time_repository.dart';
 import 'view/view_processor.dart';
@@ -21,6 +22,8 @@ void initializeGetItContext() {
   getIt.registerSingleton<IncidentRepository>(IncidentRepository());
   getIt.registerSingleton<CharacterRepository>(CharacterRepository());
   getIt.registerSingleton<LocationRepository>(LocationRepository());
+  getIt.registerSingleton<LocationConnectionRepository>(
+      LocationConnectionRepository());
   getIt.registerSingleton<ViewRepository>(ViewRepository());
   getIt.registerSingleton<MessageBarState>(MessageBarState());
 

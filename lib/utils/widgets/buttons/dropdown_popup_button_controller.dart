@@ -4,7 +4,7 @@ import '../../../commands/command.dart';
 import '../../../commands/command_processor.dart';
 import '../../../get_it_context.dart';
 
-abstract class EditDropdownButtonController<T> {
+abstract class DropdownPopupButtonController<T> {
   final _commandProcessor = getIt.get<CommandProcessor>();
 
   List<DropdownMenuEntry<T>> get validMenuEntries {
@@ -23,12 +23,12 @@ abstract class EditDropdownButtonController<T> {
 
   String getLabel(T entry);
 
-  void update(T? newValue) {
-    if (newValue != null) {
-      Command command = buildCommand(newValue);
+  void onConfirm(T? selection) {
+    if (selection != null) {
+      Command command = buildCommand(selection);
       _commandProcessor.process(command);
     }
   }
 
-  Command buildCommand(T newValue);
+  Command buildCommand(T selection);
 }

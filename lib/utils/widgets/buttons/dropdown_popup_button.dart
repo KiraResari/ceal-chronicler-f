@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
 
 import '../dialogs/select_dropdown_dialog.dart';
-import 'edit_dropdown_button_controller.dart';
+import 'dropdown_popup_button_controller.dart';
 import 'small_circular_button.dart';
 
-abstract class EditDropdownButton<T> extends SmallCircularButton {
-  final EditDropdownButtonController<T> controller;
+abstract class DropdownPopupButton<T> extends SmallCircularButton {
+  final DropdownPopupButtonController<T> controller;
   final T? initialSelection;
   final String labelText;
 
-  const EditDropdownButton({
+  const DropdownPopupButton({
     required this.controller,
     required this.initialSelection,
     required this.labelText,
+    required super.icon,
     super.key,
-  }) : super(icon: Icons.edit);
+  });
 
   @override
   void onPressed(BuildContext context) async {
     T? selectedValue = await _showSelectionDialog(context);
-    controller.update(selectedValue);
+    controller.onConfirm(selectedValue);
   }
 
   Future<T?> _showSelectionDialog(BuildContext context) {

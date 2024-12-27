@@ -1721,9 +1721,12 @@
   * And I now managed to set up the layout for this as well
   * And the commands are working too
   * Next, I need to bring it all together in a nice way
+    * That took a bit, but now it looks nice
+  * Now all that's left is adding the functionality to break connections
 
 # TODO
 
+* Inactive adjacent locations should not be displayed 
 * Issue: Messages when deleting keys use the ID of the point in time instead of the name
 
 # User Story

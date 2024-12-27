@@ -2,6 +2,8 @@ import 'package:ceal_chronicler_f/characters/model/character.dart';
 import 'package:ceal_chronicler_f/incidents/model/incident.dart';
 import 'package:ceal_chronicler_f/io/chronicle.dart';
 import 'package:ceal_chronicler_f/locations/model/location.dart';
+import 'package:ceal_chronicler_f/locations/model/location_connection.dart';
+import 'package:ceal_chronicler_f/locations/model/location_connection_direction.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -48,10 +50,15 @@ Chronicle _buildTestChronicle() {
     Location(pointsInTime[0].id),
     Location(pointsInTime[1].id),
   ];
+  var locationConnections = [
+    LocationConnection(
+        locations[0].id, LocationConnectionDirection.west, locations[1].id)
+  ];
   return Chronicle(
     pointsInTime: pointsInTime,
     incidents: incidents,
     characters: characters,
     locations: locations,
+    locationConnections: locationConnections,
   );
 }

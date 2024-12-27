@@ -10,8 +10,10 @@ import '../../../utils/string_key.dart';
 import '../../../utils/widgets/temporal_entity_view.dart';
 import '../../model/location.dart';
 import '../../model/location_level.dart';
+import '../buttons/add_location_connection_button.dart';
 import '../buttons/edit_parent_location_button.dart';
 import '../buttons/location_button.dart';
+import '../panels/connected_location_panel_template.dart';
 import 'location_view_controller.dart';
 
 class LocationView
@@ -134,28 +136,54 @@ class LocationView
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
       children: [
         TableRow(children: [
-          _buildAdjacentLocationBlock(LocationConnectionDirection.northwest),
-          _buildAdjacentLocationBlock(LocationConnectionDirection.north),
-          _buildAdjacentLocationBlock(LocationConnectionDirection.northeast),
+          _buildAdjacentLocationBlock(
+              context, LocationConnectionDirection.northwest),
+          _buildAdjacentLocationBlock(
+              context, LocationConnectionDirection.north),
+          _buildAdjacentLocationBlock(
+              context, LocationConnectionDirection.northeast),
         ]),
         TableRow(children: [
-          _buildAdjacentLocationBlock(LocationConnectionDirection.west),
+          _buildAdjacentLocationBlock(
+              context, LocationConnectionDirection.west),
           Text(name),
-          _buildAdjacentLocationBlock(LocationConnectionDirection.east),
+          _buildAdjacentLocationBlock(
+              context, LocationConnectionDirection.east),
         ]),
         TableRow(children: [
-          _buildAdjacentLocationBlock(LocationConnectionDirection.southwest),
-          _buildAdjacentLocationBlock(LocationConnectionDirection.south),
-          _buildAdjacentLocationBlock(LocationConnectionDirection.southeast),
+          _buildAdjacentLocationBlock(
+              context, LocationConnectionDirection.southwest),
+          _buildAdjacentLocationBlock(
+              context, LocationConnectionDirection.south),
+          _buildAdjacentLocationBlock(
+              context, LocationConnectionDirection.southeast),
         ]),
       ],
     );
   }
 
-  Widget _buildAdjacentLocationBlock(LocationConnectionDirection direction) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Text(direction.name),
+  Widget _buildAdjacentLocationBlock(
+    BuildContext context,
+    LocationConnectionDirection direction,
+  ) {
+    List<Widget> connectedLocationPanels =
+        _buildConnectedLocationPanels(context, direction);
+    return Column(
+      children: [
+        ...connectedLocationPanels,
+        AddLocationConnectionButton(entity, direction),
+      ],
     );
+  }
+
+  List<Widget> _buildConnectedLocationPanels(
+      BuildContext context, LocationConnectionDirection direction) {
+    List<ConnectedLocationPanelTemplate> connectedLocations = context
+        .watch<LocationViewController>()
+        .getConnectedLocationsForDirection(direction);
+    List<Widget> connectedLocationPanels = connectedLocations
+        .map((connectedLocation) => LocationButton(connectedLocation.location))
+        .toList();
+    return connectedLocationPanels;
   }
 }

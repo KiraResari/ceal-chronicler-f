@@ -2,21 +2,23 @@ import '../../../get_it_context.dart';
 import '../../../key_fields/key_field_resolver.dart';
 import '../../../timeline/model/point_in_time_repository.dart';
 import '../../../utils/widgets/buttons/dropdown_popup_button_controller.dart';
-import '../../commands/update_parent_location_command.dart';
+import '../../commands/create_location_connection_command.dart';
 import '../../model/location.dart';
+import '../../model/location_connection_direction.dart';
 import '../../model/location_id.dart';
 import '../../model/location_level.dart';
 import '../../model/location_repository.dart';
 
-class EditParentLocationButtonController
+class AddLocationConnectionButtonController
     extends DropdownPopupButtonController<LocationId> {
   final _locationRepository = getIt.get<LocationRepository>();
   final _keyFieldResolver = getIt.get<KeyFieldResolver>();
   final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
 
   final Location presentLocation;
+  final LocationConnectionDirection direction;
 
-  EditParentLocationButtonController(this.presentLocation);
+  AddLocationConnectionButtonController(this.presentLocation, this.direction);
 
   @override
   List<LocationId> get validEntries {
@@ -29,10 +31,10 @@ class EditParentLocationButtonController
   bool _isValid(Location location) {
     var locationIsActive =
         _pointInTimeRepository.entityIsPresentlyActive(location);
-    var locationIsOfHigherLevel =
+    var locationIsOfEquivalentLevel =
         location.locationLevel == LocationLevel.notSet ||
-            location.locationLevel.isAbove(presentLocation.locationLevel);
-    return locationIsActive && locationIsOfHigherLevel;
+            location.locationLevel.isEquivalent(presentLocation.locationLevel);
+    return locationIsActive && locationIsOfEquivalentLevel;
   }
 
   @override
@@ -47,6 +49,10 @@ class EditParentLocationButtonController
   }
 
   @override
-  UpdateParentLocationCommand buildCommand(LocationId newValue) =>
-      UpdateParentLocationCommand(presentLocation, newValue);
+  CreateLocationConnectionCommand buildCommand(LocationId selection) =>
+      CreateLocationConnectionCommand(
+        presentLocation.id,
+        direction,
+        selection,
+      );
 }
