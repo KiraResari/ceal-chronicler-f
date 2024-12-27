@@ -6,8 +6,7 @@ import '../buttons/add_location_button.dart';
 import '../buttons/location_button.dart';
 import 'location_overview_controller.dart';
 
-class LocationOverview
-    extends Overview<Location, LocationOverviewController> {
+class LocationOverview extends Overview<Location, LocationOverviewController> {
   const LocationOverview({super.key});
 
   @override
@@ -23,7 +22,10 @@ class LocationOverview
 
   @override
   List<Location> getItems(LocationOverviewController controller) {
-    return controller.entitiesAtActivePointInTime;
+    var locations = controller.entitiesAtActivePointInTime;
+    locations
+        .sort((a, b) => a.locationLevel.value.compareTo(b.locationLevel.value));
+    return locations;
   }
 
   @override
