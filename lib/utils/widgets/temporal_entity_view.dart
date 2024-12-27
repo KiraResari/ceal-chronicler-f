@@ -62,23 +62,29 @@ abstract class TemporalEntityView<T extends TemporalEntity,
   }
 
   Widget _buildBody(BuildContext context) {
-    List<Widget> columns = [_buildEntityTable(context)];
+    List<Widget> columns = [
+      buildEntityTable(
+        context,
+        _buildEntityTableChildren(context),
+      )
+    ];
     columns.addAll(buildAdditionalColumns(context));
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: columns,
     );
   }
 
   List<Widget> buildAdditionalColumns(BuildContext context) => [];
 
-  Table _buildEntityTable(BuildContext context) {
+  Table buildEntityTable(BuildContext context, List<TableRow> children) {
     return Table(
       columnWidths: const <int, TableColumnWidth>{
         0: IntrinsicColumnWidth(),
         1: IntrinsicColumnWidth(),
       },
-      children: _buildEntityTableChildren(context),
+      children: children,
     );
   }
 

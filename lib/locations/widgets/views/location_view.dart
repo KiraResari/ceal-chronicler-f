@@ -27,9 +27,6 @@ class LocationView
     return [
       buildTableRow(
           context, "Characters present", _buildCharactersPresent(context)),
-      buildTableRow(context, "Location level", _buildLocationLevel(context)),
-      buildTableRow(context, "Parent location", _buildParentLocation(context)),
-      buildTableRow(context, "Child Locations", _buildChildLocations(context)),
     ];
   }
 
@@ -44,6 +41,28 @@ class LocationView
       children: charactersPresent
           .map((character) => CharacterButton(character))
           .toList(),
+    );
+  }
+
+  @override
+  List<Widget> buildAdditionalColumns(BuildContext context) {
+    return ([_buildLinkedLocationsColumn(context)]);
+  }
+
+  Widget _buildLinkedLocationsColumn(BuildContext context) {
+    List<TableRow> children = [
+      buildTableRow(context, "Location level", _buildLocationLevel(context)),
+      buildTableRow(context, "Parent location", _buildParentLocation(context)),
+      buildTableRow(context, "Child Locations", _buildChildLocations(context)),
+    ];
+    ThemeData theme = Theme.of(context);
+    TextStyle style = theme.textTheme.titleSmall!;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("Linked Locations", style: style),
+        buildEntityTable(context, children),
+      ],
     );
   }
 
