@@ -22,10 +22,7 @@ class LocationOverview extends Overview<Location, LocationOverviewController> {
 
   @override
   List<Location> getItems(LocationOverviewController controller) {
-    var locations = controller.entitiesAtActivePointInTime;
-    locations
-        .sort((a, b) => a.locationLevel.value.compareTo(b.locationLevel.value));
-    return locations;
+    return controller.sortedActiveLocations;
   }
 
   @override

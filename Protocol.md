@@ -1733,6 +1733,7 @@
 * With that, the locations should all be good for now!
 * As a bonus, let's see if I can get the locations sorted by level and alphabet in the `LocationOverview`
   * Well, sorting them by level works already
+  * And sorting by name was a bit more complicated due to key fields, but ultimately still worked out
 
 # TODO
 
