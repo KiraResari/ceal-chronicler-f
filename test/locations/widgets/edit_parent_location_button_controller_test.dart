@@ -34,7 +34,7 @@ main() {
   });
 
   test(
-    "validLocations should return valid parent locations",
+    "validMenuEntries should return valid parent locations",
     () {
       Location thisLocation = utils.createLocationAndAddToRepository(
           locationLevel: LocationLevel.locale);
@@ -47,7 +47,7 @@ main() {
       var controller = EditParentLocationButtonController(thisLocation);
 
       List<DropdownMenuEntry<LocationId>> validEntries =
-          controller.validEntries;
+          controller.validMenuEntries;
 
       expect(
         validEntries.map((entry) => entry.value).toList(),
@@ -57,7 +57,7 @@ main() {
   );
 
   test(
-    "validLocations should return not return location in future",
+    "validMenuEntries should return not return location in future",
     () {
       Location thisLocation = utils.createLocationAndAddToRepository(
           locationLevel: LocationLevel.locale);
@@ -68,14 +68,14 @@ main() {
       var controller = EditParentLocationButtonController(thisLocation);
 
       List<DropdownMenuEntry<LocationId>> validEntries =
-          controller.validEntries;
+          controller.validMenuEntries;
 
       expect(validEntries, isEmpty);
     },
   );
 
   test(
-    "validLocations should return not return locations that no longer exist",
+    "validMenuEntries should return not return locations that no longer exist",
     () {
       Location thisLocation = utils.createLocationAndAddToRepository(
           locationLevel: LocationLevel.locale);
@@ -87,14 +87,14 @@ main() {
       var controller = EditParentLocationButtonController(thisLocation);
 
       List<DropdownMenuEntry<LocationId>> validEntries =
-          controller.validEntries;
+          controller.validMenuEntries;
 
       expect(validEntries, isEmpty);
     },
   );
 
   test(
-    "validLocations should return only locations with a higher location level",
+    "validMenuEntries should return only locations with a higher location level",
     () {
       Location thisLocation = utils.createLocationAndAddToRepository(
           locationLevel: LocationLevel.region);
@@ -107,7 +107,7 @@ main() {
       var controller = EditParentLocationButtonController(thisLocation);
 
       List<DropdownMenuEntry<LocationId>> validEntries =
-          controller.validEntries;
+          controller.validMenuEntries;
 
       expect(
         validEntries.map((entry) => entry.value).toList(),
