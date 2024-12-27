@@ -18,10 +18,8 @@ class Incident extends IdHolder<IncidentId> {
       : name = json[nameKey],
         super(IncidentId.fromString(json[IdHolder.idKey]));
 
-  @override
   String get identifier => name;
 
-  @override
   String get identifierDescription => nameKey;
 
   @override

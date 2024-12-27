@@ -1,29 +1,29 @@
 enum LocationLevel {
-  notSet('❔', notSetName, -1),
-  minayero('✨', minayeroName, 0),
-  universe('🌌', universeName, 1),
-  world('🪐', worldName, 2),
-  continent('🗺️', continentName, 3),
-  region('🗾', regionName, 4),
-  district('🏞️', districtName, 5),
-  locale('📍', localeName, 6);
+  notSet('❔', _notSetName, -1),
+  minayero('✨', _minayeroName, 0),
+  universe('🌌', _universeName, 1),
+  world('🪐', _worldName, 2),
+  continent('🗺️', _continentName, 3),
+  region('🗾', _regionName, 4),
+  district('🏞️', _districtName, 5),
+  locale('📍', _localeName, 6);
 
-  static const notSetName = "Not Set";
-  static const minayeroName = "Minayero";
-  static const universeName = "Universe";
-  static const worldName = "World";
-  static const continentName = "Continent";
-  static const regionName = "Region";
-  static const districtName = "District";
-  static const localeName = "Locale";
+  static const _notSetName = "Not Set";
+  static const _minayeroName = "Minayero";
+  static const _universeName = "Universe";
+  static const _worldName = "World";
+  static const _continentName = "Continent";
+  static const _regionName = "Region";
+  static const _districtName = "District";
+  static const _localeName = "Locale";
   static const Map<String, LocationLevel> _locationLevelMap = {
-    minayeroName: LocationLevel.minayero,
-    universeName: LocationLevel.universe,
-    worldName: LocationLevel.world,
-    continentName: LocationLevel.continent,
-    regionName: LocationLevel.region,
-    districtName: LocationLevel.district,
-    localeName: LocationLevel.locale,
+    _minayeroName: LocationLevel.minayero,
+    _universeName: LocationLevel.universe,
+    _worldName: LocationLevel.world,
+    _continentName: LocationLevel.continent,
+    _regionName: LocationLevel.region,
+    _districtName: LocationLevel.district,
+    _localeName: LocationLevel.locale,
   };
 
   final String icon;
@@ -46,7 +46,7 @@ enum LocationLevel {
     return this == LocationLevel.notSet || other.value == value;
   }
 
-  static LocationLevel fromJson(String? value) {
-    return _locationLevelMap[value] ?? LocationLevel.notSet;
+  static LocationLevel fromJson(String? name) {
+    return _locationLevelMap[name] ?? LocationLevel.notSet;
   }
 }
