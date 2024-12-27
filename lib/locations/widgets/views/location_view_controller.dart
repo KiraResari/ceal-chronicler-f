@@ -1,12 +1,10 @@
-import 'package:ceal_chronicler_f/locations/model/location_connection.dart';
-import 'package:ceal_chronicler_f/locations/model/location_connection_id.dart';
-
 import '../../../characters/model/character.dart';
 import '../../../characters/model/character_repository.dart';
 import '../../../get_it_context.dart';
 import '../../../utils/widgets/temporal_entity_view_controller.dart';
 import '../../commands/delete_parent_location_command.dart';
 import '../../model/location.dart';
+import '../../model/location_connection.dart';
 import '../../model/location_connection_direction.dart';
 import '../../model/location_connection_repository.dart';
 import '../../model/location_id.dart';
@@ -91,7 +89,7 @@ class LocationViewController extends TemporalEntityViewController<Location> {
         .toList();
     return connectionsWhereThisIsStart
         .map((connection) => _buildConnectedLocationPanelTemplate(
-            connection.endLocation, connection.id))
+            connection.endLocation, connection))
         .whereType<ConnectedLocationPanelTemplate>()
         .toList();
   }
@@ -104,18 +102,18 @@ class LocationViewController extends TemporalEntityViewController<Location> {
         .toList();
     return connectionsWhereThisIsEnd
         .map((connection) => _buildConnectedLocationPanelTemplate(
-            connection.startLocation, connection.id))
+            connection.startLocation, connection))
         .whereType<ConnectedLocationPanelTemplate>()
         .toList();
   }
 
   ConnectedLocationPanelTemplate? _buildConnectedLocationPanelTemplate(
     LocationId locationId,
-    LocationConnectionId id,
+    LocationConnection connection,
   ) {
     Location? location = _locationRepository.getContentElementById(locationId);
     return location != null
-        ? ConnectedLocationPanelTemplate(location, id)
+        ? ConnectedLocationPanelTemplate(location, connection)
         : null;
   }
 }

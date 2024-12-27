@@ -10,6 +10,7 @@ import '../../model/location.dart';
 import '../../model/location_connection_direction.dart';
 import '../../model/location_level.dart';
 import '../buttons/add_location_connection_button.dart';
+import '../buttons/delete_location_connection_button.dart';
 import '../buttons/edit_location_level_button.dart';
 import '../buttons/edit_parent_location_button.dart';
 import '../buttons/location_button.dart';
@@ -177,13 +178,27 @@ class LocationView
   }
 
   List<Widget> _buildConnectedLocationPanels(
-      BuildContext context, LocationConnectionDirection direction) {
+    BuildContext context,
+    LocationConnectionDirection direction,
+  ) {
     List<ConnectedLocationPanelTemplate> connectedLocations = context
         .watch<LocationViewController>()
         .getConnectedLocationsForDirection(direction);
     List<Widget> connectedLocationPanels = connectedLocations
-        .map((connectedLocation) => LocationButton(connectedLocation.location))
+        .map((connectedLocation) =>
+            _buildConnectedLocationPanel(connectedLocation))
         .toList();
     return connectedLocationPanels;
+  }
+
+  Widget _buildConnectedLocationPanel(
+    ConnectedLocationPanelTemplate connectedLocation,
+  ) {
+    return Row(
+      children: [
+        LocationButton(connectedLocation.location),
+        DeleteLocationConnectionButton(connectedLocation.locationConnection),
+      ],
+    );
   }
 }

@@ -1723,6 +1723,7 @@
   * Next, I need to bring it all together in a nice way
     * That took a bit, but now it looks nice
   * Now all that's left is adding the functionality to break connections
+    * That now works too
 
 # TODO
 
@@ -1802,8 +1803,8 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [x] have a first appearance
 - [x] have a last appearance
 - [x] can be added
-- [ ] can be connected to other locations
-  - [ ] adjacent locations
+- [x] can be connected to other locations
+  - [x] adjacent locations
   - [x] by clicking on linked locations, you can jump to them
     - [x] Buttons of locations that do not presently exist should not be displayed
   - [x] parent and child locations
@@ -1816,7 +1817,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
   - [x] You can jump to these characters
 - [x] should have an editable location level
   - [x] can only have parents of a higher level
-  - [ ] can only be connected to locations of the same level
+  - [x] can only be connected to locations of the same level
   - [x] level editing should be restricted by connected, parent and child locations
 
 

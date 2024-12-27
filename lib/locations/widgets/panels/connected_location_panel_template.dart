@@ -1,9 +1,9 @@
 import '../../model/location.dart';
-import '../../model/location_connection_id.dart';
+import '../../model/location_connection.dart';
 
 class ConnectedLocationPanelTemplate{
   final Location location;
-  final LocationConnectionId locationConnectionId;
+  final LocationConnection locationConnection;
 
-  ConnectedLocationPanelTemplate(this.location, this.locationConnectionId);
+  ConnectedLocationPanelTemplate(this.location, this.locationConnection);
 }
