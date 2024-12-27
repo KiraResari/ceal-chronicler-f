@@ -33,4 +33,7 @@ class RenameStringKeyButton extends SmallCircularButton {
   String get labelText => controller.keyExistsAtCurrentPointInTime
       ? "Edit value at this point in time"
       : "Create new key with the following value";
+
+  @override
+  String? get tooltip => labelText;
 }

@@ -1,13 +1,12 @@
-import 'package:ceal_chronicler_f/characters/model/character_repository.dart';
-import 'package:ceal_chronicler_f/incidents/model/incident.dart';
-import 'package:ceal_chronicler_f/locations/model/location_repository.dart';
-
 import '../characters/model/character.dart';
+import '../characters/model/character_repository.dart';
 import '../get_it_context.dart';
+import '../incidents/model/incident.dart';
 import '../incidents/model/incident_repository.dart';
 import '../locations/model/location.dart';
 import '../locations/model/location_connection.dart';
 import '../locations/model/location_connection_repository.dart';
+import '../locations/model/location_repository.dart';
 import '../timeline/model/point_in_time.dart';
 import '../timeline/model/point_in_time_repository.dart';
 import 'chronicle.dart';

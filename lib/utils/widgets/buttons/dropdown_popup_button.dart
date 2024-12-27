@@ -36,4 +36,7 @@ abstract class DropdownPopupButton<T> extends SmallCircularButton {
       },
     );
   }
+
+  @override
+  String? get tooltip => labelText;
 }

@@ -1,16 +1,16 @@
-import 'package:ceal_chronicler_f/locations/model/location_connection_direction.dart';
-import 'package:ceal_chronicler_f/locations/widgets/buttons/edit_location_level_button.dart';
-import 'package:ceal_chronicler_f/utils/widgets/buttons/delete_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../characters/model/character.dart';
 import '../../../characters/widgets/character_button.dart';
 import '../../../utils/string_key.dart';
+import '../../../utils/widgets/buttons/delete_button.dart';
 import '../../../utils/widgets/temporal_entity_view.dart';
 import '../../model/location.dart';
+import '../../model/location_connection_direction.dart';
 import '../../model/location_level.dart';
 import '../buttons/add_location_connection_button.dart';
+import '../buttons/edit_location_level_button.dart';
 import '../buttons/edit_parent_location_button.dart';
 import '../buttons/location_button.dart';
 import '../panels/connected_location_panel_template.dart';
