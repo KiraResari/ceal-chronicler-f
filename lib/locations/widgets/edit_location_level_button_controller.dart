@@ -1,10 +1,10 @@
-import 'package:ceal_chronicler_f/locations/commands/update_location_level_command.dart';
-import 'package:ceal_chronicler_f/locations/model/location_id.dart';
 import 'package:flutter/material.dart';
 
 import '../../commands/command_processor.dart';
 import '../../get_it_context.dart';
+import '../commands/update_location_level_command.dart';
 import '../model/location.dart';
+import '../model/location_id.dart';
 import '../model/location_level.dart';
 import '../model/location_repository.dart';
 
@@ -65,11 +65,10 @@ class EditLocationLevelButtonController {
     );
   }
 
-  void updateLocationLevel(
-      Location locationBeingEdited, LocationLevel? newLocationLevel) {
+  void updateLocationLevel(LocationLevel? newLocationLevel) {
     if (newLocationLevel != null) {
       _commandProcessor.process(
-          UpdateLocationLevelCommand(locationBeingEdited, newLocationLevel));
+          UpdateLocationLevelCommand(presentLocation, newLocationLevel));
     }
   }
 }

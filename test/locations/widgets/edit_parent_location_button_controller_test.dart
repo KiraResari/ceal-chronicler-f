@@ -47,7 +47,7 @@ main() {
       var controller = EditParentLocationButtonController(thisLocation);
 
       List<DropdownMenuEntry<LocationId>> validEntries =
-          controller.validLocations;
+          controller.validEntries;
 
       expect(
         validEntries.map((entry) => entry.value).toList(),
@@ -68,7 +68,7 @@ main() {
       var controller = EditParentLocationButtonController(thisLocation);
 
       List<DropdownMenuEntry<LocationId>> validEntries =
-          controller.validLocations;
+          controller.validEntries;
 
       expect(validEntries, isEmpty);
     },
@@ -87,7 +87,7 @@ main() {
       var controller = EditParentLocationButtonController(thisLocation);
 
       List<DropdownMenuEntry<LocationId>> validEntries =
-          controller.validLocations;
+          controller.validEntries;
 
       expect(validEntries, isEmpty);
     },
@@ -107,7 +107,7 @@ main() {
       var controller = EditParentLocationButtonController(thisLocation);
 
       List<DropdownMenuEntry<LocationId>> validEntries =
-          controller.validLocations;
+          controller.validEntries;
 
       expect(
         validEntries.map((entry) => entry.value).toList(),

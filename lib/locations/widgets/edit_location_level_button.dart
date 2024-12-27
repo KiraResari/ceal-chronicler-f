@@ -10,16 +10,14 @@ class EditLocationLevelButton extends SmallCircularButton {
   final Location locationBeingEdited;
   final EditLocationLevelButtonController controller;
 
-  EditLocationLevelButton(
-    this.locationBeingEdited, {
-    super.key,
-  })  : controller = EditLocationLevelButtonController(locationBeingEdited),
+  EditLocationLevelButton(this.locationBeingEdited, {super.key})
+      : controller = EditLocationLevelButtonController(locationBeingEdited),
         super(icon: Icons.edit);
 
   @override
   void onPressed(BuildContext context) async {
     LocationLevel? selectedValue = await _showSelectionDialog(context);
-    controller.updateLocationLevel(locationBeingEdited, selectedValue);
+    controller.updateLocationLevel(selectedValue);
   }
 
   Future<LocationLevel?> _showSelectionDialog(BuildContext context) {

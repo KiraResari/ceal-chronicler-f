@@ -17,18 +17,18 @@ class EditParentLocationButton extends SmallCircularButton {
   @override
   void onPressed(BuildContext context) async {
     LocationId? selectedValue = await _showSelectionDialog(context);
-    controller.updateParentLocation(locationBeingEdited, selectedValue);
+    controller.updateParentLocation(selectedValue);
   }
 
   Future<LocationId?> _showSelectionDialog(BuildContext context) {
-    List<DropdownMenuEntry<LocationId>> validLocations =
-        controller.validLocations;
+    List<DropdownMenuEntry<LocationId>> validEntries =
+        controller.validEntries;
     return showDialog(
       context: context,
       builder: (BuildContext context) {
         return SelectDropdownDialog<LocationId>(
           initialSelection: locationBeingEdited.parentLocation,
-          entries: validLocations,
+          entries: validEntries,
           labelText: "Select parent location",
         );
       },

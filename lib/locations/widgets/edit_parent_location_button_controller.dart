@@ -1,13 +1,13 @@
-import 'package:ceal_chronicler_f/locations/model/location_level.dart';
-import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
 import 'package:flutter/material.dart';
 
 import '../../commands/command_processor.dart';
 import '../../get_it_context.dart';
 import '../../key_fields/key_field_resolver.dart';
+import '../../timeline/model/point_in_time_repository.dart';
 import '../commands/update_parent_location_command.dart';
 import '../model/location.dart';
 import '../model/location_id.dart';
+import '../model/location_level.dart';
 import '../model/location_repository.dart';
 
 class EditParentLocationButtonController {
@@ -20,16 +20,16 @@ class EditParentLocationButtonController {
 
   EditParentLocationButtonController(this.presentLocation);
 
-  List<DropdownMenuEntry<LocationId>> get validLocations {
+  List<DropdownMenuEntry<LocationId>> get validEntries {
     List<Location> allLocations = _locationRepository.content;
     List<Location> validLocations =
-        allLocations.where((location) => _isValidParent(location)).toList();
+        allLocations.where((location) => _isValid(location)).toList();
     return validLocations
-        .map((location) => _mapLocationToDropdownMenuEntry(location))
+        .map((location) => _mapToDropdownMenuEntry(location))
         .toList();
   }
 
-  bool _isValidParent(Location location) {
+  bool _isValid(Location location) {
     var locationIsActive =
         _pointInTimeRepository.entityIsPresentlyActive(location);
     var locationIsOfHigherLevel =
@@ -38,7 +38,7 @@ class EditParentLocationButtonController {
     return locationIsActive && locationIsOfHigherLevel;
   }
 
-  DropdownMenuEntry<LocationId> _mapLocationToDropdownMenuEntry(
+  DropdownMenuEntry<LocationId> _mapToDropdownMenuEntry(
     Location location,
   ) {
     String name = _keyFieldResolver.getCurrentValue(location.name) ?? "";
@@ -49,13 +49,10 @@ class EditParentLocationButtonController {
     );
   }
 
-  void updateParentLocation(
-    Location locationBeingEdited,
-    LocationId? newParentLocationId,
-  ) {
+  void updateParentLocation(LocationId? newParentLocationId) {
     if (newParentLocationId != null) {
-      _commandProcessor.process(UpdateParentLocationCommand(
-          locationBeingEdited, newParentLocationId));
+      _commandProcessor.process(
+          UpdateParentLocationCommand(presentLocation, newParentLocationId));
     }
   }
 }
