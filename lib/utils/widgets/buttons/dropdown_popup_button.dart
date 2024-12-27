@@ -11,7 +11,7 @@ abstract class DropdownPopupButton<T> extends SmallCircularButton {
 
   const DropdownPopupButton({
     required this.controller,
-    required this.initialSelection,
+    this.initialSelection,
     required this.labelText,
     required super.icon,
     super.key,

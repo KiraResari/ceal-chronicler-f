@@ -13,7 +13,6 @@ class AddLocationConnectionButton extends DropdownPopupButton<LocationId> {
       : super(
           controller: AddLocationConnectionButtonController(
               locationBeingEdited, direction),
-          initialSelection: locationBeingEdited.parentLocation,
           labelText: "Connect location to the ${direction.name}",
           icon: Icons.link,
         );

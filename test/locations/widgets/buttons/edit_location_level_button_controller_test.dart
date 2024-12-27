@@ -3,6 +3,9 @@ import 'package:ceal_chronicler_f/commands/command_processor.dart';
 import 'package:ceal_chronicler_f/get_it_context.dart';
 import 'package:ceal_chronicler_f/key_fields/key_field_resolver.dart';
 import 'package:ceal_chronicler_f/locations/model/location.dart';
+import 'package:ceal_chronicler_f/locations/model/location_connection.dart';
+import 'package:ceal_chronicler_f/locations/model/location_connection_direction.dart';
+import 'package:ceal_chronicler_f/locations/model/location_connection_repository.dart';
 import 'package:ceal_chronicler_f/locations/model/location_level.dart';
 import 'package:ceal_chronicler_f/locations/model/location_repository.dart';
 import 'package:ceal_chronicler_f/locations/widgets/buttons/edit_location_level_button_controller.dart';
@@ -16,6 +19,7 @@ import '../../location_test_utils.dart';
 main() {
   late PointInTimeRepository pointInTimeRepository;
   late LocationRepository locationRepository;
+  late LocationConnectionRepository locationConnectionRepository;
   late LocationTestUtils utils;
 
   setUp(() {
@@ -26,6 +30,9 @@ main() {
     getIt.registerSingleton<PointInTimeRepository>(pointInTimeRepository);
     locationRepository = LocationRepository();
     getIt.registerSingleton<LocationRepository>(locationRepository);
+    locationConnectionRepository = LocationConnectionRepository();
+    getIt.registerSingleton<LocationConnectionRepository>(
+        locationConnectionRepository);
     getIt.registerSingleton<KeyFieldResolver>(KeyFieldResolver());
     getIt.registerSingleton<CommandProcessor>(CommandProcessor());
     utils = LocationTestUtils();
@@ -73,7 +80,7 @@ main() {
 
   test(
     "validMenuEntries should only return location levels lower than those of parents",
-        () {
+    () {
       Location thisLocation = utils.createLocationAndAddToRepository();
       Location parentLocation = utils.createLocationAndAddToRepository(
           locationLevel: LocationLevel.continent);
@@ -91,6 +98,30 @@ main() {
           LocationLevel.locale,
           LocationLevel.notSet,
         ]),
+      );
+    },
+  );
+
+  test(
+    "validMenuEntries should only return location levels equivalent of those of connected locations",
+    () {
+      Location thisLocation = utils.createLocationAndAddToRepository();
+      Location connectedLocation = utils.createLocationAndAddToRepository(
+          locationLevel: LocationLevel.district);
+      locationConnectionRepository.add(LocationConnection(
+        thisLocation.id,
+        LocationConnectionDirection.west,
+        connectedLocation.id,
+      ));
+
+      var controller = EditLocationLevelButtonController(thisLocation);
+
+      List<DropdownMenuEntry<LocationLevel>> validEntries =
+          controller.validMenuEntries;
+
+      expect(
+        validEntries.map((entry) => entry.value).toList(),
+        unorderedEquals([LocationLevel.district, LocationLevel.notSet]),
       );
     },
   );

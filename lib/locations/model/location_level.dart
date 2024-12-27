@@ -35,15 +35,21 @@ enum LocationLevel {
   String get iconAndName => icon + name;
 
   bool isAbove(LocationLevel other) {
-    return this == LocationLevel.notSet || other.value > value;
+    return this == LocationLevel.notSet ||
+        other == LocationLevel.notSet ||
+        other.value > value;
   }
 
   bool isBelow(LocationLevel other) {
-    return this == LocationLevel.notSet || other.value < value;
+    return this == LocationLevel.notSet ||
+        other == LocationLevel.notSet ||
+        other.value < value;
   }
 
   bool isEquivalent(LocationLevel other) {
-    return this == LocationLevel.notSet || other.value == value;
+    return this == LocationLevel.notSet ||
+        other == LocationLevel.notSet ||
+        other.value == value;
   }
 
   static LocationLevel fromJson(String? name) {

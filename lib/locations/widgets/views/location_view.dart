@@ -61,7 +61,10 @@ class LocationView
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildLevelParentAndChildLocationBlock(context),
-        Text("Adjacent Locations", style: style),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text("Adjacent Locations", style: style),
+        ),
         _buildAdjacentLocationsBlock(context),
       ],
     );
@@ -127,39 +130,49 @@ class LocationView
   }
 
   Widget _buildAdjacentLocationsBlock(BuildContext context) {
-    String name = context.watch<LocationViewController>().name;
-    return Table(
-      columnWidths: const <int, TableColumnWidth>{
-        0: IntrinsicColumnWidth(),
-        1: IntrinsicColumnWidth(),
-        2: IntrinsicColumnWidth(),
-      },
-      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-      children: [
-        TableRow(children: [
-          _buildAdjacentLocationBlock(
-              context, LocationConnectionDirection.northwest),
-          _buildAdjacentLocationBlock(
-              context, LocationConnectionDirection.north),
-          _buildAdjacentLocationBlock(
-              context, LocationConnectionDirection.northeast),
-        ]),
-        TableRow(children: [
-          _buildAdjacentLocationBlock(
-              context, LocationConnectionDirection.west),
-          Text(name),
-          _buildAdjacentLocationBlock(
-              context, LocationConnectionDirection.east),
-        ]),
-        TableRow(children: [
-          _buildAdjacentLocationBlock(
-              context, LocationConnectionDirection.southwest),
-          _buildAdjacentLocationBlock(
-              context, LocationConnectionDirection.south),
-          _buildAdjacentLocationBlock(
-              context, LocationConnectionDirection.southeast),
-        ]),
-      ],
+    String name = entity.locationLevel.icon +
+        context.watch<LocationViewController>().name;
+    ThemeData theme = Theme.of(context);
+    TextStyle style = theme.textTheme.titleSmall!;
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Table(
+        columnWidths: const <int, TableColumnWidth>{
+          0: IntrinsicColumnWidth(),
+          1: IntrinsicColumnWidth(),
+          2: IntrinsicColumnWidth(),
+        },
+        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+        border: TableBorder.all(),
+        children: [
+          TableRow(children: [
+            _buildAdjacentLocationBlock(
+                context, LocationConnectionDirection.northwest),
+            _buildAdjacentLocationBlock(
+                context, LocationConnectionDirection.north),
+            _buildAdjacentLocationBlock(
+                context, LocationConnectionDirection.northeast),
+          ]),
+          TableRow(children: [
+            _buildAdjacentLocationBlock(
+                context, LocationConnectionDirection.west),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(name, style: style),
+            ),
+            _buildAdjacentLocationBlock(
+                context, LocationConnectionDirection.east),
+          ]),
+          TableRow(children: [
+            _buildAdjacentLocationBlock(
+                context, LocationConnectionDirection.southwest),
+            _buildAdjacentLocationBlock(
+                context, LocationConnectionDirection.south),
+            _buildAdjacentLocationBlock(
+                context, LocationConnectionDirection.southeast),
+          ]),
+        ],
+      ),
     );
   }
 

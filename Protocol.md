@@ -1724,10 +1724,15 @@
     * That took a bit, but now it looks nice
   * Now all that's left is adding the functionality to break connections
     * That now works too
+  * With that, sibling levels are now basically done
+* However, I have still found some minor issues
+* For one, it should now also not be possible to select a location level that is different from the adjacent locations (or not set)
+  * I now fixed that
 
 # TODO
 
 * Inactive adjacent locations should not be displayed 
+* Selectable Location Level should be constricted by adjacent locations
 * Issue: Messages when deleting keys use the ID of the point in time instead of the name
 
 # User Story
