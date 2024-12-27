@@ -160,6 +160,7 @@ abstract class TemporalEntityView<T extends TemporalEntity,
     if (entity.lastAppearance != null) {
       lastAppearanceBlockElements.add(DeleteButton(
         onPressedFunction: () => _onDeleteLastAppearanceButtonPressed(context),
+        tooltip: "Delete last appearance",
       ));
     }
     return Row(children: lastAppearanceBlockElements);

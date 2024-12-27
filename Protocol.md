@@ -1714,6 +1714,8 @@
   * That will require modifying the `TemporalEntityView` in some way, but it can definitely be done
   * I now managed to do that
 * Next, I still have to add that the parent location can be removed
+  * Right, that now works too
+* With that, I think I am now ready to proceed to sibling locations
 
 # TODO
 
@@ -1796,10 +1798,10 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
   - [ ] adjacent locations
   - [x] by clicking on linked locations, you can jump to them
     - [x] Buttons of locations that do not presently exist should not be displayed
-  - [ ] parent and child locations
+  - [x] parent and child locations
     - [x] parent location is being displayed
     - [x] parent location can be edited
-    - [ ] parent location can be removed
+    - [x] parent location can be removed
     - [x] child locations are being displayed
 - [x] can be saved and loaded
 - [x] Characters at a location at a time are displayed

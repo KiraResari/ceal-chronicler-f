@@ -1,4 +1,5 @@
 import 'package:ceal_chronicler_f/locations/widgets/buttons/edit_location_level_button.dart';
+import 'package:ceal_chronicler_f/utils/widgets/buttons/delete_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -52,7 +53,8 @@ class LocationView
   Widget _buildLinkedLocationsColumn(BuildContext context) {
     List<TableRow> children = [
       buildTableRow(context, "Location level", _buildLocationLevel(context)),
-      buildTableRow(context, "Parent location", _buildParentLocation(context)),
+      buildTableRow(
+          context, "Parent location", _buildParentLocationPanel(context)),
       buildTableRow(context, "Child Locations", _buildChildLocations(context)),
     ];
     ThemeData theme = Theme.of(context);
@@ -77,17 +79,29 @@ class LocationView
     );
   }
 
-  Widget _buildParentLocation(BuildContext context) {
+  Widget _buildParentLocationPanel(BuildContext context) {
     Location? parentLocation =
         context.watch<LocationViewController>().parentLocation;
+    var children = [
+      parentLocation == null
+          ? const Text("none")
+          : LocationButton(parentLocation),
+      EditParentLocationButton(entity),
+    ];
+    if (parentLocation != null) {
+      children.add(DeleteButton(
+        onPressedFunction: () => _onDeleteParentLocationPressed(context),
+        tooltip: "Delete parent location",
+      ));
+    }
     return Row(
-      children: [
-        parentLocation == null
-            ? const Text("none")
-            : LocationButton(parentLocation),
-        EditParentLocationButton(entity),
-      ],
+      children: children,
     );
+  }
+
+  void _onDeleteParentLocationPressed(BuildContext context) {
+    var controller = context.read<LocationViewController>();
+    controller.deleteParentLocation();
   }
 
   Widget _buildChildLocations(BuildContext context) {

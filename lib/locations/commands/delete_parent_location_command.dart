@@ -5,25 +5,23 @@ import '../model/location.dart';
 import '../model/location_id.dart';
 import '../model/location_repository.dart';
 
-class UpdateParentLocationCommand extends Command {
+class DeleteParentLocationCommand extends Command {
   final _locationRepository = getIt.get<LocationRepository>();
   final _keyFieldResolver = getIt.get<KeyFieldResolver>();
   final Location _locationBeingEdited;
-  final LocationId? _newParentLocationId;
   LocationId? _oldParentLocationId;
 
-  UpdateParentLocationCommand(
-      this._locationBeingEdited, this._newParentLocationId);
+  DeleteParentLocationCommand(this._locationBeingEdited);
 
   @override
   void execute() {
     _oldParentLocationId = _locationBeingEdited.parentLocation;
-    _locationBeingEdited.parentLocation = _newParentLocationId;
+    _locationBeingEdited.parentLocation = null;
   }
 
   @override
   String get executeMessage =>
-      "Changed parent of location $_locationNameOrNothing from ${_getLocationIdNameOrUnknown(_oldParentLocationId)} to ${_getLocationIdNameOrUnknown(_newParentLocationId)}";
+      "Deleted parent of location $_locationNameOrNothing (was: ${_getLocationIdNameOrUnknown(_oldParentLocationId)})";
 
   @override
   void undo() {
@@ -32,7 +30,7 @@ class UpdateParentLocationCommand extends Command {
 
   @override
   String get undoMessage =>
-      "Undid change of parent of location $_locationNameOrNothing from ${_getLocationIdNameOrUnknown(_oldParentLocationId)} to ${_getLocationIdNameOrUnknown(_newParentLocationId)}";
+      "Restored parent of location $_locationNameOrNothing to ${_getLocationIdNameOrUnknown(_oldParentLocationId)}";
 
   String get _locationNameOrNothing {
     String? name = _keyFieldResolver.getCurrentValue(_locationBeingEdited.name);
