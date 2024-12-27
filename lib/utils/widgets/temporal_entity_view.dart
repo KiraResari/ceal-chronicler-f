@@ -39,22 +39,38 @@ abstract class TemporalEntityView<T extends TemporalEntity,
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildTitle(context),
-        _buildEntityTable(context),
-        ReturnToOverviewViewButton(),
+        _buildTitleRow(context),
+        _buildBody(context),
       ],
     );
   }
 
-  Widget _buildTitle(BuildContext context) {
+  Widget _buildTitleRow(BuildContext context) {
     ThemeData theme = Theme.of(context);
     TextStyle style = theme.textTheme.titleMedium!;
     String name = context.watch<C>().name;
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Text(name, style: style),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ReturnToOverviewViewButton(),
+          Text(name, style: style),
+        ],
+      ),
     );
   }
+
+  Widget _buildBody(BuildContext context) {
+    List<Widget> columns = [_buildEntityTable(context)];
+    columns.addAll(buildAdditionalColumns(context));
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: columns,
+    );
+  }
+
+  List<Widget> buildAdditionalColumns(BuildContext context) => [];
 
   Table _buildEntityTable(BuildContext context) {
     return Table(

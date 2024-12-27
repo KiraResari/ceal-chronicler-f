@@ -8,7 +8,7 @@ import '../view/view_processor.dart';
 class ReturnToOverviewViewButton extends MediumSquareButton {
   final _viewProcessor = getIt.get<ViewProcessor>();
 
-  ReturnToOverviewViewButton({super.key}) : super(icon: Icons.arrow_back);
+  ReturnToOverviewViewButton({super.key}) : super(icon: Icons.arrow_upward);
 
   @override
   void onPressed(BuildContext context) {
