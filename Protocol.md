@@ -1740,6 +1740,22 @@
 
 [Time elapsed so far: 133.25 hours]
 
+# 28-Dec-2024
+
+* Now continuing with this
+* I tried to install the Ceal Chronicler on my cellphone again, but got a weird error, which seems to stem from me using a Java version that is too new
+  * Okay, this is getting ridiculous! I am just slipping from one error into the next here!
+  * I now created a new flutter project, and can install that one on my cellphone just fine
+  * Right, so maybe I can merge the parts that work from there in a sensible way
+  * Okay, it took a lot of back and forth, but in the end I managed to get it working again
+  * Looking at the git diff, here's what I changed:
+    * `android/app/build.gradle` got a complete makeover; I pretty much copied it from the new flutter project
+    * "package="com.tri_tail.ceal_chronicler_f"" was removed from the three files `android/app/src/*/AndroidManifest.xml` 
+    * In the `android/build.gradle`, the "buildscript" block was dropped
+    * In the `android/gradle.properties`, the first line was changed to `org.gradle.jvmargs=-Xmx4G -XX:MaxMetaspaceSize=2G -XX:+HeapDumpOnOutOfMemoryError`
+    * In the `android/gradle/wrapper/gradle-wrapper.properties`, the `distributionUrl` versopm was changed to 8.3
+    * 
+
 # TODO
 
 * Implement location sorting everywhere
