@@ -1,8 +1,13 @@
 import '../../commands/command.dart';
-import '../key_field.dart';
+import '../../get_it_context.dart';
+import '../../timeline/model/point_in_time.dart';
 import '../../timeline/model/point_in_time_id.dart';
+import '../../timeline/model/point_in_time_repository.dart';
+import '../key_field.dart';
 
 class AddOrUpdateKeyCommand<T> extends Command {
+  final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
+
   final KeyField<T?> keyField;
   final PointInTimeId pointInTimeId;
   final T? value;
@@ -19,9 +24,9 @@ class AddOrUpdateKeyCommand<T> extends Command {
   @override
   String get executeMessage {
     if (previousValue == null) {
-      return "Added key with value $value at $pointInTimeId";
+      return "Added key with value $value at point in time '$_pointInTimeNameOrUnknown'";
     }
-    return "Changed value of key at $pointInTimeId from $previousValue to $value";
+    return "Changed value of key at point in time '$_pointInTimeNameOrUnknown' from $previousValue to $value";
   }
 
   @override
@@ -36,8 +41,13 @@ class AddOrUpdateKeyCommand<T> extends Command {
   @override
   String get undoMessage {
     if (previousValue == null) {
-      return "Undid adding of key with value $value at $pointInTimeId";
+      return "Undid adding of key with value $value at point in time '$_pointInTimeNameOrUnknown'";
     }
-    return "Undid changing of value of key at $pointInTimeId from $previousValue to $value";
+    return "Undid changing of value of key at point in time '$_pointInTimeNameOrUnknown'from $previousValue to $value";
+  }
+
+  String get _pointInTimeNameOrUnknown {
+    PointInTime? point = _pointInTimeRepository.get(pointInTimeId);
+    return point != null ? point.name : "unknown";
   }
 }

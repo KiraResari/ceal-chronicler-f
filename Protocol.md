@@ -1774,10 +1774,18 @@
   * How about adding a `LocationSorter` class that is located below the repository level?
   * Yes, and while that requires me to add two extra lines (three if you count the import) everywhere that I want to sort the locations, I think all things considered, this is the most flexible approach
   * So this works now
+* Next, status bar messages when deleting keys use the ID of the point in time instead of the name
+  * That should be about the `DeleteKeyCommand`
+  * Okay, this is a two-fold issue, because this not only refers the point in time, but also the deleted value, and while the former is always a `PointInTimeId`, the latter is a generic type, so it might be more complicates
+  * I should definitely be able to name the point in time though
+  * Okay, now that works nicely for the points in times, and it works great for string key fields like the name as well
+  * However, present locations for example still return IDs for the value
+    * Thinking about that, I don't think there's a lot that I can do about that, since what is saved in that key field is literally a location ID in this case, and may be literally anything else in other cases
+    * I could theoretically write a massive resolver for that, but I don't think doing that just for the status message is worth it 
 
 # TODO
 
-* Issue: Messages when deleting keys use the ID of the point in time instead of the name
+* 
 
 # User Story
 
