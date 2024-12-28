@@ -29,12 +29,15 @@ class AddLocationConnectionButtonController
   }
 
   bool _isValid(Location location) {
+    var locationIsDifferent = location != presentLocation;
     var locationIsActive =
         _pointInTimeRepository.entityIsPresentlyActive(location);
     var locationIsOfEquivalentLevel =
         location.locationLevel == LocationLevel.notSet ||
             location.locationLevel.isEquivalent(presentLocation.locationLevel);
-    return locationIsActive && locationIsOfEquivalentLevel;
+    return locationIsDifferent &&
+        locationIsActive &&
+        locationIsOfEquivalentLevel;
   }
 
   @override

@@ -1759,11 +1759,14 @@
 * Right, now back to the issue at hand: making the app usable on mobile too, because right now it overflows like dragon
   * Alright, now while it is still certainly not "designed for mobile", at the very least it doesn't overflow anymore (at least not in the most important places), so I can now show it to people wherever I go
   * Making a version that is actually mobile-friendly is not something that I have time for right now though, so I'll leave it at "mobile-passable"
+* Since I don't want to start anything big today anymore since it's already late, let's take care of some minor issues that I found along the way
+* First, locations should not be allowed to connect to themselves
+  * While there might be edge cases where this makes sense, in most cases this just clutters up the selection menu with an extra unneeded option, so let's get rid of it
+  * I now did that
 
 # TODO
 
 * Implement location sorting everywhere
-* Locations should not be allowed to connect to themselves
 * Issue: Messages when deleting keys use the ID of the point in time instead of the name
 
 # User Story
