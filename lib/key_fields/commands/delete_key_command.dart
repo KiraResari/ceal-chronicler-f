@@ -23,7 +23,7 @@ class DeleteKeyCommand<T> extends Command {
 
   @override
   String get executeMessage =>
-      "Deleted key at point in time '$_pointInTimeNameOrUnknown' with value '$deletedValue'";
+      "Deleted key at point in time '$_pointInTimeNameOrUnknown' with value '$_prettifyValue'";
 
   @override
   void undo() {
@@ -37,10 +37,21 @@ class DeleteKeyCommand<T> extends Command {
 
   @override
   String get undoMessage =>
-      "Undid creation of key at point in time '$_pointInTimeNameOrUnknown' with value '$deletedValue'";
+      "Undid creation of key at point in time '$_pointInTimeNameOrUnknown' with value '$_prettifyValue'";
 
   String get _pointInTimeNameOrUnknown {
     PointInTime? point = _pointInTimeRepository.get(pointInTimeId);
     return point != null ? point.name : "unknown";
+  }
+
+  String get _prettifyValue {
+    T? value = deletedValue;
+    if(value == null){
+      return "";
+    }
+    if(value is String){
+      return value;
+    }
+    return "$T($value)";
   }
 }

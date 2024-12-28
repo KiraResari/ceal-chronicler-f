@@ -1782,6 +1782,10 @@
   * However, present locations for example still return IDs for the value
     * Thinking about that, I don't think there's a lot that I can do about that, since what is saved in that key field is literally a location ID in this case, and may be literally anything else in other cases
     * I could theoretically write a massive resolver for that, but I don't think doing that just for the status message is worth it 
+    * But at least I can somehow prettify it a little
+* This is as far as I'm getting with this today
+
+[Time elapsed so far: 137.5 hours]
 
 # TODO
 
