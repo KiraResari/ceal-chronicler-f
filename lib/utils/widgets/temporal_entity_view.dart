@@ -69,10 +69,19 @@ abstract class TemporalEntityView<T extends TemporalEntity,
       )
     ];
     columns.addAll(buildAdditionalColumns(context));
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: columns,
+    ScrollController controller = ScrollController();
+
+    return Scrollbar(
+      controller: controller,
+      child: SingleChildScrollView(
+        controller: controller,
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: columns,
+        ),
+      ),
     );
   }
 

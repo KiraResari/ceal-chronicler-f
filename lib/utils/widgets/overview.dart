@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:ceal_chronicler_f/utils/widgets/title_medium.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -44,9 +46,13 @@ abstract class Overview<T, C extends ChangeNotifier> extends StatelessWidget {
   }
 
   Widget _buildScrollList(BuildContext context) {
+    int scrollListHeightOffset =
+        Platform.isAndroid || Platform.isIOS ? 275 : 225;
+
     return ConstrainedBox(
-      constraints:
-          BoxConstraints(maxHeight: MediaQuery.of(context).size.height - 225),
+      constraints: BoxConstraints(
+          maxHeight:
+              MediaQuery.of(context).size.height - scrollListHeightOffset),
       child: SingleChildScrollView(
         child: Column(
           children: [

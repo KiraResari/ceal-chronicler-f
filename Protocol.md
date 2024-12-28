@@ -1754,11 +1754,16 @@
     * In the `android/build.gradle`, the "buildscript" block was dropped
     * In the `android/gradle.properties`, the first line was changed to `org.gradle.jvmargs=-Xmx4G -XX:MaxMetaspaceSize=2G -XX:+HeapDumpOnOutOfMemoryError`
     * In the `android/gradle/wrapper/gradle-wrapper.properties`, the `distributionUrl` versopm was changed to 8.3
-    * 
+    * `android/app/build.gradle` got a complete makeover; I pretty much copied it from the new flutter project
+    * In the `pubspec.yaml`, I updated all dependencies to the latest version, and the environment to ^3.6.0
+* Right, now back to the issue at hand: making the app usable on mobile too, because right now it overflows like dragon
+  * Alright, now while it is still certainly not "designed for mobile", at the very least it doesn't overflow anymore (at least not in the most important places), so I can now show it to people wherever I go
+  * Making a version that is actually mobile-friendly is not something that I have time for right now though, so I'll leave it at "mobile-passable"
 
 # TODO
 
 * Implement location sorting everywhere
+* Locations should not be allowed to connect to themselves
 * Issue: Messages when deleting keys use the ID of the point in time instead of the name
 
 # User Story
