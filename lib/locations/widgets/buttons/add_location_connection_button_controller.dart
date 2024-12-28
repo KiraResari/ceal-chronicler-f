@@ -8,12 +8,14 @@ import '../../model/location_connection_direction.dart';
 import '../../model/location_id.dart';
 import '../../model/location_level.dart';
 import '../../model/location_repository.dart';
+import '../../model/location_sorter.dart';
 
 class AddLocationConnectionButtonController
     extends DropdownPopupButtonController<LocationId> {
   final _locationRepository = getIt.get<LocationRepository>();
   final _keyFieldResolver = getIt.get<KeyFieldResolver>();
   final _pointInTimeRepository = getIt.get<PointInTimeRepository>();
+  final _sorter = getIt.get<LocationSorter>();
 
   final Location presentLocation;
   final LocationConnectionDirection direction;
@@ -23,6 +25,7 @@ class AddLocationConnectionButtonController
   @override
   List<LocationId> get validEntries {
     List<Location> allLocations = _locationRepository.content;
+    allLocations.sort(_sorter.sort);
     List<Location> validLocations =
         allLocations.where((location) => _isValid(location)).toList();
     return validLocations.map((location) => location.id).toList();

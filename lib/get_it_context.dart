@@ -10,6 +10,7 @@ import 'io/file/file_processor.dart';
 import 'key_fields/key_field_resolver.dart';
 import 'locations/model/location_connection_repository.dart';
 import 'locations/model/location_repository.dart';
+import 'locations/model/location_sorter.dart';
 import 'message_bar/message_bar_state.dart';
 import 'timeline/model/point_in_time_repository.dart';
 import 'view/view_processor.dart';
@@ -28,6 +29,7 @@ void initializeGetItContext() {
   getIt.registerSingleton<MessageBarState>(MessageBarState());
 
   getIt.registerSingleton<KeyFieldResolver>(KeyFieldResolver());
+  getIt.registerSingleton<LocationSorter>(LocationSorter());
 
   getIt.registerSingleton<ChronicleCodec>(ChronicleCodec());
   getIt.registerSingleton<FileAdapter>(FileAdapter());

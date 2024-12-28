@@ -8,6 +8,7 @@ import 'package:ceal_chronicler_f/key_fields/key_field_resolver.dart';
 import 'package:ceal_chronicler_f/locations/model/location.dart';
 import 'package:ceal_chronicler_f/locations/model/location_id.dart';
 import 'package:ceal_chronicler_f/locations/model/location_repository.dart';
+import 'package:ceal_chronicler_f/locations/model/location_sorter.dart';
 import 'package:ceal_chronicler_f/locations/widgets/panels/location_id_key_field_panel_controller.dart';
 import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
@@ -31,6 +32,7 @@ main() {
     getIt.registerSingleton<PointInTimeRepository>(pointInTimeRepository);
     keyFieldResolver = KeyFieldResolver();
     getIt.registerSingleton<KeyFieldResolver>(keyFieldResolver);
+    getIt.registerSingleton<LocationSorter>(LocationSorter());
     getIt.registerSingleton<CommandHistory>(CommandHistory());
     getIt.registerSingleton<MessageBarState>(MessageBarState());
     getIt.registerSingleton<FileProcessor>(FileProcessorMockLite());

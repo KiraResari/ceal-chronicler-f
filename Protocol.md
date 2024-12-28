@@ -1763,10 +1763,20 @@
 * First, locations should not be allowed to connect to themselves
   * While there might be edge cases where this makes sense, in most cases this just clutters up the selection menu with an extra unneeded option, so let's get rid of it
   * I now did that
+* Next, I want to implement location sorting... well, ideally everywhere
+  * The best location to do that would be the `LocationRepository`, but I'm actually not sure if that would have some weird and unintended side effect
+  * Welp, let's just try it and see what happens! 
+  * Mmh, yeah, I figured this wasn't going to work
+  * The main issue is that I want to sort by name, and in order to get a location's current name, I need the `KeyFieldResolver`,, which depends on the `PointInTimeRepository`
+  * So while it would probably work, putting it into the `LocationRepository` would start breaking the architecture
+  * So let's not do that
+  * Right then, how do I then do that in a way that does not break the architecture?
+  * How about adding a `LocationSorter` class that is located below the repository level?
+  * Yes, and while that requires me to add two extra lines (three if you count the import) everywhere that I want to sort the locations, I think all things considered, this is the most flexible approach
+  * So this works now
 
 # TODO
 
-* Implement location sorting everywhere
 * Issue: Messages when deleting keys use the ID of the point in time instead of the name
 
 # User Story

@@ -5,6 +5,7 @@ import '../../../key_fields/widgets/key_field_controller.dart';
 import '../../model/location.dart';
 import '../../model/location_id.dart';
 import '../../model/location_repository.dart';
+import '../../model/location_sorter.dart';
 
 class LocationIdKeyFieldPanelController extends KeyFieldController<LocationId?> {
   LocationIdKeyFieldPanelController(super.keyField);
@@ -13,6 +14,7 @@ class LocationIdKeyFieldPanelController extends KeyFieldController<LocationId?> 
   static final DropdownMenuEntry<LocationId> unknownEntry =
       DropdownMenuEntry<LocationId>(value: unknownLocationId, label: "unknown");
   final _locationRepository = getIt.get<LocationRepository>();
+  final _sorter = getIt.get<LocationSorter>();
 
   Location? get presentLocation {
     if (currentValue != null) {
@@ -23,7 +25,7 @@ class LocationIdKeyFieldPanelController extends KeyFieldController<LocationId?> 
 
   List<DropdownMenuEntry<LocationId>> get validLocationEntries {
     List<Location> validLocations = _validLocations;
-
+    validLocations.sort(_sorter.sort);
     List<DropdownMenuEntry<LocationId>> locationEntries = validLocations
         .map((location) => _mapLocationToDropdownMenuEntry(location))
         .toList();

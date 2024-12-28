@@ -8,6 +8,7 @@ import 'package:ceal_chronicler_f/locations/model/location_connection_repository
 import 'package:ceal_chronicler_f/locations/model/location_id.dart';
 import 'package:ceal_chronicler_f/locations/model/location_level.dart';
 import 'package:ceal_chronicler_f/locations/model/location_repository.dart';
+import 'package:ceal_chronicler_f/locations/model/location_sorter.dart';
 import 'package:ceal_chronicler_f/locations/widgets/buttons/add_location_connection_button_controller.dart';
 import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
@@ -34,6 +35,7 @@ main() {
     getIt.registerSingleton<LocationConnectionRepository>(
         locationConnectionRepository);
     getIt.registerSingleton<KeyFieldResolver>(KeyFieldResolver());
+    getIt.registerSingleton<LocationSorter>(LocationSorter());
     getIt.registerSingleton<CommandProcessor>(CommandProcessor());
     utils = LocationTestUtils();
   });
