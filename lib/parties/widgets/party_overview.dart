@@ -1,3 +1,4 @@
+import 'package:ceal_chronicler_f/parties/widgets/add_party_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/widgets/overview.dart';
@@ -32,6 +33,6 @@ class PartyOverview
 
   @override
   Widget buildAddButton() {
-    return const Text("Add Button");
+    return AddPartyButton();
   }
 }

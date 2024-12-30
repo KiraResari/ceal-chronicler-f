@@ -1895,10 +1895,11 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 
 ### Parties
 
-- [ ] should exist as temporal entities
+- [x] should exist as temporal entities
   - [ ] have an editable name
   - [ ] have a first appearance
   - [ ] have a last appearance
+  - [x] can be added
 
 ### Technical
 
