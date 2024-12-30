@@ -1907,12 +1907,21 @@
     * The main problem is that I built the `AddOrUpdatePartyAffiliationCommand` in such a way that it requires a `Character` and a `Party` object each, but at the point it is executed we have neither
     * We should be able to fetch em though
     * I _think_ it now works?
+    * Not really, no
+    * Sadly, I'm out of time to debug this now
+    * That's a shame. I really had hoped I could bring this to a clean finish this year
 
+* This is as far as I'm getting with this this year
 
+* Don't even have time for a retrospective =>,<=
+
+[Time elapsed so far: 147.25 hours]
 
 # TODO
 
-* 
+* Debug: Adding characters to parties totally messes up their locations
+* Character locations should not be editable while they're in parties
+* Parties should have editable locations while characters are in them
 
 # User Story
 
