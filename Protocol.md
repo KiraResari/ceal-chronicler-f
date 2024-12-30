@@ -1798,6 +1798,34 @@
   * In essence, they are just normal temporal entities without any special properties, so this part might be pretty easy
   * Right, that's done now
   * It was straightforward, but still took a bit of time
+* Good, so after that now comes the more difficult part
+  * The key point here is specifying how parties and characters should behave in interaction with one another
+  * Basically, a party should allow characters to travel as a group
+    * That means that a party should display all characters in it, and allow for a change in location which then affects all characters
+    * This also means we need functionality to add or remove characters from a party
+    * The tricky thing here is how it should work with regards to characters who already have a set of locations they travel around, and then are added to a party, and possibly removed from it
+      * One way would be saying that the party location overrides the character locations, but I think that would result in unintuitive behavior where removing a character from a party would change its location
+      * The alternate approach would be letting the party modify the character's locations directly
+        * That would mean that the party itself has no location, which makes sense on a conceptual level since if no one is in a party, then the party is effectively nowhere, and as long as exactly one character is in a party, then the party is where that character is
+        * That would mean also mean that all characters in a party are always in the same place, which is kinda the point of parties
+      * That latter approach sounds like what we want here
+    * Now let's see what that necessiates
+      * First off, the party does not have a location field in its data model
+        * The party's displayed location is determined by its characters
+          * If no character is in a party, the party's location is unknown
+          * If multiple characters are in a party, the locations of these characters should be in sync, so the party can just display the location of the first character that is presently within the party
+      * Second, since a party dictates a character's location, it makes sense that a character can only be inside one party at a time, which means party affiliation is something that should be saved in the character
+      * Character adding behavior:
+        * When the first character is added to a party, nothing special needs to happen
+        * When subsequent characters are added to the party, the locations of those characters starting from their joining the party should be overridden by the party's locations
+          * Undoing this might be a bit tricky
+      * When a character is removed from a party, nothing special needs to happen; its locations stay the way that the party modified them
+      * Once a party has at least one active character, its location should become editable
+        * Editing a party's location should edit it for all active characters 
+  * Okay, that is pretty complex, but I think I can do it if I do it step by step
+* First, let's focus on adding characters to parties without worrying about any of that location garbage
+  * That should actually be very similar to adding characters to locations
+  * 
 
 
 
@@ -1870,6 +1898,8 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [x] Characters can be unassigned from locations
 - [x] You can jump to the location from the character
   - [x] If a location does not exist at the current point, it is displayed as a greyed-out button
+- [ ] can be added to a party
+- [ ] can be removed from a party
 
 
 ### Locations
@@ -1902,6 +1932,10 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
   - [x] have a first appearance
   - [x] have a last appearance
   - [x] can be added
+- [ ] displays all characters in it
+- [ ] displays present location if at least one active character is in it
+- [ ] allows for a change in location which then affects all active characters as long as at least one characters is active
+- [ ] displays present location as unknown if no active characters are in it 
 
 ### Technical
 
