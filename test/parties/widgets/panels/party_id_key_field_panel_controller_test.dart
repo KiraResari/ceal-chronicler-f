@@ -5,11 +5,13 @@ import 'package:ceal_chronicler_f/commands/command_processor.dart';
 import 'package:ceal_chronicler_f/get_it_context.dart';
 import 'package:ceal_chronicler_f/io/file/file_processor.dart';
 import 'package:ceal_chronicler_f/key_fields/key_field_resolver.dart';
+import 'package:ceal_chronicler_f/locations/model/location_repository.dart';
 import 'package:ceal_chronicler_f/locations/model/location_sorter.dart';
 import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
 import 'package:ceal_chronicler_f/parties/model/party.dart';
 import 'package:ceal_chronicler_f/parties/model/party_id.dart';
 import 'package:ceal_chronicler_f/parties/model/party_repository.dart';
+import 'package:ceal_chronicler_f/parties/party_location_resolver.dart';
 import 'package:ceal_chronicler_f/parties/widgets/panels/party_id_key_field_panel_controller.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
@@ -42,6 +44,9 @@ main() {
     partyRepository = PartyRepository();
     getIt.registerSingleton<CharacterRepository>(characterRepository);
     getIt.registerSingleton<PartyRepository>(partyRepository);
+    getIt.registerSingleton<LocationRepository>(LocationRepository());
+    getIt.registerSingleton<PartyLocationResolver>(PartyLocationResolver());
+
   });
 
   test(
@@ -51,7 +56,7 @@ main() {
       var character = Character(presentPointId);
       var party = Party(presentPointId);
       partyRepository.add(party);
-      var controller = PartyIdKeyFieldPanelController(character.party);
+      var controller = PartyIdKeyFieldPanelController(character, character.party);
 
       List<DropdownMenuEntry<PartyId>> partyEntries =
           controller.validPartyEntries;
@@ -73,7 +78,7 @@ main() {
       var character = Character(presentPointId);
       var party = Party(futurePoint.id);
       partyRepository.add(party);
-      var controller = PartyIdKeyFieldPanelController(character.party);
+      var controller = PartyIdKeyFieldPanelController(character, character.party);
 
       List<DropdownMenuEntry<PartyId>> partyEntries =
           controller.validPartyEntries;
@@ -92,7 +97,7 @@ main() {
       var party = Party(pastPoint.id);
       party.lastAppearance = pastPoint.id;
       partyRepository.add(party);
-      var controller = PartyIdKeyFieldPanelController(character.party);
+      var controller = PartyIdKeyFieldPanelController(character, character.party);
 
       List<DropdownMenuEntry<PartyId>> partyEntries =
           controller.validPartyEntries;
@@ -106,7 +111,7 @@ main() {
     () {
       PointInTimeId presentPointId = pointInTimeRepository.activePointInTime.id;
       var character = Character(presentPointId);
-      var controller = PartyIdKeyFieldPanelController(character.party);
+      var controller = PartyIdKeyFieldPanelController(character, character.party);
       var newParty = Party(presentPointId);
       partyRepository.add(newParty);
 
@@ -124,7 +129,7 @@ main() {
       var character = Character(presentPointId);
       var partyId = PartyId();
       character.party.addOrUpdateKeyAtTime(partyId, presentPointId);
-      var controller = PartyIdKeyFieldPanelController(character.party);
+      var controller = PartyIdKeyFieldPanelController(character, character.party);
 
       controller.updateParty(PartyIdKeyFieldPanelController.nonePartyId);
 
@@ -142,7 +147,7 @@ main() {
       var character = Character(pastPoint.id);
       var partyId = PartyId();
       character.party.addOrUpdateKeyAtTime(partyId, pastPoint.id);
-      var controller = PartyIdKeyFieldPanelController(character.party);
+      var controller = PartyIdKeyFieldPanelController(character, character.party);
 
       controller.updateParty(PartyIdKeyFieldPanelController.nonePartyId);
 

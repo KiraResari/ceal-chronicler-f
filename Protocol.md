@@ -1901,6 +1901,13 @@
 
       * I think that works now
 
+  * Right then, the last thing for this year will be adding that command to the `PartyIdKeyFieldPanelController`
+
+    * Okay, that is regrettably not as easy, and I just had to revert a bunch of changes because they caused tests to fail in an incomprehensible way
+    * The main problem is that I built the `AddOrUpdatePartyAffiliationCommand` in such a way that it requires a `Character` and a `Party` object each, but at the point it is executed we have neither
+    * We should be able to fetch em though
+    * I _think_ it now works?
+
 
 
 # TODO

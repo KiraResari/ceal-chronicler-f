@@ -29,7 +29,7 @@ class CharacterView
     return [
       buildTableRow(context, "Present Location",
           LocationIdKeyFieldPanel(locationIdKeyField)),
-      buildTableRow(context, "Party", PartyIdKeyFieldPanel(partyIdKeyField)),
+      buildTableRow(context, "Party", PartyIdKeyFieldPanel(entity, partyIdKeyField)),
     ];
   }
 }

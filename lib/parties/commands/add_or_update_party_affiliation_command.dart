@@ -17,7 +17,7 @@ class AddOrUpdatePartyAffiliationCommand extends Command {
   final _keyFieldResolver = getIt.get<KeyFieldResolver>();
   final PointInTimeId pointId;
   final Character character;
-  final Party party;
+  final Party? party;
   PartyId? previousPartyId;
   bool previousKeyExisted = false;
   String? previousLocationKeys;
@@ -30,13 +30,19 @@ class AddOrUpdatePartyAffiliationCommand extends Command {
       previousPartyId = _keyFieldResolver.getValueAt(character.party, pointId);
       previousKeyExisted = true;
     }
-    var partyLocationMapBeforeAddingCharacter =
-        _partyLocationResolver.getLocationMapOfParty(party);
-    character.party.addOrUpdateKeyAtTime(party.id, pointId);
+    Map<PointInTimeId, LocationId?> partyLocationMapBeforeAddingCharacter =
+        partyLocationMap;
+    character.party.addOrUpdateKeyAtTime(party?.id, pointId);
     if (partyLocationMapBeforeAddingCharacter.isNotEmpty) {
       previousLocationKeys = character.presentLocation.toJsonString();
       imprintPartyLocationsOnCharacter(partyLocationMapBeforeAddingCharacter);
     }
+  }
+
+  Map<PointInTimeId, LocationId?> get partyLocationMap {
+    return party == null
+          ? {}
+          : _partyLocationResolver.getLocationMapOfParty(party!);
   }
 
   void imprintPartyLocationsOnCharacter(
@@ -45,7 +51,7 @@ class AddOrUpdatePartyAffiliationCommand extends Command {
     for (var entry in partyLocationMap.entries) {
       PartyId? characterPartyAffiliationAtEntry =
           _keyFieldResolver.getValueAt(character.party, entry.key);
-      if (characterPartyAffiliationAtEntry == party.id) {
+      if (party != null && characterPartyAffiliationAtEntry == party!.id) {
         character.presentLocation.addOrUpdateKeyAtTime(entry.value, entry.key);
       }
     }
@@ -58,7 +64,7 @@ class AddOrUpdatePartyAffiliationCommand extends Command {
   @override
   void undo() {
     if (previousKeyExisted) {
-      character.party.addOrUpdateKeyAtTime(party.id, pointId);
+      character.party.addOrUpdateKeyAtTime(party?.id, pointId);
     } else {
       character.party.deleteKeyAtTime(pointId);
     }
@@ -75,8 +81,12 @@ class AddOrUpdatePartyAffiliationCommand extends Command {
   String get characterName =>
       _keyFieldResolver.getCurrentValue(character.name) ?? "unknown";
 
-  String get partyName =>
-      _keyFieldResolver.getCurrentValue(party.name) ?? "unknown";
+  String get partyName {
+    if(party == null){
+      return "none";
+    }
+    return _keyFieldResolver.getCurrentValue(party!.name) ?? "unknown";
+  }
 
   String get pointName {
     PointInTime? point = _pointInTimeRepository.get(pointId);

@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
 
+import '../../../characters/model/character.dart';
 import '../../../key_fields/party_id_key_field.dart';
 import '../../../key_fields/widgets/next_key_button.dart';
 import '../../../key_fields/widgets/previous_key_button.dart';
@@ -13,13 +14,14 @@ import 'party_id_key_field_panel_controller.dart';
 
 class PartyIdKeyFieldPanel extends StatelessWidget {
   final PartyIdKeyField keyField;
+  final Character character;
 
-  const PartyIdKeyFieldPanel(this.keyField, {super.key});
+  const PartyIdKeyFieldPanel(this.character, this.keyField, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => PartyIdKeyFieldPanelController(keyField),
+      create: (context) => PartyIdKeyFieldPanelController(character, keyField),
       builder: (context, child) => _buildView(context),
     );
   }
