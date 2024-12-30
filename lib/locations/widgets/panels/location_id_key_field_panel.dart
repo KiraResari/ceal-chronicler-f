@@ -68,8 +68,9 @@ class LocationIdKeyFieldPanel extends StatelessWidget {
   Widget _buildEditButton(BuildContext context) {
     List<DropdownMenuEntry<LocationId>> entries =
         context.watch<LocationIdKeyFieldPanelController>().validLocationEntries;
+    var controller = context.read<LocationIdKeyFieldPanelController>();
     return SelectKeyButton(
-      keyField: keyField,
+      controller: controller,
       entries: entries,
       labelText: "Assign character to location",
     );

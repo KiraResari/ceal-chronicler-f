@@ -67,8 +67,9 @@ class PartyIdKeyFieldPanel extends StatelessWidget {
   Widget _buildEditButton(BuildContext context) {
     List<DropdownMenuEntry<PartyId>> entries =
         context.watch<PartyIdKeyFieldPanelController>().validPartyEntries;
+    var controller = context.read<PartyIdKeyFieldPanelController>();
     return SelectKeyButton(
-      keyField: keyField,
+      controller: controller,
       entries: entries,
       labelText: "Assign character to party",
     );

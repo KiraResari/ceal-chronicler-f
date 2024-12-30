@@ -10,7 +10,7 @@ import '../../timeline/model/point_in_time_repository.dart';
 import '../key_field.dart';
 import '../key_field_resolver.dart';
 
-class KeyFieldController<T> extends ProcessorListener {
+abstract class KeyFieldController<T> extends ProcessorListener {
   final KeyField<T> keyField;
 
   final keyFieldResolver = getIt.get<KeyFieldResolver>();

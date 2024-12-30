@@ -1836,6 +1836,10 @@
   * However, the button used for adding characters at locations is still a generic `SelectKeyButton`
   * So, how do I do this?
   * The point is I need something like an `AddCharacterToPartyCommand` that I can use here, but how do I get it all the way in there?
+  * Hmm, the `ToggleKeyButton` is more customization friendly than the `SelectKeyButton`, because it allows me to pass a `KeyFieldController controller` inside
+    * Let me see if I can make the `SelectKeyButton` work the same way
+    * Looks like that works. That'll make things easier
+    * Because like this, I can now override the methods in question inside the `PartyIdKeyFieldPanelController` to make them use the `AddCharacterToPartyCommand` (or whatever I'll call it)
 
 
 
