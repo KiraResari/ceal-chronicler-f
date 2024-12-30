@@ -178,4 +178,19 @@ main() {
       );
     },
   );
+
+  test(
+    "getValueAt should return correct value",
+    () {
+      var keyField = StringKeyField("Test");
+      var futurePoint = PointInTime("Future Point");
+      repository.addAtIndex(1, futurePoint);
+      var changedValue = "Changed";
+      keyField.addOrUpdateKeyAtTime(changedValue, futurePoint.id);
+
+      String? value = resolver.getValueAt(keyField, futurePoint.id);
+
+      expect(value, equals(changedValue));
+    },
+  );
 }

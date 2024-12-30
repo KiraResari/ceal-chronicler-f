@@ -20,6 +20,20 @@ class KeyFieldResolver {
     return mostRecentValue;
   }
 
+  T? getValueAt<T>(KeyField<T> keyField, PointInTimeId pointId) {
+    T? mostRecentValue = keyField.initialValue;
+    for (PointInTime point in _pointInTimeRepository.pointsInTime) {
+      keyField.keys.containsKey(point.id);
+      if (keyField.keys.containsKey(point.id)) {
+        mostRecentValue = keyField.keys[point.id];
+      }
+      if (point.id == pointId) {
+        break;
+      }
+    }
+    return mostRecentValue;
+  }
+
   bool hasNext<T>(KeyField<T> keyField) {
     for (PointInTime pointInTime in _pointInTimeRepository.futurePointsInTime) {
       if (keyField.keys.containsKey(pointInTime.id)) {
@@ -30,8 +44,7 @@ class KeyFieldResolver {
   }
 
   bool hasPrevious<T>(KeyField<T> keyField) {
-    for (PointInTime pointInTime
-        in _pointInTimeRepository.pastPointsInTime) {
+    for (PointInTime pointInTime in _pointInTimeRepository.pastPointsInTime) {
       if (keyField.keys.containsKey(pointInTime.id)) {
         return true;
       }

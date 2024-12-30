@@ -1840,6 +1840,11 @@
     * Let me see if I can make the `SelectKeyButton` work the same way
     * Looks like that works. That'll make things easier
     * Because like this, I can now override the methods in question inside the `PartyIdKeyFieldPanelController` to make them use the `AddCharacterToPartyCommand` (or whatever I'll call it)
+  * That command is going to be the heart and soul of this whole thing, and it is going to be a bitch to write and test, but everything stands and falls with this one, so I gotta be extra thorough here
+    * One more thing I need to keep in mind here is that if a character is assigned to another party at a future point in time, then of course the location keys should only be changed up until that point
+    * I'd better write down a checklist for all that in the requirements below
+    * I now created a `PartyLocationResolver` which also contains crucial logic here, which has the advantage that I can test that separately
+      * Moreso, I can actually use that to to test that a party shows the correct location even without the  `AddOrUpdatePartyAffiliationCommand` up and running yet
 
 
 
@@ -1950,6 +1955,9 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [ ] displays present location if at least one active character is in it
 - [ ] allows for a change in location which then affects all active characters as long as at least one characters is active
 - [ ] displays present location as unknown if no active characters are in it 
+- [ ] adding character to party behavior
+  - [ ] adding first character to party should not change that character's locations
+  - [ ] adding subsequent characters into party should overwrite their location for the duration during which they are in the party
 
 ### Technical
 
