@@ -1790,15 +1790,23 @@
 # 30-Dec-2024
 
 * Now for the grand finale
+
 * There's really just one more big thing that I need to complete for the Ceal Chronicler to be really usable, and that is parties
+
   * Specifically, the point of this is being able to group characters and move them around as a group instead of having to move each character, because that is something that is going to happen a lot
+
 * I wonder if I'll be able to finish this today, but I'll definitely try
+
 * This is really a complex thing, so I'll do it one step at a time
+
 * First step is making parties exist in the first place
+
   * In essence, they are just normal temporal entities without any special properties, so this part might be pretty easy
   * Right, that's done now
   * It was straightforward, but still took a bit of time
+
 * Good, so after that now comes the more difficult part
+
   * The key point here is specifying how parties and characters should behave in interaction with one another
   * Basically, a party should allow characters to travel as a group
     * That means that a party should display all characters in it, and allow for a change in location which then affects all characters
@@ -1823,24 +1831,37 @@
       * Once a party has at least one active character, its location should become editable
         * Editing a party's location should edit it for all active characters 
   * Okay, that is pretty complex, but I think I can do it if I do it step by step
+
 * First, let's focus on adding characters to parties without worrying about any of that location garbage
+
   * That should actually be very similar to adding characters to locations
   * ...except it is going to diverge when it comes to the standardized key fields and associated commands that I have, because adding characters to parties, as discussed above, requires some really sophisticated logic
   * But we'll worry about that when we get to it, and focus on the very basic functionality for now
   * Alright, so adding characters to parties in this most basic way works now, and so does removing them
   * And now the characters are also being displayed in the parties
+
 * Now there's a bug that prevents me from loading my existing chronicle
+
   * I now fixed that
+
 * Right, and this is the point where there's no more putting off the complicated stuff
+
   * On the upside, I have found out that the panels for displaying and editing the party ID are actually not standardized, which might make changing their behavior at least a little bit more easy
+
   * However, the button used for adding characters at locations is still a generic `SelectKeyButton`
+
   * So, how do I do this?
+
   * The point is I need something like an `AddCharacterToPartyCommand` that I can use here, but how do I get it all the way in there?
+
   * Hmm, the `ToggleKeyButton` is more customization friendly than the `SelectKeyButton`, because it allows me to pass a `KeyFieldController controller` inside
+
     * Let me see if I can make the `SelectKeyButton` work the same way
     * Looks like that works. That'll make things easier
     * Because like this, I can now override the methods in question inside the `PartyIdKeyFieldPanelController` to make them use the `AddCharacterToPartyCommand` (or whatever I'll call it)
+
   * That command is going to be the heart and soul of this whole thing, and it is going to be a bitch to write and test, but everything stands and falls with this one, so I gotta be extra thorough here
+
     * One more thing I need to keep in mind here is that if a character is assigned to another party at a future point in time, then of course the location keys should only be changed up until that point
     * I'd better write down a checklist for all that in the requirements below
     * I now created a `PartyLocationResolver` which also contains crucial logic here, which has the advantage that I can test that separately
@@ -1851,10 +1872,34 @@
         * If a character joins a party, and is already assigned to a location before joining the party, the party's location should be the character's location as soon as it joins the party
         * Oh dragon, this is gonna get so ugly...
       * Okay, it took some while, but now I'm reasonably certain that the `PartyLocationResolver` works as intended... probably
+
   * Right, now back to the `AddOrUpdatePartyAffiliationCommand`
+
     * I'll do this step by step
+
     * First, the basic functionality just for adding characters to parties, without touching the locations, so I have a solid base to build the more complex stuff on
+
       * That looks like it works now
+
+    * Right, and now the more complicated location modification
+
+      * I'm going to start with a test case here that specifies the behavior I want to see in the end
+
+      * Here's how the locations should look like:
+
+      * |                                   | Prologue                  | Chapter 1 | Chapter 2 | Chapter 3 | Chapter 4               |
+        | --------------------------------- | ------------------------- | --------- | --------- | --------- | ----------------------- |
+        | Sylvia                            | (before first appearance) | Aidenous  | <-same    | Vaught    | (after last appearance) |
+        | Party with Sylvia                 | (null)                    | Aidenous  | <-same    | Vaught    | (null)                  |
+        | Bokay                             | Fienyn                    | <-same    | Kiehlero  | <-same    | <-same                  |
+        | Bokay added to party in chapter 3 | Fienyn                    | <-same    | Kiehlero  | Vaught    | <-same                  |
+        | Party after adding Bokay          | (null)                    | Aidenous  | <-same    | Vaught    | <-same                  |
+
+      * I wrote a test case for that that fails as expected, and DRAGON is that already looking vicious
+
+      * Now to try and get it to pass
+
+      * I think that works now
 
 
 
@@ -1929,6 +1974,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
   - [x] If a location does not exist at the current point, it is displayed as a greyed-out button
 - [x] can be added to a party
 - [x] can be removed from a party
+- [ ] location can't be edited while character is in party
 
 
 ### Locations
@@ -1962,9 +2008,9 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
   - [x] have a last appearance
   - [x] can be added
 - [x] displays all characters in it
-- [ ] displays present location if at least one active character is in it
+- [x] displays present location if at least one active character is in it
 - [ ] allows for a change in location which then affects all active characters as long as at least one characters is active
-- [ ] displays present location as unknown if no active characters are in it 
+- [x] displays present location as unknown if no active characters are in it 
 - [ ] adding character to party behavior
   - [ ] adding first character to party should not change that character's locations
   - [ ] adding subsequent characters into party should overwrite their location for the duration during which they are in the party
