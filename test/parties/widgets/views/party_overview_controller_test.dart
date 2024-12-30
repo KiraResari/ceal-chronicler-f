@@ -7,13 +7,13 @@ import 'package:ceal_chronicler_f/io/chronicle_codec.dart';
 import 'package:ceal_chronicler_f/io/file/file_adapter.dart';
 import 'package:ceal_chronicler_f/io/file/file_processor.dart';
 import 'package:ceal_chronicler_f/key_fields/key_field_resolver.dart';
-import 'package:ceal_chronicler_f/locations/model/location.dart';
 import 'package:ceal_chronicler_f/locations/model/location_connection_repository.dart';
 import 'package:ceal_chronicler_f/locations/model/location_repository.dart';
 import 'package:ceal_chronicler_f/locations/model/location_sorter.dart';
-import 'package:ceal_chronicler_f/locations/widgets/views/location_overview_controller.dart';
 import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
+import 'package:ceal_chronicler_f/parties/model/party.dart';
 import 'package:ceal_chronicler_f/parties/model/party_repository.dart';
+import 'package:ceal_chronicler_f/parties/widgets/view/party_overview_controller.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
 import 'package:ceal_chronicler_f/view/view_processor.dart';
@@ -23,19 +23,19 @@ import '../../../mocks/file_adapter_mock.dart';
 
 main() {
   late PointInTimeRepository pointInTimeRepository;
-  late LocationRepository locationRepository;
-  late LocationOverviewController controller;
+  late PartyRepository partyRepository;
+  late PartyOverviewController controller;
   setUp(() {
     getIt.reset();
     pointInTimeRepository = PointInTimeRepository();
-    locationRepository = LocationRepository();
+    partyRepository = PartyRepository();
     getIt.registerSingleton<PointInTimeRepository>(pointInTimeRepository);
-    getIt.registerSingleton<LocationRepository>(locationRepository);
+    getIt.registerSingleton<PartyRepository>(partyRepository);
     getIt.registerSingleton<LocationConnectionRepository>(
         LocationConnectionRepository());
     getIt.registerSingleton<IncidentRepository>(IncidentRepository());
     getIt.registerSingleton<CharacterRepository>(CharacterRepository());
-    getIt.registerSingleton<PartyRepository>(PartyRepository());
+    getIt.registerSingleton<LocationRepository>(LocationRepository());
     getIt.registerSingleton<ChronicleCodec>(ChronicleCodec());
     getIt.registerSingleton<KeyFieldResolver>(KeyFieldResolver());
     getIt.registerSingleton<LocationSorter>(LocationSorter());
@@ -45,52 +45,52 @@ main() {
     getIt.registerSingleton<CommandProcessor>(CommandProcessor());
     getIt.registerSingleton<ViewProcessor>(ViewProcessor());
     getIt.registerSingleton<FileProcessor>(FileProcessor());
-    controller = LocationOverviewController();
+    controller = PartyOverviewController();
   });
 
   test(
-    "Location should be displayed if active point in time is between first and last appearance",
+    "Party should be displayed if active point in time is between first and last appearance",
     () {
       PointInTime activePointInTime = pointInTimeRepository.activePointInTime;
-      var location = Location(activePointInTime.id);
-      locationRepository.add(location);
+      var party = Party(activePointInTime.id);
+      partyRepository.add(party);
 
-      List<Location> locations = controller.entitiesAtActivePointInTime;
+      List<Party> parties = controller.entitiesAtActivePointInTime;
 
-      expect(locations, contains(location));
+      expect(parties, contains(party));
     },
   );
 
   test(
-    "Location should not be displayed if active point in time is before its first appearance",
+    "Party should not be displayed if active point in time is before its first appearance",
     () {
       PointInTime activePointInTime = pointInTimeRepository.activePointInTime;
-      var location = Location(activePointInTime.id);
-      locationRepository.add(location);
+      var party = Party(activePointInTime.id);
+      partyRepository.add(party);
 
       PointInTime pointBeforeFirstAppearance = PointInTime("Before");
       pointInTimeRepository.addAtIndex(0, pointBeforeFirstAppearance);
       pointInTimeRepository.activePointInTime = pointBeforeFirstAppearance;
-      List<Location> locations = controller.entitiesAtActivePointInTime;
+      List<Party> parties = controller.entitiesAtActivePointInTime;
 
-      expect(locations, isNot(contains(location)));
+      expect(parties, isNot(contains(party)));
     },
   );
 
   test(
-    "Location should not be displayed if active point in time is after its last appearance",
+    "Party should not be displayed if active point in time is after its last appearance",
     () {
       PointInTime activePointInTime = pointInTimeRepository.activePointInTime;
-      var location = Location(activePointInTime.id);
-      location.lastAppearance = activePointInTime.id;
-      locationRepository.add(location);
+      var party = Party(activePointInTime.id);
+      party.lastAppearance = activePointInTime.id;
+      partyRepository.add(party);
 
       PointInTime pointAfterLastAppearance = PointInTime("After");
       pointInTimeRepository.addAtIndex(1, pointAfterLastAppearance);
       pointInTimeRepository.activePointInTime = pointAfterLastAppearance;
-      List<Location> locations = controller.entitiesAtActivePointInTime;
+      List<Party> parties = controller.entitiesAtActivePointInTime;
 
-      expect(locations, isNot(contains(location)));
+      expect(parties, isNot(contains(party)));
     },
   );
 }
