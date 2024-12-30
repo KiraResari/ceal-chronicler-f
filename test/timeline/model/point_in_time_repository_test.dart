@@ -1,3 +1,4 @@
+import 'package:ceal_chronicler_f/characters/model/character.dart';
 import 'package:ceal_chronicler_f/exceptions/invalid_operation_exception.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
@@ -153,7 +154,7 @@ main() {
 
   test(
     "pointIsInThePast should return false if reference point is in the future",
-        () {
+    () {
       PointInTime referencePoint = PointInTime("Test");
       repository.addAtIndex(1, referencePoint);
 
@@ -165,7 +166,7 @@ main() {
 
   test(
     "pointIsInThePast should return true of point is in the past",
-        () {
+    () {
       PointInTime referencePoint = PointInTime("Test");
       repository.addAtIndex(0, referencePoint);
 
@@ -177,12 +178,70 @@ main() {
 
   test(
     "pointIsInThePast should return false of point is active point",
-        () {
+    () {
       PointInTime referencePoint = repository.activePointInTime;
 
       bool result = repository.pointIsInThePast(referencePoint.id);
 
       expect(result, isFalse);
     },
+  );
+
+  test(
+    "entityIsActiveAtPoint should return true if entity is active at reference point",
+    () {
+      PointInTime secondPoint = repository.createNewAtIndex(1);
+      Character character = Character(secondPoint.id);
+      character.lastAppearance = secondPoint.id;
+
+      bool isActive =
+          repository.entityIsActiveAtPoint(character, secondPoint.id);
+
+      expect(isActive, isTrue);
+    },
+  );
+
+  test(
+    "entityIsActiveAtPoint should return false if reference point is before entity's first appearance",
+    () {
+      PointInTime firstPoint = repository.activePointInTime;
+      PointInTime secondPoint = repository.createNewAtIndex(1);
+      Character character = Character(secondPoint.id);
+
+      bool isActive =
+          repository.entityIsActiveAtPoint(character, firstPoint.id);
+
+      expect(isActive, isFalse);
+    },
+  );
+
+  test(
+    "entityIsActiveAtPoint should return false if reference point is after entity's last appearance",
+    () {
+      PointInTime secondPoint = repository.createNewAtIndex(1);
+      PointInTime thirdPoint = repository.createNewAtIndex(2);
+      Character character = Character(secondPoint.id);
+      character.lastAppearance = secondPoint.id;
+
+      bool isActive =
+          repository.entityIsActiveAtPoint(character, thirdPoint.id);
+
+      expect(isActive, isFalse);
+    },
+  );
+
+  test(
+    "getPointsInTimeFromUntilInclusive should return correct points in time",
+    () {
+      PointInTime secondPoint = repository.createNewAtIndex(1);
+      PointInTime thirdPoint = repository.createNewAtIndex(2);
+      PointInTime fourthPoint = repository.createNewAtIndex(3);
+      repository.createNewAtIndex(4);
+
+      List<PointInTime> points = repository.getPointsInTimeFromUntilInclusive(
+          secondPoint.id, fourthPoint.id);
+
+      expect(points, equals([secondPoint, thirdPoint, fourthPoint]));
+      },
   );
 }

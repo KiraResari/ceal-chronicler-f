@@ -1845,6 +1845,12 @@
     * I'd better write down a checklist for all that in the requirements below
     * I now created a `PartyLocationResolver` which also contains crucial logic here, which has the advantage that I can test that separately
       * Moreso, I can actually use that to to test that a party shows the correct location even without the  `AddOrUpdatePartyAffiliationCommand` up and running yet
+      * Sadly, it isn't
+      * Weird, it works in the tests though
+      * Aaand, just realized something that makes it even more complicated:
+        * If a character joins a party, and is already assigned to a location before joining the party, the party's location should be the character's location as soon as it joins the party
+        * Oh dragon, this is gonna get so ugly...
+      * Okay, it took some while, but now I'm reasonably certain that the `PartyLocationResolver` works as intended... probably
 
 
 

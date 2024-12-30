@@ -3,13 +3,14 @@ import 'package:provider/provider.dart';
 
 import '../../../characters/model/character.dart';
 import '../../../characters/widgets/character_button.dart';
+import '../../../locations/model/location.dart';
+import '../../../locations/widgets/buttons/location_button.dart';
 import '../../../utils/string_key.dart';
 import '../../../utils/widgets/temporal_entity_view.dart';
 import '../../model/party.dart';
 import 'party_view_controller.dart';
 
-class PartyView
-    extends TemporalEntityView<Party, PartyViewController> {
+class PartyView extends TemporalEntityView<Party, PartyViewController> {
   PartyView({required Party party})
       : super(entity: party, key: StringKey(party.toString()));
 
@@ -23,6 +24,8 @@ class PartyView
     return [
       buildTableRow(
           context, "Characters in party", _buildCharactersInParty(context)),
+      buildTableRow(
+          context, "Present location", _buildPresentLocation(context)),
     ];
   }
 
@@ -38,5 +41,14 @@ class PartyView
           .map((character) => CharacterButton(character))
           .toList(),
     );
+  }
+
+  Widget _buildPresentLocation(BuildContext context) {
+    Location? presentLocation =
+        context.watch<PartyViewController>().presentLocation;
+    if(presentLocation == null){
+      return const Text("unknown");
+    }
+    return LocationButton(presentLocation);
   }
 }

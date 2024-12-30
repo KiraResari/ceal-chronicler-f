@@ -5,9 +5,12 @@ import 'package:ceal_chronicler_f/commands/command_processor.dart';
 import 'package:ceal_chronicler_f/get_it_context.dart';
 import 'package:ceal_chronicler_f/io/file/file_processor.dart';
 import 'package:ceal_chronicler_f/key_fields/key_field_resolver.dart';
+import 'package:ceal_chronicler_f/locations/model/location.dart';
+import 'package:ceal_chronicler_f/locations/model/location_repository.dart';
 import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
 import 'package:ceal_chronicler_f/parties/model/party.dart';
 import 'package:ceal_chronicler_f/parties/model/party_repository.dart';
+import 'package:ceal_chronicler_f/parties/party_location_resolver.dart';
 import 'package:ceal_chronicler_f/parties/widgets/view/party_view_controller.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
@@ -21,6 +24,7 @@ main() {
   late PointInTimeRepository pointInTimeRepository;
   late PartyRepository partyRepository;
   late CharacterRepository characterRepository;
+  late LocationRepository locationRepository;
 
   setUp(() {
     getIt.reset();
@@ -36,6 +40,9 @@ main() {
     getIt.registerSingleton<PartyRepository>(partyRepository);
     characterRepository = CharacterRepository();
     getIt.registerSingleton<CharacterRepository>(characterRepository);
+    locationRepository = LocationRepository();
+    getIt.registerSingleton<LocationRepository>(locationRepository);
+    getIt.registerSingleton<PartyLocationResolver>(PartyLocationResolver());
   });
 
   test(
@@ -126,6 +133,83 @@ main() {
       List<Character> activeCharacters = controller.activeCharacters;
 
       expect(activeCharacters, isNot(contains(character)));
+    },
+  );
+
+  test(
+    "get presentLocation should correctly return changed location",
+    () {
+      PointInTime prologue = pointInTimeRepository.activePointInTime;
+      PointInTime chapterOne = pointInTimeRepository.createNewAtIndex(1);
+      var sylvia = Character(prologue.id);
+      characterRepository.add(sylvia);
+      var vaught = Location(prologue.id);
+      locationRepository.add(vaught);
+      var aidenous = Location(prologue.id);
+      locationRepository.add(aidenous);
+      sylvia.presentLocation.addOrUpdateKeyAtTime(vaught.id, prologue.id);
+      sylvia.presentLocation.addOrUpdateKeyAtTime(aidenous.id, chapterOne.id);
+      var party = Party(prologue.id);
+      sylvia.party.addOrUpdateKeyAtTime(party.id, prologue.id);
+      sylvia.lastAppearance = chapterOne.id;
+      pointInTimeRepository.activePointInTime = chapterOne;
+      var controller = PartyViewController(party);
+
+      Location? presentLocation = controller.presentLocation;
+
+      expect(presentLocation, aidenous);
+    },
+  );
+
+  test(
+    "get presentLocation should return null if no active character are in party",
+    () {
+      PointInTime prologue = pointInTimeRepository.activePointInTime;
+      PointInTime chapterOne = pointInTimeRepository.createNewAtIndex(1);
+      PointInTime chapterTwo = pointInTimeRepository.createNewAtIndex(2);
+      var sylvia = Character(prologue.id);
+      characterRepository.add(sylvia);
+      var vaught = Location(prologue.id);
+      locationRepository.add(vaught);
+      var aidenous = Location(prologue.id);
+      locationRepository.add(aidenous);
+      sylvia.presentLocation.addOrUpdateKeyAtTime(vaught.id, prologue.id);
+      sylvia.presentLocation.addOrUpdateKeyAtTime(aidenous.id, chapterOne.id);
+      var party = Party(prologue.id);
+      sylvia.party.addOrUpdateKeyAtTime(party.id, prologue.id);
+      sylvia.lastAppearance = chapterOne.id;
+      pointInTimeRepository.activePointInTime = chapterTwo;
+      var controller = PartyViewController(party);
+
+      Location? presentLocation = controller.presentLocation;
+
+      expect(presentLocation, isNull);
+    },
+  );
+
+  test(
+    "get presentLocation should return null if no character is in party at that point in time",
+        () {
+      PointInTime prologue = pointInTimeRepository.activePointInTime;
+      PointInTime chapterOne = pointInTimeRepository.createNewAtIndex(1);
+      PointInTime chapterTwo = pointInTimeRepository.createNewAtIndex(2);
+      var sylvia = Character(prologue.id);
+      characterRepository.add(sylvia);
+      var vaught = Location(prologue.id);
+      locationRepository.add(vaught);
+      var aidenous = Location(prologue.id);
+      locationRepository.add(aidenous);
+      sylvia.presentLocation.addOrUpdateKeyAtTime(vaught.id, prologue.id);
+      sylvia.presentLocation.addOrUpdateKeyAtTime(aidenous.id, chapterOne.id);
+      var party = Party(prologue.id);
+      sylvia.party.addOrUpdateKeyAtTime(party.id, prologue.id);
+      sylvia.party.addOrUpdateKeyAtTime(null, chapterTwo.id);
+      pointInTimeRepository.activePointInTime = chapterTwo;
+      var controller = PartyViewController(party);
+
+      Location? presentLocation = controller.presentLocation;
+
+      expect(presentLocation, isNull);
     },
   );
 }

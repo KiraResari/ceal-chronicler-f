@@ -4,7 +4,9 @@ import 'package:ceal_chronicler_f/commands/command_history.dart';
 import 'package:ceal_chronicler_f/commands/command_processor.dart';
 import 'package:ceal_chronicler_f/get_it_context.dart';
 import 'package:ceal_chronicler_f/key_fields/key_field_resolver.dart';
+import 'package:ceal_chronicler_f/locations/model/location.dart';
 import 'package:ceal_chronicler_f/locations/model/location_id.dart';
+import 'package:ceal_chronicler_f/locations/model/location_repository.dart';
 import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
 import 'package:ceal_chronicler_f/parties/model/party.dart';
 import 'package:ceal_chronicler_f/parties/model/party_repository.dart';
@@ -19,7 +21,8 @@ main() {
   late PointInTimeRepository pointInTimeRepository;
   late PartyRepository partyRepository;
   late CharacterRepository characterRepository;
-  late PartyLocationResolver partyLocationResolver;
+  late LocationRepository locationRepository;
+  late PartyLocationResolver resolver;
 
   setUp(() {
     getIt.reset();
@@ -34,7 +37,9 @@ main() {
     getIt.registerSingleton<PartyRepository>(partyRepository);
     characterRepository = CharacterRepository();
     getIt.registerSingleton<CharacterRepository>(characterRepository);
-    partyLocationResolver = PartyLocationResolver();
+    locationRepository = LocationRepository();
+    getIt.registerSingleton<LocationRepository>(locationRepository);
+    resolver = PartyLocationResolver();
   });
 
   test(
@@ -66,7 +71,7 @@ main() {
       characterRepository.add(secondCharacter);
 
       Map<PointInTimeId, LocationId?> partyLocationMap =
-          partyLocationResolver.getLocationMapOfParty(party.id);
+          resolver.getLocationMapOfParty(party);
 
       expect(
           partyLocationMap,
@@ -75,6 +80,44 @@ main() {
             secondPointInTime.id: secondLocationId,
             thirdPointInTime.id: thirdLocationId,
           }));
+    },
+  );
+
+  test(
+    "getPresentLocationOf should return correct location",
+        () {
+      PointInTime firstPointInTime = pointInTimeRepository.activePointInTime;
+      var secondPointInTime = PointInTime("Second Point In Time");
+      var thirdPointInTime = PointInTime("Third Point In Time");
+      pointInTimeRepository.addAtIndex(1, secondPointInTime);
+      pointInTimeRepository.addAtIndex(2, thirdPointInTime);
+      var firstLocation = Location(firstPointInTime.id);
+      var secondLocation = Location(firstPointInTime.id);
+      var thirdLocation= Location(firstPointInTime.id);
+      locationRepository.add(firstLocation);
+      locationRepository.add(secondLocation);
+      locationRepository.add(thirdLocation);
+      var party = Party(firstPointInTime.id);
+      var firstCharacter = Character(firstPointInTime.id);
+      firstCharacter.party.addOrUpdateKeyAtTime(party.id, firstPointInTime.id);
+      firstCharacter.party.addOrUpdateKeyAtTime(null, thirdPointInTime.id);
+      firstCharacter.presentLocation
+          .addOrUpdateKeyAtTime(firstLocation.id, firstPointInTime.id);
+      firstCharacter.presentLocation
+          .addOrUpdateKeyAtTime(secondLocation.id, secondPointInTime.id);
+      firstCharacter.presentLocation
+          .addOrUpdateKeyAtTime(firstLocation.id, thirdPointInTime.id);
+      var secondCharacter = Character(secondPointInTime.id);
+      secondCharacter.party.addOrUpdateKeyAtTime(party.id, thirdPointInTime.id);
+      secondCharacter.presentLocation
+          .addOrUpdateKeyAtTime(thirdLocation.id, thirdPointInTime.id);
+      characterRepository.add(firstCharacter);
+      characterRepository.add(secondCharacter);
+      pointInTimeRepository.activePointInTime = thirdPointInTime;
+
+      Location? presentLocation = resolver.getPresentLocationOf(party);
+
+      expect(presentLocation, equals(thirdLocation));
     },
   );
 }

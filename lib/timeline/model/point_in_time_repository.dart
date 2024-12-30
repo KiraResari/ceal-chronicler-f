@@ -169,6 +169,15 @@ class PointInTimeRepository {
     throw PointInTimeNotFoundException();
   }
 
+  List<PointInTime> getPointsInTimeFromUntilInclusive(
+    PointInTimeId start,
+    PointInTimeId end,
+  ) {
+    int startIndex = _getPointIndexById(start);
+    int endIndex = _getPointIndexById(end);
+    return pointsInTime.sublist(startIndex, endIndex + 1);
+  }
+
   bool pointIsInTheFuture(PointInTimeId id) {
     int activePointInTimeIndex = pointsInTime.indexOf(activePointInTime);
     int referencePointIndex = _getPointIndexById(id);
@@ -188,5 +197,19 @@ class PointInTimeRepository {
     bool lastAppearanceHasntHappened =
         lastAppearance == null ? true : !pointIsInThePast(lastAppearance);
     return firstAppearanceHasHappened && lastAppearanceHasntHappened;
+  }
+
+  bool entityIsActiveAtPoint(TemporalEntity entity, PointInTimeId pointId) {
+    int firstAppearanceIndex = _getPointIndexById(entity.firstAppearance);
+    int referencePointIndex = _getPointIndexById(pointId);
+    if (referencePointIndex < firstAppearanceIndex) {
+      return false;
+    }
+    PointInTimeId? lastAppearance = entity.lastAppearance;
+    if (lastAppearance == null) {
+      return true;
+    }
+    int lastAppearanceIndex = _getPointIndexById(lastAppearance);
+    return referencePointIndex <= lastAppearanceIndex;
   }
 }
