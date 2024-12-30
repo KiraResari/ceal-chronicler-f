@@ -4,6 +4,7 @@ import '../characters/widgets/character_overview.dart';
 import '../incidents/widgets/incident_overview.dart';
 import '../locations/widgets/views/location_overview.dart';
 import '../main_view/main_view_candidate.dart';
+import '../parties/widgets/party_overview.dart';
 
 class OverviewView extends MainViewCandidate {
   const OverviewView({super.key});
@@ -29,10 +30,12 @@ class OverviewView extends MainViewCandidate {
   List<Widget> _buildChildren() {
     return [
       const IncidentOverview(),
-      const SizedBox(width: 50, height: 10,),
-      const CharacterOverview(),
-      const SizedBox(width: 50, height: 10,),
+      const SizedBox(width: 50, height: 10),
       const LocationOverview(),
+      const SizedBox(width: 50, height: 10),
+      const CharacterOverview(),
+      const SizedBox(width: 50, height: 10),
+      const PartyOverview(),
     ];
   }
 }
