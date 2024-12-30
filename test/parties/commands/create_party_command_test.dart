@@ -30,12 +30,12 @@ main() {
   test(
     "Processing command should add new party",
     () {
-      int initialIncidentCount = repository.content.length;
+      int initialCount = repository.content.length;
       var command = CreatePartyCommand(PointInTimeId());
 
       processor.process(command);
 
-      expect(repository.content.length, equals(initialIncidentCount + 1));
+      expect(repository.content.length, equals(initialCount + 1));
     },
   );
 

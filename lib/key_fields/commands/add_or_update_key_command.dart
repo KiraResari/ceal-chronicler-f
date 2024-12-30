@@ -12,12 +12,16 @@ class AddOrUpdateKeyCommand<T> extends Command {
   final PointInTimeId pointInTimeId;
   final T? value;
   T? previousValue;
+  bool previousKeyExisted = false;
 
   AddOrUpdateKeyCommand(this.keyField, this.pointInTimeId, this.value);
 
   @override
   void execute() {
-    previousValue = keyField.keys[pointInTimeId];
+    if(keyField.keys.containsKey(pointInTimeId)){
+      previousValue = keyField.keys[pointInTimeId];
+      previousKeyExisted = true;
+    }
     keyField.keys[pointInTimeId] = value;
   }
 
@@ -31,10 +35,10 @@ class AddOrUpdateKeyCommand<T> extends Command {
 
   @override
   void undo() {
-    if (previousValue == null) {
-      keyField.deleteKeyAtTime(pointInTimeId);
+    if (previousKeyExisted) {
+      keyField.keys[pointInTimeId] = previousValue;
     } else {
-      keyField.keys[pointInTimeId] = previousValue as T;
+      keyField.deleteKeyAtTime(pointInTimeId);
     }
   }
 

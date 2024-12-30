@@ -1851,6 +1851,10 @@
         * If a character joins a party, and is already assigned to a location before joining the party, the party's location should be the character's location as soon as it joins the party
         * Oh dragon, this is gonna get so ugly...
       * Okay, it took some while, but now I'm reasonably certain that the `PartyLocationResolver` works as intended... probably
+  * Right, now back to the `AddOrUpdatePartyAffiliationCommand`
+    * I'll do this step by step
+    * First, the basic functionality just for adding characters to parties, without touching the locations, so I have a solid base to build the more complex stuff on
+      * That looks like it works now
 
 
 
