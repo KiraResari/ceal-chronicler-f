@@ -5,6 +5,7 @@ import 'package:ceal_chronicler_f/key_fields/commands/add_or_update_key_command.
 import 'package:ceal_chronicler_f/key_fields/string_key_field.dart';
 import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
+import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 main() {
@@ -13,6 +14,7 @@ main() {
   setUp(() {
     getIt.reset();
     getIt.registerSingleton<CommandHistory>(CommandHistory());
+    getIt.registerSingleton<PointInTimeRepository>(PointInTimeRepository());
     getIt.registerSingleton<MessageBarState>(MessageBarState());
     processor = CommandProcessor();
   });

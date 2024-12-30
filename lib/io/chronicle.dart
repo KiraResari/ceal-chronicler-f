@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:ceal_chronicler_f/parties/model/party.dart';
+
 import '../characters/model/character.dart';
 import '../incidents/model/incident.dart';
 import '../locations/model/location.dart';
@@ -14,12 +16,14 @@ class Chronicle extends JsonSerializable {
   static const String charactersKey = "characters";
   static const String locationsKey = "locations";
   static const String locationConnectionsKey = "locationConnections";
+  static const String partiesKey = "parties";
 
   final List<PointInTime> pointsInTime;
   final List<Incident> incidents;
   final List<Character> characters;
   final List<Location> locations;
   final List<LocationConnection> locationConnections;
+  final List<Party> parties;
 
   Chronicle({
     required this.pointsInTime,
@@ -27,6 +31,7 @@ class Chronicle extends JsonSerializable {
     required this.characters,
     required this.locations,
     required this.locationConnections,
+    required this.parties,
   });
 
   Chronicle.fromJsonString(String jsonString)
@@ -42,7 +47,8 @@ class Chronicle extends JsonSerializable {
         locations =
             _extractList(json, locationsKey, (e) => Location.fromJson(e)),
         locationConnections = _extractList(json, locationConnectionsKey,
-            (e) => LocationConnection.fromJson(e));
+            (e) => LocationConnection.fromJson(e)),
+        parties = _extractList(json, partiesKey, (e) => Party.fromJson(e));
 
   static List<T> _extractList<T>(
       Map<String, dynamic> json, String key, T Function(dynamic) fromJson) {
@@ -58,11 +64,12 @@ class Chronicle extends JsonSerializable {
         charactersKey: characters,
         locationsKey: locations,
         locationConnectionsKey: locationConnections,
+        partiesKey: parties,
       };
 
   @override
   String toString() {
-    return 'Chronicle{pointsInTime: $pointsInTime, incidents: $incidents, characters: $characters, locations: $locations, locationConnections: $locationConnections}';
+    return 'Chronicle{pointsInTime: $pointsInTime, incidents: $incidents, characters: $characters, locations: $locations, locationConnections: $locationConnections}, parties: $parties';
   }
 
   @override
@@ -79,7 +86,9 @@ class Chronicle extends JsonSerializable {
           ListUtils.containEqualElementsInSameOrder(
               locations, other.locations) &&
           ListUtils.containEqualElementsInSameOrder(
-              locationConnections, other.locationConnections);
+              locationConnections, other.locationConnections) &&
+          ListUtils.containEqualElementsInSameOrder(
+              parties, other.parties);
 
   @override
   int get hashCode =>
@@ -87,5 +96,6 @@ class Chronicle extends JsonSerializable {
       incidents.hashCode ^
       characters.hashCode ^
       locations.hashCode ^
-      locationConnections.hashCode;
+      locationConnections.hashCode ^
+      parties.hashCode;
 }

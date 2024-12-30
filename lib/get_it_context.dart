@@ -12,6 +12,7 @@ import 'locations/model/location_connection_repository.dart';
 import 'locations/model/location_repository.dart';
 import 'locations/model/location_sorter.dart';
 import 'message_bar/message_bar_state.dart';
+import 'parties/model/party_repository.dart';
 import 'timeline/model/point_in_time_repository.dart';
 import 'view/view_processor.dart';
 import 'view/view_repository.dart';
@@ -25,6 +26,7 @@ void initializeGetItContext() {
   getIt.registerSingleton<LocationRepository>(LocationRepository());
   getIt.registerSingleton<LocationConnectionRepository>(
       LocationConnectionRepository());
+  getIt.registerSingleton<PartyRepository>(PartyRepository());
   getIt.registerSingleton<ViewRepository>(ViewRepository());
   getIt.registerSingleton<MessageBarState>(MessageBarState());
 

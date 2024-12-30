@@ -13,6 +13,7 @@ import 'package:ceal_chronicler_f/locations/model/location_repository.dart';
 import 'package:ceal_chronicler_f/locations/model/location_sorter.dart';
 import 'package:ceal_chronicler_f/locations/widgets/views/location_overview_controller.dart';
 import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
+import 'package:ceal_chronicler_f/parties/model/party_repository.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
 import 'package:ceal_chronicler_f/view/view_processor.dart';
@@ -34,6 +35,7 @@ main() {
         LocationConnectionRepository());
     getIt.registerSingleton<IncidentRepository>(IncidentRepository());
     getIt.registerSingleton<CharacterRepository>(CharacterRepository());
+    getIt.registerSingleton<PartyRepository>(PartyRepository());
     getIt.registerSingleton<ChronicleCodec>(ChronicleCodec());
     getIt.registerSingleton<KeyFieldResolver>(KeyFieldResolver());
     getIt.registerSingleton<LocationSorter>(LocationSorter());

@@ -1795,7 +1795,7 @@
 * I wonder if I'll be able to finish this today, but I'll definitely try
 * This is really a complex thing, so I'll do it one step at a time
 * First step is making parties exist in the first place
-  * In essence, they are just normal temporal entities, so this part might be pretty easy
+  * In essence, they are just normal temporal entities without any special properties, so this part might be pretty easy
 
 
 

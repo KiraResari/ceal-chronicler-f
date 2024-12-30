@@ -9,9 +9,14 @@ import 'package:ceal_chronicler_f/io/file/file_adapter.dart';
 import 'package:ceal_chronicler_f/io/file/file_processor.dart';
 import 'package:ceal_chronicler_f/io/chronicle_codec.dart';
 import 'package:ceal_chronicler_f/locations/model/location.dart';
+import 'package:ceal_chronicler_f/locations/model/location_connection.dart';
+import 'package:ceal_chronicler_f/locations/model/location_connection_direction.dart';
 import 'package:ceal_chronicler_f/locations/model/location_connection_repository.dart';
+import 'package:ceal_chronicler_f/locations/model/location_id.dart';
 import 'package:ceal_chronicler_f/locations/model/location_repository.dart';
 import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
+import 'package:ceal_chronicler_f/parties/model/party.dart';
+import 'package:ceal_chronicler_f/parties/model/party_repository.dart';
 import 'package:ceal_chronicler_f/timeline/commands/create_point_in_time_command.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
@@ -25,6 +30,8 @@ main() {
   late IncidentRepository incidentRepository;
   late CharacterRepository characterRepository;
   late LocationRepository locationRepository;
+  late LocationConnectionRepository locationConnectionRepository;
+  late PartyRepository partyRepository;
   late FileProcessor fileProcessor;
   late CommandProcessor commandProcessor;
 
@@ -34,18 +41,21 @@ main() {
     incidentRepository = IncidentRepository();
     characterRepository = CharacterRepository();
     locationRepository = LocationRepository();
+    locationConnectionRepository = LocationConnectionRepository();
+    partyRepository = PartyRepository();
     getIt.registerSingleton<PointInTimeRepository>(pointInTimeRepository);
     getIt.registerSingleton<IncidentRepository>(incidentRepository);
     getIt.registerSingleton<CharacterRepository>(characterRepository);
     getIt.registerSingleton<LocationRepository>(locationRepository);
     getIt.registerSingleton<LocationConnectionRepository>(
-        LocationConnectionRepository());
+        locationConnectionRepository);
+    getIt.registerSingleton<PartyRepository>(partyRepository);
     getIt.registerSingleton<ChronicleCodec>(ChronicleCodec());
     getIt.registerSingleton<FileAdapter>(FileAdapterMock());
     getIt.registerSingleton<MessageBarState>(MessageBarState());
     getIt.registerSingleton<CommandHistory>(CommandHistory());
     fileProcessor = FileProcessor();
-    commandProcessor= CommandProcessor();
+    commandProcessor = CommandProcessor();
   });
 
   test(
@@ -77,7 +87,7 @@ main() {
 
   test(
     "Saving and loading should preserve characters",
-        () async {
+    () async {
       Character character = Character(PointInTimeId());
       characterRepository.add(character);
 
@@ -91,7 +101,7 @@ main() {
 
   test(
     "Saving and loading should preserve locations",
-        () async {
+    () async {
       var location = Location(PointInTimeId());
       locationRepository.add(location);
 
@@ -100,6 +110,35 @@ main() {
       await fileProcessor.load();
 
       expect(locationRepository.content, contains(location));
+    },
+  );
+
+  test(
+    "Saving and loading should preserve location connections",
+    () async {
+      var connection = LocationConnection(
+          LocationId(), LocationConnectionDirection.west, LocationId());
+      locationConnectionRepository.add(connection);
+
+      await fileProcessor.save();
+      locationConnectionRepository.remove(connection);
+      await fileProcessor.load();
+
+      expect(locationConnectionRepository.content, contains(connection));
+    },
+  );
+
+  test(
+    "Saving and loading should preserve parties",
+        () async {
+      var party = Party(PointInTimeId());
+      partyRepository.add(party);
+
+      await fileProcessor.save();
+      partyRepository.remove(party);
+      await fileProcessor.load();
+
+      expect(partyRepository.content, contains(party));
     },
   );
 
@@ -119,14 +158,14 @@ main() {
 
   test(
     "Saving should not be necessary when no commands have been executed",
-        () {
+    () {
       expect(fileProcessor.isSavingNecessary, isFalse);
     },
   );
 
   test(
     "Saving should be necessary if a command has been executed but not saved",
-        () {
+    () {
       var command = CreatePointInTimeCommand(0);
 
       commandProcessor.process(command);
@@ -137,7 +176,7 @@ main() {
 
   test(
     "Saving should not be necessary if a command has been executed and saved",
-        () async {
+    () async {
       var command = CreatePointInTimeCommand(0);
 
       commandProcessor.process(command);
@@ -149,7 +188,7 @@ main() {
 
   test(
     "Saving should not be necessary if a command has been executed and undone",
-        () async {
+    () async {
       var command = CreatePointInTimeCommand(0);
 
       commandProcessor.process(command);
@@ -161,7 +200,7 @@ main() {
 
   test(
     "Saving should be necessary if a command has been executed, saved and undone",
-        () async {
+    () async {
       var command = CreatePointInTimeCommand(0);
 
       commandProcessor.process(command);
@@ -174,7 +213,7 @@ main() {
 
   test(
     "Saving should not be necessary if a command has been executed, saved, undone and redone",
-        () async {
+    () async {
       var command = CreatePointInTimeCommand(0);
 
       commandProcessor.process(command);
@@ -188,7 +227,7 @@ main() {
 
   test(
     "Saving should be necessary if a command has been executed, saved, undone and then another command executed",
-        () async {
+    () async {
       var command = CreatePointInTimeCommand(0);
 
       commandProcessor.process(command);
@@ -202,7 +241,7 @@ main() {
 
   test(
     "Saving should not be necessary after loading",
-        () async {
+    () async {
       var command = CreatePointInTimeCommand(0);
 
       commandProcessor.process(command);
@@ -216,7 +255,7 @@ main() {
 
   test(
     "Undo should not be possible after loading",
-        () async {
+    () async {
       var command = CreatePointInTimeCommand(0);
 
       commandProcessor.process(command);
@@ -230,7 +269,7 @@ main() {
 
   test(
     "Redo should not be possible after loading",
-        () async {
+    () async {
       var command = CreatePointInTimeCommand(0);
 
       commandProcessor.process(command);
