@@ -24,10 +24,27 @@ class Character extends TemporalEntity<CharacterId> {
       : this.fromJson(jsonDecode(jsonString));
 
   Character.fromJson(Map<String, dynamic> json)
-      : presentLocation =
-            LocationIdKeyField.fromJson(json[_presentLocationKey]),
-        party = PartyIdKeyField.fromJson(json[_partyKey]),
+      : presentLocation = _locationIdKeyFieldFromJson(json),
+        party = _partyIdKeyFieldFromJson(json),
         super.fromJson(json, CharacterId.fromString(json[IdHolder.idKey]));
+
+  static LocationIdKeyField _locationIdKeyFieldFromJson(
+    Map<String, dynamic> json,
+  ) {
+    var jsonMap = json[_presentLocationKey];
+    return jsonMap == null
+        ? LocationIdKeyField()
+        : LocationIdKeyField.fromJson(jsonMap);
+  }
+
+  static PartyIdKeyField _partyIdKeyFieldFromJson(
+    Map<String, dynamic> json,
+  ) {
+    var jsonMap = json[_partyKey];
+    return jsonMap == null
+        ? PartyIdKeyField()
+        : PartyIdKeyField.fromJson(jsonMap);
+  }
 
   @override
   Map<String, dynamic> toJson() {

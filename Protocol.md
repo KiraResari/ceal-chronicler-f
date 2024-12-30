@@ -1829,6 +1829,8 @@
   * But we'll worry about that when we get to it, and focus on the very basic functionality for now
   * Alright, so adding characters to parties in this most basic way works now, and so does removing them
   * And now the characters are also being displayed in the parties
+* Now there's a bug that prevents me from loading my existing chronicle
+  * I now fixed that
 
 
 

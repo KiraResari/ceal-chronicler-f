@@ -93,7 +93,7 @@ abstract class TemporalEntityView<T extends TemporalEntity,
         0: IntrinsicColumnWidth(),
         1: IntrinsicColumnWidth(),
       },
-      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+      defaultVerticalAlignment: TableCellVerticalAlignment.top,
       children: children,
     );
   }
