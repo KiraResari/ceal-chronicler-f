@@ -1,5 +1,4 @@
-import 'package:ceal_chronicler_f/key_fields/location_id_key_field.dart';
-
+import '../../key_fields/location_id_key_field.dart';
 import '../../utils/widgets/temporal_entity_view_controller.dart';
 import '../model/character.dart';
 
