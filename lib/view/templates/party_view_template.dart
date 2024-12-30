@@ -6,16 +6,12 @@ import '../../parties/model/party_repository.dart';
 import '../../parties/widgets/party_view.dart';
 import 'temporally_limited_template.dart';
 
-class PartyViewTemplate
-    extends TemporallyLimitedTemplate<Party, PartyId>
-     {
-
-  PartyViewTemplate(character)
-      : super(character, getIt<PartyRepository>());
+class PartyViewTemplate extends TemporallyLimitedTemplate<Party, PartyId> {
+  PartyViewTemplate(Party party) : super(party, getIt<PartyRepository>());
 
   @override
   MainViewCandidate get associatedView => PartyView(party: entity);
 
   @override
-  String get identifier => "PArty '$currentName'";
+  String get identifier => "Party '$currentName'";
 }

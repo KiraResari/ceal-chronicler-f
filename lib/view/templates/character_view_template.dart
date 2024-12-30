@@ -10,7 +10,7 @@ class CharacterViewTemplate
     extends TemporallyLimitedTemplate<Character, CharacterId>
      {
 
-  CharacterViewTemplate(character)
+  CharacterViewTemplate(Character character)
       : super(character, getIt<CharacterRepository>());
 
   @override

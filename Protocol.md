@@ -1796,6 +1796,8 @@
 * This is really a complex thing, so I'll do it one step at a time
 * First step is making parties exist in the first place
   * In essence, they are just normal temporal entities without any special properties, so this part might be pretty easy
+  * Right, that's done now
+  * It was straightforward, but still took a bit of time
 
 
 
@@ -1896,9 +1898,9 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 ### Parties
 
 - [x] should exist as temporal entities
-  - [ ] have an editable name
-  - [ ] have a first appearance
-  - [ ] have a last appearance
+  - [x] have an editable name
+  - [x] have a first appearance
+  - [x] have a last appearance
   - [x] can be added
 
 ### Technical

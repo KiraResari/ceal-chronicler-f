@@ -8,7 +8,8 @@ import 'temporally_limited_template.dart';
 
 class LocationViewTemplate
     extends TemporallyLimitedTemplate<Location, LocationId> {
-  LocationViewTemplate(location) : super(location, getIt<LocationRepository>());
+  LocationViewTemplate(Location location)
+      : super(location, getIt<LocationRepository>());
 
   @override
   MainViewCandidate get associatedView => LocationView(location: entity);

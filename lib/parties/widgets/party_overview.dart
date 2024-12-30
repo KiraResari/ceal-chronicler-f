@@ -1,8 +1,9 @@
-import 'package:ceal_chronicler_f/parties/widgets/add_party_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/widgets/overview.dart';
 import '../model/party.dart';
+import 'add_party_button.dart';
+import 'party_button.dart';
 import 'party_overview_controller.dart';
 
 
@@ -28,7 +29,7 @@ class PartyOverview
 
   @override
   Widget buildItem(Party item) {
-    return const Text("Party");
+    return PartyButton(item);
   }
 
   @override
