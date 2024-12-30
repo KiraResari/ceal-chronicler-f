@@ -1787,6 +1787,18 @@
 
 [Time elapsed so far: 137.5 hours]
 
+# 30-Dec-2024
+
+* Now for the grand finale
+* There's really just one more big thing that I need to complete for the Ceal Chronicler to be really usable, and that is parties
+  * Specifically, the point of this is being able to group characters and move them around as a group instead of having to move each character, because that is something that is going to happen a lot
+* I wonder if I'll be able to finish this today, but I'll definitely try
+* This is really a complex thing, so I'll do it one step at a time
+* First step is making parties exist in the first place
+  * In essence, they are just normal temporal entities, so this part might be pretty easy
+
+
+
 # TODO
 
 * 
@@ -1881,7 +1893,12 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
   - [x] can only be connected to locations of the same level
   - [x] level editing should be restricted by connected, parent and child locations
 
+### Parties
 
+- [ ] should exist as temporal entities
+  - [ ] have an editable name
+  - [ ] have a first appearance
+  - [ ] have a last appearance
 
 ### Technical
 
