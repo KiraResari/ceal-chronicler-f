@@ -3,20 +3,20 @@ import 'package:flutter/material.dart';
 import '../../utils/widgets/buttons/small_circular_button.dart';
 import '../../utils/widgets/dialogs/select_dropdown_dialog.dart';
 import '../key_field.dart';
-import 'select_key_button_controller.dart';
+import 'key_field_controller.dart';
 
 class SelectKeyButton<T> extends SmallCircularButton {
   final KeyField<T> keyField;
   final List<DropdownMenuEntry<T>> entries;
   final String? labelText;
-  final SelectKeyButtonController<T> controller;
+  final KeyFieldController<T> controller;
 
   SelectKeyButton({
     super.key,
     required this.keyField,
     required this.entries,
     this.labelText,
-  })  : controller = SelectKeyButtonController(keyField),
+  })  : controller = KeyFieldController(keyField),
         super(icon: Icons.edit);
 
   @override

@@ -1831,6 +1831,11 @@
   * And now the characters are also being displayed in the parties
 * Now there's a bug that prevents me from loading my existing chronicle
   * I now fixed that
+* Right, and this is the point where there's no more putting off the complicated stuff
+  * On the upside, I have found out that the panels for displaying and editing the party ID are actually not standardized, which might make changing their behavior at least a little bit more easy
+  * However, the button used for adding characters at locations is still a generic `SelectKeyButton`
+  * So, how do I do this?
+  * The point is I need something like an `AddCharacterToPartyCommand` that I can use here, but how do I get it all the way in there?
 
 
 
