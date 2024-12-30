@@ -1,3 +1,8 @@
+import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+
+import '../../../characters/model/character.dart';
+import '../../../characters/widgets/character_button.dart';
 import '../../../utils/string_key.dart';
 import '../../../utils/widgets/temporal_entity_view.dart';
 import '../../model/party.dart';
@@ -11,5 +16,27 @@ class PartyView
   @override
   PartyViewController createController() {
     return PartyViewController(entity);
+  }
+
+  @override
+  List<TableRow> buildAdditionalEntityTableChildren(BuildContext context) {
+    return [
+      buildTableRow(
+          context, "Characters in party", _buildCharactersInParty(context)),
+    ];
+  }
+
+  Widget _buildCharactersInParty(BuildContext context) {
+    List<Character> charactersPresent =
+        context.watch<PartyViewController>().activeCharacters;
+    if (charactersPresent.isEmpty) {
+      return const Text("none");
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: charactersPresent
+          .map((character) => CharacterButton(character))
+          .toList(),
+    );
   }
 }

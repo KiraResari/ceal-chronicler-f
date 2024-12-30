@@ -1828,6 +1828,7 @@
   * ...except it is going to diverge when it comes to the standardized key fields and associated commands that I have, because adding characters to parties, as discussed above, requires some really sophisticated logic
   * But we'll worry about that when we get to it, and focus on the very basic functionality for now
   * Alright, so adding characters to parties in this most basic way works now, and so does removing them
+  * And now the characters are also being displayed in the parties
 
 
 
@@ -1934,7 +1935,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
   - [x] have a first appearance
   - [x] have a last appearance
   - [x] can be added
-- [ ] displays all characters in it
+- [x] displays all characters in it
 - [ ] displays present location if at least one active character is in it
 - [ ] allows for a change in location which then affects all active characters as long as at least one characters is active
 - [ ] displays present location as unknown if no active characters are in it 
