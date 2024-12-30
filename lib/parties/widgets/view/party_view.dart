@@ -1,6 +1,6 @@
-import '../../utils/string_key.dart';
-import '../../utils/widgets/temporal_entity_view.dart';
-import '../model/party.dart';
+import '../../../utils/string_key.dart';
+import '../../../utils/widgets/temporal_entity_view.dart';
+import '../../model/party.dart';
 import 'party_view_controller.dart';
 
 class PartyView

@@ -4,7 +4,7 @@ import '../characters/widgets/character_overview.dart';
 import '../incidents/widgets/incident_overview.dart';
 import '../locations/widgets/views/location_overview.dart';
 import '../main_view/main_view_candidate.dart';
-import '../parties/widgets/party_overview.dart';
+import '../parties/widgets/view/party_overview.dart';
 
 class OverviewView extends MainViewCandidate {
   const OverviewView({super.key});

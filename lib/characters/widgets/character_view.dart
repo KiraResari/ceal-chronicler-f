@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../key_fields/location_id_key_field.dart';
+import '../../key_fields/party_id_key_field.dart';
 import '../../locations/widgets/panels/location_id_key_field_panel.dart';
+import '../../parties/widgets/panels/party_id_key_field_panel.dart';
 import '../../utils/string_key.dart';
 import '../../utils/widgets/temporal_entity_view.dart';
 import '../model/character.dart';
@@ -22,9 +24,12 @@ class CharacterView
   List<TableRow> buildAdditionalEntityTableChildren(BuildContext context) {
     LocationIdKeyField locationIdKeyField =
         context.watch<CharacterViewController>().locationIdKeyField;
+    PartyIdKeyField partyIdKeyField =
+        context.watch<CharacterViewController>().partyIdKeyField;
     return [
       buildTableRow(context, "Present Location",
-          LocationIdKeyFieldPanel(locationIdKeyField))
+          LocationIdKeyFieldPanel(locationIdKeyField)),
+      buildTableRow(context, "Party", PartyIdKeyFieldPanel(partyIdKeyField)),
     ];
   }
 }

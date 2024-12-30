@@ -1825,7 +1825,9 @@
   * Okay, that is pretty complex, but I think I can do it if I do it step by step
 * First, let's focus on adding characters to parties without worrying about any of that location garbage
   * That should actually be very similar to adding characters to locations
-  * 
+  * ...except it is going to diverge when it comes to the standardized key fields and associated commands that I have, because adding characters to parties, as discussed above, requires some really sophisticated logic
+  * But we'll worry about that when we get to it, and focus on the very basic functionality for now
+  * Alright, so adding characters to parties in this most basic way works now, and so does removing them
 
 
 
@@ -1898,8 +1900,8 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [x] Characters can be unassigned from locations
 - [x] You can jump to the location from the character
   - [x] If a location does not exist at the current point, it is displayed as a greyed-out button
-- [ ] can be added to a party
-- [ ] can be removed from a party
+- [x] can be added to a party
+- [x] can be removed from a party
 
 
 ### Locations

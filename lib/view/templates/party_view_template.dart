@@ -3,7 +3,7 @@ import '../../main_view/main_view_candidate.dart';
 import '../../parties/model/party.dart';
 import '../../parties/model/party_id.dart';
 import '../../parties/model/party_repository.dart';
-import '../../parties/widgets/party_view.dart';
+import '../../parties/widgets/view/party_view.dart';
 import 'temporally_limited_template.dart';
 
 class PartyViewTemplate extends TemporallyLimitedTemplate<Party, PartyId> {
