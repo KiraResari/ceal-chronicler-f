@@ -1929,6 +1929,9 @@
   * I was able to do that easily as well
 * Next will be making it so that characters in parties are displayed to be at that location if they are in a party
   * That also goes for locations
+* This is as far as I'm getting with this today
+
+[Time elapsed so far: 147.75 hours]
 
 # TODO
 
