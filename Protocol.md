@@ -1926,6 +1926,9 @@
   * First, cleanup though
     * I now purged the old, messed-up approach to party locations from the code
 * Next will be giving a present location field to the party
+  * I was able to do that easily as well
+* Next will be making it so that characters in parties are displayed to be at that location if they are in a party
+  * That also goes for locations
 
 # TODO
 

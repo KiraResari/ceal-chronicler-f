@@ -8,6 +8,7 @@ import 'package:ceal_chronicler_f/io/file/file_processor.dart';
 import 'package:ceal_chronicler_f/key_fields/key_field_resolver.dart';
 import 'package:ceal_chronicler_f/locations/model/location_repository.dart';
 import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
+import 'package:ceal_chronicler_f/parties/model/party.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
 import 'package:ceal_chronicler_f/view/view_processor.dart';
@@ -76,6 +77,54 @@ main() {
       expect(validLastAppearances,
           containsAll([secondPointInTime, thirdPointInTime]));
       expect(validLastAppearances, isNot(contains(firstPointInTime)));
+    },
+  );
+
+  test(
+    "isPresentlyInParty should return true if character is presently in party",
+        () {
+      PointInTime present = pointInTimeRepository.activePointInTime;
+      var character = Character(present.id);
+      characterRepository.add(character);
+      var party = Party(present.id);
+      character.party.addOrUpdateKeyAtTime(party.id, present.id);
+      var controller = CharacterViewController(character);
+
+      bool isPresentlyInParty = controller.isPresentlyInParty;
+
+      expect(isPresentlyInParty, isTrue);
+    },
+  );
+
+  test(
+    "isPresentlyInParty should return false if character is not in any party",
+        () {
+      PointInTime present = pointInTimeRepository.activePointInTime;
+      var character = Character(present.id);
+      characterRepository.add(character);
+      var controller = CharacterViewController(character);
+
+      bool isPresentlyInParty = controller.isPresentlyInParty;
+
+      expect(isPresentlyInParty, isFalse);
+    },
+  );
+
+  test(
+    "isPresentlyInParty should return false if character is in party, but not at the present point in time",
+        () {
+      PointInTime present = pointInTimeRepository.activePointInTime;
+      var future = PointInTime("Second Point In Time");
+      pointInTimeRepository.addAtIndex(1, future);
+      var character = Character(present.id);
+      characterRepository.add(character);
+      var party = Party(present.id);
+      character.party.addOrUpdateKeyAtTime(party.id, future.id);
+      var controller = CharacterViewController(character);
+
+      bool isPresentlyInParty = controller.isPresentlyInParty;
+
+      expect(isPresentlyInParty, isFalse);
     },
   );
 }
