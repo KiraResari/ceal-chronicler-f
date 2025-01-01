@@ -1,3 +1,4 @@
+import 'package:ceal_chronicler_f/locations/model/location_id.dart';
 import 'package:ceal_chronicler_f/parties/model/party.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -61,6 +62,32 @@ main() {
       var decoded = Party.fromJsonString(jsonString);
 
       expect(decoded.lastAppearance, equals(original.lastAppearance));
+    },
+  );
+
+  test(
+    "Parsing Party to JSON and back should preserve present location if not set",
+        () {
+      var original = Party(PointInTimeId());
+
+      String jsonString = original.toJsonString();
+      var decoded = Party.fromJsonString(jsonString);
+
+      expect(decoded.presentLocation, equals(original.presentLocation));
+    },
+  );
+
+  test(
+    "Parsing Party to JSON and back should preserve present location if set",
+        () {
+      var original = Party(PointInTimeId());
+      original.presentLocation
+          .addOrUpdateKeyAtTime(LocationId(), PointInTimeId());
+
+      String jsonString = original.toJsonString();
+      var decoded = Party.fromJsonString(jsonString);
+
+      expect(decoded.presentLocation, equals(original.presentLocation));
     },
   );
 }

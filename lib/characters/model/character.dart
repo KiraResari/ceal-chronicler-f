@@ -12,7 +12,7 @@ class Character extends TemporalEntity<CharacterId> {
   static const String _presentLocationKey = "presentLocation";
   static const String _partyKey = "party";
 
-  LocationIdKeyField presentLocation;
+  final LocationIdKeyField presentLocation;
   final PartyIdKeyField party;
 
   Character(PointInTimeId firstAppearance)

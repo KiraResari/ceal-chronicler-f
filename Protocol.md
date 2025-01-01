@@ -1925,6 +1925,7 @@
   * That's not gonna make it inherently worse than the original design during normal use of the chronicler, and it's gonna be just SO MUCH easier to implement since this effectively makes the Party a location of the Character
   * First, cleanup though
     * I now purged the old, messed-up approach to party locations from the code
+* Next will be giving a present location field to the party
 
 # TODO
 
