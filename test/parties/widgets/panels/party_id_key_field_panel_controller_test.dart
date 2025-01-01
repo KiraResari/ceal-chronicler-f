@@ -11,7 +11,6 @@ import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
 import 'package:ceal_chronicler_f/parties/model/party.dart';
 import 'package:ceal_chronicler_f/parties/model/party_id.dart';
 import 'package:ceal_chronicler_f/parties/model/party_repository.dart';
-import 'package:ceal_chronicler_f/parties/party_location_resolver.dart';
 import 'package:ceal_chronicler_f/parties/widgets/panels/party_id_key_field_panel_controller.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
@@ -45,7 +44,6 @@ main() {
     getIt.registerSingleton<CharacterRepository>(characterRepository);
     getIt.registerSingleton<PartyRepository>(partyRepository);
     getIt.registerSingleton<LocationRepository>(LocationRepository());
-    getIt.registerSingleton<PartyLocationResolver>(PartyLocationResolver());
 
   });
 

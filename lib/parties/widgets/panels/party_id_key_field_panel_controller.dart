@@ -4,7 +4,6 @@ import '../../../characters/model/character.dart';
 import '../../../get_it_context.dart';
 import '../../../key_fields/widgets/key_field_controller.dart';
 import '../../../timeline/model/point_in_time_id.dart';
-import '../../commands/add_or_update_party_affiliation_command.dart';
 import '../../model/party.dart';
 import '../../model/party_id.dart';
 import '../../model/party_repository.dart';
@@ -57,16 +56,5 @@ class PartyIdKeyFieldPanelController extends KeyFieldController<PartyId?> {
         updateKey(id);
       }
     }
-  }
-
-  @override
-  void updateKey(PartyId? newValue) {
-    PointInTimeId pointInTimeId = pointInTimeRepository.activePointInTime.id;
-    Party? party = newValue == null
-        ? null
-        : _partyRepository.getContentElementById(newValue);
-    var command =
-        AddOrUpdatePartyAffiliationCommand(character, party, pointInTimeId);
-    commandProcessor.process(command);
   }
 }

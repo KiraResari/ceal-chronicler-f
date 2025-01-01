@@ -1917,11 +1917,18 @@
 
 [Time elapsed so far: 147.25 hours]
 
+# 1-Jan-2025
+
+* Now continuing with this
+* I have thought about this, including how much pain the present approach to the party locations is causing, and how many twisted things result as a consequence of this, and have decided to make it different instead
+  * Instead of how I planned it, I am gonna make it so that parties have their own set of present locations, and that those simply overrride the character locations while a character is inside a party
+  * That's not gonna make it inherently worse than the original design during normal use of the chronicler, and it's gonna be just SO MUCH easier to implement since this effectively makes the Party a location of the Character
+  * First, cleanup though
+    * I now purged the old, messed-up approach to party locations from the code
+
 # TODO
 
-* Debug: Adding characters to parties totally messes up their locations
-* Character locations should not be editable while they're in parties
-* Parties should have editable locations while characters are in them
+* 
 
 # User Story
 
