@@ -1,6 +1,6 @@
 enum LocationLevel {
   notSet('❔', _notSetName, -1),
-  minayero('✨', _minayeroName, 0),
+  multiverse('✨', _multiverseName, 0),
   universe('🌌', _universeName, 1),
   world('🪐', _worldName, 2),
   continent('🗺️', _continentName, 3),
@@ -9,7 +9,7 @@ enum LocationLevel {
   locale('📍', _localeName, 6);
 
   static const _notSetName = "Not Set";
-  static const _minayeroName = "Minayero";
+  static const _multiverseName = "Multiverse";
   static const _universeName = "Universe";
   static const _worldName = "World";
   static const _continentName = "Continent";
@@ -17,7 +17,7 @@ enum LocationLevel {
   static const _districtName = "District";
   static const _localeName = "Locale";
   static const Map<String, LocationLevel> _locationLevelMap = {
-    _minayeroName: LocationLevel.minayero,
+    _multiverseName: LocationLevel.multiverse,
     _universeName: LocationLevel.universe,
     _worldName: LocationLevel.world,
     _continentName: LocationLevel.continent,

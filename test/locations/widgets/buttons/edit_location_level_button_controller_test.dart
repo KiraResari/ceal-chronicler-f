@@ -69,7 +69,7 @@ main() {
       expect(
         validEntries.map((entry) => entry.value).toList(),
         unorderedEquals([
-          LocationLevel.minayero,
+          LocationLevel.multiverse,
           LocationLevel.universe,
           LocationLevel.world,
           LocationLevel.notSet,
