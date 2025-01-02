@@ -1941,10 +1941,22 @@
   * Looks like I might be having an issue with the null party ID here
   * Found and fixed that
   * Now this works
+* Next, let's work on making it so that in the location view, characters who are in parties are displayed at the locations of their parties, not at their overridden individual locations
+  * That was surprisingly easy to accomplish
+* With that, the parties are now up and working
+* This is as far as I'm getting with this today
+* And with this, the Ceal Chronicler f, after precisely one year of development, has reached a state that I would consider usable
+  * Since it was a fragmented effort though, let's put it into perspective
+  * The time I spent on this was less than half the time I spent on the AIG migration at work during the last time
+  * It is roughly equal to the time I spend working at my job in a month
+  * And it is roughly equal to the time I spend programming at my job in two months
+  * So although it took me a year to get this far, the current state more likely represents about a month of focused work, or about two months of less focused work 
+
+[Time elapsed so far: 148.5 hours]
 
 # TODO
 
-* In the location view, characters who are in parties should be displayed at the locations of their parties, not at their overridden individual locations
+* 
 
 # User Story
 
@@ -2035,7 +2047,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [x] can be saved and loaded
 - [x] Characters at a location at a time are displayed
   - [x] You can jump to these characters
-  - [ ] If a character is in a party, the character should be displayed at the location where the party is at that point, and not where the character is it at that point
+  - [x] If a character is in a party, the character should be displayed at the location where the party is at that point, and not where the character is it at that point
 - [x] should have an editable location level
   - [x] can only have parents of a higher level
   - [x] can only be connected to locations of the same level

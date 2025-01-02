@@ -1,6 +1,10 @@
+import 'package:ceal_chronicler_f/parties/model/party_repository.dart';
+
 import '../../../characters/model/character.dart';
 import '../../../characters/model/character_repository.dart';
 import '../../../get_it_context.dart';
+import '../../../parties/model/party.dart';
+import '../../../parties/model/party_id.dart';
 import '../../../utils/widgets/temporal_entity_view_controller.dart';
 import '../../commands/delete_parent_location_command.dart';
 import '../../model/location.dart';
@@ -19,6 +23,7 @@ class LocationViewController extends TemporalEntityViewController<Location> {
   final _locationRepository = getIt.get<LocationRepository>();
   final _locationConnectionRepository =
       getIt.get<LocationConnectionRepository>();
+  final _partyRepository = getIt.get<PartyRepository>();
 
   List<Character> get charactersPresentAtLocation {
     return _characterRepository.content
@@ -35,12 +40,30 @@ class LocationViewController extends TemporalEntityViewController<Location> {
   }
 
   bool _characterIsPresent(Character character) {
-    LocationId? currentLocationId =
-        keyFieldResolver.getCurrentValue(character.presentLocation);
-    bool characterIsAtLocation = currentLocationId == entity.id;
+    bool characterIsAtLocation = _characterIsAtLocation(character);
     bool characterIsActive =
         pointInTimeRepository.entityIsPresentlyActive(character);
     return characterIsAtLocation && characterIsActive;
+  }
+
+  bool _characterIsAtLocation(Character character) {
+    PartyId? partyId = keyFieldResolver.getCurrentValue(character.party);
+    if (partyId != null) {
+      return _partyIsAtLocation(partyId);
+    }
+    LocationId? currentLocationId =
+        keyFieldResolver.getCurrentValue(character.presentLocation);
+    return currentLocationId == entity.id;
+  }
+
+  bool _partyIsAtLocation(PartyId partyId) {
+    Party? party = _partyRepository.getContentElementById(partyId);
+    if (party == null) {
+      return false;
+    }
+    LocationId? currentLocationId =
+        keyFieldResolver.getCurrentValue(party.presentLocation);
+    return currentLocationId == entity.id;
   }
 
   List<Location> get childLocations {

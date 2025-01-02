@@ -13,6 +13,8 @@ import 'package:ceal_chronicler_f/locations/model/location_repository.dart';
 import 'package:ceal_chronicler_f/locations/widgets/panels/connected_location_panel_template.dart';
 import 'package:ceal_chronicler_f/locations/widgets/views/location_view_controller.dart';
 import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
+import 'package:ceal_chronicler_f/parties/model/party.dart';
+import 'package:ceal_chronicler_f/parties/model/party_repository.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_repository.dart';
@@ -26,6 +28,7 @@ main() {
   late LocationRepository locationRepository;
   late LocationConnectionRepository locationConnectionRepository;
   late CharacterRepository characterRepository;
+  late PartyRepository partyRepository;
 
   setUp(() {
     getIt.reset();
@@ -40,10 +43,12 @@ main() {
     locationRepository = LocationRepository();
     locationConnectionRepository = LocationConnectionRepository();
     characterRepository = CharacterRepository();
+    partyRepository = PartyRepository();
     getIt.registerSingleton<LocationRepository>(locationRepository);
     getIt.registerSingleton<LocationConnectionRepository>(
         locationConnectionRepository);
     getIt.registerSingleton<CharacterRepository>(characterRepository);
+    getIt.registerSingleton<PartyRepository>(partyRepository);
   });
 
   test(
@@ -281,6 +286,46 @@ main() {
           controller.getConnectedLocationsForDirection(direction.opposite);
 
       expect(connections, isEmpty);
+    },
+  );
+
+  test(
+    "get charactersPresentAtLocation should return character that is in party at location",
+    () {
+      PointInTime present = pointInTimeRepository.activePointInTime;
+      var location = Location(present.id);
+      var character = Character(present.id);
+      characterRepository.add(character);
+      var party = Party(present.id);
+      partyRepository.add(party);
+      character.party.addOrUpdateKeyAtTime(party.id, present.id);
+      party.presentLocation.addOrUpdateKeyAtTime(location.id, present.id);
+      var controller = LocationViewController(location);
+
+      List<Character> charactersAtLocation =
+          controller.charactersPresentAtLocation;
+
+      expect(charactersAtLocation, contains(character));
+    },
+  );
+
+  test(
+    "get charactersPresentAtLocation should not return character that is at location, but is in party that is not at location",
+    () {
+      PointInTime present = pointInTimeRepository.activePointInTime;
+      var location = Location(present.id);
+      var character = Character(present.id);
+      characterRepository.add(character);
+      var party = Party(present.id);
+      partyRepository.add(party);
+      character.party.addOrUpdateKeyAtTime(party.id, present.id);
+      character.presentLocation.addOrUpdateKeyAtTime(location.id, present.id);
+      var controller = LocationViewController(location);
+
+      List<Character> charactersAtLocation =
+          controller.charactersPresentAtLocation;
+
+      expect(charactersAtLocation, isNot(contains(character)));
     },
   );
 }
