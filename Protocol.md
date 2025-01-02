@@ -1933,9 +1933,18 @@
 
 [Time elapsed so far: 147.75 hours]
 
+# 2-Jan-2025
+
+* Now continuing with this
+* I am still in the middle of making it so that the party location is displayed in character instead of the character location if the character is in a party
+  * That now kinda works, only that for some strange reason the `isPresentlyInParty` sometimes apparently returns true even if the character is not presently in a party, which is weird
+  * Looks like I might be having an issue with the null party ID here
+  * Found and fixed that
+  * Now this works
+
 # TODO
 
-* 
+* In the location view, characters who are in parties should be displayed at the locations of their parties, not at their overridden individual locations
 
 # User Story
 
@@ -2004,7 +2013,8 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
   - [x] If a location does not exist at the current point, it is displayed as a greyed-out button
 - [x] can be added to a party
 - [x] can be removed from a party
-- [ ] location can't be edited while character is in party
+- [x] location can't be edited while character is in party
+- [x] if character is in party, the party's location should be displayed instead of the character's location
 
 
 ### Locations
@@ -2025,6 +2035,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [x] can be saved and loaded
 - [x] Characters at a location at a time are displayed
   - [x] You can jump to these characters
+  - [ ] If a character is in a party, the character should be displayed at the location where the party is at that point, and not where the character is it at that point
 - [x] should have an editable location level
   - [x] can only have parents of a higher level
   - [x] can only be connected to locations of the same level
@@ -2039,11 +2050,8 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
   - [x] can be added
 - [x] displays all characters in it
 - [x] displays present location if at least one active character is in it
-- [ ] allows for a change in location which then affects all active characters as long as at least one characters is active
+- [ ] allows for a change in location
 - [x] displays present location as unknown if no active characters are in it 
-- [ ] adding character to party behavior
-  - [ ] adding first character to party should not change that character's locations
-  - [ ] adding subsequent characters into party should overwrite their location for the duration during which they are in the party
 
 ### Technical
 

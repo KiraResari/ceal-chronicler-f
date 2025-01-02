@@ -105,7 +105,7 @@ main() {
   );
 
   test(
-    "updatePresentLocation should correctly update character's present location",
+    "updateKey should correctly update character's present location",
         () {
       PointInTimeId presentPointId = pointInTimeRepository.activePointInTime.id;
       var character = Character(presentPointId);
@@ -113,7 +113,7 @@ main() {
       var newLocation = Location(presentPointId);
       locationRepository.add(newLocation);
 
-      controller.updatePresentLocation(newLocation.id);
+      controller.updateKey(newLocation.id);
 
       Location? presentLocation = controller.presentLocation;
       expect(presentLocation, equals(newLocation));
@@ -121,7 +121,7 @@ main() {
   );
 
   test(
-    "updatePresentLocation with unknownLocationId should remove character's present location",
+    "updateKey with unknownLocationId should remove character's present location",
         () {
       PointInTimeId presentPointId = pointInTimeRepository.activePointInTime.id;
       var character = Character(presentPointId);
@@ -131,7 +131,7 @@ main() {
       var controller = LocationIdKeyFieldPanelController(character.presentLocation);
 
       controller
-          .updatePresentLocation(LocationIdKeyFieldPanelController.unknownLocationId);
+          .updateKey(LocationIdKeyFieldPanelController.unknownLocationId);
 
       LocationId? presentLocationId =
       keyFieldResolver.getCurrentValue(character.presentLocation);
@@ -140,7 +140,7 @@ main() {
   );
 
   test(
-    "updatePresentLocation with unknownLocationId should set character's present location to unknown, even if a previous key exists",
+    "updateKey with unknownLocationId should set character's present location to unknown, even if a previous key exists",
         () {
       var pastPoint = PointInTime("Past Point In Time");
       pointInTimeRepository.addAtIndex(0, pastPoint);
@@ -150,7 +150,7 @@ main() {
       var controller = LocationIdKeyFieldPanelController(character.presentLocation);
 
       controller
-          .updatePresentLocation(LocationIdKeyFieldPanelController.unknownLocationId);
+          .updateKey(LocationIdKeyFieldPanelController.unknownLocationId);
 
       LocationId? presentLocationId =
       keyFieldResolver.getCurrentValue(character.presentLocation);

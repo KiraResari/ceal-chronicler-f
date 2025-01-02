@@ -113,7 +113,7 @@ main() {
       var newParty = Party(presentPointId);
       partyRepository.add(newParty);
 
-      controller.updateParty(newParty.id);
+      controller.updateKey(newParty.id);
 
       Party? presentParty = controller.presentParty;
       expect(presentParty, equals(newParty));
@@ -129,7 +129,7 @@ main() {
       character.party.addOrUpdateKeyAtTime(partyId, presentPointId);
       var controller = PartyIdKeyFieldPanelController(character, character.party);
 
-      controller.updateParty(PartyIdKeyFieldPanelController.nonePartyId);
+      controller.updateKey(PartyIdKeyFieldPanelController.nonePartyId);
 
       PartyId? presentPartyId =
           keyFieldResolver.getCurrentValue(character.party);
@@ -147,7 +147,7 @@ main() {
       character.party.addOrUpdateKeyAtTime(partyId, pastPoint.id);
       var controller = PartyIdKeyFieldPanelController(character, character.party);
 
-      controller.updateParty(PartyIdKeyFieldPanelController.nonePartyId);
+      controller.updateKey(PartyIdKeyFieldPanelController.nonePartyId);
 
       PartyId? presentPartyId =
           keyFieldResolver.getCurrentValue(character.party);

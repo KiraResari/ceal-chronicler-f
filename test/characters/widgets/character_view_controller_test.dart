@@ -147,7 +147,7 @@ main() {
       party.presentLocation.addOrUpdateKeyAtTime(location.id, present.id);
       var controller = CharacterViewController(character);
 
-      Location? partyLocation = controller.getPartyLocation;
+      Location? partyLocation = controller.partyLocation;
 
       expect(partyLocation, equals(location));
     },

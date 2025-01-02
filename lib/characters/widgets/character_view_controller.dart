@@ -27,7 +27,7 @@ class CharacterViewController extends TemporalEntityViewController<Character> {
     return presentParty != null;
   }
 
-  Location? get getPartyLocation {
+  Location? get partyLocation {
     PartyId? partyId = keyFieldResolver.getCurrentValue(entity.party);
     if (partyId == null) {
       return null;

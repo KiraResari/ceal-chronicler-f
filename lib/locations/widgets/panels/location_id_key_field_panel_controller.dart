@@ -49,12 +49,13 @@ class LocationIdKeyFieldPanelController extends KeyFieldController<LocationId?> 
         value: location.id, label: icon + name);
   }
 
-  void updatePresentLocation(LocationId? locationId) {
-    if (locationId != null) {
-      if (locationId == unknownLocationId) {
-        updateKey(null);
+  @override
+  void updateKey(LocationId? newValue) {
+    if (newValue != null) {
+      if (newValue == unknownLocationId) {
+        super.updateKey(null);
       } else {
-        updateKey(locationId);
+        super.updateKey(newValue);
       }
     }
   }

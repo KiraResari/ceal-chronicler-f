@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../characters/model/character.dart';
 import '../../../get_it_context.dart';
 import '../../../key_fields/widgets/key_field_controller.dart';
-import '../../../timeline/model/point_in_time_id.dart';
 import '../../model/party.dart';
 import '../../model/party_id.dart';
 import '../../model/party_repository.dart';
@@ -48,12 +47,13 @@ class PartyIdKeyFieldPanelController extends KeyFieldController<PartyId?> {
     return DropdownMenuEntry<PartyId>(value: location.id, label: name);
   }
 
-  void updateParty(PartyId? id) {
-    if (id != null) {
-      if (id == nonePartyId) {
-        updateKey(null);
+  @override
+  void updateKey(PartyId? newValue) {
+    if (newValue != null) {
+      if (newValue == nonePartyId) {
+        super.updateKey(null);
       } else {
-        updateKey(id);
+        super.updateKey(newValue);
       }
     }
   }
