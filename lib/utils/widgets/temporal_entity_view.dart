@@ -1,6 +1,7 @@
 import 'package:ceal_chronicler_f/attributes/model/attribute.dart';
 import 'package:ceal_chronicler_f/attributes/widgets/add_attribute_button.dart';
 import 'package:ceal_chronicler_f/attributes/widgets/attribute_panel.dart';
+import 'package:ceal_chronicler_f/attributes/widgets/edit_attribute_label_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -246,7 +247,7 @@ abstract class TemporalEntityView<T extends TemporalEntity,
         0: IntrinsicColumnWidth(),
         1: IntrinsicColumnWidth(),
       },
-      defaultVerticalAlignment: TableCellVerticalAlignment.top,
+      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
       children: _buildAttributeTableRows(context),
     );
   }
@@ -261,9 +262,13 @@ abstract class TemporalEntityView<T extends TemporalEntity,
   TableRow _buildAttributeTableRow(BuildContext context, Attribute attribute) {
     ThemeData theme = Theme.of(context);
     TextStyle style = theme.textTheme.labelMedium!;
-    var firstCell = Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Text(attribute.label, style: style, textAlign: TextAlign.end),
+    var firstCell = Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        EditAttributeLabelButton(attribute),
+        Text(attribute.label, style: style, textAlign: TextAlign.end),
+        const SizedBox(width: 5),
+      ],
     );
     return TableRow(
       children: [

@@ -1,12 +1,12 @@
 import '../../../../commands/command.dart';
 import '../model/attribute.dart';
 
-class EditAttributeCommand extends Command {
+class EditAttributeNameCommand extends Command {
   final Attribute attribute;
   final String newName;
   String? _oldName;
 
-  EditAttributeCommand(this.attribute, this.newName);
+  EditAttributeNameCommand(this.attribute, this.newName);
 
   @override
   void execute() {

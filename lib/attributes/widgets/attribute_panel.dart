@@ -5,7 +5,7 @@ import '../../utils/model/temporal_entity.dart';
 import '../model/attribute.dart';
 import 'attribute_panel_controller.dart';
 import 'delete_attribute_button.dart';
-import 'edit_attribute_button.dart';
+import 'edit_attribute_name_button.dart';
 import 'move_attribute_down_button.dart';
 import 'move_attribute_up_button.dart';
 
@@ -31,11 +31,8 @@ class AttributePanel extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(attribute.name),
-        ),
-        EditAttributeButton(attribute),
+        Text(attribute.name),
+        EditAttributeNameButton(attribute),
         MoveAttributeUpButton(entity, attribute, canAttributeBeMovedUp),
         MoveAttributeDownButton(entity, attribute, canAttributeBeMovedDown),
         DeleteAttributeButton(entity, attribute),
