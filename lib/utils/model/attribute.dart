@@ -5,7 +5,7 @@ import 'attribute_id.dart';
 
 class Attribute extends IdHolder<AttributeId> {
   static const String nameKey = "name";
-  static const defaultName = "New incident";
+  static const defaultName = "New attribute";
 
   String name = defaultName;
 

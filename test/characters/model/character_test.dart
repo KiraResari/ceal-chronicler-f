@@ -2,6 +2,7 @@ import 'package:ceal_chronicler_f/characters/model/character.dart';
 import 'package:ceal_chronicler_f/locations/model/location_id.dart';
 import 'package:ceal_chronicler_f/parties/model/party_id.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
+import 'package:ceal_chronicler_f/utils/model/attribute.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 main() {
@@ -114,6 +115,19 @@ main() {
       var decoded = Character.fromJsonString(jsonString);
 
       expect(decoded.party, equals(original.party));
+    },
+  );
+
+  test(
+    "Parsing Character to JSON and back should preserve attributes",
+    () {
+      var original = Character(PointInTimeId());
+      original.attributes.add(Attribute());
+
+      String jsonString = original.toJsonString();
+      var decoded = Character.fromJsonString(jsonString);
+
+      expect(decoded.attributes.length, equals(1));
     },
   );
 }
