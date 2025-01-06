@@ -1,3 +1,5 @@
+import 'package:ceal_chronicler_f/utils/model/attribute.dart';
+
 import '../../commands/processor_listener.dart';
 import '../../get_it_context.dart';
 import '../../key_fields/key_field_resolver.dart';
@@ -102,4 +104,6 @@ abstract class TemporalEntityViewController<T extends TemporalEntity>
     var command = DeleteLastAppearanceCommand(entity);
     commandProcessor.process(command);
   }
+
+  List<Attribute> get attributes => entity.attributes;
 }

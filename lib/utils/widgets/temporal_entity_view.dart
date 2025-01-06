@@ -1,3 +1,5 @@
+import 'package:ceal_chronicler_f/utils/model/attribute.dart';
+import 'package:ceal_chronicler_f/utils/widgets/attributes/add_attribute_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -68,6 +70,7 @@ abstract class TemporalEntityView<T extends TemporalEntity,
         _buildEntityTableChildren(context),
       )
     ];
+    columns.add(_buildAttributeColumn(context));
     columns.addAll(buildAdditionalColumns(context));
     ScrollController controller = ScrollController();
 
@@ -82,6 +85,23 @@ abstract class TemporalEntityView<T extends TemporalEntity,
           children: columns,
         ),
       ),
+    );
+  }
+
+  Widget _buildAttributeColumn(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    TextStyle style = theme.textTheme.titleMedium!;
+    List<Attribute> attributes = context.watch<C>().attributes;
+    List<Text> attributeNames = attributes.map((e) => Text(e.name)).toList();
+    return Column(
+      children: [
+        Text(
+          "Permanent Attributes",
+          style: style,
+        ),
+        ...attributeNames,
+        AddAttributeButton(entity),
+      ],
     );
   }
 

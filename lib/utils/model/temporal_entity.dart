@@ -26,11 +26,12 @@ abstract class TemporalEntity<T extends ReadableUuid> extends IdHolder<T> {
       : name = StringKeyField.fromJson(json[_nameKey]),
         firstAppearance = PointInTimeId.fromJson(json[_firstApperanceKey]),
         lastAppearance = _determineLastAppearanceFromJson(json),
-        attributes = _determineAttributesFromJson(json[_attributesKey]),
+        attributes = _determineAttributesFromJson(json),
         super(id);
 
   static PointInTimeId? _determineLastAppearanceFromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     if (json[_lastApperanceKey] == null) {
       return null;
     }
@@ -38,9 +39,13 @@ abstract class TemporalEntity<T extends ReadableUuid> extends IdHolder<T> {
   }
 
   static List<Attribute> _determineAttributesFromJson(
-    List<dynamic> attributeJsonList,
+    Map<String, dynamic> json,
   ) {
-    return attributeJsonList.map((e) => Attribute.fromJson(e)).toList();
+    var jsonAttributes = json[_attributesKey];
+    if (jsonAttributes == null) {
+      return [];
+    }
+    return jsonAttributes.map<Attribute>((e) => Attribute.fromJson(e)).toList();
   }
 
   @override
