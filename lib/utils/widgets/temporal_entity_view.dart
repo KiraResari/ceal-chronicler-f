@@ -1,5 +1,6 @@
-import 'package:ceal_chronicler_f/utils/model/attribute.dart';
-import 'package:ceal_chronicler_f/utils/widgets/attributes/add_attribute_button.dart';
+import 'package:ceal_chronicler_f/attributes/model/attribute.dart';
+import 'package:ceal_chronicler_f/attributes/widgets/add_attribute_button.dart';
+import 'package:ceal_chronicler_f/attributes/widgets/attribute_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -92,14 +93,16 @@ abstract class TemporalEntityView<T extends TemporalEntity,
     ThemeData theme = Theme.of(context);
     TextStyle style = theme.textTheme.titleMedium!;
     List<Attribute> attributes = context.watch<C>().attributes;
-    List<Text> attributeNames = attributes.map((e) => Text(e.name)).toList();
+    List<AttributePanel> attributePanels = attributes
+        .map((attribute) => AttributePanel(entity, attribute))
+        .toList();
     return Column(
       children: [
         Text(
           "Permanent Attributes",
           style: style,
         ),
-        ...attributeNames,
+        ...attributePanels,
         AddAttributeButton(entity),
       ],
     );

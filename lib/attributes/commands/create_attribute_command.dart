@@ -1,6 +1,6 @@
-import '../../../commands/command.dart';
-import '../../model/attribute.dart';
-import '../../model/temporal_entity.dart';
+import '../../../../commands/command.dart';
+import '../../utils/model/temporal_entity.dart';
+import '../model/attribute.dart';
 
 class CreateAttributeCommand extends Command {
   Attribute? _createdAttribute;

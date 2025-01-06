@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../../commands/command_processor.dart';
-import '../../../get_it_context.dart';
-import '../../commands/attributes/create_attribute_command.dart';
-import '../../model/temporal_entity.dart';
-import '../buttons/small_circular_button.dart';
+import '../../commands/command_processor.dart';
+import '../../get_it_context.dart';
+import '../../utils/model/temporal_entity.dart';
+import '../../utils/widgets/buttons/small_circular_button.dart';
+import '../commands/create_attribute_command.dart';
 
 class AddAttributeButton extends SmallCircularButton {
   final CommandProcessor commandProcessor = getIt.get<CommandProcessor>();

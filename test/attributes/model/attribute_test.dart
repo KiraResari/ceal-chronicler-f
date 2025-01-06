@@ -1,4 +1,4 @@
-import 'package:ceal_chronicler_f/utils/model/attribute.dart';
+import 'package:ceal_chronicler_f/attributes/model/attribute.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 main() {

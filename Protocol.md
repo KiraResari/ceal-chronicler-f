@@ -1962,10 +1962,13 @@
 * Something that really is still missing, however, is something versatile that I can use to bridge anything that I could not directly address yet, such as items, skills, knowledge, species, characteristics, etc...
   * I think I'll do that by giving each temporal entity a list of fixed and temporal attributes, that should provide a good amount of flexibility and also be easy to implement
   * The attributes are quite similar to the incidents, and yet a little different
+  * It still took a while, but the permanent attributes work now
+    * They are great for tracking things that don't change, such as species
 
 # TODO
 
 * Allow for deletion of characters and locations
+* Consolidate incident and attribute widgets
 
 # User Story
 
@@ -2036,7 +2039,10 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [x] can be removed from a party
 - [x] location can't be edited while character is in party
 - [x] if character is in party, the party's location should be displayed instead of the character's location
-- [ ] Characters should have editable fixed and temporal attributes
+- [ ] Characters should have editable permanent and temporal attributes
+  - [x] permanent attributes
+  - [ ] temporal attributes
+
 
 
 ### Locations
@@ -2072,7 +2078,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
   - [x] can be added
 - [x] displays all characters in it
 - [x] displays present location if at least one active character is in it
-- [ ] allows for a change in location
+- [x] allows for a change in location
 - [x] displays present location as unknown if no active characters are in it 
 
 ### Technical
@@ -2090,4 +2096,4 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
   * That is because there's no way to directly change the selected value of a `DropdownMenu` from the outside, only the `initialSelection`
 * (minor impact, very difficult to solve) Undoing and redoing moving of first and last appearances can sometimes end up with the active point of time being a point at which the character does not exist
   * This is because the active point of time changes as necessary if it the moving of a first or last appearance puts it out of bounds
-    * That moving is done in the `CharacterViewController` and not the `UpdateFirstAppearanceCommand` or `UpdateLastAppearanceCommand` because commands should not contain other commands, so this is a logical conundrom
+    * That moving is done in the `CharacterViewController` and not the `UpdateFirstAppearanceCommand` or `UpdateLastAppearanceCommand` because commands should not contain other commands, so this is a logical conundrum

@@ -1,4 +1,4 @@
-import 'package:ceal_chronicler_f/utils/model/attribute.dart';
+import 'package:ceal_chronicler_f/attributes/model/attribute.dart';
 
 import '../../key_fields/key_field_info.dart';
 import '../../key_fields/string_key_field.dart';

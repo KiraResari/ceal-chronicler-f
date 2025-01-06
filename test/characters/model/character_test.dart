@@ -2,7 +2,7 @@ import 'package:ceal_chronicler_f/characters/model/character.dart';
 import 'package:ceal_chronicler_f/locations/model/location_id.dart';
 import 'package:ceal_chronicler_f/parties/model/party_id.dart';
 import 'package:ceal_chronicler_f/timeline/model/point_in_time_id.dart';
-import 'package:ceal_chronicler_f/utils/model/attribute.dart';
+import 'package:ceal_chronicler_f/attributes/model/attribute.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 main() {

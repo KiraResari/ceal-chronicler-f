@@ -1,9 +1,9 @@
+import 'package:ceal_chronicler_f/attributes/commands/edit_attribute_command.dart';
 import 'package:ceal_chronicler_f/commands/command_history.dart';
 import 'package:ceal_chronicler_f/commands/command_processor.dart';
 import 'package:ceal_chronicler_f/get_it_context.dart';
 import 'package:ceal_chronicler_f/message_bar/message_bar_state.dart';
-import 'package:ceal_chronicler_f/utils/commands/attributes/edit_attribute_command.dart';
-import 'package:ceal_chronicler_f/utils/model/attribute.dart';
+import 'package:ceal_chronicler_f/attributes/model/attribute.dart';
 import 'package:ceal_chronicler_f/view/view_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 

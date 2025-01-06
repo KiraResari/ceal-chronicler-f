@@ -1,7 +1,7 @@
-import '../../../commands/command.dart';
-import '../../list_utils.dart';
-import '../../model/attribute.dart';
-import '../../model/temporal_entity.dart';
+import '../../../../commands/command.dart';
+import '../../utils/list_utils.dart';
+import '../../utils/model/temporal_entity.dart';
+import '../model/attribute.dart';
 
 class MoveAttributeDownCommand extends Command {
   final Attribute attribute;

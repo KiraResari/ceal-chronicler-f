@@ -1,4 +1,4 @@
-import 'package:ceal_chronicler_f/utils/model/attribute.dart';
+import 'package:ceal_chronicler_f/attributes/model/attribute.dart';
 
 import '../../commands/processor_listener.dart';
 import '../../get_it_context.dart';
