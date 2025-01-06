@@ -1,3 +1,4 @@
+import 'package:ceal_chronicler_f/locations/widgets/buttons/delete_location_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utils/widgets/overview.dart';
@@ -27,7 +28,12 @@ class LocationOverview extends Overview<Location, LocationOverviewController> {
 
   @override
   Widget buildItem(Location item) {
-    return LocationButton(item);
+    return Row(
+      children: [
+        LocationButton(item),
+        DeleteLocationButton(item),
+      ],
+    );
   }
 
   @override

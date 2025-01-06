@@ -1983,6 +1983,7 @@
 * Allow for deletion of characters and locations
 * Consolidate incident and attribute widgets
 * Consolidate Temporal Attribute and Attribute
+* If you delete a character/location/party, undo it, move into that entity, and then redo the deletion, you are now effectively inside a deleted entity; it would be better if in that case you got ejected to the `OverviewView`
 
 # User Story
 
@@ -2082,6 +2083,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
   - [x] can only have parents of a higher level
   - [x] can only be connected to locations of the same level
   - [x] level editing should be restricted by connected, parent and child locations
+- [x] can be deleted
 
 ### Parties
 
