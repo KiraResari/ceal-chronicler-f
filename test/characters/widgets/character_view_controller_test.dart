@@ -92,6 +92,7 @@ main() {
       var character = Character(present.id);
       characterRepository.add(character);
       var party = Party(present.id);
+      partyRepository.add(party);
       character.party.addOrUpdateKeyAtTime(party.id, present.id);
       var controller = CharacterViewController(character);
 
@@ -124,7 +125,24 @@ main() {
       var character = Character(present.id);
       characterRepository.add(character);
       var party = Party(present.id);
+      partyRepository.add(party);
       character.party.addOrUpdateKeyAtTime(party.id, future.id);
+      var controller = CharacterViewController(character);
+
+      bool isPresentlyInParty = controller.isPresentlyInParty;
+
+      expect(isPresentlyInParty, isFalse);
+    },
+  );
+
+  test(
+    "isPresentlyInParty should return false if character is presently in party, but the party does not exist in the repository",
+        () {
+      PointInTime present = pointInTimeRepository.activePointInTime;
+      var character = Character(present.id);
+      characterRepository.add(character);
+      var party = Party(present.id);
+      character.party.addOrUpdateKeyAtTime(party.id, present.id);
       var controller = CharacterViewController(character);
 
       bool isPresentlyInParty = controller.isPresentlyInParty;

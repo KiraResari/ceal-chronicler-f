@@ -1977,10 +1977,15 @@
 * As finishing touches, I want to try and make it so that characters, locations and parties can be deleted
   * At first thought that seems like a huge complicated tasks because of dangling references, but I think Flutter and my architecture actually forced me to program so that I already implemented handling for that along the way
   * Yes, looks good. For the characters this is now working nicely
+  * For the location it worked nicely too
+  * For the party, there's the thing with overriding the location that I need to bend a little bit more nicely, because right now the location is overridden even if the party doesn't exist, causing a false "unknown"
+    * But I now fixed that too
+  * With that, the deletion of characters, parties and locations now works
+    * There's at least one tiny not-so-nice thing that you can do here by using undo and redo to worm your way into a deleted entity view, but that's okay for now
+* At this point, I think this is good enough, and I'm going to release the Version 1.0.0 at this point
 
 # TODO
 
-* Allow for deletion of characters and locations
 * Consolidate incident and attribute widgets
 * Consolidate Temporal Attribute and Attribute
 * If you delete a character/location/party, undo it, move into that entity, and then redo the deletion, you are now effectively inside a deleted entity; it would be better if in that case you got ejected to the `OverviewView`
@@ -2096,6 +2101,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [x] displays present location if at least one active character is in it
 - [x] allows for a change in location
 - [x] displays present location as unknown if no active characters are in it 
+- [x] can be deleted
 
 ### Technical
 

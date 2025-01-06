@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../utils/widgets/overview.dart';
 import '../../model/party.dart';
 import '../buttons/add_party_button.dart';
+import '../buttons/delete_party_button.dart';
 import '../buttons/party_button.dart';
 import 'party_overview_controller.dart';
 
@@ -29,7 +30,12 @@ class PartyOverview
 
   @override
   Widget buildItem(Party item) {
-    return PartyButton(item);
+    return Row(
+      children: [
+        PartyButton(item),
+        DeletePartyButton(item),
+      ],
+    );
   }
 
   @override

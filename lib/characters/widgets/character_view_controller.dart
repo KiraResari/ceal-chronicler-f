@@ -24,7 +24,11 @@ class CharacterViewController extends TemporalEntityViewController<Character> {
 
   bool get isPresentlyInParty {
     PartyId? presentParty = keyFieldResolver.getCurrentValue(entity.party);
-    return presentParty != null;
+    if (presentParty == null) {
+      return false;
+    }
+    Party? party = partyRepository.getContentElementById(presentParty);
+    return party != null;
   }
 
   Location? get partyLocation {
