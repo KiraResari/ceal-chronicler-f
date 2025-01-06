@@ -1983,6 +1983,9 @@
   * With that, the deletion of characters, parties and locations now works
     * There's at least one tiny not-so-nice thing that you can do here by using undo and redo to worm your way into a deleted entity view, but that's okay for now
 * At this point, I think this is good enough, and I'm going to release the Version 1.0.0 at this point
+* And that is as far as I'm getting with this for this sprint
+
+[Time elapsed so far: 154.75 hours]
 
 # TODO
 
