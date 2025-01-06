@@ -24,9 +24,9 @@ class PartyView extends TemporalEntityView<Party, PartyViewController> {
     LocationIdKeyField locationIdKeyField =
         context.watch<PartyViewController>().locationIdKeyField;
     return [
-      buildTableRow(context, "Present Location",
+      buildNamedTableRow(context, "Present Location",
           LocationIdKeyFieldPanel(locationIdKeyField)),
-      buildTableRow(
+      buildNamedTableRow(
           context, "Characters in party", _buildCharactersInParty(context)),
     ];
   }

@@ -27,9 +27,9 @@ class CharacterView
     PartyIdKeyField partyIdKeyField =
         context.watch<CharacterViewController>().partyIdKeyField;
     return [
-      buildTableRow(
+      buildNamedTableRow(
           context, "Present Location", _buildPresentLocationPanel(context)),
-      buildTableRow(
+      buildNamedTableRow(
           context, "Party", PartyIdKeyFieldPanel(entity, partyIdKeyField)),
     ];
   }

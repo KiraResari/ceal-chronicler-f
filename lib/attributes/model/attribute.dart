@@ -4,10 +4,11 @@ import '../../utils/model/id_holder.dart';
 import 'attribute_id.dart';
 
 class Attribute extends IdHolder<AttributeId> {
+  static const String labelKey = "label";
   static const String nameKey = "name";
-  static const defaultName = "New attribute";
 
-  String name = defaultName;
+  String label = "Attribute";
+  String name = "New attribute";
 
   Attribute() : super(AttributeId());
 
@@ -15,7 +16,8 @@ class Attribute extends IdHolder<AttributeId> {
       : this.fromJson(jsonDecode(jsonString));
 
   Attribute.fromJson(Map<String, dynamic> json)
-      : name = json[nameKey],
+      : label = json[labelKey] ?? "",
+        name = json[nameKey],
         super(AttributeId.fromString(json[IdHolder.idKey]));
 
   String get identifier => name;
@@ -23,11 +25,12 @@ class Attribute extends IdHolder<AttributeId> {
   String get identifierDescription => nameKey;
 
   @override
-  String toString() => 'Incident{id: $id, name: $name}';
+  String toString() => 'Attribute{id: $id, label: $label, name: $name}';
 
   @override
   Map<String, dynamic> toJson() => {
         IdHolder.idKey: id.uuid,
+        labelKey: label,
         nameKey: name,
       };
 

@@ -89,27 +89,6 @@ abstract class TemporalEntityView<T extends TemporalEntity,
     );
   }
 
-  Widget _buildAttributeColumn(BuildContext context) {
-    ThemeData theme = Theme.of(context);
-    TextStyle style = theme.textTheme.titleMedium!;
-    List<Attribute> attributes = context.watch<C>().attributes;
-    List<AttributePanel> attributePanels = attributes
-        .map((attribute) => AttributePanel(entity, attribute))
-        .toList();
-    return Column(
-      children: [
-        Text(
-          "Permanent Attributes",
-          style: style,
-        ),
-        ...attributePanels,
-        AddAttributeButton(entity),
-      ],
-    );
-  }
-
-  List<Widget> buildAdditionalColumns(BuildContext context) => [];
-
   Table buildEntityTable(BuildContext context, List<TableRow> children) {
     return Table(
       columnWidths: const <int, TableColumnWidth>{
@@ -124,10 +103,10 @@ abstract class TemporalEntityView<T extends TemporalEntity,
   List<TableRow> _buildEntityTableChildren(BuildContext context) {
     StringKeyField nameField = context.watch<C>().nameField;
     var children = [
-      buildTableRow(context, "Name", StringKeyFieldView(nameField)),
-      buildTableRow(
+      buildNamedTableRow(context, "Name", StringKeyFieldView(nameField)),
+      buildNamedTableRow(
           context, "First Appearance", _buildFirstAppearanceBlock(context)),
-      buildTableRow(
+      buildNamedTableRow(
           context, "Last Appearance", _buildLastAppearanceBlock(context)),
     ];
     children.addAll(buildAdditionalEntityTableChildren(context));
@@ -136,16 +115,21 @@ abstract class TemporalEntityView<T extends TemporalEntity,
 
   List<TableRow> buildAdditionalEntityTableChildren(BuildContext context) => [];
 
-  TableRow buildTableRow(BuildContext context, String label, Widget child) {
+  TableRow buildNamedTableRow(
+    BuildContext context,
+    String label,
+    Widget secondCell,
+  ) {
     ThemeData theme = Theme.of(context);
     TextStyle style = theme.textTheme.labelMedium!;
+    var firstCell = Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text(label, style: style, textAlign: TextAlign.end),
+    );
     return TableRow(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(label, style: style, textAlign: TextAlign.end),
-        ),
-        child,
+        firstCell,
+        secondCell,
       ],
     );
   }
@@ -240,4 +224,54 @@ abstract class TemporalEntityView<T extends TemporalEntity,
       );
     }).toList();
   }
+
+  Widget _buildAttributeColumn(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    TextStyle style = theme.textTheme.titleMedium!;
+    return Column(
+      children: [
+        Text(
+          "Permanent Attributes",
+          style: style,
+        ),
+        _buildAttributeTable(context),
+        AddAttributeButton(entity),
+      ],
+    );
+  }
+
+  Widget _buildAttributeTable(BuildContext context) {
+    return Table(
+      columnWidths: const <int, TableColumnWidth>{
+        0: IntrinsicColumnWidth(),
+        1: IntrinsicColumnWidth(),
+      },
+      defaultVerticalAlignment: TableCellVerticalAlignment.top,
+      children: _buildAttributeTableRows(context),
+    );
+  }
+
+  List<TableRow> _buildAttributeTableRows(BuildContext context) {
+    List<Attribute> attributes = context.watch<C>().attributes;
+    return attributes
+        .map((attribute) => _buildAttributeTableRow(context, attribute))
+        .toList();
+  }
+
+  TableRow _buildAttributeTableRow(BuildContext context, Attribute attribute) {
+    ThemeData theme = Theme.of(context);
+    TextStyle style = theme.textTheme.labelMedium!;
+    var firstCell = Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text(attribute.label, style: style, textAlign: TextAlign.end),
+    );
+    return TableRow(
+      children: [
+        firstCell,
+        AttributePanel(entity, attribute),
+      ],
+    );
+  }
+
+  List<Widget> buildAdditionalColumns(BuildContext context) => [];
 }

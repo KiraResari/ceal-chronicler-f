@@ -23,16 +23,7 @@ class AttributePanel extends StatelessWidget {
     );
   }
 
-  Card _buildContent(BuildContext context) {
-    ThemeData theme = Theme.of(context);
-    Color cardColor = theme.colorScheme.inversePrimary;
-    return Card(
-      color: cardColor,
-      child: _buildTextAndButtons(context),
-    );
-  }
-
-  Row _buildTextAndButtons(BuildContext context) {
+  Widget _buildContent(BuildContext context) {
     bool canAttributeBeMovedUp =
         context.watch<AttributePanelController>().canAttributeBeMovedUp;
     bool canAttributeBeMovedDown =

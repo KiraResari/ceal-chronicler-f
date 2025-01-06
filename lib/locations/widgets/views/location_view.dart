@@ -30,7 +30,7 @@ class LocationView
   @override
   List<TableRow> buildAdditionalEntityTableChildren(BuildContext context) {
     return [
-      buildTableRow(
+      buildNamedTableRow(
           context, "Characters present", _buildCharactersPresent(context)),
     ];
   }
@@ -72,10 +72,10 @@ class LocationView
 
   Widget _buildLevelParentAndChildLocationBlock(BuildContext context) {
     List<TableRow> children = [
-      buildTableRow(context, "Location level", _buildLocationLevel(context)),
-      buildTableRow(
+      buildNamedTableRow(context, "Location level", _buildLocationLevel(context)),
+      buildNamedTableRow(
           context, "Parent location", _buildParentLocationPanel(context)),
-      buildTableRow(context, "Child Locations", _buildChildLocations(context)),
+      buildNamedTableRow(context, "Child Locations", _buildChildLocations(context)),
     ];
     return buildEntityTable(context, children);
   }

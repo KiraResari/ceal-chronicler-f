@@ -1964,6 +1964,7 @@
   * The attributes are quite similar to the incidents, and yet a little different
   * It still took a while, but the permanent attributes work now
     * They are great for tracking things that don't change, such as species
+    * And since I just realized I was mostly using them with labels in the value, I figure I can make it so that the labels are separate
 
 # TODO
 
