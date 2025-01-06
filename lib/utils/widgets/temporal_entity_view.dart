@@ -246,6 +246,7 @@ abstract class TemporalEntityView<T extends TemporalEntity,
       columnWidths: const <int, TableColumnWidth>{
         0: IntrinsicColumnWidth(),
         1: IntrinsicColumnWidth(),
+        2: IntrinsicColumnWidth(),
       },
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
       children: _buildAttributeTableRows(context),
@@ -273,7 +274,8 @@ abstract class TemporalEntityView<T extends TemporalEntity,
     return TableRow(
       children: [
         firstCell,
-        AttributePanel(entity, attribute),
+        Text(attribute.name),
+        AttributeControls(entity, attribute),
       ],
     );
   }

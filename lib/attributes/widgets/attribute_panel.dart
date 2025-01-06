@@ -1,3 +1,4 @@
+import 'package:ceal_chronicler_f/utils/string_key.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,29 +10,29 @@ import 'edit_attribute_name_button.dart';
 import 'move_attribute_down_button.dart';
 import 'move_attribute_up_button.dart';
 
-class AttributePanel extends StatelessWidget {
+class AttributeControls extends StatelessWidget {
   final Attribute attribute;
   final TemporalEntity entity;
 
-  const AttributePanel(this.entity, this.attribute, {super.key});
+  AttributeControls(this.entity, this.attribute)
+      : super(key: StringKey(attribute.id.uuid));
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => AttributePanelController(entity, attribute),
+      create: (context) => AttributeControlsController(entity, attribute),
       builder: (context, child) => _buildContent(context),
     );
   }
 
   Widget _buildContent(BuildContext context) {
     bool canAttributeBeMovedUp =
-        context.watch<AttributePanelController>().canAttributeBeMovedUp;
+        context.watch<AttributeControlsController>().canAttributeBeMovedUp;
     bool canAttributeBeMovedDown =
-        context.watch<AttributePanelController>().canAttributeBeMovedDown;
+        context.watch<AttributeControlsController>().canAttributeBeMovedDown;
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(attribute.name),
         EditAttributeNameButton(attribute),
         MoveAttributeUpButton(entity, attribute, canAttributeBeMovedUp),
         MoveAttributeDownButton(entity, attribute, canAttributeBeMovedDown),
