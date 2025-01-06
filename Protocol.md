@@ -1977,6 +1977,7 @@
 
 * Allow for deletion of characters and locations
 * Consolidate incident and attribute widgets
+* Consolidate Temporal Attribute and Attribute
 
 # User Story
 

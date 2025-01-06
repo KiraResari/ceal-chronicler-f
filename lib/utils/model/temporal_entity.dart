@@ -1,5 +1,5 @@
-import 'package:ceal_chronicler_f/attributes/model/attribute.dart';
-
+import '../../attributes/model/attribute.dart';
+import '../../attributes/model/temporal_attribute.dart';
 import '../../key_fields/key_field_info.dart';
 import '../../key_fields/string_key_field.dart';
 import '../../timeline/model/point_in_time_id.dart';
@@ -11,15 +11,18 @@ abstract class TemporalEntity<T extends ReadableUuid> extends IdHolder<T> {
   static const String _firstApperanceKey = "firstAppearance";
   static const String _lastApperanceKey = "lastAppearance";
   static const String _attributesKey = "attributes";
+  static const String _temporalAttributesKey = "temporalAttributes";
 
   final StringKeyField name;
   PointInTimeId firstAppearance;
   PointInTimeId? lastAppearance;
   final List<Attribute> attributes;
+  final List<TemporalAttribute> temporalAttributes;
 
   TemporalEntity(String nameString, T id, this.firstAppearance)
       : name = StringKeyField(nameString),
         attributes = [],
+        temporalAttributes = [],
         super(id);
 
   TemporalEntity.fromJson(Map<String, dynamic> json, T id)
@@ -27,6 +30,7 @@ abstract class TemporalEntity<T extends ReadableUuid> extends IdHolder<T> {
         firstAppearance = PointInTimeId.fromJson(json[_firstApperanceKey]),
         lastAppearance = _determineLastAppearanceFromJson(json),
         attributes = _determineAttributesFromJson(json),
+        temporalAttributes = _determineTemporalAttributesFromJson(json),
         super(id);
 
   static PointInTimeId? _determineLastAppearanceFromJson(
@@ -46,6 +50,18 @@ abstract class TemporalEntity<T extends ReadableUuid> extends IdHolder<T> {
       return [];
     }
     return jsonAttributes.map<Attribute>((e) => Attribute.fromJson(e)).toList();
+  }
+
+  static List<TemporalAttribute> _determineTemporalAttributesFromJson(
+    Map<String, dynamic> json,
+  ) {
+    var jsonAttributes = json[_temporalAttributesKey];
+    if (jsonAttributes == null) {
+      return [];
+    }
+    return jsonAttributes
+        .map<Attribute>((e) => TemporalAttribute.fromJson(e))
+        .toList();
   }
 
   @override
