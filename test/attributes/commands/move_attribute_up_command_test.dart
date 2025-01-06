@@ -22,14 +22,15 @@ main() {
 
   test(
     "Processing command should move attribute up in list",
-        () {
+    () {
       var character = Character(PointInTimeId());
       var firstAttribute = Attribute();
       var secondAttribute = Attribute();
       var thirdAttribute = Attribute();
       character.attributes
           .addAll([firstAttribute, secondAttribute, thirdAttribute]);
-      var command = MoveAttributeUpCommand(character, secondAttribute);
+      var command =
+          MoveAttributeUpCommand(character.attributes, secondAttribute);
 
       processor.process(command);
 
@@ -40,14 +41,15 @@ main() {
 
   test(
     "Undoing command should restore original attribute order",
-        () {
+    () {
       var character = Character(PointInTimeId());
       var firstAttribute = Attribute();
       var secondAttribute = Attribute();
       var thirdAttribute = Attribute();
       character.attributes
           .addAll([firstAttribute, secondAttribute, thirdAttribute]);
-      var command = MoveAttributeUpCommand(character, secondAttribute);
+      var command =
+          MoveAttributeUpCommand(character.attributes, secondAttribute);
 
       processor.process(command);
       processor.undo();
@@ -59,14 +61,15 @@ main() {
 
   test(
     "Redoing command should move attribute up in list again",
-        () {
+    () {
       var character = Character(PointInTimeId());
       var firstAttribute = Attribute();
       var secondAttribute = Attribute();
       var thirdAttribute = Attribute();
       character.attributes
           .addAll([firstAttribute, secondAttribute, thirdAttribute]);
-      var command = MoveAttributeUpCommand(character, secondAttribute);
+      var command =
+          MoveAttributeUpCommand(character.attributes, secondAttribute);
 
       processor.process(command);
       processor.undo();

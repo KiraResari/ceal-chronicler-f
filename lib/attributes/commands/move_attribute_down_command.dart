@@ -1,25 +1,23 @@
 import '../../../../commands/command.dart';
 import '../../utils/list_utils.dart';
-import '../../utils/model/temporal_entity.dart';
-import '../model/attribute.dart';
 
-class MoveAttributeDownCommand extends Command {
-  final Attribute attribute;
-  final TemporalEntity entity;
+class MoveAttributeDownCommand<T extends Object> extends Command {
+  final T attribute;
+  final List<T> list;
 
-  MoveAttributeDownCommand(this.entity, this.attribute);
+  MoveAttributeDownCommand(this.list, this.attribute);
 
   @override
   void execute() =>
-      ListUtils.moveElementTowardsEndOfList(entity.attributes, attribute);
+      ListUtils.moveElementTowardsEndOfList(list, attribute);
 
   @override
-  String get executeMessage => "Moved attribute ${attribute.name} down";
+  String get executeMessage => "Moved attribute $attribute down";
 
   @override
   void undo() =>
-      ListUtils.moveElementTowardsFrontOfList(entity.attributes, attribute);
+      ListUtils.moveElementTowardsFrontOfList(list, attribute);
 
   @override
-  String get undoMessage => "Moved attribute ${attribute.name} back up";
+  String get undoMessage => "Moved attribute $attribute back up";
 }

@@ -34,8 +34,10 @@ class AttributeControls extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         EditAttributeNameButton(attribute),
-        MoveAttributeUpButton(entity, attribute, canAttributeBeMovedUp),
-        MoveAttributeDownButton(entity, attribute, canAttributeBeMovedDown),
+        MoveAttributeUpButton(
+            entity.attributes, attribute, canAttributeBeMovedUp),
+        MoveAttributeDownButton(
+            entity.attributes, attribute, canAttributeBeMovedDown),
         DeleteAttributeButton(entity, attribute),
       ],
     );

@@ -2,23 +2,21 @@ import 'package:flutter/material.dart';
 
 import '../../commands/command_processor.dart';
 import '../../get_it_context.dart';
-import '../../utils/model/temporal_entity.dart';
 import '../../utils/widgets/buttons/small_circular_button.dart';
 import '../commands/move_attribute_down_command.dart';
-import '../model/attribute.dart';
 
-class MoveAttributeDownButton extends SmallCircularButton {
+class MoveAttributeDownButton<T extends Object> extends SmallCircularButton {
   final commandProcessor = getIt.get<CommandProcessor>();
-  final Attribute attribute;
-  final TemporalEntity entity;
+  final T attribute;
+  final List<T> list;
   final bool enabled;
 
-  MoveAttributeDownButton(this.entity, this.attribute, this.enabled, {super.key})
+  MoveAttributeDownButton(this.list, this.attribute, this.enabled, {super.key})
       : super(icon: Icons.arrow_downward);
 
   @override
   void onPressed(BuildContext context) {
-    var command = MoveAttributeDownCommand(entity, attribute);
+    var command = MoveAttributeDownCommand(list, attribute);
     commandProcessor.process(command);
   }
 

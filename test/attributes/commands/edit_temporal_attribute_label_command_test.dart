@@ -1,5 +1,5 @@
-import 'package:ceal_chronicler_f/attributes/commands/edit_attribute_label_command.dart';
-import 'package:ceal_chronicler_f/attributes/model/attribute.dart';
+import 'package:ceal_chronicler_f/attributes/commands/edit_temporal_attribute_label_command.dart';
+import 'package:ceal_chronicler_f/attributes/model/temporal_attribute.dart';
 import 'package:ceal_chronicler_f/commands/command_history.dart';
 import 'package:ceal_chronicler_f/commands/command_processor.dart';
 import 'package:ceal_chronicler_f/get_it_context.dart';
@@ -19,10 +19,10 @@ main() {
   });
 
   test(
-    "Processing command should edit attribute label",
+    "Processing command should edit temporal attribute label",
     () {
-      var attribute = Attribute();
-      var command = EditAttributeLabelCommand(attribute, "New value");
+      var attribute = TemporalAttribute();
+      var command = EditTemporalAttributeLabelCommand(attribute, "New value");
 
       processor.process(command);
 
@@ -31,11 +31,11 @@ main() {
   );
 
   test(
-    "Undoing command should restore old attribute label",
+    "Undoing command should restore old temporal attribute label",
         () {
-      var attribute = Attribute();
+      var attribute = TemporalAttribute();
       String oldName = attribute.label;
-      var command = EditAttributeLabelCommand(attribute, "New value");
+      var command = EditTemporalAttributeLabelCommand(attribute, "New value");
 
       processor.process(command);
       processor.undo();
@@ -45,10 +45,10 @@ main() {
   );
 
   test(
-    "Redoing command should set new attribute name label",
+    "Redoing command should set new temporal attribute label again",
         () {
-      var attribute = Attribute();
-      var command = EditAttributeLabelCommand(attribute, "New value");
+      var attribute = TemporalAttribute();
+      var command = EditTemporalAttributeLabelCommand(attribute, "New value");
 
       processor.process(command);
       processor.undo();

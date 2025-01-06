@@ -29,7 +29,8 @@ main() {
       var thirdAttribute = Attribute();
       character.attributes
           .addAll([firstAttribute, secondAttribute, thirdAttribute]);
-      var command = MoveAttributeDownCommand(character, secondAttribute);
+      var command =
+          MoveAttributeDownCommand(character.attributes, secondAttribute);
 
       processor.process(command);
 
@@ -47,7 +48,8 @@ main() {
       var thirdAttribute = Attribute();
       character.attributes
           .addAll([firstAttribute, secondAttribute, thirdAttribute]);
-      var command = MoveAttributeDownCommand(character, secondAttribute);
+      var command =
+          MoveAttributeDownCommand(character.attributes, secondAttribute);
 
       processor.process(command);
       processor.undo();
@@ -66,7 +68,8 @@ main() {
       var thirdAttribute = Attribute();
       character.attributes
           .addAll([firstAttribute, secondAttribute, thirdAttribute]);
-      var command = MoveAttributeDownCommand(character, secondAttribute);
+      var command =
+          MoveAttributeDownCommand(character.attributes, secondAttribute);
 
       processor.process(command);
       processor.undo();
