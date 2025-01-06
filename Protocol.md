@@ -1967,6 +1967,11 @@
     * And since I just realized I was mostly using them with labels in the value, I figure I can make it so that the labels are separate
       * I now did that
     * However, now I seem to have a weird bug when moving attributes up and down
+      * Looks like `canAttributeBeMovedUp` and `canAttributeBeMovedDown` don't update correctly for some reason
+      * Okay, that was due to the key bug again where Flutter treid to be overly efficient, and thus caused erratic behavior
+        * Managed to fix that by assigning an attribute-dependent key to the `AttributePanel`
+* Okay, that's that
+* Next, temporal attributes
 
 # TODO
 
