@@ -1,19 +1,21 @@
-import 'package:ceal_chronicler_f/utils/map_utils.dart';
-
-import '../../../io/json_serializable.dart';
 import '../../../timeline/model/point_in_time_id.dart';
 import '../exceptions/invalid_operation_exception.dart';
+import '../utils/map_utils.dart';
+import '../utils/model/id_holder.dart';
+import 'widgets/key_field_id.dart';
 
-abstract class KeyField<T> extends JsonSerializable {
+abstract class KeyField<T> extends IdHolder<KeyFieldId> {
   static const String initialValueKey = "initialValue";
   static const String keysKey = "keys";
 
   final T? initialValue;
   final Map<PointInTimeId, T?> keys;
 
-  KeyField({this.initialValue}) : keys = {};
+  KeyField({this.initialValue})
+      : keys = {},
+        super(KeyFieldId());
 
-  KeyField.fromDecodedJson(this.initialValue, this.keys);
+  KeyField.fromDecodedJson(this.initialValue, this.keys) : super(KeyFieldId());
 
   @override
   Map<String, dynamic> toJson() {

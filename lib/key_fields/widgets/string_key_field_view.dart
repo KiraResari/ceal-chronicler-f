@@ -2,6 +2,7 @@ import 'package:ceal_chronicler_f/key_fields/widgets/previous_key_button.dart';
 import 'package:ceal_chronicler_f/key_fields/widgets/rename_string_key_button.dart';
 import 'package:ceal_chronicler_f/key_fields/widgets/string_key_field_controller.dart';
 import 'package:ceal_chronicler_f/key_fields/widgets/toggle_key_button.dart';
+import 'package:ceal_chronicler_f/utils/string_key.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,7 +12,7 @@ import 'next_key_button.dart';
 class StringKeyFieldView extends StatelessWidget {
   final StringKeyField keyField;
 
-  const StringKeyFieldView(this.keyField, {super.key});
+  StringKeyFieldView(this.keyField) : super(key: StringKey(keyField.id.uuid));
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +48,8 @@ class StringKeyFieldView extends StatelessWidget {
 
   Widget _buildAddOrRemoveKeyButton(BuildContext context) {
     var controller = context.read<StringKeyFieldController>();
-    bool keyExistsAtCurrentPointInTime = context
-        .watch<StringKeyFieldController>()
-        .keyExistsAtCurrentPointInTime;
+    bool keyExistsAtCurrentPointInTime =
+        context.watch<StringKeyFieldController>().keyExistsAtCurrentPointInTime;
     return ToggleKeyButton(controller, keyExistsAtCurrentPointInTime);
   }
 

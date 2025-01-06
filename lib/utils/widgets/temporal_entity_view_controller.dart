@@ -1,5 +1,5 @@
-import 'package:ceal_chronicler_f/attributes/model/attribute.dart';
-
+import '../../attributes/model/attribute.dart';
+import '../../attributes/model/temporal_attribute.dart';
 import '../../commands/processor_listener.dart';
 import '../../get_it_context.dart';
 import '../../key_fields/key_field_resolver.dart';
@@ -106,4 +106,6 @@ abstract class TemporalEntityViewController<T extends TemporalEntity>
   }
 
   List<Attribute> get attributes => entity.attributes;
+
+  List<TemporalAttribute> get temporalAttributes => entity.temporalAttributes;
 }

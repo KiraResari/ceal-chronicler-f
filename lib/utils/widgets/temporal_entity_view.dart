@@ -5,6 +5,10 @@ import 'package:ceal_chronicler_f/attributes/widgets/edit_attribute_label_button
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../attributes/model/temporal_attribute.dart';
+import '../../attributes/widgets/add_temporal_attribute_button.dart';
+import '../../attributes/widgets/edit_temporal_attribute_label_button.dart';
+import '../../attributes/widgets/temporal_attribute_controls.dart';
 import '../../key_fields/string_key_field.dart';
 import '../../key_fields/widgets/string_key_field_view.dart';
 import '../../main_view/main_view_candidate.dart';
@@ -228,28 +232,26 @@ abstract class TemporalEntityView<T extends TemporalEntity,
 
   Widget _buildAttributeColumn(BuildContext context) {
     ThemeData theme = Theme.of(context);
-    TextStyle style = theme.textTheme.titleMedium!;
+    TextStyle style = theme.textTheme.titleSmall!;
+    List<TableRow> attributeTableRows = _buildAttributeTableRows(context);
+    List<TableRow> temporalAttributeTableRows =
+        _buildTemporalAttributeTableRows(context);
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Permanent Attributes",
+          "Permanent attributes",
           style: style,
         ),
-        _buildAttributeTable(context),
+        _buildAttributeTable(attributeTableRows),
         AddAttributeButton(entity),
+        Text(
+          "Temporal attributes",
+          style: style,
+        ),
+        _buildAttributeTable(temporalAttributeTableRows),
+        AddTemporalAttributeButton(entity),
       ],
-    );
-  }
-
-  Widget _buildAttributeTable(BuildContext context) {
-    return Table(
-      columnWidths: const <int, TableColumnWidth>{
-        0: IntrinsicColumnWidth(),
-        1: IntrinsicColumnWidth(),
-        2: IntrinsicColumnWidth(),
-      },
-      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-      children: _buildAttributeTableRows(context),
     );
   }
 
@@ -277,6 +279,46 @@ abstract class TemporalEntityView<T extends TemporalEntity,
         Text(attribute.name),
         AttributeControls(entity, attribute),
       ],
+    );
+  }
+
+  List<TableRow> _buildTemporalAttributeTableRows(BuildContext context) {
+    List<TemporalAttribute> attributes = context.watch<C>().temporalAttributes;
+    return attributes
+        .map((attribute) => _buildTemporalAttributeTableRow(context, attribute))
+        .toList();
+  }
+
+  TableRow _buildTemporalAttributeTableRow(
+      BuildContext context, TemporalAttribute attribute) {
+    ThemeData theme = Theme.of(context);
+    TextStyle style = theme.textTheme.labelMedium!;
+    var firstCell = Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        EditTemporalAttributeLabelButton(attribute),
+        Text(attribute.label, style: style, textAlign: TextAlign.end),
+        const SizedBox(width: 5),
+      ],
+    );
+    return TableRow(
+      children: [
+        firstCell,
+        StringKeyFieldView(attribute.value),
+        TemporalAttributeControls(entity, attribute),
+      ],
+    );
+  }
+
+  Widget _buildAttributeTable(List<TableRow> rows) {
+    return Table(
+      columnWidths: const <int, TableColumnWidth>{
+        0: IntrinsicColumnWidth(),
+        1: IntrinsicColumnWidth(),
+        2: IntrinsicColumnWidth(),
+      },
+      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+      children: rows,
     );
   }
 
