@@ -1,5 +1,5 @@
-import '../../commands/command.dart';
-import '../model/attribute.dart';
+import '../../../commands/command.dart';
+import '../../model/attribute.dart';
 
 class EditAttributeCommand extends Command {
   final Attribute attribute;

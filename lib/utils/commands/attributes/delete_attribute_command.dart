@@ -1,6 +1,6 @@
-import '../../commands/command.dart';
-import '../model/attribute.dart';
-import '../model/temporal_entity.dart';
+import '../../../commands/command.dart';
+import '../../model/attribute.dart';
+import '../../model/temporal_entity.dart';
 
 class DeleteAttributeCommand extends Command {
   final Attribute attribute;
