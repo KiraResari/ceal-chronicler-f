@@ -1,6 +1,6 @@
 import 'package:ceal_chronicler_f/attributes/model/attribute.dart';
 import 'package:ceal_chronicler_f/attributes/widgets/add_attribute_button.dart';
-import 'package:ceal_chronicler_f/attributes/widgets/attribute_panel.dart';
+import 'package:ceal_chronicler_f/attributes/widgets/attribute_controls.dart';
 import 'package:ceal_chronicler_f/attributes/widgets/edit_attribute_label_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
