@@ -1954,9 +1954,17 @@
 
 [Time elapsed so far: 148.5 hours]
 
+# 6-Jan-2025
+
+* Now continuing with this
+* This is probably the last I'll work on this for a while, so let's try bringing this to a clean close today
+* As it is, I have characters, incidents, locations and parties, which is good
+* Something that really is still missing, however, is something versatile that I can use to bridge anything that I could not directly address yet, such as items, skills, knowledge, species, characteristics, etc...
+  * I think I'll do that by giving each temporal entity a list of fixed and temporal attributes, that should provide a good amount of flexibility and also be easy to implement
+
 # TODO
 
-* 
+* Allow for deletion of characters and locations
 
 # User Story
 
@@ -2027,6 +2035,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [x] can be removed from a party
 - [x] location can't be edited while character is in party
 - [x] if character is in party, the party's location should be displayed instead of the character's location
+- [ ] Characters should have editable fixed and temporal attributes
 
 
 ### Locations
