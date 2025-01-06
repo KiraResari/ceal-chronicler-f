@@ -60,7 +60,7 @@ abstract class TemporalEntity<T extends ReadableUuid> extends IdHolder<T> {
       return [];
     }
     return jsonAttributes
-        .map<Attribute>((e) => TemporalAttribute.fromJson(e))
+        .map<TemporalAttribute>((e) => TemporalAttribute.fromJson(e))
         .toList();
   }
 
@@ -71,6 +71,7 @@ abstract class TemporalEntity<T extends ReadableUuid> extends IdHolder<T> {
         _firstApperanceKey: firstAppearance,
         _lastApperanceKey: lastAppearance,
         _attributesKey: attributes,
+        _temporalAttributesKey: temporalAttributes,
       };
 
   @override

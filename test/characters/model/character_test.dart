@@ -1,3 +1,4 @@
+import 'package:ceal_chronicler_f/attributes/model/temporal_attribute.dart';
 import 'package:ceal_chronicler_f/characters/model/character.dart';
 import 'package:ceal_chronicler_f/locations/model/location_id.dart';
 import 'package:ceal_chronicler_f/parties/model/party_id.dart';
@@ -128,6 +129,19 @@ main() {
       var decoded = Character.fromJsonString(jsonString);
 
       expect(decoded.attributes.length, equals(1));
+    },
+  );
+
+  test(
+    "Parsing Character to JSON and back should preserve temporal attributes",
+        () {
+      var original = Character(PointInTimeId());
+      original.temporalAttributes.add(TemporalAttribute());
+
+      String jsonString = original.toJsonString();
+      var decoded = Character.fromJsonString(jsonString);
+
+      expect(decoded.temporalAttributes.length, equals(1));
     },
   );
 }
