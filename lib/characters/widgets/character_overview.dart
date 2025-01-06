@@ -1,3 +1,4 @@
+import 'package:ceal_chronicler_f/characters/widgets/delete_character_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/widgets/overview.dart';
@@ -27,8 +28,13 @@ class CharacterOverview
   }
 
   @override
-  Widget buildItem(Character character) {
-    return CharacterButton(character);
+  Widget buildItem(Character item) {
+    return Row(
+      children: [
+        CharacterButton(item),
+        DeleteCharacterButton(item),
+      ],
+    );
   }
 
   @override

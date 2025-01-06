@@ -1972,6 +1972,11 @@
         * Managed to fix that by assigning an attribute-dependent key to the `AttributePanel`
 * Okay, that's that
 * Next, temporal attributes
+  * These now work too
+* With that, I think I have the most important things down now
+* As finishing touches, I want to try and make it so that characters, locations and parties can be deleted
+  * At first thought that seems like a huge complicated tasks because of dangling references, but I think Flutter and my architecture actually forced me to program so that I already implemented handling for that along the way
+  * Yes, looks good. For the characters this is now working nicely
 
 # TODO
 
@@ -2034,7 +2039,7 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [x] Editing a field causes the contents to change from that point in time onward, until it is edited again
   - [x] The exceptions are First and Last Appearance, which are logically always the same within a character 
   - [x] It is possible to jump back and forth to points in time where a field's value has been edited
-- [ ] Allows complete deletion of existing characters (with warning)
+- [x] Allows complete deletion of existing characters
 - [x] The character screen has a back button, which returns back to the main view
 - [x] Characters can be assigned to locations
   - [x] Basic functionality
@@ -2048,9 +2053,9 @@ As a Game Designer and Author, I want a tool to help me keep track of characters
 - [x] can be removed from a party
 - [x] location can't be edited while character is in party
 - [x] if character is in party, the party's location should be displayed instead of the character's location
-- [ ] Characters should have editable permanent and temporal attributes
+- [x] Characters should have editable permanent and temporal attributes
   - [x] permanent attributes
-  - [ ] temporal attributes
+  - [x] temporal attributes
 
 
 
