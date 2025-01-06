@@ -1961,6 +1961,7 @@
 * As it is, I have characters, incidents, locations and parties, which is good
 * Something that really is still missing, however, is something versatile that I can use to bridge anything that I could not directly address yet, such as items, skills, knowledge, species, characteristics, etc...
   * I think I'll do that by giving each temporal entity a list of fixed and temporal attributes, that should provide a good amount of flexibility and also be easy to implement
+  * The attributes are quite similar to the incidents, and yet a little different
 
 # TODO
 
