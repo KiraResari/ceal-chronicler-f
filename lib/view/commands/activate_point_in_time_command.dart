@@ -41,8 +41,7 @@ class ActivatePointInTimeCommand extends ViewCommand {
   bool get _pointIsWithinTemporalBounds {
     MainViewTemplate mainViewTemplate = _viewRepository.mainViewTemplate;
     if (mainViewTemplate is TemporallyLimitedTemplate) {
-      return (mainViewTemplate as TemporallyLimitedTemplate)
-          .existsAt(_previousActivePointInTimeId!);
+      return mainViewTemplate.existsAt(_previousActivePointInTimeId!);
     }
     return true;
   }

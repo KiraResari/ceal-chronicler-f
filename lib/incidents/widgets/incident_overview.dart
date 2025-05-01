@@ -26,8 +26,8 @@ class IncidentOverview extends Overview<Incident, IncidentOverviewController> {
   }
 
   @override
-  Widget buildItem(Incident incident) {
-    return IncidentPanel(incident);
+  Widget buildItem(Incident item) {
+    return IncidentPanel(item);
   }
 
   @override

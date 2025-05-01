@@ -192,8 +192,7 @@ class TimeBarController extends ProcessorListener {
   bool _isInsideTemporalLimits(PointInTime pointInTime) {
     final mainViewTemplate = _viewRepository.mainViewTemplate;
     if (mainViewTemplate is TemporallyLimitedTemplate) {
-      return (mainViewTemplate as TemporallyLimitedTemplate)
-          .existsAt(pointInTime.id);
+      return mainViewTemplate.existsAt(pointInTime.id);
     }
     return true;
   }
@@ -205,8 +204,7 @@ class TimeBarController extends ProcessorListener {
     if (!_isInsideTemporalLimits(pointInTime)) {
       final mainViewTemplate = _viewRepository.mainViewTemplate;
       if (mainViewTemplate is TemporallyLimitedTemplate) {
-        return (mainViewTemplate as TemporallyLimitedTemplate)
-            .getTemporalInvalidityReason(pointInTime.id);
+        return mainViewTemplate.getTemporalInvalidityReason(pointInTime.id);
       } else {
         return "Point in time is outside temporal limits, but somehow the mainViewTemplate is not a TemporallyLimitedTemplate. This might be a bug.";
       }

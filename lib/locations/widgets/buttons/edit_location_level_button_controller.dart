@@ -89,6 +89,6 @@ class EditLocationLevelButtonController
   String getLabel(LocationLevel entry) => entry.iconAndName;
 
   @override
-  UpdateLocationLevelCommand buildCommand(LocationLevel newValue) =>
-      UpdateLocationLevelCommand(presentLocation, newValue);
+  UpdateLocationLevelCommand buildCommand(LocationLevel selection) =>
+      UpdateLocationLevelCommand(presentLocation, selection);
 }

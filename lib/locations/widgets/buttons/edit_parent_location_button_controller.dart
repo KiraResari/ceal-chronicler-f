@@ -50,6 +50,6 @@ class EditParentLocationButtonController
   }
 
   @override
-  UpdateParentLocationCommand buildCommand(LocationId newValue) =>
-      UpdateParentLocationCommand(presentLocation, newValue);
+  UpdateParentLocationCommand buildCommand(LocationId selection) =>
+      UpdateParentLocationCommand(presentLocation, selection);
 }
