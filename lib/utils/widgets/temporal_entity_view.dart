@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:ceal_chronicler_f/attributes/model/attribute.dart';
 import 'package:ceal_chronicler_f/attributes/widgets/add_attribute_button.dart';
 import 'package:ceal_chronicler_f/attributes/widgets/attribute_controls.dart';
@@ -236,7 +238,8 @@ abstract class TemporalEntityView<T extends TemporalEntity,
     List<TableRow> attributeTableRows = _buildAttributeTableRows(context);
     List<TableRow> temporalAttributeTableRows =
         _buildTemporalAttributeTableRows(context);
-    return Column(
+
+    var column = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
@@ -252,6 +255,20 @@ abstract class TemporalEntityView<T extends TemporalEntity,
         _buildAttributeTable(temporalAttributeTableRows),
         AddTemporalAttributeButton(entity),
       ],
+    );
+    return _buildVerticalScrollColumn(context, column);
+  }
+
+  Widget _buildVerticalScrollColumn(BuildContext context, Column column) {
+    int scrollListHeightOffset =
+        Platform.isAndroid || Platform.isIOS ? 300 : 250;
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+          maxHeight:
+              MediaQuery.of(context).size.height - scrollListHeightOffset),
+      child: SingleChildScrollView(
+        child: column,
+      ),
     );
   }
 

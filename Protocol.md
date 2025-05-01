@@ -1987,11 +1987,73 @@
 
 [Time elapsed so far: 154.75 hours]
 
+# 1-May-2025
+
+* Now continuing with this
+
+* This is an emergency update, since I am facing a blocking issue that I have to resolve before I can continue to work with the Ceal Chronicler
+
+  * The issue is that scrolling doesn't work if the list of attributes becomes too long, thus preventing bottom attributes to be seen or edited
+
+  * I thought I had enabled that, but clearly I did not
+
+  * Okay, upon investigation, I can now see that I had implemented a horizontal scrollbar, but not a vertical one
+
+  * I now tried implementing vertical scrolling with `Scrollbar` and/or `SingleChildScrollView`, but for some strange reason it didn't work
+
+  * After floundering around a lot with Chatty's suggested solutions, I now solved it in this crude but functional way:
+
+    * ````dart
+          var column = Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Permanent attributes",
+                style: style,
+              ),
+              _buildAttributeTable(attributeTableRows),
+              AddAttributeButton(entity),
+              Text(
+                "Temporal attributes",
+                style: style,
+              ),
+              _buildAttributeTable(temporalAttributeTableRows),
+              AddTemporalAttributeButton(entity),
+            ],
+          );
+          return _buildVerticalScrollColumn(context, column);
+        }
+      
+        Widget _buildVerticalScrollColumn(BuildContext context, Column column) {
+          int scrollListHeightOffset =
+              Platform.isAndroid || Platform.isIOS ? 300 : 250;
+          return ConstrainedBox(
+            constraints: BoxConstraints(
+                maxHeight:
+                    MediaQuery.of(context).size.height - scrollListHeightOffset),
+            child: SingleChildScrollView(
+              child: column,
+            ),
+          );
+        }
+      ````
+
+    * I hate how this requires hard-coded values, but apparently with all that flexible layout garbage that Flutter uses, it needs some hard-coded values here and there
+
+  *  For now, this will do
+
+* With this, I can now continue to use the Ceal Chronicler, and that is good enough for now
+
+[Time elapsed so far: 156.5 hours]
+
 # TODO
 
+* Temporal attributes should not be displayed before their first key (like with Sylvia's Weapon, Armor and Skill)
+* Enable quick saving
 * Consolidate incident and attribute widgets
 * Consolidate Temporal Attribute and Attribute
 * If you delete a character/location/party, undo it, move into that entity, and then redo the deletion, you are now effectively inside a deleted entity; it would be better if in that case you got ejected to the `OverviewView`
+* Add "importance"-field for characters, so they can be sorted by protagonists, major characters and minor characters 
 
 # User Story
 
